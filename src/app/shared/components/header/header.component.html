@@ -1,4 +1,4 @@
-
+<ng-container *transloco="let t; prefix: 'HEADER'">
   <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
@@ -21,20 +21,19 @@
           </ul>
           <ng-container [ngTemplateOutlet]="selectNavBarTemplate()"/>
           <li class="nav-item px-2 dropdown">
-            <a class="nav-link dropdown-toggle text-light text-uppercase" role="button" data-bs-toggle="dropdown"
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
               <fa-icon [icon]="faFlag"></fa-icon>
-              Leng
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" (click)="switchLanguage('es')">
-                <span class="fi fi-es"></span> es</a>
+                <span class="fi fi-es"></span> {{ t('ES')}}</a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" (click)="switchLanguage('en')">
-                <span class="fi fi-us"></span> en</a>
+                <span class="fi fi-us"></span> {{ t('EN')}}</a>
               </li>
             </ul>
           </li>
@@ -62,5 +61,5 @@
       Admin$
     </li>
   </ng-template>
-
+</ng-container>
 
