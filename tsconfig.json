@@ -25,25 +25,25 @@
     ],
     "paths": {
       "@core/*": [
-        "src/app/core/*"
+        "/src/app/core/*"
       ],
       "@features/*": [
-        "src/app/features/*"
+        "/src/app/features/*"
       ],
       "@shared/*": [
-        "src/app/shared/*"
+        "/src/app/shared/*"
       ],
       "@data/*": [
-        "src/app/data/*"
+        "/src/app/data/*"
       ],
       "@env/*": [
-        "src/environments/*"
+        "/src/environments/*"
       ],
       "@images/*": [
-        "src/assets/images/*"
+        "/src/assets/images/*"
       ],
       "@languages/*": [
-        "src/assets/i18n/*"
+        "/src/assets/i18n/*"
       ]
     }
   },
