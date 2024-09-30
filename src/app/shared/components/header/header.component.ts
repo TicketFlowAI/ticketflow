@@ -1,9 +1,21 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
+import {AsyncPipe, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {ScrollToTopInstantDirective} from "../../directives/scroll-to-top-instant.directive";
-import {TranslocoDirective} from "@jsverse/transloco";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {AuthService} from "../../../core/services/auth.service";
+import {ThemeService} from "../../../core/services/theme.service";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {faFlag, faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-header',
@@ -13,14 +25,21 @@ import {AuthService} from "../../../core/services/auth.service";
     NgOptimizedImage,
     ScrollToTopInstantDirective,
     TranslocoDirective,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    AsyncPipe,
+    FaIconComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
+  translocoService: TranslocoService = inject(TranslocoService)
+  cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   authService: AuthService = inject(AuthService)
+  themeService: ThemeService = inject(ThemeService)
+
+
   isAuth = this.authService.isLoggedIn$.getValue();
 
   userName = ''
@@ -31,7 +50,12 @@ export class HeaderComponent implements OnInit {
   @ViewChild('clientTemplate') ClientTemplate!: TemplateRef<any>
 
   ngOnInit() {
+    this.themeService.setStartTheme()
+  }
+
+  ngAfterViewInit() {
     this.selectNavBarTemplate()
+    this.cdr.detectChanges()
   }
 
   selectNavBarTemplate() {
@@ -51,7 +75,15 @@ export class HeaderComponent implements OnInit {
       return this.NoAuthTemplate;
   }
 
-  switchLanguage() {
-
+  switchLanguage(lang: string) {
+    this.translocoService.setActiveLang(lang);
   }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
+  protected readonly faSun = faSun;
+  protected readonly faMoon = faMoon;
+  protected readonly faFlag = faFlag;
 }

@@ -1,5 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,14 @@ export class ThemeService {
   cookieService = inject(CookieService)
 
   private readonly THEME_KEY = 'theme'
-  currentTheme: string = 'light';
+  currentTheme$: BehaviorSubject<string> = new BehaviorSubject<string>(this.cookieService.get(this.THEME_KEY) || 'light');
 
-  setTheme(theme: string) {
-    this.cookieService.set(this.THEME_KEY, theme)
+  setStartTheme(){
+    document.documentElement.setAttribute('data-bs-theme', this.currentTheme$.getValue());
   }
-
-  getTheme() {
-    return this.cookieService.get(this.THEME_KEY) || 'light'
+  toggleTheme() {
+    this.currentTheme$.next(this.currentTheme$.getValue() === 'light' ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-bs-theme', this.currentTheme$.getValue());
+    this.cookieService.set(this.THEME_KEY, this.currentTheme$.getValue())
   }
 }

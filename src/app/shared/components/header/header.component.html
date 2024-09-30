@@ -1,40 +1,66 @@
-<ng-container *transloco="let t; prefix: 'HEADER'">
+
   <header>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" ScrollToTopInstant [routerLink]="['/']">
           <img class="brand-logo" ngSrc="/assets/images"
-                                  alt="mindSoftLogo" width="140"
-                                     height="70" priority>
-          <ng-container [ngTemplateOutlet]="selectNavBarTemplate()"/>
-
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" (click)="switchLanguage('es')">
-              <span class="fi fi-es"></span> {{ t('ES') }}</a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" (click)="switchLanguage('en')">
-              <span class="fi fi-us"></span> {{ t('EN') }}</a>
+               alt="mindSoftLogo" width="140"
+               height="70" priority>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" (click)="toggleTheme()">
+              <a class="nav-link active text-light" aria-current="page">
+                @if ((this.themeService.currentTheme$ | async) === 'light') {
+                  <fa-icon [icon]="faMoon"></fa-icon>
+                } @else {
+                  <fa-icon [icon]="faSun"></fa-icon>
+                }
+              </a>
             </li>
           </ul>
-        </a>
+          <ng-container [ngTemplateOutlet]="selectNavBarTemplate()"/>
+          <li class="nav-item px-2 dropdown">
+            <a class="nav-link dropdown-toggle text-light text-uppercase" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              <fa-icon [icon]="faFlag"></fa-icon>
+              Leng
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" (click)="switchLanguage('es')">
+                <span class="fi fi-es"></span> es</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" (click)="switchLanguage('en')">
+                <span class="fi fi-us"></span> en</a>
+              </li>
+            </ul>
+          </li>
+        </div>
       </div>
     </nav>
   </header>
   <ng-template #noAuthTemplate>
-
+    <li>
+      NoAuth
+    </li>
   </ng-template>
   <ng-template #clientTemplate>
-
+    <li>
+      Client
+    </li>
   </ng-template>
   <ng-template #teamTemplate>
-
+    <li>
+      Team
+    </li>
   </ng-template>
   <ng-template #adminTemplate>
-
+    <li>
+      Admin$
+    </li>
   </ng-template>
-</ng-container>
 
 
