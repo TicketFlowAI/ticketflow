@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiEndpoint: ''
+  apiEndpoint: 'https://servicios.mindsoftdev.com'
 };

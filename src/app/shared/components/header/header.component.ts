@@ -16,6 +16,8 @@ import {AuthService} from "../../../core/services/auth.service";
 import {ThemeService} from "../../../core/services/theme.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faFlag, faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
+import {MatButton} from "@angular/material/button";
+import {OpenLoginDirective} from "../../directives/open-login.directive";
 
 @Component({
   selector: 'app-header',
@@ -27,7 +29,9 @@ import {faFlag, faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
     TranslocoDirective,
     NgTemplateOutlet,
     AsyncPipe,
-    FaIconComponent
+    FaIconComponent,
+    MatButton,
+    OpenLoginDirective
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -58,7 +62,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges()
   }
 
-  selectNavBarTemplate() {
+  selectNavBarTemplate(): TemplateRef<any> {
     if(this.isAuth) {
       switch (this.authService.getUserRole()) {
         case  'admin':
@@ -74,6 +78,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     else
       return this.NoAuthTemplate;
   }
+
+
 
   switchLanguage(lang: string) {
     this.translocoService.setActiveLang(lang);

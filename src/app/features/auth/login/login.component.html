@@ -1,1 +1,45 @@
-<p>login works!</p>
+<ng-container *transloco="let t; prefix: 'FEATURES.AUTH.LOGIN'">
+  <h2 class="text-center m-3">{{t('LOGIN')}}</h2>
+  <form [formGroup]="loginFrom" class="align-content-center">
+    <mat-dialog-content class="align-content-center">
+      <div class="row justify-content-center">
+        <mat-form-field class="w-100">
+          <mat-label>{{t('EMAIL-TITLE')}}</mat-label>
+          <input type="email" matInput [formControl]="emailFormControl" placeholder="{{t('EMAIL-PLACEHOLDER')}}">
+          @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+            <mat-error>{{t('EMAIL-VALIDATOR-EMAIL')}}</mat-error>
+          }
+          @if (emailFormControl.hasError('required')) {
+            <mat-error>{{t('EMAIL-VALIDATOR-REQUIRED')}}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="row justify-content-center">
+        <mat-form-field class="w-100">
+          <mat-label>{{t('PASSWORD-TITLE')}}</mat-label>
+          <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="{{t('PASSWORD-PLACEHOLDER')}}"/>
+          <button mat-icon-button  matSuffix
+                  (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>{{t('PASSWORD-VALIDATOR-REQUIRED')}}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="justify-content-center">
+      <div class="row w-100 justify-content-center">
+        <button [disabled]="loginFrom.invalid" (click)="submitLoginForm()">
+          {{t('LOGIN')}}
+        </button>
+      </div>
+      <div class="row w-100 text-center">
+        <a [routerLink]="['change-password']" (click)="closeDialog()">{{t('RECOVER-PASSWORD')}}</a>
+      </div>
+      <div class="row w-100 text-center">
+        <a [routerLink]="['register']" (click)="closeDialog()">{{t('REGISTER')}}</a>
+      </div>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

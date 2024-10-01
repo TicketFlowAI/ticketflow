@@ -1,16 +1,39 @@
-<ng-container *transloco="let t; prefix: 'HEADER'">
-  <header>
+<ng-container *transloco="let t; prefix: 'SHARED.HEADER'">
+  <header class="w-100">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" ScrollToTopInstant [routerLink]="['/']">
-          <img class="brand-logo" ngSrc="/assets/images"
+          <img class="brand-logo" ngSrc="../../../../../logos/logo_inline_light.svg"
                alt="mindSoftLogo" width="140"
-               height="70" priority>
+               height="199" priority>
         </a>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableNav" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-sm-center justify-content-md-end" id="collapsableNav">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item px-2 dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                <fa-icon [icon]="faFlag"></fa-icon>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" (click)="switchLanguage('es')">{{ t('ES') }}</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="switchLanguage('en')">{{ t('EN') }}</a>
+                </li>
+              </ul>
+            </li>
+
+            <ng-container [ngTemplateOutlet]="selectNavBarTemplate()"/>
+
             <li class="nav-item" (click)="toggleTheme()">
-              <a class="nav-link active text-light" aria-current="page">
+              <a class="nav-link" aria-current="page">
                 @if ((this.themeService.currentTheme$ | async) === 'light') {
                   <fa-icon [icon]="faMoon"></fa-icon>
                 } @else {
@@ -19,31 +42,13 @@
               </a>
             </li>
           </ul>
-          <ng-container [ngTemplateOutlet]="selectNavBarTemplate()"/>
-          <li class="nav-item px-2 dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-              <fa-icon [icon]="faFlag"></fa-icon>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" (click)="switchLanguage('es')">
-                <span class="fi fi-es"></span> {{ t('ES')}}</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" (click)="switchLanguage('en')">
-                <span class="fi fi-us"></span> {{ t('EN')}}</a>
-              </li>
-            </ul>
-          </li>
         </div>
       </div>
     </nav>
   </header>
   <ng-template #noAuthTemplate>
-    <li>
-      NoAuth
+    <li class="nav-item">
+      <button OpenLogin mat-raised-button>Login</button>
     </li>
   </ng-template>
   <ng-template #clientTemplate>

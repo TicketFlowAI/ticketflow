@@ -10,5 +10,4 @@ export class ScrollToTopInstantDirective {
     event.preventDefault()
     window.scrollTo({top: -50, behavior: 'instant'})
   }
-
 }

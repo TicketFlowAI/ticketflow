@@ -1,6 +1,37 @@
 {
-  "HEADER": {
-    "ES": "Spanish",
-    "EN": "English"
+  "FEATURES": {
+    "AUTH": {
+      "LOGIN": {
+        "EMAIL-TITLE": "Email",
+        "EMAIL-PLACEHOLDER": "Enter your email...",
+        "EMAIL-VALIDATOR-REQUIRED": "Enter an email",
+        "EMAIL-VALIDATOR-EMAIL": "Enter a valid email",
+
+        "PASSWORD-TITLE": "Password",
+        "PASSWORD-PLACEHOLDER": "Enter your password...",
+        "PASSWORD-VALIDATOR-REQUIRED": "Enter a password",
+
+        "ACCOUNT": "Cuenta",
+        "LOGIN": "Sign In",
+        "CREATE-ACCOUNT": "Sign On",
+        "RECOVER-PASSWORD": "Recover my password",
+        "REGISTER": "Sign On"
+      },
+      "REGISTER": {
+
+      },
+      "CHANGE-PASSWORD": {
+
+      },
+      "VERIFY": {
+
+      }
+    }
+  },
+  "SHARED": {
+    "HEADER": {
+      "ES": "Spanish",
+      "EN": "English"
+    }
   }
 }

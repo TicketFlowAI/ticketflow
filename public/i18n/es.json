@@ -1,6 +1,37 @@
 {
-  "HEADER": {
-    "ES": "Español",
-    "EN": "Inglés"
+  "FEATURES": {
+    "AUTH": {
+      "LOGIN": {
+        "EMAIL-TITLE": "Correo electrónico",
+        "EMAIL-PLACEHOLDER": "Ingresa tu correo...",
+        "EMAIL-VALIDATOR-REQUIRED": "Ingrese un correo electrónico",
+        "EMAIL-VALIDATOR-EMAIL": "Ingrese un correo válido",
+
+        "PASSWORD-TITLE": "Contraseña",
+        "PASSWORD-PLACEHOLDER": "Ingresa tu contraseña...",
+        "PASSWORD-VALIDATOR-REQUIRED": "Ingrese una contraseña",
+
+        "ACCOUNT": "Cuenta",
+        "LOGIN": "Iniciar Sesión",
+        "CREATE-ACCOUNT": "Crear Cuenta",
+        "RECOVER-PASSWORD": "Recuperar mi contraseña",
+        "REGISTER": "Crea una cuenta"
+      },
+      "REGISTER": {
+
+      },
+      "CHANGE-PASSWORD": {
+
+      },
+      "VERIFY": {
+
+      }
+    }
+  },
+  "SHARED": {
+    "HEADER": {
+      "ES": "Español",
+      "EN": "Inglés"
+    }
   }
 }
