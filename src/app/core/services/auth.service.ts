@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {TokenService} from "./token.service";
 import {LoginRequest} from "../models/requests/login.request";
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Subject, tap} from "rxjs";
+import {HttpClient, HttpResponse} from "@angular/common/http";
+import {BehaviorSubject, Observable, Subject, switchMap, tap} from "rxjs";
 import {IUserModel} from "../models/entities/user.model";
 import {environment} from "../../../environments/environment";
 
@@ -21,20 +21,14 @@ export class AuthService {
     this.isAuthenticated();
   }
 
-  login(loginRequest: LoginRequest) {
-    return this.http.post(`${this.BASE_URL}/login`, loginRequest, { withCredentials: true }).pipe(
-      tap((response: any) => {
-        this.tokenService.setToken(response);
-        this.isAuthenticated();
-        this.user = this.getUser();
-      })
-    );
+  getAuthCookie(): Observable<HttpResponse<any>>{ 
+    return this.http.get<any>(`${this.BASE_URL}/sanctum/csrf-cookie`)
   }
 
-  getUserRole() {
-    return this.user.roles[0]
+  loginWithCookie(loginRequest: LoginRequest): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${this.BASE_URL}/login`, loginRequest, { withCredentials: true })
   }
-
+  
   isAuthenticated() {
     this.isLoggedIn$.next(!!this.tokenService.getToken())
   }

@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   selectNavBarTemplate(): TemplateRef<any> {
     if(this.isAuth) {
-      switch (this.authService.getUserRole()) {
+      switch (Math.random().toString()) {
         case  'admin':
           return this.AdminTemplate;
         case  'team':

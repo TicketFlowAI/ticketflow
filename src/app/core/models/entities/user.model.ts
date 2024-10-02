@@ -1,6 +1,23 @@
 export interface IUserModel {
-  email: string,
-  name: string,
+  id: number;
+  name: string;
+  lastname: string;
+  email: string;
+  company: number;
+}
 
-  roles: string[]
+export class UserModel implements IUserModel {
+  id: number;
+  name: string;
+  lastname: string;
+  email: string;
+  company: number;
+
+  constructor(id: number, name: string, lastname: string, email: string, company: number) {
+    this.id = id;
+    this.name = name;
+    this.lastname = lastname;
+    this.email = email;
+    this.company = company;
+  }
 }

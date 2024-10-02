@@ -10,25 +10,6 @@ export class TokenService {
   constructor(private cookieService: CookieService) {
   }
 
-  setToken(token: string) {
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 30);
-    const cookieOptions: any = {
-      expires,
-      sameSite: 'Strict'
-    };
-
-    if (window.location.protocol === 'https:') {
-      cookieOptions.secure = true;
-    }
-
-    if (this.getToken()) {
-      this.clearToken()
-    }
-
-    this.cookieService.set(this.TOKEN_KEY, token, cookieOptions);
-  }
-
   getToken(): string {
     const token = this.cookieService.get(this.TOKEN_KEY)
 

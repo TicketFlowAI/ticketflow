@@ -1,0 +1,15 @@
+/* Mostrar la imagen para el modo claro */
+.img-dark {
+    display: none;
+  }
+  
+  /* Cambiar automáticamente al modo oscuro */
+  @media (prefers-color-scheme: dark) {
+    .img-light {
+      display: none;
+    }
+    .img-dark {
+      display: block;
+    }
+  }
+  

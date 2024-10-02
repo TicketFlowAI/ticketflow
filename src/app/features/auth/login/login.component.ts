@@ -7,6 +7,8 @@ import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
+import { AuthService } from '../../../core/services/auth.service';
+import { LoginRequest } from '../../../core/models/requests/login.request';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,7 @@ import {RouterLink} from "@angular/router";
 })
 export class LoginComponent {
   private dialogRef = inject(MatDialogRef<LoginComponent>);
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder)
 
   hide = signal(true);
@@ -53,6 +56,17 @@ export class LoginComponent {
   }
 
   submitLoginForm(){
+    const loginFormValue = this.loginFrom.value;
+    const loginRequest = new LoginRequest();
+    loginRequest.email = loginFormValue.email?? ''
+    loginRequest.password = loginFormValue.password?? ''
 
+    this.authService.getAuthCookie().subscribe({
+        next: () => {
+          this.authService.loginWithCookie(loginRequest).subscribe({
+
+          })
+      }
+    })
   }
 }
