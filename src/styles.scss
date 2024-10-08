@@ -1,8 +1,244 @@
+@use '@angular/material' as mat;
+@use 'styles/m3-theme.scss' as custom-theme;
+
+@include mat.core();
+
+[data-bs-theme='dark'] {
+    --bs-body-bg: #2B3035;
+    --bs-body-color: #e0e0e0;
+    --bs-primary:  #FF4438;
+    --bs-secondary: #001689 ;
+    --bs-navbar-bg: #1F1F1F;
+    --bs-mat-element: #151515;
+  }
+  
+  [data-bs-theme='light'] {
+    --mindsoft-red: #FF4438 
+    --mindsoft-blue: #001689
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #000000;
+    --bs-primary:  #FF4438;
+    --bs-secondary: #001689 ;
+    --bs-navbar-bg: #1F1F1F;
+    --bs-mat-element: #FFFFFF; 
+  }
+  
+
+html {
+    @include mat.all-component-themes(custom-theme.$light-theme);
+  
+    background: mat.get-theme-color(custom-theme.$light-theme, surface);
+  
+    &.dark {
+      @include mat.all-component-colors(custom-theme.$dark-theme);
+  
+      background: mat.get-theme-color(custom-theme.$dark-theme, surface);
+    }
+  }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+header {
+  background-color: var(--bs-navbar-bg);
+  max-height: 8%;
+}
+
+main {
+  min-height: 84%;
+}
+
+footer {
+  background-color: var(--bs-navbar-bg);
+  max-height: 8%;
+}
+
+.dropdown-item:hover {
+  background-color: var(--bs-primary) !important;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+//ANGULAR MATERIAL CUSTOM ELEMENTS
+
+.mat-mdc-dialog-surface {
+  background-color: var(--bs-mat-element) !important;
+  .dialog-title {
+    background-color: var(--bg-color-layout);
+
+    .close-btn {
+      cursor: pointer;
+    }
+  }
+
+  .dialog-content {
+    background-color: var(--bs-body-bg);
+
+    p {
+      color: var(--text-color);
+    }
+  }
+
+  .dialog-actions {
+    background-color: var(--bs-body-bg);
+
+    .continue-btn {
+      background-color: #66BB6B;
+      width: 90%;
+      border: 2px solid #66BB6B;
+      color: #FFFFFF;
+      border-radius: 10px;
+      padding: 0.5rem;
+      display: block;
+      font-size: 16px;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: 0.75px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 500ms;
+
+      &:hover {
+        transition: 200ms;
+        cursor: pointer;
+        background-color: #FFFFFF;
+        color: #66BB6B !important;
+        background-size: 100% 2px;
+      }
+    }
+
+    .cancel-btn {
+      background-color: #F54A3D;
+      width: 90%;
+      border: 2px solid #F54A3D;
+      color: #FFFFFF;
+      border-radius: 10px;
+      padding: 0.5rem;
+      display: block;
+      font-size: 16px;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: 0.75px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 500ms;
+
+      &:hover {
+        transition: 200ms;
+        cursor: pointer;
+        background-color: #FFFFFF;
+        color: #F54A3D !important;
+        background-size: 100% 2px;
+      }
+    }
+  }
+}
 
 
-:root {
+mat-accordion {
+  background-color: var(red);
+
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      background-color: var(--bs-body-bg);
+      color: var(--text-color);
+
+      mat-card {
+        background-color: var(--bg-element);
+      }
+    }
+  }
+}
+
+.mdc-text-field--filled {
+  background-color: var(--bs-body-bg) !important;
+
+  .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
+    /* Input text color and font size customization */
+    .mdc-text-field__input {
+      color: var(--text-color);
+
+      /* Estilo para el placeholder */
+      &::placeholder {
+        color: var(--placeholder-color) !important; /* Ajusta el color del placeholder aquí */
+      }
+    }
+  }
+
+  /* On hover, change the background color */
+  .mat-mdc-form-field-focus-overlay {
+    background-color: var(--bg-element) !important;
+  }
+
+  /* Change the border bottom color */
+  .mdc-line-ripple::before,
+  .mdc-line-ripple::after {
+    border-bottom-color: var(--text-color) !important;
+  }
+}
+
+mat-label {
+  color: var(--text-color); /* Cambia el color globalmente */
+}
+
+mat-select {
+  color: var(--text-color); /* Cambia el color globalmente */
+}
+
+hr {
+  background-color: var(--bs-body-bg) !important;
+}
+
+mat-card {
+  border-radius: 1rem !important;
+  background-color: var(--bg-element) !important;
+
+  mat-card {
+    background-color: var(--bs-body-bg) !important;
+  }
 
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-mdc-checkbox .mdc-form-field {
+  color: var(--text-color) !important;
+}
+
+mat-stepper {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--text-color) !important;
+
+  .mat-step-header .mat-step-label {
+    color: var(--text-color) !important; /* Cambia el color del texto de los headers */
+  }
+}
+
+label {
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-row:nth-child(1n) {
+  background-color: var(--bg-element);
+  .mat-mdc-cell {
+    color: var(--text-color);
+  }
+}
+
+.mat-mdc-row:nth-child(2n) {
+  background-color: var(--bs-body-bg);
+}
+
+.mat-mdc-header-row {
+  background-color: var(--bs-body-bg) !important;
+}
+
+.mat-mdc-header-row .mat-mdc-header-cell {
+  font-size: 1rem;
+  color: var(--text-color);
+  font-weight: 800;
+}

@@ -1,1 +1,10 @@
-<p>footer works!</p>
+<ng-container *transloco="let t; prefix: 'SHARED.FOOTER'">
+    <footer class="text-center">
+        <hr class="text-light">
+        <div class="justify-content-center align-items-center">
+            <div class="text-light">
+                <span>{{ t('ALL-RIGHTS')}} {{getYear()}}. Quito - Ecuador</span>
+            </div>
+        </div>
+    </footer>
+</ng-container>

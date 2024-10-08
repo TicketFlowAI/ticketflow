@@ -15,7 +15,7 @@ import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {AuthService} from "../../../core/services/auth.service";
 import {ThemeService} from "../../../core/services/theme.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faFlag, faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
+import {faFlag, faMoon, faSun, faUser, faSignInAlt} from "@fortawesome/free-solid-svg-icons";
 import {MatButton} from "@angular/material/button";
 import {OpenLoginDirective} from "../../directives/open-login.directive";
 
@@ -38,11 +38,19 @@ import {OpenLoginDirective} from "../../directives/open-login.directive";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
+
+  protected readonly faSun = faSun;
+  protected readonly faMoon = faMoon;
+  protected readonly faFlag = faFlag;
+  protected readonly faUser = faUser;
+  protected readonly faSignInAlt = faSignInAlt;
+
   translocoService: TranslocoService = inject(TranslocoService)
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   authService: AuthService = inject(AuthService)
   themeService: ThemeService = inject(ThemeService)
 
+  selectedTemplate!: TemplateRef<any>
 
   isAuth = this.authService.isLoggedIn$.getValue();
 
@@ -54,32 +62,45 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('clientTemplate') ClientTemplate!: TemplateRef<any>
 
   ngOnInit() {
+    this.selectNavBarTemplate()
     this.themeService.setStartTheme()
   }
 
   ngAfterViewInit() {
     this.selectNavBarTemplate()
+
     this.cdr.detectChanges()
   }
 
-  selectNavBarTemplate(): TemplateRef<any> {
+  selectNavBarTemplate() {
+    this.selectedTemplate = this.NoAuthTemplate;
+    
     if(this.isAuth) {
       switch (Math.random().toString()) {
         case  'admin':
-          return this.AdminTemplate;
+          this.selectedTemplate = this.AdminTemplate;
+          break;
         case  'team':
-          return this.TeamTemplate;
+          this.selectedTemplate = this.TeamTemplate;
+          break;
         case  'client':
-          return this.ClientTemplate;
+          this.selectedTemplate = this.ClientTemplate;
+          break;
         default:
-          return this.NoAuthTemplate;
+          this.selectedTemplate = this.NoAuthTemplate;
+          break;
       }
     }
     else
-      return this.NoAuthTemplate;
+      this.selectedTemplate = this.NoAuthTemplate;
   }
 
-
+  closeNavbar() {
+    const navbar = document.getElementById('navbarNav');
+    if (navbar?.classList.contains('show')) {
+      navbar.classList.remove('show');
+    }
+  }
 
   switchLanguage(lang: string) {
     this.translocoService.setActiveLang(lang);
@@ -88,8 +109,4 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   toggleTheme() {
     this.themeService.toggleTheme();
   }
-
-  protected readonly faSun = faSun;
-  protected readonly faMoon = faMoon;
-  protected readonly faFlag = faFlag;
 }

@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {TokenService} from "./token.service";
 import {LoginRequest} from "../models/requests/login.request";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {BehaviorSubject, Observable, Subject, switchMap, tap} from "rxjs";
-import {IUserModel} from "../models/entities/user.model";
+import {IUserModel, UserModel} from "../models/entities/user.model";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -17,24 +17,45 @@ export class AuthService {
   isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   user!: IUserModel
 
-  constructor() {
-    this.isAuthenticated();
-  }
-
   getAuthCookie(): Observable<HttpResponse<any>>{ 
-    return this.http.get<any>(`${this.BASE_URL}/sanctum/csrf-cookie`)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    return this.http.get<any>(`${this.BASE_URL}/sanctum/csrf-cookie`, { headers: headers, withCredentials: true })
   }
 
   loginWithCookie(loginRequest: LoginRequest): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${this.BASE_URL}/login`, loginRequest, { withCredentials: true })
+    const xsrfToken = this.tokenService.getToken();
+  
+    const headers = new HttpHeaders({
+      'X-XSRF-TOKEN': xsrfToken || '',
+      'Content-Type': 'application/json' // Especifica que el contenido es JSON
+    });
+  
+    return this.http.post<any>(
+      `${this.BASE_URL}/login`,
+      loginRequest, // Esto se enviará como JSON automáticamente si es un objeto JS
+      {
+        headers: headers,
+        withCredentials: true, // Necesario para enviar cookies con la solicitud
+        observe: 'response' // Para obtener el objeto HttpResponse completo
+      }
+    );
+  }
+  
+  getUser(): Observable<UserModel> {
+    const xsrfToken = this.tokenService.getToken();
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    return this.http.get<UserModel>(`${this.BASE_URL}/api/user`, { headers: headers, withCredentials: true });
   }
   
   isAuthenticated() {
     this.isLoggedIn$.next(!!this.tokenService.getToken())
-  }
-
-  private getUser(): IUserModel {
-    return JSON.parse(this.tokenService.getToken().split('.')[1]) as IUserModel
   }
 
   logout() {

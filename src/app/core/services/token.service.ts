@@ -5,7 +5,7 @@ import {CookieService} from "ngx-cookie-service";
   providedIn: 'root'
 })
 export class TokenService {
-  private readonly TOKEN_KEY = 'auth-token';
+  private readonly TOKEN_KEY = 'XSRF-TOKEN';
 
   constructor(private cookieService: CookieService) {
   }

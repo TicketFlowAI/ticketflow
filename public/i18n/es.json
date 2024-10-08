@@ -30,8 +30,19 @@
   },
   "SHARED": {
     "HEADER": {
+      "HOME": "Inicio",
+      "COMPANY": "Mis empresas",
+      "MY-CLIENTS": "Clientes",
       "ES": "Español",
-      "EN": "Inglés"
+      "EN": "Inglés",
+
+      "ACCOUNT": "Cuenta",
+      "LOGIN": "Iniciar Sesión",
+      "PROFILE": "Mi Perfil",
+      "LOGOUT": "Cerrar Sesión"
+    },
+    "FOOTER": {
+      "ALL-RIGHTS": "Todos los derechos reservados. © Mindsoft"
     }
   }
 }

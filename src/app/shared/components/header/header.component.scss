@@ -1,15 +1,47 @@
-/* Mostrar la imagen para el modo claro */
-.img-dark {
-    display: none;
+
+.account {
+  background-color: #FFFFFF !important;
+  color: var(--bs-primary);
+  border-radius: 25px;
+  border: 2px solid black;
+
+  &:hover,
+  &:focus {
+    background-color: var(--bs-primary) !important;
+    transition: 500ms;
+    color: white !important;
+    border: 2px solid white;
   }
-  
-  /* Cambiar automáticamente al modo oscuro */
-  @media (prefers-color-scheme: dark) {
-    .img-light {
-      display: none;
-    }
-    .img-dark {
-      display: block;
-    }
+}
+
+.link-underline {
+  color: white;
+  padding: 0.5rem;
+  display: block;
+  font-size: 13px;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.75px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  -webkit-transition: background-size 0.3s;
+  transition: background-size 0.3s;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    color: white !important;
+    background-size: 100% 2px;
   }
-  
+}
+
+@media(max-width: 768px) {
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -64,7 +64,13 @@ export class LoginComponent {
     this.authService.getAuthCookie().subscribe({
         next: () => {
           this.authService.loginWithCookie(loginRequest).subscribe({
-
+            next: () => {
+              this.authService.getUser().subscribe({
+                next: (user) => {
+                  console.log(user);
+                }
+              })
+            }
           })
       }
     })
