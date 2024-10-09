@@ -1,69 +1,54 @@
-import {inject, Injectable} from '@angular/core';
-import {TokenService} from "./token.service";
-import {LoginRequest} from "../models/requests/login.request";
-import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {BehaviorSubject, Observable, Subject, switchMap, tap} from "rxjs";
-import {IUserModel, UserModel} from "../models/entities/user.model";
-import {environment} from "../../../environments/environment";
+import { inject, Injectable } from '@angular/core';
+import { TokenService } from "./token.service";
+import { LoginRequest } from "../models/requests/login.request";
+import { BehaviorSubject, catchError, concatMap, of } from "rxjs";
+import { IUserModel } from "../models/entities/user.model";
+import { SpinnerService } from '../../shared/services/spinner.service';
+import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
+import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
+import { UserService } from '../api/servicios-mindsoftdev/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly BASE_URL = environment.apiEndpoint
-  tokenService: TokenService = inject(TokenService)
-  http: HttpClient = inject(HttpClient)
+  //Services
+  sanctumService = inject(SanctumService)
+  authenticationService = inject(AuthenticationService)
+  userService = inject(UserService)
+  tokenService = inject(TokenService)
+  spinnerService = inject(SpinnerService)
+
+
+  //Variables n properties
 
   isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   user!: IUserModel
 
-  getAuthCookie(): Observable<HttpResponse<any>>{ 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    
-    return this.http.get<any>(`${this.BASE_URL}/sanctum/csrf-cookie`, { headers: headers, withCredentials: true })
-  }
-
-  loginWithCookie(loginRequest: LoginRequest): Observable<HttpResponse<any>> {
-    const xsrfToken = this.tokenService.getToken();
-  
-    const headers = new HttpHeaders({
-      'X-XSRF-TOKEN': xsrfToken || '',
-      'Content-Type': 'application/json' // Especifica que el contenido es JSON
-    });
-  
-    return this.http.post<any>(
-      `${this.BASE_URL}/login`,
-      loginRequest, // Esto se enviará como JSON automáticamente si es un objeto JS
-      {
-        headers: headers,
-        withCredentials: true, // Necesario para enviar cookies con la solicitud
-        observe: 'response' // Para obtener el objeto HttpResponse completo
-      }
-    );
-  }
-  
-  getUser(): Observable<UserModel> {
-    const xsrfToken = this.tokenService.getToken();
-  
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-  
-    return this.http.get<UserModel>(`${this.BASE_URL}/api/user`, { headers: headers, withCredentials: true });
-  }
-  
+  //Methods
   isAuthenticated() {
     this.isLoggedIn$.next(!!this.tokenService.getToken())
   }
 
-  logout() {
-    return this.http.post(`${this.BASE_URL}/logout`, {}, { withCredentials: true }).pipe(
-      tap(() => {
-        this.tokenService.clearToken();
-        this.isLoggedIn$.next(false);
+  login(loginRequest: LoginRequest) {
+    this.spinnerService.showSpinner();
+
+    this.sanctumService.getCsrfCookie().pipe(
+      concatMap(() => this.authenticationService.loginWithCredentials(loginRequest)),
+      concatMap(() => this.userService.getUser()),
+      catchError(() => {
+        this.spinnerService.hideSpinner()
+        return of(null);
       })
-    );
+    ).subscribe({
+      next: () => {
+        this.spinnerService.hideSpinner()
+      }
+    }
+    )
+  }
+
+  logout() {
+    this.authenticationService.logout()
   }
 }

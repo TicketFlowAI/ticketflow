@@ -9,6 +9,7 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ import { LoginRequest } from '../../../core/models/requests/login.request';
 })
 export class LoginComponent {
   private dialogRef = inject(MatDialogRef<LoginComponent>);
+  private spinnerService = inject(SpinnerService);
   private authService = inject(AuthService);
   private fb = inject(FormBuilder)
 
@@ -50,7 +52,7 @@ export class LoginComponent {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
+  
   closeDialog() {
     this.dialogRef.close();
   }
@@ -61,18 +63,6 @@ export class LoginComponent {
     loginRequest.email = loginFormValue.email?? ''
     loginRequest.password = loginFormValue.password?? ''
 
-    this.authService.getAuthCookie().subscribe({
-        next: () => {
-          this.authService.loginWithCookie(loginRequest).subscribe({
-            next: () => {
-              this.authService.getUser().subscribe({
-                next: (user) => {
-                  console.log(user);
-                }
-              })
-            }
-          })
-      }
-    })
+    this.authService.login(loginRequest)
   }
 }
