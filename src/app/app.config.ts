@@ -12,25 +12,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideExperimentalZonelessChangeDetection(), provideHttpClient(), provideTransloco({
+    provideExperimentalZonelessChangeDetection(), 
+    provideHttpClient(), 
+    provideTransloco({
       config: {
-        availableLangs: ['(es', 'en)'],
-        defaultLang: '(es',
-        // Remove this option if your application doesn't support changing language in runtime.
+        availableLangs: ['es', 'en'],
+        defaultLang: 'es',
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
       },
       loader: TranslocoHttpLoader
     }),
-    provideTransloco({
-      config: {
-        availableLangs: ['en', 'es'],
-        defaultLang: 'en',
-        // Remove this option if your application doesn't support changing language in runtime.
-        reRenderOnLangChange: true,
-        prodMode: !isDevMode(),
-      },
-      loader: TranslocoHttpLoader,
-    })
   ]
 };

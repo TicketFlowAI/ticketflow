@@ -7,17 +7,12 @@ export interface IUserModel {
 }
 
 export class UserModel implements IUserModel {
-  id: number;
-  name: string;
-  lastname: string;
-  email: string;
-  company: number;
-
-  constructor(id: number, name: string, lastname: string, email: string, company: number) {
-    this.id = id;
-    this.name = name;
-    this.lastname = lastname;
-    this.email = email;
-    this.company = company;
+  constructor(
+    public id: number = 0,
+    public name: string = '',
+    public lastname: string = '',
+    public email: string = '',
+    public company: number = 0
+  ){
   }
 }

@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnInit,
-  TemplateRef,
-  ViewChild
+import {ChangeDetectionStrategy,ChangeDetectorRef,Component,effect,inject,OnInit,TemplateRef,ViewChild
 } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
@@ -18,6 +10,8 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faFlag, faMoon, faSun, faUser, faSignInAlt} from "@fortawesome/free-solid-svg-icons";
 import {MatButton} from "@angular/material/button";
 import {OpenLoginDirective} from "../../directives/open-login.directive";
+import { IUserModel } from '../../../core/models/entities/user.model';
+import { UserSesionService } from '../../../core/services/user-sesion.service';
 
 @Component({
   selector: 'app-header',
@@ -37,62 +31,48 @@ import {OpenLoginDirective} from "../../directives/open-login.directive";
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
-
+export class HeaderComponent implements OnInit {
   protected readonly faSun = faSun;
   protected readonly faMoon = faMoon;
   protected readonly faFlag = faFlag;
   protected readonly faUser = faUser;
   protected readonly faSignInAlt = faSignInAlt;
 
-  translocoService: TranslocoService = inject(TranslocoService)
+  user!: IUserModel;
+
+  userSessionService: UserSesionService = inject(UserSesionService)
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   authService: AuthService = inject(AuthService)
+  translocoService: TranslocoService = inject(TranslocoService)
   themeService: ThemeService = inject(ThemeService)
 
-  selectedTemplate!: TemplateRef<any>
-
-  isAuth = this.authService.isLoggedIn$.getValue();
-
+  isAuthenticated = false;
   userName = ''
+  userRole = ''
+
 
   @ViewChild('noAuthTemplate') NoAuthTemplate!: TemplateRef<any>
   @ViewChild('adminTemplate') AdminTemplate!: TemplateRef<any>
   @ViewChild('teamTemplate') TeamTemplate!: TemplateRef<any>
   @ViewChild('clientTemplate') ClientTemplate!: TemplateRef<any>
 
+  constructor() {
+    effect(() => {
+      this.isAuthenticated = this.authService.isAuthenticated()
+      this.userName = this.userSessionService.currentUser().name + ' ' + this.userSessionService.currentUser().lastname;
+      this.userRole = 'Admin';
+      this.cdr.detectChanges();
+    });
+
+    effect(() => {
+      this.userName = this.userSessionService.currentUser().name + ' ' + this.userSessionService.currentUser().lastname;
+      this.userRole = 'Admin';
+      this.cdr.detectChanges();
+    });
+  }
+
   ngOnInit() {
-    this.selectNavBarTemplate()
     this.themeService.setStartTheme()
-  }
-
-  ngAfterViewInit() {
-    this.selectNavBarTemplate()
-
-    this.cdr.detectChanges()
-  }
-
-  selectNavBarTemplate() {
-    this.selectedTemplate = this.NoAuthTemplate;
-    
-    if(this.isAuth) {
-      switch (Math.random().toString()) {
-        case  'admin':
-          this.selectedTemplate = this.AdminTemplate;
-          break;
-        case  'team':
-          this.selectedTemplate = this.TeamTemplate;
-          break;
-        case  'client':
-          this.selectedTemplate = this.ClientTemplate;
-          break;
-        default:
-          this.selectedTemplate = this.NoAuthTemplate;
-          break;
-      }
-    }
-    else
-      this.selectedTemplate = this.NoAuthTemplate;
   }
 
   closeNavbar() {
@@ -108,5 +88,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

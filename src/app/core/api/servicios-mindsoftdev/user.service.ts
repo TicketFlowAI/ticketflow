@@ -20,8 +20,13 @@ export class UserService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getUser(): Observable<UserModel> {
+  getUser(): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<UserModel>(`${this.apiUser}`, { headers: customHeader, withCredentials: true });
+    return this.http.get<any>(`${this.apiUser}`, { headers: customHeader, withCredentials: true, observe: 'response'});
+  }
+
+  updateUser(userToUpdate: UserModel): Observable<UserModel> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.put<UserModel>(`${this.apiUser}`, userToUpdate ,{ headers: customHeader, withCredentials: true });
   }
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {MatDialogActions, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
@@ -33,21 +33,29 @@ import { SpinnerService } from '../../../shared/services/spinner.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+  //SERVICES
   private dialogRef = inject(MatDialogRef<LoginComponent>);
-  private spinnerService = inject(SpinnerService);
   private authService = inject(AuthService);
   private fb = inject(FormBuilder)
 
-  hide = signal(true);
-
+  //PROPS N VARS
   emailFormControl = new FormControl('', [Validators.required, Validators.email])
   passwordFormControl = new FormControl('', [Validators.required])
-
   loginFrom = this.fb.group({
     email: this.emailFormControl,
     password: this.passwordFormControl
   })
 
+  hide = signal(true);
+  
+  //CONSTRUCTOR
+  constructor() {
+    effect(() => {
+      if(this.authService.isAuthenticated()) this.dialogRef.close();
+    })
+  }
+
+  //METHODS
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();

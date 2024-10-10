@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TokenService } from "./token.service";
 import { LoginRequest } from "../models/requests/login.request";
 import { BehaviorSubject, catchError, concatMap, of } from "rxjs";
@@ -19,15 +19,13 @@ export class AuthService {
   tokenService = inject(TokenService)
   spinnerService = inject(SpinnerService)
 
-
   //Variables n properties
-
-  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  isAuthenticated = signal<boolean>(false)
   user!: IUserModel
 
   //Methods
-  isAuthenticated() {
-    this.isLoggedIn$.next(!!this.tokenService.getToken())
+  isUserLoggedIn() {
+    if(this.tokenService.getToken() != '') this.isAuthenticated.set(true)
   }
 
   login(loginRequest: LoginRequest) {
@@ -35,13 +33,13 @@ export class AuthService {
 
     this.sanctumService.getCsrfCookie().pipe(
       concatMap(() => this.authenticationService.loginWithCredentials(loginRequest)),
-      concatMap(() => this.userService.getUser()),
       catchError(() => {
         this.spinnerService.hideSpinner()
         return of(null);
       })
     ).subscribe({
-      next: () => {
+      next: (result) => {
+        if(result != null) this.isAuthenticated.set(true);
         this.spinnerService.hideSpinner()
       }
     }
@@ -49,6 +47,10 @@ export class AuthService {
   }
 
   logout() {
-    this.authenticationService.logout()
+    this.authenticationService.logout().subscribe({
+      next: (response) => {
+        this.isAuthenticated.set(false)
+      }
+    })
   }
 }

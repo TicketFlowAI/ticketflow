@@ -32,6 +32,11 @@ export class AuthenticationService {
   }
 
   logout(): Observable<HttpResponse<any>> {
-    return this.http.get<any>(`${this.apiAuthentication}/logout`, { headers: this.customHeaders, withCredentials: true })
+    const customHeaders = this.customHeadersService.addXsrfToken().addAppJson().getHeaders()
+    return this.http.post<any>(`${this.apiAuthentication}/logout`, null ,
+      { headers: customHeaders, 
+        withCredentials: true, 
+        observe: 'response' 
+      })
   }
 }
