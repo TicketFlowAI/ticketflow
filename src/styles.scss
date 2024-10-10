@@ -4,59 +4,53 @@
 @include mat.core();
 
 [data-bs-theme='dark'] {
-    --bs-body-bg: #2B3035;
-    --bs-body-color: #e0e0e0;
-    --bs-primary:  #FF4438;
-    --bs-secondary: #001689 ;
-    --bs-navbar-bg: #1F1F1F;
-    --bs-mat-element: #151515;
-  }
-  
-  [data-bs-theme='light'] {
-    --mindsoft-red: #FF4438 
-    --mindsoft-blue: #001689
-    --bs-body-bg: #ffffff;
-    --bs-body-color: #000000;
-    --bs-primary:  #FF4438;
-    --bs-secondary: #001689 ;
-    --bs-navbar-bg: #1F1F1F;
-    --bs-mat-element: #FFFFFF; 
-  }
-  
+  --bs-body-bg: #2B3035;
+  --bs-body-color: #e0e0e0;
+  --bs-primary: #FF4438;
+  --bs-secondary: #001689;
+  --bs-navbar-bg: #1F1F1F;
+  --bs-mat-element: #151515;
+}
+
+[data-bs-theme='light'] {
+  --mindsoft-red: #FF4438 --mindsoft-blue: #001689 --bs-body-bg: #ffffff;
+  --bs-body-color: #000000;
+  --bs-primary: #FF4438;
+  --bs-secondary: #001689;
+  --bs-navbar-bg: #1F1F1F;
+  --bs-mat-element: #FFFFFF;
+}
 
 html {
-    @include mat.all-component-themes(custom-theme.$light-theme);
-  
-    background: mat.get-theme-color(custom-theme.$light-theme, surface);
-  
-    &.dark {
-      @include mat.all-component-colors(custom-theme.$dark-theme);
-  
-      background: mat.get-theme-color(custom-theme.$dark-theme, surface);
-    }
-  }
-
-html,
-body {
   height: 100%;
 }
+
 body {
-  margin: 0;
+  height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
 
-header {
-  background-color: var(--bs-navbar-bg);
-  max-height: 8%;
-}
+  #page-container {
+    position: relative;
+    min-height: 100vh;
 
-main {
-  min-height: 84%;
-}
+    header {
+      background-color: var(--bs-navbar-bg);
+      position: sticky;
+      opacity: 99%;
+      top: 0;
+    }
 
-footer {
-  background-color: var(--bs-navbar-bg);
-  max-height: 8%;
+    main {
+      padding-bottom: 3.5rem;
+    }
+    
+    footer {
+      background-color: var(--bs-navbar-bg);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  }
 }
 
 .dropdown-item:hover {
@@ -69,6 +63,7 @@ footer {
 
 .mat-mdc-dialog-surface {
   background-color: var(--bs-mat-element) !important;
+
   .dialog-title {
     background-color: var(--bg-color-layout);
 
@@ -160,13 +155,15 @@ mat-accordion {
   background-color: var(--bs-body-bg) !important;
 
   .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
+
     /* Input text color and font size customization */
     .mdc-text-field__input {
       color: var(--text-color);
 
       /* Estilo para el placeholder */
       &::placeholder {
-        color: var(--placeholder-color) !important; /* Ajusta el color del placeholder aquí */
+        color: var(--placeholder-color) !important;
+        /* Ajusta el color del placeholder aquí */
       }
     }
   }
@@ -184,11 +181,13 @@ mat-accordion {
 }
 
 mat-label {
-  color: var(--text-color); /* Cambia el color globalmente */
+  color: var(--text-color);
+  /* Cambia el color globalmente */
 }
 
 mat-select {
-  color: var(--text-color); /* Cambia el color globalmente */
+  color: var(--text-color);
+  /* Cambia el color globalmente */
 }
 
 hr {
@@ -214,7 +213,8 @@ mat-stepper {
   color: var(--text-color) !important;
 
   .mat-step-header .mat-step-label {
-    color: var(--text-color) !important; /* Cambia el color del texto de los headers */
+    color: var(--text-color) !important;
+    /* Cambia el color del texto de los headers */
   }
 }
 
@@ -224,6 +224,7 @@ label {
 
 .mat-mdc-row:nth-child(1n) {
   background-color: var(--bg-element);
+
   .mat-mdc-cell {
     color: var(--text-color);
   }
