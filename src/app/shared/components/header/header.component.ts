@@ -11,7 +11,7 @@ import {faFlag, faMoon, faSun, faUser, faSignInAlt} from "@fortawesome/free-soli
 import {MatButton} from "@angular/material/button";
 import {OpenLoginDirective} from "../../directives/open-login.directive";
 import { IUserModel } from '../../../core/models/entities/user.model';
-import { UserSesionService } from '../../../core/services/user-sesion.service';
+import { UserSessionService } from '../../../core/services/user-sesion.service';
 
 @Component({
   selector: 'app-header',
@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   user!: IUserModel;
 
-  userSessionService: UserSesionService = inject(UserSesionService)
+  userSessionService: UserSessionService = inject(UserSessionService)
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   authService: AuthService = inject(AuthService)
   translocoService: TranslocoService = inject(TranslocoService)

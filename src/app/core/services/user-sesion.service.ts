@@ -7,10 +7,10 @@ import { HttpStatusCode } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class UserSesionService {
+export class UserSessionService {
   //SERVICES
-  authService: AuthService = inject(AuthService)
-  userService = inject(UserService)
+  private authService: AuthService = inject(AuthService)
+  private userService = inject(UserService)
 
   //PROPS N VARIABLES
   currentUser = signal<UserModel>(new UserModel())

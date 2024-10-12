@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HeaderComponent} from "./shared/components/header/header.component";
 import {FooterComponent} from "./shared/components/footer/footer.component";
-import { UserSesionService } from './core/services/user-sesion.service';
+import { UserSessionService } from './core/services/user-sesion.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { UserSesionService } from './core/services/user-sesion.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  userSessionService = inject(UserSesionService)
+  userSessionService = inject(UserSessionService)
   title = 'TicketFlow';
 
   constructor() {

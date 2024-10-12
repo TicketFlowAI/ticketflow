@@ -13,11 +13,10 @@ import { UserService } from '../api/servicios-mindsoftdev/user.service';
 })
 export class AuthService {
   //Services
-  sanctumService = inject(SanctumService)
-  authenticationService = inject(AuthenticationService)
-  userService = inject(UserService)
-  tokenService = inject(TokenService)
-  spinnerService = inject(SpinnerService)
+  private sanctumService = inject(SanctumService)
+  private authenticationService = inject(AuthenticationService)
+  private tokenService = inject(TokenService)
+  private spinnerService = inject(SpinnerService)
 
   //Variables n properties
   isAuthenticated = signal<boolean>(false)

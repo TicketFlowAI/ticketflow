@@ -6,7 +6,7 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class ThemeService {
-  cookieService = inject(CookieService)
+  private cookieService = inject(CookieService)
 
   private readonly THEME_KEY = 'theme'
   currentTheme$: BehaviorSubject<string> = new BehaviorSubject<string>(this.cookieService.get(this.THEME_KEY) || 'light');
