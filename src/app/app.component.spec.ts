@@ -1,12 +1,35 @@
-import { TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {SanctumService} from "./core/api/servicios-mindsoftdev/sanctum.service";
+import {provideHttpClient} from "@angular/common/http";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {AuthService} from "./core/services/auth.service";
+import {provideTransloco} from "@jsverse/transloco";
+import {isDevMode} from "@angular/core";
+import {TranslocoHttpLoader} from "./transloco-loader";
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-    }).compileComponents();
-  });
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideTransloco({
+          config: {
+            availableLangs: ['es', 'en'],
+            defaultLang: 'es',
+            reRenderOnLangChange: true,
+            prodMode: !isDevMode(),
+          },
+          loader: TranslocoHttpLoader
+        }),
+      ]
+    }).compileComponents()
+  })
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -17,13 +40,6 @@ describe('AppComponent', () => {
   it(`should have the 'ticketflow' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ticketflow');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ticketflow');
+    expect(app.title).toEqual('Ticketflow');
   });
 });

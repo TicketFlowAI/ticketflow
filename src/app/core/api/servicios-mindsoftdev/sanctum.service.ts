@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
@@ -17,7 +17,7 @@ export class SanctumService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getCsrfCookie(): Observable<HttpResponse<any>>{ 
+  getCsrfCookie(): Observable<HttpResponse<any>>{
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
     return this.http.get<any>(`${this.apiSanctum}/csrf-cookie`, { headers: customHeader, withCredentials: true })
   }

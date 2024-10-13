@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
+import {provideTransloco} from "@jsverse/transloco";
+import {isDevMode} from "@angular/core";
+import {TranslocoHttpLoader} from "../../../transloco-loader";
+import {AuthService} from "../../../core/services/auth.service";
+import {HttpClient, provideHttpClient} from "@angular/common/http";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,7 +14,20 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
+      imports: [HeaderComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideTransloco({
+          config: {
+            availableLangs: ['es', 'en'],
+            defaultLang: 'es',
+            reRenderOnLangChange: true,
+            prodMode: !isDevMode(),
+          },
+          loader: TranslocoHttpLoader
+        }),
+      ]
     })
     .compileComponents();
 

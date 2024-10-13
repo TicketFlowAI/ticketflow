@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-footer',

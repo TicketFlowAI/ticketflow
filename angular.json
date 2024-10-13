@@ -104,10 +104,14 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "karmaConfig": "karma.conf.js"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "d1f22b32-e5cc-435b-9160-9f755f088307"
   }
 }

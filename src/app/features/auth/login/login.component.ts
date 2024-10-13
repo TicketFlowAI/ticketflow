@@ -9,7 +9,6 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
-import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +46,7 @@ export class LoginComponent {
   })
 
   hide = signal(true);
-  
+
   //CONSTRUCTOR
   constructor() {
     effect(() => {
@@ -60,7 +59,7 @@ export class LoginComponent {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-  
+
   closeDialog() {
     this.dialogRef.close();
   }

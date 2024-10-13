@@ -13,9 +13,13 @@ import { UserSessionService } from './core/services/user-sesion.service';
 })
 export class AppComponent {
   userSessionService = inject(UserSessionService)
-  title = 'TicketFlow';
+  title = 'Ticketflow';
 
   constructor() {
     this.userSessionService.checkUserInitialState();
+  }
+
+  sum(a: number, b: number) {
+    return a + b;
   }
 }

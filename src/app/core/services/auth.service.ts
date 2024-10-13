@@ -1,12 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { TokenService } from "./token.service";
 import { LoginRequest } from "../models/requests/login.request";
-import { BehaviorSubject, catchError, concatMap, of } from "rxjs";
+import { catchError, concatMap, of } from "rxjs";
 import { IUserModel } from "../models/entities/user.model";
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
 import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
-import { UserService } from '../api/servicios-mindsoftdev/user.service';
 
 @Injectable({
   providedIn: 'root'

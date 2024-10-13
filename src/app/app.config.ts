@@ -12,8 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideExperimentalZonelessChangeDetection(), 
-    provideHttpClient(), 
+    provideExperimentalZonelessChangeDetection(),
     provideTransloco({
       config: {
         availableLangs: ['es', 'en'],
