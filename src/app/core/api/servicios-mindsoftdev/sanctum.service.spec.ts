@@ -6,7 +6,7 @@ import {HttpTestingController, provideHttpClientTesting} from "@angular/common/h
 import { environment } from '../../../../environments/environment';
 
 describe('SanctumService', () => {
-  const API_URL = environment.apiEndpoint + '/sanctum'
+  const API_URL = environment.apiEndpoint + '/sanctum/csrf-cookie'
   let service: SanctumService;
   let httpMock: HttpTestingController;
 
@@ -32,18 +32,26 @@ describe('SanctumService', () => {
   it('should get the cookies and have a 204 no content response', () => {
     service.getCsrfCookie().subscribe({
       next: (response) => {
-        expect(response.status).toBe(204) 
-        expect(response.body).toBe({}) 
-        expect(response.headers.has('Set-Cookie')).toBeTrue() 
+        expect(response?.status).toBe(204); // Verificamos que el status sea 204
+        expect(response?.body).toBeNull(); // Como es 204, el cuerpo debería ser null
+        expect(response?.headers?.has('Set-Cookie')).toBeTrue(); // Verificamos el header
       },
-      error: () => {fail('Response wasnt 204 no content')}
-    })
-
-    let req = httpMock.expectOne(API_URL)
-
-    const mockHeaders = { 'Set-Cookie': 'XSRF-TOKEN=mock-token; mindsoft_ticketflow_session=mock-session-id;' };
+      error: () => fail('Response was not 204 No Content'),
+    });
+  
+    const req = httpMock.expectOne(API_URL);
+    const mockHeaders = new HttpHeaders({
+      'Set-Cookie': 'XSRF-TOKEN=mock-token; mindsoft_ticketflow_session=mock-session-id;',
+    });
+  
     expect(req.request.method).toBe('GET');
-
-    req.flush({}, {headers: new HttpHeaders(mockHeaders), status: 204, statusText: 'No Content'})
+  
+    // Simular respuesta con encabezados y estado 204
+    req.flush(null, {
+      headers: mockHeaders,
+      status: 204,
+      statusText: 'No Content',
+    });
   });
+  
 });

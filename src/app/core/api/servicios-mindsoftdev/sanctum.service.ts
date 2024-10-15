@@ -19,6 +19,6 @@ export class SanctumService {
   //Methods
   getCsrfCookie(): Observable<HttpResponse<any>>{
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<any>(`${this.apiSanctum}/csrf-cookie`, { headers: customHeader, withCredentials: true })
+    return this.http.get<any>(`${this.apiSanctum}/csrf-cookie`, { headers: customHeader, withCredentials: true, observe: 'response' })
   }
 }
