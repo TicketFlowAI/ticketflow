@@ -48,6 +48,7 @@ export class AuthService {
     this.authenticationService.logout().subscribe({
       next: (response) => {
         this.isAuthenticated.set(false)
+        this.tokenService.clearAll();
       }
     })
   }
