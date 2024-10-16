@@ -6,6 +6,7 @@ import { IUserModel } from "../models/entities/user.model";
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
 import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
+import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -47,9 +48,14 @@ export class AuthService {
   logout() {
     this.authenticationService.logout().subscribe({
       next: (response) => {
+        if(response.status !== HttpStatusCode.Ok) return
+
         this.isAuthenticated.set(false)
         this.tokenService.clearAll();
-      }
+      },
+      error: () => {
+        console.log()
+      } 
     })
   }
 }
