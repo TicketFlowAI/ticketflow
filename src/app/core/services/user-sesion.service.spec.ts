@@ -5,6 +5,7 @@ import { UserService } from '../api/servicios-mindsoftdev/user.service';
 import { UserModel } from '../models/entities/user.model';
 import { of } from 'rxjs';
 import { HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { signal } from '@angular/core';
 
 describe('UserSessionService', () => {
   let service: UserSessionService;
@@ -12,7 +13,7 @@ describe('UserSessionService', () => {
   let userServiceSpy: jasmine.SpyObj<UserService>;
 
   beforeEach(() => {
-    const authSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
+    const authSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated'], { isAuthenticated: signal(false) });
     const userSpy = jasmine.createSpyObj('UserService', ['getUser', 'updateUser']);
 
     TestBed.configureTestingModule({
@@ -39,7 +40,7 @@ describe('UserSessionService', () => {
     service.checkUserInitialState();
 
     expect(userServiceSpy.getUser).toHaveBeenCalled();
-    expect(authServiceSpy.isAuthenticated.set).toHaveBeenCalledWith(true);
+    expect(authServiceSpy.isAuthenticated()).toBe(true);
   });
 
   it('should set isAuthenticated to false if user is unauthorized', () => {
@@ -49,7 +50,7 @@ describe('UserSessionService', () => {
     service.checkUserInitialState();
 
     expect(userServiceSpy.getUser).toHaveBeenCalled();
-    expect(authServiceSpy.isAuthenticated.set).toHaveBeenCalledWith(false);
+    expect(authServiceSpy.isAuthenticated()).toBe(false);
   });
 
   it('should fetch and set the current user if authenticated', () => {

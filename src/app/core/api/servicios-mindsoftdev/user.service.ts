@@ -13,7 +13,6 @@ export class UserService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
   private apiUser = this.BASE_URL + '/api/user'
-  private customHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   //Services
   http = inject(HttpClient)

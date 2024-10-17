@@ -28,7 +28,7 @@ describe('LoginComponent', () => {
             availableLangs: ['es', 'en'],
             defaultLang: 'es',
             reRenderOnLangChange: true,
-            prodMode: !isDevMode(),
+            prodMode: isDevMode(),
           },
           loader: TranslocoHttpLoader
         }),

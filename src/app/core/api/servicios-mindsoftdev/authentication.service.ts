@@ -13,7 +13,6 @@ export class AuthenticationService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
   private apiAuthentication = this.BASE_URL + ''
-  private customHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   //Services
   http = inject(HttpClient)

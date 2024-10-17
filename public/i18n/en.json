@@ -15,7 +15,9 @@
         "LOGIN": "Sign In",
         "CREATE-ACCOUNT": "Sign On",
         "RECOVER-PASSWORD": "Recover my password",
-        "REGISTER": "Sign On"
+        "REGISTER": "Sign On",
+
+        "COMPANY": "My Companies"
       },
       "REGISTER": {
 
@@ -26,6 +28,10 @@
       "VERIFY": {
 
       }
+    },
+    "COMPANY": {
+      "COMPANIES": "My Companies",
+      "NEW-COMPANY": "Add new Company"
     }
   },
   "SHARED": {

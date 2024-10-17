@@ -1,0 +1,34 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.COMPANY'">
+    <div class="companies container pt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row justify-content-sm-center justify-content-start">
+                    <h2>{{t('COMPANIES')}}</h2>
+                </div>
+            </div>
+            <div class="col-md-4 align-content-center">
+                <div class="row justify-content-sm-center justify-content-end">
+                    <button type="button" class="btn btn-primary">{{t('NEW-COMPANY')}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <hr>
+        </div>
+
+        <div class="row">
+            @for(company of companies; track company.id) {
+                <mat-accordion class="mt-2">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>{{company.name}}</mat-panel-title>
+                        <mat-panel-description>{{company.address}}</mat-panel-description>
+                      </mat-expansion-panel-header>
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+            }
+        </div>
+    </div>
+</ng-container>
