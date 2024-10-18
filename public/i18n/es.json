@@ -31,7 +31,9 @@
     },
     "COMPANY": {
       "COMPANIES": "Mis Empresas",
-      "NEW-COMPANY": "Crear una empresa"
+      "NEW-COMPANY": "Crear una empresa",
+
+      "SEARCH": "Buscar..."
     }
   },
   "SHARED": {

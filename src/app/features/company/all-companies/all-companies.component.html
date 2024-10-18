@@ -1,34 +1,41 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.COMPANY'">
-    <div class="companies container pt-5">
+    <div class="companies container py-4">
         <div class="row">
-            <div class="col-md-8">
-                <div class="row justify-content-sm-center justify-content-start">
+            <div class="col-md-8 align-content-center">
+                <div class="row text-center text-md-start">
                     <h2>{{t('COMPANIES')}}</h2>
                 </div>
             </div>
             <div class="col-md-4 align-content-center">
-                <div class="row justify-content-sm-center justify-content-end">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <button type="button" class="btn btn-primary">{{t('NEW-COMPANY')}}</button>
-                </div>
+                </div> 
             </div>
         </div>
 
-        <div class="row">
-            <hr>
+        <div class="row mt-4">
+            <mat-form-field>
+                <mat-label>{{ t('SEARCH')}}</mat-label>
+                <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
         </div>
 
-        <div class="row">
-            @for(company of companies; track company.id) {
-                <mat-accordion class="mt-2">
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header>
+        <div class="row my-2">
+            @for(company of pagedCompanies; track company.id) {
+            <mat-accordion class="my-2">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
                         <mat-panel-title>{{company.name}}</mat-panel-title>
                         <mat-panel-description>{{company.address}}</mat-panel-description>
-                      </mat-expansion-panel-header>
+                    </mat-expansion-panel-header>
 
-                    </mat-expansion-panel>
-                  </mat-accordion>
+                </mat-expansion-panel>
+            </mat-accordion>
             }
+            <mat-paginator [length]="companies.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
+            (page)="onPageChange($event)" aria-label="Select page">
+        </mat-paginator>
         </div>
     </div>
 </ng-container>

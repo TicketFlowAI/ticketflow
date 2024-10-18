@@ -3,23 +3,68 @@
 
 @include mat.core();
 
+$mindsoft-red: #FF4438;
+$mindsoft-blue: #FFFFFF;
+$btn-font-size: 16px;
+
 [data-bs-theme='dark'] {
+  //LAYOUT 
   --bs-body-bg: #2B3035;
   --bs-body-color: #e0e0e0;
   --bs-primary: #FF4438;
   --bs-secondary: #001689;
   --bs-navbar-bg: #1F1F1F;
   --bs-mat-element: #151515;
+
+  //MATERIAL VARIABLES
+  --mat-paginator-container-background-color: #212529;
+  --mat-paginator-container-text-color:  #FFFFFF;
+  --mat-select-enabled-trigger-text-color:  #FFFFFF;
+  --mdc-filled-text-field-label-text-color: ;
+  --mdc-icon-button-icon-color: #FFFFFF;
+
+  --mat-icon-color: #FFFFFF;
+
+  --mdc-filled-text-field-container-color: #2B3035;
+  --mdc-filled-text-field-input-text-color: #FFFFFF;
+  --mdc-filled-text-field-label-text-color: #FFFFFF;
+  --mat-app-surface-variant: #2B3035;
+  --mat-app-surface: #2B3035;
+
 }
 
 [data-bs-theme='light'] {
-  --mindsoft-red: #FF4438 --mindsoft-blue: #001689 --bs-body-bg: #ffffff;
-  --bs-body-color: #000000;
-  --bs-primary: #FF4438;
+  //LAYOUT
+  --bs-body-color: #FFFFFF;
   --bs-secondary: #001689;
   --bs-navbar-bg: #1F1F1F;
   --bs-mat-element: #FFFFFF;
+
+  //MATERIAL VARIABLES
+  --mat-paginator-container-background-color: #FFFFFF;
+  --mat-paginator-container-text-color:  #000000;
+  --mat-select-enabled-trigger-text-color:  #000000;
+  --mdc-icon-button-icon-color: #000000;
+
+  --mat-icon-color: #000000;
+
+  --mdc-filled-text-field-container-color: #FFFFFF;
+  --mdc-filled-text-field-input-text-color: #000000;
+  --mdc-filled-text-field-label-text-color: #000000;
+  --mat-app-surface-variant: #FFFFFF;
+  --mat-app-surface: #FFFFFF;
+  
 }
+
+$primary: #FF4438;
+$btn-color: #FFFFFF;
+$btn-font-size: 16px;
+
+$btn-border-radius: 25px;
+
+$btn-primary-color: white;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 html {
   height: 100%;
@@ -34,6 +79,7 @@ body {
     min-height: 100vh;
 
     header {
+      z-index: 1000;
       background-color: var(--bs-navbar-bg);
       position: sticky;
       opacity: 99%;
@@ -51,6 +97,10 @@ body {
       width: 100%;
     }
   }
+}
+
+.btn-primary {
+  color: $btn-color; // o directamente #FFFFFF;
 }
 
 .dropdown-item:hover {
@@ -136,6 +186,8 @@ body {
 }
 
 
+
+
 mat-accordion {
   background-color: var(red);
 
@@ -148,35 +200,6 @@ mat-accordion {
         background-color: var(--bg-element);
       }
     }
-  }
-}
-
-.mdc-text-field--filled {
-  background-color: var(--bs-body-bg) !important;
-
-  .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
-
-    /* Input text color and font size customization */
-    .mdc-text-field__input {
-      color: var(--text-color);
-
-      /* Estilo para el placeholder */
-      &::placeholder {
-        color: var(--placeholder-color) !important;
-        /* Ajusta el color del placeholder aquí */
-      }
-    }
-  }
-
-  /* On hover, change the background color */
-  .mat-mdc-form-field-focus-overlay {
-    background-color: var(--bg-element) !important;
-  }
-
-  /* Change the border bottom color */
-  .mdc-line-ripple::before,
-  .mdc-line-ripple::after {
-    border-bottom-color: var(--text-color) !important;
   }
 }
 
@@ -232,14 +255,4 @@ label {
 
 .mat-mdc-row:nth-child(2n) {
   background-color: var(--bs-body-bg);
-}
-
-.mat-mdc-header-row {
-  background-color: var(--bs-body-bg) !important;
-}
-
-.mat-mdc-header-row .mat-mdc-header-cell {
-  font-size: 1rem;
-  color: var(--text-color);
-  font-weight: 800;
 }

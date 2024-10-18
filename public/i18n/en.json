@@ -31,7 +31,9 @@
     },
     "COMPANY": {
       "COMPANIES": "My Companies",
-      "NEW-COMPANY": "Add new Company"
+      "NEW-COMPANY": "Add new Company",
+
+      "SEARCH": "Filter..."
     }
   },
   "SHARED": {
