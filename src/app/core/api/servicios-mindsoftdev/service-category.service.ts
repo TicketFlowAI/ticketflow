@@ -34,7 +34,7 @@ export class ServiceCategoryService {
     })
   }
 
-  createServiceCategory(serviceCategory: ServiceCategoryModel): Observable<HttpResponse<any>> {
+  createServiceCategory(serviceCategory: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.post<HttpResponse<any>>(`${this.apiCategories}`, serviceCategory, {
       headers: customHeaders,
@@ -42,7 +42,7 @@ export class ServiceCategoryService {
     })
   }
 
-  updateServiceCategory(serviceCategory: ServiceCategoryModel): Observable<HttpResponse<any>> {
+  updateServiceCategory(serviceCategory: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.post<HttpResponse<any>>(`${this.apiCategories}`, serviceCategory, {
       headers: customHeaders,
