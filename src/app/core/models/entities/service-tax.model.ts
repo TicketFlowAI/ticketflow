@@ -1,3 +1,8 @@
+export interface IServiceTaxApiResponse {
+    success: boolean;
+    data: IServiceTaxModel[];
+}
+
 export interface IServiceTaxModel {
     id: number;
     description: string;

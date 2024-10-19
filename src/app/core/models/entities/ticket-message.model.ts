@@ -1,3 +1,8 @@
+export interface ITicketMessageApiResponse {
+  success: boolean;
+  data: ITicketMessageModel[];
+}
+
 export interface ITicketMessageModel {
   id: number;
   ticket_id: number;

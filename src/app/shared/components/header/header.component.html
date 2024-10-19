@@ -113,8 +113,12 @@
   </ng-template>
   <ng-template #adminTemplate>
     <li class="nav-item px-2">
+      <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+         aria-current="page">{{ t('ADMIN.SERVICES') }}</a>
+    </li>
+    <li class="nav-item px-2">
       <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('COMPANY') }}</a>
+         aria-current="page">{{ t('ADMIN.COMPANY') }}</a>
     </li>
     <li class="nav-item px-2 dropdown">
       <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"

@@ -1,3 +1,8 @@
+export interface IServiceApiResponse {
+    success: boolean;
+    data: IServiceModel[];
+}
+
 export interface IServiceModel {
     id: number;
     category_id: number;

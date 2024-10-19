@@ -39,7 +39,12 @@
   "SHARED": {
     "HEADER": {
       "HOME": "Inicio",
-      "COMPANY": "Mis empresas",
+
+      "ADMIN.COMPANY": "Empresas",
+      "CLIENT.COMPANY": "Mis empresas",
+
+      "ADMIN.SERVICES": "Servicios",
+
       "MY-CLIENTS": "Clientes",
       "ES": "Español",
       "EN": "Inglés",

@@ -1,3 +1,8 @@
+export interface IServiceContractApiResponse {
+    success: boolean;
+    data: IServiceContractModel[];
+}
+
 export interface IServiceContractModel {
     id: number;
     comapany_id: number;

@@ -1,3 +1,8 @@
+export interface IServiceTermApiResponse {
+    success: boolean;
+    data: IServiceTermModel[];
+}
+
 export interface IServiceTermModel {
     id: number;
     term: string;

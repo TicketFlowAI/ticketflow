@@ -1,3 +1,8 @@
+export interface ITicketApiResponse {
+  success: boolean;
+  data: ITicketModel[];
+}
+
 export interface ITicketModel {
   id: number;
   company_id: number;
