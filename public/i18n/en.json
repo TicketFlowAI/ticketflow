@@ -4,18 +4,18 @@
       "LOGIN": {
         "EMAIL-TITLE": "Email",
         "EMAIL-PLACEHOLDER": "Enter your email...",
-        "EMAIL-VALIDATOR-REQUIRED": "Enter an email",
+        "EMAIL-VALIDATOR-REQUIRED": "Enter an email address",
         "EMAIL-VALIDATOR-EMAIL": "Enter a valid email",
 
         "PASSWORD-TITLE": "Password",
         "PASSWORD-PLACEHOLDER": "Enter your password...",
         "PASSWORD-VALIDATOR-REQUIRED": "Enter a password",
 
-        "ACCOUNT": "Cuenta",
-        "LOGIN": "Sign In",
-        "CREATE-ACCOUNT": "Sign On",
+        "ACCOUNT": "Account",
+        "LOGIN": "Login",
+        "CREATE-ACCOUNT": "Create Account",
         "RECOVER-PASSWORD": "Recover my password",
-        "REGISTER": "Sign On",
+        "REGISTER": "Create an account",
 
         "COMPANY": "My Companies"
       },
@@ -30,22 +30,76 @@
       }
     },
     "COMPANY": {
-      "COMPANIES": "My Companies",
-      "NEW-COMPANY": "Add new Company",
+      "SEARCH": "Search...",
 
-      "SEARCH": "Filter..."
+      "SERVICE-CONTRACT": "SERVICE-CONTRACT",
+      "SERVICE-CONTRACT-DESC": "Click here to manage the contracted services for this company",
+
+      "READ-COMPANY-INFO": "Company Details",
+      "READ-COMPANY-INFO-DESC": "Click here to see all the informatión releated to this company",
+
+      "UPDATE-COMPANY-INFO": "Update Company",
+      "UPDATE-COMPANY-INFO-DESC": "Click here to update your company information",
+
+      "ADMIN": {
+        "COMPANIES": "Companies",
+        "NEW-COMPANY": "Create a company"
+      },
+      "TEAM": {
+        "COMPANIES": "Companies",
+        "NEW-COMPANY": "Create a company"
+      },
+      "CLIENT": {
+        "COMPANIES": "My Companies",
+        "NEW-COMPANY": "Create a company"
+      }
+    },
+    "SERVICES": {
+      "SEARCH": "Search...",
+
+      "SERVICE-COL-DESC": "Description",
+      "SERVICE-COL-CATEGORY": "Category",
+      "SERVICE-COL-PRICE": "Price",
+      "SERVICE-COL-ACTIONS": "Actions",
+
+      "ADMIN": {
+        "SERVICES": "Manage Services",
+        "MANAGE-SERVICE-CATEGORIES": "Manage categories",
+        "MANAGE-SERVICE-TAXES": "Manage taxes"
+      }
+    },
+    "SERVICE-TAXES": {
+      "SEARCH": "Search...",
+
+      "ADMIN": {
+        "SERVICES": "Manage Services",
+        "MANAGE-SERVICE-CATEGORIES": "Manage categories",
+        "MANAGE-SERVICE-TAXES": "Manage taxes"
+      }
+    },
+    "SERVICE-CATEGORIES": {
+      "SEARCH": "Search...",
+
+      "ADMIN": {
+        "SERVICES": "Manage Services",
+        "CREATE": "Create Category"
+      }
     }
   },
   "SHARED": {
     "HEADER": {
-      "HOME": "Home",
+      "ADMIN": {
+        "COMPANY": "Companies",
+        "SERVICES": "Services"
+      },
+      "TEAM": {
 
-      "ADMIN.COMPANY": "Companies",
-      "CLIENT.COMPANY": "My COmpanies",
+      },
+      "CLIENT": {
+        "HOME": "Home",
+        "SCOMPANY": "My Companies"
+      },
 
-      "ADMIN.SERVICES": "Services",
-
-      "MY-CLIENTS": "Clients",
       "ES": "Spanish",
       "EN": "English",
 
@@ -56,6 +110,13 @@
     },
     "FOOTER": {
       "ALL-RIGHTS": "All rights reserved. © Mindsoft"
+    },
+    "DIALOGS": {
+      "CONFIRMATION-DIALOG": {
+        "TITLE": "Confirmación",
+        "CANCEL": "Cancelar",
+        "OK": "Confirmar"
+      }
     }
   }
 }

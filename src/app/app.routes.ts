@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {ChangePasswordComponent} from "./features/account/change-password/change-password.component";
 import { AllCompaniesComponent } from './features/company/all-companies/all-companies.component';
+import { AllServicesComponent } from './features/services/all-services/all-services.component';
 
 export const routes: Routes = [
   {
@@ -9,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: 'services',
-    component: ChangePasswordComponent
+    component: AllServicesComponent
   },
   {
     path: 'change-password',

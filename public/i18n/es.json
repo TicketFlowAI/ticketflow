@@ -30,22 +30,76 @@
       }
     },
     "COMPANY": {
-      "COMPANIES": "Mis Empresas",
-      "NEW-COMPANY": "Crear una empresa",
+      "SEARCH": "Buscar...",
+      
+      "SERVICE-CONTRACT": "Servicios Contratados",
+      "SERVICE-CONTRACT-DESC": "De clic aquí para poder adminsitrar los servicios contratados",
 
-      "SEARCH": "Buscar..."
+      "READ-COMPANY-INFO": "Ver Detalles",
+      "READ-COMPANY-INFO-DESC": "De clic aquí para poder ver la infromación de su empresa",
+
+      "UPDATE-COMPANY-INFO": "Actualizar Información",
+      "UPDATE-COMPANY-INFO-DESC": "De clic aquí para poder actulizar la información de su compañia",
+
+      "ADMIN": {
+        "COMPANIES": "Empresas",
+        "NEW-COMPANY": "Crear una empresa"
+      },
+      "TEAM": {
+        "COMPANIES": "Empresas",
+        "NEW-COMPANY": "Crear una empresa"
+      },
+      "CLIENT": {
+        "COMPANIES": "Mis Empresas",
+        "NEW-COMPANY": "Crear una empresa"
+      }
+    },
+    "SERVICES": {
+      "SEARCH": "Buscar...",
+
+      "SERVICE-COL-DESC": "Descripción",
+      "SERVICE-COL-CATEGORY": "Categoría",
+      "SERVICE-COL-PRICE": "Precio",
+      "SERVICE-COL-ACTIONS": "Acciones",
+
+      "ADMIN": {
+        "SERVICES": "Administrar Servicios",
+        "MANAGE-SERVICE-CATEGORIES": "Adminsitrar categorías",
+        "MANAGE-SERVICE-TAXES": "Administrar impuestos"
+      }
+    },
+    "SERVICE-TAXES": {
+      "SEARCH": "Buscar...",
+
+      "ADMIN": {
+        "SERVICES": "Administrar Servicios",
+        "MANAGE-SERVICE-CATEGORIES": "Adminsitrar categorías",
+        "MANAGE-SERVICE-TAXES": "Administrar impuestos"
+      }
+    },
+    "SERVICE-CATEGORIES": {
+      "SEARCH": "Buscar...",
+       
+      "ADMIN": {
+        "SERVICES": "Administrar Servicios",
+        "CREATE": "Crear Categoria"
+      }
     }
   },
   "SHARED": {
     "HEADER": {
-      "HOME": "Inicio",
+      "ADMIN": {
+        "COMPANY": "Empresas",
+        "SERVICES": "Servicios"
+      },
+      "TEAM": {
+        
+      },
+      "CLIENT": {
+        "HOME": "Inicio",
+        "COMPANY": "Mis empresas"
+      },
 
-      "ADMIN.COMPANY": "Empresas",
-      "CLIENT.COMPANY": "Mis empresas",
-
-      "ADMIN.SERVICES": "Servicios",
-
-      "MY-CLIENTS": "Clientes",
       "ES": "Español",
       "EN": "Inglés",
 
@@ -56,6 +110,13 @@
     },
     "FOOTER": {
       "ALL-RIGHTS": "Todos los derechos reservados. © Mindsoft"
+    },
+    "DIALOGS": {
+      "CONFIRMATION": {
+        "TITLE": "Confirmation",
+        "CANCEL": "Cancel",
+        "OK": "Continue"
+      }
     }
   }
 }

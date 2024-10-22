@@ -47,32 +47,32 @@ export class MindsoftServicesService {
     );
   }
 
-  getAllServices(): Observable<ServiceModel[] | null> {
+  getAllServices(): Observable<ServiceModel[] | []> {
     return this.serviceService.getAllServices().pipe(
       map((services) => services.data),
       catchError((error) => {
         console.log(error);
-        return of(null);
+        return of([]);
       })
     );
   }
 
-  getAllServiceTax(): Observable<ServiceTaxModel[] | null> {
+  getAllServiceTax(): Observable<ServiceTaxModel[] | []> {
     return this.serviceTaxService.getAllServiceTaxes().pipe(
       map((serviceTax) => serviceTax.data),
       catchError((error) => {
         console.log(error);
-        return of(null);
+        return of([]);
       })
     );
   }
 
-  getAllServiceCategory(): Observable<ServiceCategoryModel[] | null> {
+  getAllServiceCategory(): Observable<ServiceCategoryModel[] | []> {
     return this.serviceService.getAllServices().pipe(
       map((serviceCategories) => serviceCategories.data),
       catchError((error) => {
         console.log(error);
-        return of(null);
+        return of([]);
       })
     );
   }

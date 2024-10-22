@@ -4,7 +4,7 @@
 @include mat.core();
 
 $mindsoft-red: #FF4438;
-$mindsoft-blue: #FFFFFF;
+$mindsoft-blue: #001689;
 $btn-font-size: 16px;
 
 [data-bs-theme='dark'] {
@@ -18,8 +18,8 @@ $btn-font-size: 16px;
 
   //MATERIAL VARIABLES
   --mat-paginator-container-background-color: #212529;
-  --mat-paginator-container-text-color:  #FFFFFF;
-  --mat-select-enabled-trigger-text-color:  #FFFFFF;
+  --mat-paginator-container-text-color: #FFFFFF;
+  --mat-select-enabled-trigger-text-color: #FFFFFF;
   --mdc-filled-text-field-label-text-color: ;
   --mdc-icon-button-icon-color: #FFFFFF;
 
@@ -43,8 +43,8 @@ $btn-font-size: 16px;
 
   //MATERIAL VARIABLES
   --mat-paginator-container-background-color: #FFFFFF;
-  --mat-paginator-container-text-color:  #000000;
-  --mat-select-enabled-trigger-text-color:  #000000;
+  --mat-paginator-container-text-color: #000000;
+  --mat-select-enabled-trigger-text-color: #000000;
   --mdc-icon-button-icon-color: #000000;
 
   --mat-icon-color: #000000;
@@ -55,10 +55,11 @@ $btn-font-size: 16px;
   --mdc-filled-text-field-label-text-color: #000000;
   --mat-app-surface-variant: #FFFFFF;
   --mat-app-surface: #FFFFFF;
-  
+
 }
 
 $primary: #FF4438;
+$secondary: #0C6EFD;
 $btn-color: #FFFFFF;
 $btn-font-size: 16px;
 
@@ -91,7 +92,7 @@ body {
     main {
       padding-bottom: 3.5rem;
     }
-    
+
     footer {
       background-color: var(--bs-navbar-bg);
       position: absolute;
@@ -257,4 +258,30 @@ label {
 
 .mat-mdc-row:nth-child(2n) {
   background-color: var(--bs-body-bg);
+}
+
+
+a {
+  color: var(mindsoft-red);
+  padding: 0.5rem 0rem 0.5rem 0rem;
+  display: block;
+  font-size: 14px;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.75px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  -webkit-transition: background-size 0.3s;
+  transition: background-size 0.3s;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    color: var(mindsoft-red);
+    background-size: 100% 2px;
+  }
 }

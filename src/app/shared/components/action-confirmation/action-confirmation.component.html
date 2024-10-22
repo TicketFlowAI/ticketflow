@@ -1,0 +1,17 @@
+<ng-container *transloco="let t; prefix: 'SHARED.DIALOGS.CONFIRMATION'">
+    <h2 mat-dialog-title class="fs-5 text-center">{{data}}</h2>
+    <mat-dialog-content class="row">
+    </mat-dialog-content>
+    <mat-dialog-actions class="row">
+        <div class="col-md-6">
+            <div class="row mt-3 px-2">
+                <button type="button" class="btn btn-danger" (click)="onNoClick()">{{t('CANCEL')}}</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row mt-3 px-2">
+                <button type="button" class="btn btn-success" (click)="onYesClick()" cdkFocusInitial>{{t('OK')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>

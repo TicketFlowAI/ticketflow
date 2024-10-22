@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-md-8 align-content-center">
                 <div class="row text-center text-md-start">
-                    <h2>{{t('COMPANIES')}}</h2>
+                    <h2>{{t('ADMIN.COMPANIES')}}</h2>
                 </div>
             </div>
             <div class="col-md-4 align-content-center">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary">{{t('NEW-COMPANY')}}</button>
+                    <button type="button" class="btn btn-primary">{{t('ADMIN.NEW-COMPANY')}}</button>
                 </div> 
             </div>
         </div>
@@ -27,9 +27,38 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>{{company.name}}</mat-panel-title>
-                        <mat-panel-description>{{company.address}}</mat-panel-description>
+                        <mat-panel-description>{{company.idNumber}}</mat-panel-description>
                     </mat-expansion-panel-header>
-
+                    <hr>
+                    <div class="ps-md-4 mt-2">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <a href="javascript:void(0);">{{t('SERVICE-CONTRACT')}}</a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('SERVICE-CONTRACT-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="#">{{t('READ-COMPANY-INFO')}}</a>
+                            </div>
+                            <div class="col-md-8">
+                                {{t('READ-COMPANY-INFO-DESC')}}
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a route="#">{{t('UPDATE-COMPANY-INFO')}}</a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('UPDATE-COMPANY-INFO-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
                 </mat-expansion-panel>
             </mat-accordion>
             }
