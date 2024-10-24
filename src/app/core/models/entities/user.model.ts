@@ -1,3 +1,8 @@
+export interface IUserModelResponse {
+  success: boolean;
+  data: IUserModel[];
+}
+
 export interface IUserModel {
   id: number;
   name: string;

@@ -1,0 +1,44 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SERVICES.SERVICE-INFO'">
+    <h2 class="fw-semibold" mat-dialog-title>{{t ('TITLE')}}</h2>
+    <mat-dialog-content>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('SERVICE-DESC')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{service.description}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('SERVICE-CATEGORY')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{service.category}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('SERVICE-PRICE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{(service.price | currency: 'USD')}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('SERVICE-TAX')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{service.tax_description}}</p>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onReturnClick()" cdkFocusInitial>{{t('RETURN')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>

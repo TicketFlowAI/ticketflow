@@ -1,0 +1,70 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.COMPANY.COMPANY-MANAGEMENT'">
+    @if(!companyData) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-COMPANY')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-COMPANY')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="companyForm">
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-NAME')}}</mat-label>
+                    <input matInput [formControl]="nameFormControl">
+                    <mat-icon matSuffix>business</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-ID')}}</mat-label>
+                    <input matInput [formControl]="dniFormControl">
+                    <mat-icon matSuffix>fingerprint</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-EMAIL')}}</mat-label>
+                    <input matInput [formControl]="emailFormControl">
+                    <mat-icon matSuffix>mail_outline</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-PHONE')}}</mat-label>
+                    <input matInput [formControl]="phoneFormControl">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-ADDRESS')}}</mat-label>
+                    <input matInput [formControl]="addressFormControl">
+                    <mat-icon matSuffix>place</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-STATE')}}</mat-label>
+                    <input matInput [formControl]="stateFormControl">
+                    <mat-icon matSuffix>map</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('COMPANY-CITY')}}</mat-label>
+                    <input matInput [formControl]="cityFormControl">
+                    <mat-icon matSuffix>pin_drop</mat-icon>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

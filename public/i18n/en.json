@@ -32,7 +32,7 @@
     "COMPANY": {
       "SEARCH": "Search...",
 
-      "SERVICE-CONTRACT": "SERVICE-CONTRACT",
+      "SERVICE-CONTRACT": "Services Contracted",
       "SERVICE-CONTRACT-DESC": "Click here to manage the contracted services for this company",
 
       "READ-COMPANY-INFO": "Company Details",
@@ -52,37 +52,107 @@
       "CLIENT": {
         "COMPANIES": "My Companies",
         "NEW-COMPANY": "Create a company"
+      },
+
+      "COMPANY-MANAGEMENT": {
+        "CREATE-COMPANY": "Create Company",
+        "EDIT-COMPANY": "Edit Company",
+        "COMPANY-NAME": "Company Name",
+        "COMPANY-ID": "ID Number",
+        "COMPANY-EMAIL": "Email",
+        "COMPANY-PHONE": "Phone",
+        "COMPANY-STATE": "State / Province",
+        "COMPANY-CITY": "City",
+        "COMPANY-ADDRESS": "Address",
+        "SAVE": "Save"
+      },
+      "COMPANY-INFO": {
+        "TITLE": "Company Information",
+        "COMPANY-NAME": "Company Name",
+        "COMPANY-ID": "ID Number",
+        "COMPANY-EMAIL": "Email",
+        "COMPANY-PHONE": "Phone",
+        "COMPANY-STATE": "State / Province",
+        "COMPANY-CITY": "City",
+        "COMPANY-ADDRESS": "Address",
+        "RETURN": "Return"
       }
     },
     "SERVICES": {
       "SEARCH": "Search...",
 
-      "SERVICE-COL-DESC": "Description",
-      "SERVICE-COL-CATEGORY": "Category",
-      "SERVICE-COL-PRICE": "Price",
-      "SERVICE-COL-ACTIONS": "Actions",
+      "READ-SERVICE-INFO": "View Details",
+      "READ-SERVICE-INFO-DESC": "Click here to see the complete service info",
+
+      "EDIT-SERVICE-INFO": "Edit Service",
+      "EDIT-SERVICE-INFO-DESC": "Click here to edit this service",
+
+      "DELETE": "Delete",
 
       "ADMIN": {
         "SERVICES": "Manage Services",
-        "MANAGE-SERVICE-CATEGORIES": "Manage categories",
-        "MANAGE-SERVICE-TAXES": "Manage taxes"
+        "MANAGE-SERVICE-CATEGORIES": "Categories",
+        "MANAGE-SERVICE-TAXES": "Taxes",
+        "CREATE-SERVICE": "Create Service"
+      },
+
+      "SERVICE-MANAGEMENT": {
+        "CREATE-SERVICE": "Create Company",
+        "EDIT-SERVICE": "Edit Company",
+        "SERVICE-DESC": "Description",
+        "SERVICE-PRICE": "Price",
+        "SERVICE-CATEGORY": "Category",
+        "SERVICE-TAX": "Tax Type"
+      },
+      "SERVICE-INFO": {
+        "TITLE": "Service Information",
+        "SERVICE-DESC": "Description",
+        "SERVICE-PRICE": "Price",
+        "SERVICE-CATEGORY": "Category",
+        "SERVICE-TAX": "Tax Type",
+        "RETURN": "Return"
       }
     },
     "SERVICE-TAXES": {
       "SEARCH": "Search...",
 
+      "EDIT-SERVICE-TAX-INFO": "Edit Tax",
+      "EDIT-SERVICE-TAX-INFO-DESC": "Click here to edit the tax info",
+
+      "DELETE": "Delete",
+
       "ADMIN": {
-        "SERVICES": "Manage Services",
-        "MANAGE-SERVICE-CATEGORIES": "Manage categories",
-        "MANAGE-SERVICE-TAXES": "Manage taxes"
+        "SERVICE-TAXES": "Manage Taxes",
+        "RETURN-TO-SERVICES": "Return",
+        "CREATE-SERVICE-TAX": "Create Tax"
+      },
+
+      "SERVICE-TAX-MANAGEMENT": {
+        "CREATE-SERVICE-TAX": "Create Tax",
+        "EDIT-SERVICE-TAX": "Edit Tax",
+        "SERVICE-TAX-DESC": "Tax Type",
+        "SERVICE-TAX-VALUE": "Value"
       }
     },
     "SERVICE-CATEGORIES": {
       "SEARCH": "Search...",
 
+      "EDIT-SERVICE-CATEGORY-INFO": "Edit Category",
+      "EDIT-SERVICE-CATEGORY-INFO-DESC": "Click here to edit the category info",
+
+      "DELETE": "Delete",
+
       "ADMIN": {
-        "SERVICES": "Manage Services",
-        "CREATE": "Create Category"
+        "SERVICE-CATEGORIES": "Manage Categories",
+        "RETURN-TO-SERVICES": "Return",
+        "CREATE-SERVICE-CATEGORY": "Create Category"
+      },
+
+      "SERVICE-CATEGORY-MANAGEMENT": {
+        "CREATE-SERVICE-CATEGORY": "Create Category",
+        "EDIT-SERVICE-CATEGORY": "Edit Category",
+        "SERVICE-CATEGORY-DESC": "Name",
+        "SAVE": "Save"
       }
     }
   },

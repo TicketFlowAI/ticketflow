@@ -34,8 +34,8 @@ describe('UserSessionService', () => {
   });
 
   it('should check initial user state and authenticate if status is OK', () => {
-    const response = new HttpResponse({ status: HttpStatusCode.Ok });
-    userServiceSpy.getUser.and.returnValue(of(response));
+    const user = new UserModel();
+    userServiceSpy.getUser.and.returnValue(of(user));
 
     service.checkUserInitialState();
 
@@ -44,8 +44,8 @@ describe('UserSessionService', () => {
   });
 
   it('should set isAuthenticated to false if user is unauthorized', () => {
-    const response = new HttpResponse({ status: HttpStatusCode.Unauthorized });
-    userServiceSpy.getUser.and.returnValue(of(response));
+    const user = new UserModel();
+    userServiceSpy.getUser.and.returnValue(of(user));
 
     service.checkUserInitialState();
 
@@ -55,22 +55,11 @@ describe('UserSessionService', () => {
 
   it('should fetch and set the current user if authenticated', () => {
     const user = new UserModel();
-    const response = new HttpResponse({ status: HttpStatusCode.Ok, body: user });
-    userServiceSpy.getUser.and.returnValue(of(response));
+    userServiceSpy.getUser.and.returnValue(of(user));
 
     service.getUser();
 
     expect(userServiceSpy.getUser).toHaveBeenCalled();
     expect(service.currentUser()).toEqual(user);
-  });
-
-  it('should update the current user info', () => {
-    const updatedUser = new UserModel();
-    userServiceSpy.updateUser.and.returnValue(of(updatedUser));
-
-    service.updateMyPersonalInfo(updatedUser);
-
-    expect(userServiceSpy.updateUser).toHaveBeenCalledWith(updatedUser);
-    expect(service.currentUser()).toEqual(updatedUser);
   });
 });

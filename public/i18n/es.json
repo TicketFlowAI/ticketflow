@@ -33,10 +33,10 @@
       "SEARCH": "Buscar...",
       
       "SERVICE-CONTRACT": "Servicios Contratados",
-      "SERVICE-CONTRACT-DESC": "De clic aquí para poder adminsitrar los servicios contratados",
+      "SERVICE-CONTRACT-DESC": "De clic aquí para poder administrar los servicios contratados",
 
       "READ-COMPANY-INFO": "Ver Detalles",
-      "READ-COMPANY-INFO-DESC": "De clic aquí para poder ver la infromación de su empresa",
+      "READ-COMPANY-INFO-DESC": "De clic aquí para poder ver la información de su empresa",
 
       "UPDATE-COMPANY-INFO": "Actualizar Información",
       "UPDATE-COMPANY-INFO-DESC": "De clic aquí para poder actulizar la información de su compañia",
@@ -52,37 +52,107 @@
       "CLIENT": {
         "COMPANIES": "Mis Empresas",
         "NEW-COMPANY": "Crear una empresa"
+      },
+
+      "COMPANY-MANAGEMENT": {
+        "CREATE-COMPANY": "Crear Empresa",
+        "EDIT-COMPANY": "Editar Empresa",
+        "COMPANY-NAME": "Nombre Comercial",
+        "COMPANY-ID": "RUC / Número de Identificación",
+        "COMPANY-EMAIL": "Correo Electrónico",
+        "COMPANY-PHONE": "Teléfono",
+        "COMPANY-STATE": "Provincia / Estado",
+        "COMPANY-CITY": "Ciudad",
+        "COMPANY-ADDRESS": "Dirección",
+        "SAVE": "Guardar"
+      },
+      "COMPANY-INFO": {
+        "TITLE": "Información de la Empresa",
+        "COMPANY-NAME": "Nombre Comercial",
+        "COMPANY-ID": "RUC / Número de Identificación",
+        "COMPANY-EMAIL": "Correo Electrónico",
+        "COMPANY-PHONE": "Teléfono",
+        "COMPANY-STATE": "Provincia / Estado",
+        "COMPANY-CITY": "Ciudad",
+        "COMPANY-ADDRESS": "Dirección",
+        "RETURN": "Regresar"
       }
     },
     "SERVICES": {
       "SEARCH": "Buscar...",
 
-      "SERVICE-COL-DESC": "Descripción",
-      "SERVICE-COL-CATEGORY": "Categoría",
-      "SERVICE-COL-PRICE": "Precio",
-      "SERVICE-COL-ACTIONS": "Acciones",
+      "READ-SERVICE-INFO": "Ver Detalles",
+      "READ-SERVICE-INFO-DESC": "De clic aquí para poder ver la información del servicio",
 
+      "EDIT-SERVICE-INFO": "Editar Servicio",
+      "EDIT-SERVICE-INFO-DESC": "De clic aquí para poder editar el servicio",
+
+      "DELETE": "Borrar",
+      
       "ADMIN": {
         "SERVICES": "Administrar Servicios",
-        "MANAGE-SERVICE-CATEGORIES": "Adminsitrar categorías",
-        "MANAGE-SERVICE-TAXES": "Administrar impuestos"
+        "MANAGE-SERVICE-CATEGORIES": "Categorías",
+        "MANAGE-SERVICE-TAXES": "Impuestos",
+        "CREATE-SERVICE": "Crear Servicio"
+      },
+
+      "SERVICE-MANAGEMENT": {
+        "CREATE-SERVICE": "Crear Empresa",
+        "EDIT-SERVICE": "Editar Empresa",
+        "SERVICE-DESC": "Descripción",
+        "SERVICE-PRICE": "Precio",
+        "SERVICE-CATEGORY": "Categoría",
+        "SERVICE-TAX": "Tipo de Impuesto"
+      },
+      "SERVICE-INFO": {
+        "TITLE": "Información del Servicio",
+        "SERVICE-DESC": "Descripción",
+        "SERVICE-PRICE": "Precio",
+        "SERVICE-CATEGORY": "Categoría",
+        "SERVICE-TAX": "Tipo de Impuesto",
+        "RETURN": "Regresar"
       }
     },
     "SERVICE-TAXES": {
       "SEARCH": "Buscar...",
 
+      "EDIT-SERVICE-TAX-INFO": "Editar Impuesto",
+      "EDIT-SERVICE-TAX-INFO-DESC": "De clic aquí para editar el impuesto",
+
+      "DELETE": "Borrar",
+
       "ADMIN": {
-        "SERVICES": "Administrar Servicios",
-        "MANAGE-SERVICE-CATEGORIES": "Adminsitrar categorías",
-        "MANAGE-SERVICE-TAXES": "Administrar impuestos"
+        "SERVICE-TAXES": "Manage Taxes",
+        "RETURN-TO-SERVICES": "Regresar",
+        "CREATE-SERVICE-TAX": "Create Tax"
+      },
+
+      "SERVICE-TAX-MANAGEMENT": {
+        "CREATE-SERVICE-TAX": "Crear Impuesto",
+        "EDIT-SERVICE-TAX": "Editar Impuesto",
+        "SERVICE-TAX-DESC": "Tipos de Impuesto",
+        "SERVICE-TAX-VALUE": "Valor"
       }
     },
     "SERVICE-CATEGORIES": {
       "SEARCH": "Buscar...",
-       
+
+      "EDIT-SERVICE-CATEGORY-INFO": "Editar Categoría",
+      "EDIT-SERVICE-CATEGORY-INFO-DESC": "De clic aquí para editar la categoría",
+
+      "DELETE": "Borrar",
+
       "ADMIN": {
-        "SERVICES": "Administrar Servicios",
-        "CREATE": "Crear Categoria"
+        "SERVICE-CATEGORIES": "Administrar Categorías",
+        "RETURN-TO-SERVICES": "Regresar",
+        "CREATE-SERVICE-CATEGORY": "Crear Categoría"
+      },
+
+      "SERVICE-CATEGORY-MANAGEMENT": {
+        "CREATE-SERVICE-CATEGORY": "Crear Categoría",
+        "EDIT-SERVICE-CATEGORY": "Editar Categoría",
+        "SERVICE-CATEGORY-DESC": "Nombre",
+        "SAVE": "Guardar"
       }
     }
   },

@@ -28,10 +28,10 @@ export class CompanyService {
     );
   }
 
-  getCompany(companyId: number): Observable<HttpResponse<any>> {
+  getCompany(companyId: number): Observable<ICompanyApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
 
-    return this.http.get<HttpResponse<any>>(`${this.apiCompany}/${companyId}`, {
+    return this.http.get<ICompanyApiResponse>(`${this.apiCompany}/${companyId}`, {
       headers: customHeaders,
       withCredentials: true,
     }
@@ -41,17 +41,17 @@ export class CompanyService {
   updateCompany(companyToUpdate: CompanyModel): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
 
-    return this.http.put<any>(`${this.apiCompany}/${companyToUpdate.idNumber}`, companyToUpdate, {
+    return this.http.put<any>(`${this.apiCompany}/${companyToUpdate.id}`, companyToUpdate, {
       headers: customHeaders,
       withCredentials: true,
     }
     );
-  }
+  } 
 
-  createCompany(companyToUpdate: CompanyModel): Observable<HttpResponse<any>> {
+  createCompany(companyToAdd: CompanyModel): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
 
-    return this.http.post<HttpResponse<any>>(`${this.apiCompany}/${companyToUpdate.idNumber}`, companyToUpdate, {
+    return this.http.post<HttpResponse<any>>(`${this.apiCompany}`, companyToAdd, {
       headers: customHeaders,
       withCredentials: true,
     }

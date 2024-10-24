@@ -1,0 +1,28 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SERVICE-CATEGORIES.SERVICE-CATEGORY-MANAGEMENT'">
+    @if(!serviceCategoryData) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-SERVICE-CATEGORY')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-SERVICE-CATEGORY')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="serviceCategoryForm">
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('SERVICE-CATEGORY-DESC')}}</mat-label>
+                    <input matInput [formControl]="categoryFormControl">
+                    <mat-icon matSuffix>list</mat-icon>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

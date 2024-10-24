@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../../models/requests/login.request';
-import { UserModel } from '../../models/entities/user.model';
+import { IUserModelResponse, UserModel } from '../../models/entities/user.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
 @Injectable({
@@ -19,13 +19,34 @@ export class UserService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getUser(): Observable<HttpResponse<any>> {
+
+  getUsers(): Observable<IUserModelResponse> {
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<any>(`${this.apiUser}`, { headers: customHeader, withCredentials: true, observe: 'response'});
+    return this.http.get<IUserModelResponse>(`${this.apiUser}`, { headers: customHeader, withCredentials: true});
   }
 
-  updateUser(userToUpdate: any): Observable<UserModel> {
+  getUserById(id: number): Observable<IUserModelResponse> {
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.put<UserModel>(`${this.apiUser}`, userToUpdate ,{ headers: customHeader, withCredentials: true });
+    return this.http.get<IUserModelResponse>(`${this.apiUser}/${id}`, { headers: customHeader, withCredentials: true});
+  }
+
+  getUser(): Observable<UserModel> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.get<UserModel>(`${this.apiUser}`, { headers: customHeader, withCredentials: true});
+  }
+
+  createUser(userToAdd: UserModel): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.post<any>(`${this.apiUser}`, userToAdd, { headers: customHeader, withCredentials: true, observe: 'response'});
+  }
+
+  updateUser(userToUpdate: any): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.put<any>(`${this.apiUser}`, userToUpdate ,{ headers: customHeader, withCredentials: true, observe: 'response' });
+  }
+
+  deleteUser(id: number): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.delete<any>(`${this.apiUser}/${id}`, { headers: customHeader, withCredentials: true, observe: 'response' });
   }
 }

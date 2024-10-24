@@ -11,8 +11,7 @@ $btn-font-size: 16px;
   //LAYOUT 
   --bs-body-bg: #2B3035;
   --bs-body-color: #e0e0e0;
-  --bs-primary: #FF4438;
-  --bs-secondary: #001689;
+  --bs-navbar-active-color: #e0e0e0;
   --bs-navbar-bg: #1F1F1F;
   --bs-mat-element: #151515;
 
@@ -24,7 +23,13 @@ $btn-font-size: 16px;
   --mdc-icon-button-icon-color: #FFFFFF;
 
   --mat-icon-color: #FFFFFF;
-  --mat-expansion-container-background-color: #FFFFFF;
+  --mat-expansion-header-text-color: #FFFFFF;
+  --mat-expansion-container-text-color: #FFFFFF;
+  --mat-expansion-header-description-color: #cfcfcf;
+  --mat-expansion-container-background-color: #2A2E34;
+
+  --mdc-dialog-subhead-color: #FFFFFF;
+  --mdc-dialog-supporting-text-color: #FFFFFF;
 
   --mdc-filled-text-field-container-color: #2B3035;
   --mdc-filled-text-field-input-text-color: #FFFFFF;
@@ -36,8 +41,9 @@ $btn-font-size: 16px;
 
 [data-bs-theme='light'] {
   //LAYOUT
+  --bs-body-bg: #2B3035;
   --bs-body-color: #FFFFFF;
-  --bs-secondary: #001689;
+  --bs-navbar-active-color: #e0e0e0;
   --bs-navbar-bg: #1F1F1F;
   --bs-mat-element: #FFFFFF;
 
@@ -48,7 +54,13 @@ $btn-font-size: 16px;
   --mdc-icon-button-icon-color: #000000;
 
   --mat-icon-color: #000000;
+  --mat-expansion-header-text-color: #000000;
+  --mat-expansion-container-text-color: #000000;
+  --mat-expansion-header-description-color: #919191;
   --mat-expansion-container-background-color: #FFFFFF;
+
+  --mdc-dialog-subhead-color: #000000;
+  --mdc-dialog-supporting-text-color: #000000;
 
   --mdc-filled-text-field-container-color: #FFFFFF;
   --mdc-filled-text-field-input-text-color: #000000;

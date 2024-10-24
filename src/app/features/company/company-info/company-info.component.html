@@ -1,0 +1,68 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.COMPANY.COMPANY-INFO'">
+    <h2 class="fw-semibold" mat-dialog-title>{{t ('TITLE')}}</h2>
+    <mat-dialog-content>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-NAME')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.name}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-ID')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.idNumber}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-EMAIL')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.contactEmail}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-ADDRESS')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.address}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-PHONE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.phone}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-STATE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.state}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('COMPANY-CITY')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{company.city}}</p>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onReturnClick()" cdkFocusInitial>{{t('RETURN')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>

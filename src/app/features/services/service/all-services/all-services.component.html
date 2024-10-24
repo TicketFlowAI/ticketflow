@@ -1,15 +1,22 @@
-<ng-container *transloco="let t; prefix: 'FEATURES.COMPANY'">
+<ng-container *transloco="let t; prefix: 'FEATURES.SERVICES'">
     <div class="companies container py-4">
         <div class="row">
-            <div class="col-md-9 align-content-center">
-                <div class="row text-center text-md-start">
-                    <h2>{{t('ADMIN.COMPANIES')}}</h2>
+            <div class="col-md-6 text-center text-md-start align-content-center">
+                <h2>{{t('ADMIN.SERVICES')}}</h2>
+            </div>
+            <div class="col-md-2 align-content-center py-4 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button [routerLink]="['/service-categories']" type="button" class="btn btn-primary">{{t('ADMIN.MANAGE-SERVICE-CATEGORIES')}}</button>
                 </div>
             </div>
-            <div class="col-md-3 align-content-center">
+            <div class="col-md-2 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openCompanyManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
-                        {{t('ADMIN.NEW-COMPANY')}}</button>
+                    <button [routerLink]="['/service-taxes']" type="button" class="btn btn-primary">{{t('ADMIN.MANAGE-SERVICE-TAXES')}}</button>
+                </div>
+            </div>
+            <div class="col-md-2 align-content-center py-3 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button type="button" class="btn btn-primary" (click)="openServiceManageDialog(null)"><fa-icon [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-SERVICE')}}</button>
                 </div>
             </div>
         </div>
@@ -24,16 +31,16 @@
 
         <div class="row my-2">
             <mat-accordion class="my-2" [multi]="false">
-                @for(company of pagedCompanies; track company.id) {
+                @for(service of pagedServices; track service.id) {
                 <mat-expansion-panel class="mt-2">
                     <mat-expansion-panel-header>
-                        <mat-panel-title class="text-truncate">{{company.name}}</mat-panel-title>
+                        <mat-panel-title class="text-truncate">{{service.description}}</mat-panel-title>
                         <mat-panel-description class="row">
                             <div class="col-6 text-center">
-                                {{company.idNumber}}
+                                {{service.category}}
                             </div>
                             <div class="col-6 text-center">
-                                {{company.phone}}
+                                {{service.price | currency: 'USD'}}
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -41,42 +48,31 @@
                     <div class="ps-md-4 mt-2">
                         <div class="row ">
                             <div class="col-md-4">
-                                <a [routerLink]="['/service-contract/{{company.id}}']">
-                                    <fa-icon [icon]="faFileContract"></fa-icon> {{t('SERVICE-CONTRACT')}}
+                                <a href="javascript:void(0);" (click)="openServiceInfoDialog(service)">
+                                    <fa-icon class="pe-2" [icon]="faInfoCircle"></fa-icon> {{t('READ-SERVICE-INFO')}}
                                 </a>
                             </div>
                             <div class="col-md-8">
-                                <p>{{t('SERVICE-CONTRACT-DESC')}}</p>
+                                <p>{{t('READ-SERVICE-INFO-DESC')}}</p>
                             </div>
                             <hr>
                         </div>
                         <div class="row fs-6">
                             <div class="col-md-4">
-                                <a href="javascript:void(0);" (click)="openCompanyInfoDialog(company)">
-                                    <fa-icon [icon]="faBuilding"></fa-icon> {{t('READ-COMPANY-INFO')}}
+                                <a href="javascript:void(0);" (click)="openServiceManageDialog(service)">
+                                    <fa-icon class="pe-2" [icon]="faPencil"></fa-icon> {{t('EDIT-SERVICE-INFO')}}
                                 </a>
                             </div>
                             <div class="col-md-8">
-                                <p>{{t('READ-COMPANY-INFO-DESC')}}</p>
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a href="javascript:void(0);" (click)="openCompanyManageDialog(company)">
-                                    <fa-icon [icon]="faFilePen"></fa-icon> {{t('UPDATE-COMPANY-INFO')}}
-                                </a>
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{t('UPDATE-COMPANY-INFO-DESC')}}</p>
+                                <p>{{t('EDIT-SERVICE-INFO-DESC')}}</p>
                             </div>
                             <hr>
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="openConfirmationDialog()"> <fa-icon [icon]="faPlus"></fa-icon>
-                                        Borrar
+                                    <button  type="button" class="btn btn-danger"(click)="openConfirmationDialog()">
+                                        <fa-icon [icon]="faX"></fa-icon> {{t('DELETE')}}
                                     </button>
                                 </div>
                             </div>
@@ -86,7 +82,7 @@
                 }
             </mat-accordion>
 
-            <mat-paginator [length]="companies.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
+            <mat-paginator [length]="services.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
                 (page)="onPageChange($event)" aria-label="Select page">
             </mat-paginator>
         </div>

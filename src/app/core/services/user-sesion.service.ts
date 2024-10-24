@@ -24,31 +24,22 @@ export class UserSessionService {
   //METHODS
   checkUserInitialState() {
     this.userService.getUser().subscribe({
-      next: (response) => {
-        if(response.status === HttpStatusCode.Ok){
+      next: (user) => {
+        if(user){
           this.authService.isAuthenticated.set(true);
         }
-          
-        if(response.status === HttpStatusCode.Unauthorized) 
-        {
+        else {
           this.authService.isAuthenticated.set(false);
         }
+
       }
     })
   }
 
   getUser() {
     this.userService.getUser().subscribe({
-      next: (response) => {
-        if(response.status === HttpStatusCode.Ok) this.currentUser.set(response.body as UserModel);
-      }
-    })
-  }
-  
-  updateMyPersonalInfo(userToUpdate: UserModel) {
-    this.userService.updateUser(userToUpdate).subscribe({
       next: (user) => {
-        this.currentUser.set(user);
+        if(user) this.currentUser.set(user);
       }
     })
   }

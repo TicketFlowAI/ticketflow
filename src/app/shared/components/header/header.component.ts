@@ -1,15 +1,16 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component,effect,inject,OnInit,TemplateRef,ViewChild
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit, TemplateRef, ViewChild
 } from '@angular/core';
-import {RouterLink} from "@angular/router";
-import {AsyncPipe, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
-import {ScrollToTopInstantDirective} from "../../directives/scroll-to-top-instant.directive";
-import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
-import {AuthService} from "../../../core/services/auth.service";
-import {ThemeService} from "../../../core/services/theme.service";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faFlag, faMoon, faSun, faUser, faSignInAlt} from "@fortawesome/free-solid-svg-icons";
-import {MatButton} from "@angular/material/button";
-import {OpenLoginDirective} from "../../directives/open-login.directive";
+import { RouterLink } from "@angular/router";
+import { AsyncPipe, NgOptimizedImage, NgTemplateOutlet } from "@angular/common";
+import { ScrollToTopInstantDirective } from "../../directives/scroll-to-top-instant.directive";
+import { TranslocoDirective, TranslocoService } from "@jsverse/transloco";
+import { AuthService } from "../../../core/services/auth.service";
+import { ThemeService } from "../../../core/services/theme.service";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { faFlag, faMoon, faSun, faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { MatButton } from "@angular/material/button";
+import { OpenLoginDirective } from "../../directives/open-login.directive";
 import { IUserModel } from '../../../core/models/entities/user.model';
 import { UserSessionService } from '../../../core/services/user-sesion.service';
 
