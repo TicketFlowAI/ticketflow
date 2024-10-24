@@ -155,13 +155,53 @@
         "SERVICE-CATEGORY-DESC": "Name",
         "SAVE": "Save"
       }
+    },
+    "USERS": {
+      "SEARCH": "Search...",
+
+      "READ-USER-INFO": "User Info",
+      "READ-USER-INFO-DESC": "Click here the see the user info",
+
+      "EDIT-USER-INFO": "Edit User",
+      "EDIT-USER-INFO-DESC": "Click here to edit the user info",
+
+      "DELETE": "Delete",
+
+      "ADMIN": {
+        "USERS": "Manage Users",
+        "CREATE-USER": "Create User"
+      },
+
+      "USER-MANAGEMENT": {
+        "CREATE-USER": "Create User",
+        "EDIT-USER": "Edit User",
+        "USER-NAME": "Name",
+        "USER-LASTNAME": "Lastname",
+        "USER-EMAIL": "Email",
+        "USER-COMPANY": "Company",
+        "USER-CREATE-DATE": "Created at",
+        "USER-UPDATE-DATE": "Updated at",
+        "SAVE": "Save"
+      },
+      "USER-INFO": {
+        "TITLE": "User Information",
+        "USER-NAME": "Name",
+        "USER-LASTNAME": "Lastname",
+        "USER-EMAIL": "Email",
+        "USER-COMPANY": "Company",
+        "USER-CREATE-DATE": "Created at",
+        "USER-UPDATE-DATE": "Updated at",
+        "RETURN": "Return"
+      }
     }
   },
   "SHARED": {
     "HEADER": {
       "ADMIN": {
         "COMPANY": "Companies",
-        "SERVICES": "Services"
+        "SERVICES": "Services",
+        "USERS": "Users",
+        "TICKETS": "Tickets"
       },
       "TEAM": {
 

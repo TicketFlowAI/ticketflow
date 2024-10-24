@@ -4,6 +4,8 @@ import { AllCompaniesComponent } from './features/company/all-companies/all-comp
 import { AllServicesComponent } from './features/services/service/all-services/all-services.component';
 import { AllServiceCategoriesComponent } from './features/services/service-category/all-service-categories/all-service-categories.component';
 import { AllServiceTaxesComponent } from './features/services/service-tax/all-service-taxes/all-service-taxes.component';
+import { AllUsersComponent } from './features/users/all-users/all-users.component';
+import { AllTicketsComponent } from './features/tickets/all-tickets/all-tickets.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +15,14 @@ export const routes: Routes = [
   {
     path: 'services',
     component: AllServicesComponent
+  },
+  {
+    path: 'users',
+    component: AllUsersComponent
+  },
+  {
+    path: 'tickets',
+    component: AllTicketsComponent
   },
   {
     path: 'service-categories',

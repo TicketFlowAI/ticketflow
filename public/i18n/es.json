@@ -155,13 +155,54 @@
         "SERVICE-CATEGORY-DESC": "Nombre",
         "SAVE": "Guardar"
       }
+    },
+    "USERS": {
+      "SEARCH": "Buscar...",
+
+      "READ-USER-INFO": "Información del usuario",
+      "READ-USER-INFO-DESC": "De clic aquí para ver la información del usuario",
+
+      "EDIT-USER-INFO": "Editar usuario",
+      "EDIT-USER-INFO-DESC": "De clic aquí para editar la información del usuario",
+
+      "DELETE": "Eliminar",
+
+      "ADMIN": {
+        "USERS": "Administrar usuarios",
+        "CREATE-USER": "Crear usuario"
+      },
+
+      "USER-MANAGEMENT": {
+        "CREATE-USER": "Crear usuario",
+        "EDIT-USER": "Editar usuario",
+        "USER-NAME": "Nombre",
+        "USER-LASTNAME": "Apellido",
+        "USER-EMAIL": "Correo electrónico",
+        "USER-COMPANY": "Empresa",
+        "USER-CREATE-DATE": "Fecha de creación",
+        "USER-UPDATE-DATE": "Fecha de actualización",
+        "SAVE": "Guardar"
+      },
+      "USER-INFO": {
+        "TITLE": "Información del Usuario",
+        "USER-NAME": "Nombre",
+        "USER-LASTNAME": "Apellido",
+        "USER-EMAIL": "Correo electrónico",
+        "USER-COMPANY": "Empresa",
+        "USER-CREATE-DATE": "Fecha de creación",
+        "USER-UPDATE-DATE": "Fecha de actualización",
+        "RETURN": "Regresar"
+      }
     }
+
   },
   "SHARED": {
     "HEADER": {
       "ADMIN": {
         "COMPANY": "Empresas",
-        "SERVICES": "Servicios"
+        "SERVICES": "Servicios",
+        "USERS": "Usuarios",
+        "TICKETS": "Tickets"
       },
       "TEAM": {
         

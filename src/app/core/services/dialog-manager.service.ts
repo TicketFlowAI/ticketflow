@@ -13,6 +13,9 @@ import { CompanyModel } from '../models/entities/company.model';
 import { CompanyInfoComponent } from '../../features/company/company-info/company-info.component';
 import { ManageCompanyComponent } from '../../features/company/manage-company/manage-company.component';
 import { ServiceInfoComponent } from '../../features/services/service/service-info/service-info.component';
+import { UserModel } from '../models/entities/user.model';
+import { ManageUserComponent } from '../../features/users/manage-user/manage-user.component';
+import { UserInfoComponent } from '../../features/users/user-info/user-info.component';
 
 @Injectable({
   providedIn: 'root'
@@ -132,6 +135,34 @@ export class DialogManagerService {
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceTax
+    });
+  }
+
+  openUserInfoDialog(user: UserModel){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(UserInfoComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '450px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: user
+    });
+  }
+
+  openManageUserDialog(user: UserModel | null){
+    const enterAnimationDuration = '0ms'
+    const exitAnimationDuration = '0ms'
+    
+    this.dialogService.open(ManageUserComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '460px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: user
     });
   }
 
