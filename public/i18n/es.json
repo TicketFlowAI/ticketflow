@@ -131,7 +131,8 @@
         "CREATE-SERVICE-TAX": "Crear Impuesto",
         "EDIT-SERVICE-TAX": "Editar Impuesto",
         "SERVICE-TAX-DESC": "Tipos de Impuesto",
-        "SERVICE-TAX-VALUE": "Valor"
+        "SERVICE-TAX-VALUE": "Valor",
+        "SAVE": "Guardar"
       }
     },
     "SERVICE-CATEGORIES": {

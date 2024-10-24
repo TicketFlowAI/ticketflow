@@ -128,7 +128,7 @@ export class DialogManagerService {
     
     this.dialogService.open(ManageServiceTaxComponent, {
       width: '500px',
-      height: '400px',
+      height: '310px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceTax

@@ -131,7 +131,8 @@
         "CREATE-SERVICE-TAX": "Create Tax",
         "EDIT-SERVICE-TAX": "Edit Tax",
         "SERVICE-TAX-DESC": "Tax Type",
-        "SERVICE-TAX-VALUE": "Value"
+        "SERVICE-TAX-VALUE": "Value",
+        "SAVE": "Save"
       }
     },
     "SERVICE-CATEGORIES": {
