@@ -200,24 +200,6 @@ body {
   }
 }
 
-
-
-
-mat-accordion {
-  background-color: var(red);
-
-  mat-expansion-panel {
-    .mat-expansion-panel-body {
-      background-color: var(--bs-body-bg);
-      color: var(--text-color);
-
-      mat-card {
-        background-color: var(--bg-element);
-      }
-    }
-  }
-}
-
 mat-label {
   color: var(--text-color);
   /* Cambia el color globalmente */
@@ -270,6 +252,15 @@ label {
 
 .mat-mdc-row:nth-child(2n) {
   background-color: var(--bs-body-bg);
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
 }
 
 
