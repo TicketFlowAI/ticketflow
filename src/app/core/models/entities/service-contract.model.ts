@@ -1,6 +1,11 @@
-export interface IServiceContractApiResponse {
+export interface IServiceContractsApiResponse {
     success: boolean;
     data: IServiceContractModel[];
+}
+
+export interface IServiceContractApiResponse {
+    success: boolean;
+    data: IServiceContractModel;
 }
 
 export interface IServiceContractModel {

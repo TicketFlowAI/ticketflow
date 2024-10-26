@@ -12,24 +12,22 @@ export class UserManagementService {
   getAllUsers(): Observable<UserModel[] | []> {
     return this.userService.getUsers().pipe(
       map((users) => users.data),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of([]);
       })
     )
   }
 
-  getUserById(id: number): Observable<UserModel[] | []> {
-    return this.userService.getUserById(id).pipe(
-      map((users) => users.data),
-      catchError((error) => {
-        console.log(error);
-        return of([]);
+  getOneUser(id: number): Observable<UserModel | null> {
+    return this.userService.getUser(id).pipe(
+      map((user) => user.data),
+      catchError(() => {
+        return of(null);
       })
     )
   }
 
-  createUser(newUser: UserModel): Observable<boolean> {
+  addUser(newUser: UserModel): Observable<boolean> {
     return this.userService.createUser(newUser).pipe(
       map(() => true),
       catchError(() => {

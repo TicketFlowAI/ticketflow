@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../../models/requests/login.request';
-import { TokenService } from '../../services/token.service';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
 @Injectable({

@@ -95,7 +95,7 @@ export class ManageCompanyComponent {
       )
     }
     else {
-      this.companyManagementService.createCompany(company).subscribe({
+      this.companyManagementService.addCompany(company).subscribe({
         next: (created) => {
           console.log('Response:', created)
         }

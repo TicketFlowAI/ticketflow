@@ -37,12 +37,12 @@ export class UserInfoComponent {
   readonly user = inject<UserModel>(MAT_DIALOG_DATA);
 
   private companyManagementService = inject(CompanyManagementService)
-  userCompany!: CompanyModel
+  userCompany: CompanyModel | null = null;
 
   cosntructor() {
-    this.companyManagementService.getCompanyById(this.user.company_id).subscribe({
+    this.companyManagementService.getOneCompany(this.user.company_id).subscribe({
       next: (company) => {
-        this.userCompany = company[0]
+        this.userCompany = company
       }
     })
     this.userCompany = new CompanyModel()

@@ -60,7 +60,7 @@ export class ManageServiceTaxComponent {
     if (this.serviceTaxData) {
       serviceTax.id = this.serviceTaxData.id
       
-      this.serviceManagementService.updateOneServiceTax(serviceTax).subscribe({
+      this.serviceManagementService.updateServiceTax(serviceTax).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }
@@ -68,7 +68,7 @@ export class ManageServiceTaxComponent {
       )
     }
     else {
-      this.serviceManagementService.addOneServiceTax(serviceTax).subscribe({
+      this.serviceManagementService.addServiceTax(serviceTax).subscribe({
         next: (created) => {
           console.log('Response:', created)
         }

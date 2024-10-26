@@ -98,7 +98,7 @@ export class ManageUserComponent {
       )
     }
     else {
-      this.userManagementService.createUser(user).subscribe({
+      this.userManagementService.addUser(user).subscribe({
         next: (created) => {
           console.log('Response:', created)
         }

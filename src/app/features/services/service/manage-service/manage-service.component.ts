@@ -96,7 +96,7 @@ export class ManageServiceComponent {
     if (this.serviceData) {
       service.id = this.serviceData.id
       
-      this.serviceManagementService.updateOneService(service).subscribe({
+      this.serviceManagementService.updateService(service).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }
@@ -104,7 +104,7 @@ export class ManageServiceComponent {
       )
     }
     else {
-      this.serviceManagementService.addOneService(service).subscribe({
+      this.serviceManagementService.addService(service).subscribe({
         next: (created) => {
           console.log('Response:', created)
         }

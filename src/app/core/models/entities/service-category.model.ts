@@ -1,7 +1,13 @@
-export interface IServiceCategoryApiResponse {
+export interface IServiceCategoriesApiResponse {
   success: boolean;
   data: IServiceCategoryModel[];
 }
+
+export interface IServiceCategoryApiResponse {
+  success: boolean;
+  data: IServiceCategoryModel;
+}
+
 
 export interface IServiceCategoryModel {
   id: number;

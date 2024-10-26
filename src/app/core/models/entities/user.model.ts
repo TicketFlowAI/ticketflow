@@ -1,6 +1,11 @@
-export interface IUserModelResponse {
+export interface IUsersModelResponse {
   success: boolean;
   data: IUserModel[];
+}
+
+export interface IUserModelResponse {
+  success: boolean;
+  data: IUserModel;
 }
 
 export interface IUserModel {
@@ -9,9 +14,7 @@ export interface IUserModel {
   lastname: string;
   email: string;
   company_id: number;
-  deleted_at: Date | null;
-  created_at: Date | null;
-  updated_at: Date | null;
+  company_name: string;
 }
 
 export class UserModel implements IUserModel {
@@ -21,9 +24,7 @@ export class UserModel implements IUserModel {
     public lastname: string = '',
     public email: string = '',
     public company_id: number = 0,
-    public deleted_at: Date | null = null,
-    public created_at: Date | null = null,
-    public updated_at: Date | null = null,
+    public company_name: string = '',
   ) {
   }
 }

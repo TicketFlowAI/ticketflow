@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IServiceTaxApiResponse, ServiceTaxModel } from '../../models/entities/service-tax.model';
+import { IServiceTaxApiResponse, IServiceTaxesApiResponse } from '../../models/entities/service-tax.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +18,15 @@ export class ServiceTaxService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  //Methods
-  getAllServiceTaxes(): Observable<IServiceTaxApiResponse> {
+  getServiceTaxes(): Observable<IServiceTaxesApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-    return this.http.get<IServiceTaxApiResponse>(`${this.apiServiceTax}`, {
+    return this.http.get<IServiceTaxesApiResponse>(`${this.apiServiceTax}`, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  getOneServiceTax(id: number): Observable<IServiceTaxApiResponse> {
+  getServiceTax(id: number): Observable<IServiceTaxApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.get<IServiceTaxApiResponse>(`${this.apiServiceTax}/${id}`, {
       headers: customHeaders,

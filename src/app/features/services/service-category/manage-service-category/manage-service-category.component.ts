@@ -56,7 +56,7 @@ export class ManageServiceCategoryComponent {
     if (this.serviceCategoryData) {
       serviceCategory.id = this.serviceCategoryData.id
       
-      this.serviceManagementService.updateOneServiceCategory(serviceCategory).subscribe({
+      this.serviceManagementService.updateServiceCategory(serviceCategory).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }
@@ -64,7 +64,7 @@ export class ManageServiceCategoryComponent {
       )
     }
     else {
-      this.serviceManagementService.addOneServiceCategory(serviceCategory).subscribe({
+      this.serviceManagementService.addServiceCategory(serviceCategory).subscribe({
         next: (created) => {
           console.log('Response:', created)
         }

@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 import { Observable } from 'rxjs';
-import { IServiceApiResponse, ServiceModel } from '../../models/entities/service.model';
+import { IServiceApiResponse, IServicesApiResponse } from '../../models/entities/service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +18,15 @@ export class ServiceService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getAllServices(): Observable<IServiceApiResponse> {
+  getServices(): Observable<IServicesApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-    return this.http.get<IServiceApiResponse>(`${this.apiServices}`, {
+    return this.http.get<IServicesApiResponse>(`${this.apiServices}`, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  getOneService(id: number): Observable<IServiceApiResponse> {
+  getService(id: number): Observable<IServiceApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.get<IServiceApiResponse>(`${this.apiServices}/${id}`, {
       headers: customHeaders,

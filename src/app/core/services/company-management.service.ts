@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { catchError, map, Observable, of } from 'rxjs';
 import { CompanyService } from '../api/servicios-mindsoftdev/company.service';
 import { CompanyModel } from '../models/entities/company.model';
-import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +12,22 @@ export class CompanyManagementService {
   getAllCompanies(): Observable<CompanyModel[] | []> {
     return this.companyService.getCompanies().pipe(
       map((companies) => companies.data),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of([]);
       })
     )
   }
 
-  getCompanyById(id: number): Observable<CompanyModel[] | []> {
+  getOneCompany(id: number): Observable<CompanyModel | null> {
     return this.companyService.getCompany(id).pipe(
-      map((companies) => companies.data),
-      catchError((error) => {
-        console.log(error);
-        return of([]);
+      map((company) => company.data),
+      catchError(() => {
+        return of(null);
       })
     )
   }
 
-  createCompany(newCompany: CompanyModel): Observable<boolean> {
+  addCompany(newCompany: CompanyModel): Observable<boolean> {
     return this.companyService.createCompany(newCompany).pipe(
       map(() => true),
       catchError(() => {

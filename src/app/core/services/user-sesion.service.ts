@@ -2,7 +2,6 @@ import { effect, inject, Injectable, signal } from '@angular/core';
 import { UserModel } from '../models/entities/user.model';
 import { UserService } from '../api/servicios-mindsoftdev/user.service';
 import { AuthService } from './auth.service';
-import { HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +22,9 @@ export class UserSessionService {
 
   //METHODS
   checkUserInitialState() {
-    this.userService.getUser().subscribe({
+    this.userService.getMyUser().subscribe({
       next: (user) => {
-        if(user){
+        if(user.data){
           this.authService.isAuthenticated.set(true);
         }
         else {
@@ -37,9 +36,9 @@ export class UserSessionService {
   }
 
   getUser() {
-    this.userService.getUser().subscribe({
+    this.userService.getMyUser().subscribe({
       next: (user) => {
-        if(user) this.currentUser.set(user);
+        if(user.success) this.currentUser.set(user.data);
       }
     })
   }

@@ -1,6 +1,11 @@
-export interface ICompanyApiResponse {
+export interface ICompaniesApiResponse {
   success: boolean;
   data: ICompanyModel[];
+}
+
+export interface ICompanyApiResponse {
+  success: boolean;
+  data: ICompanyModel;
 }
 
 export interface ICompanyModel {

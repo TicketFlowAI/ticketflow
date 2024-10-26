@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
-import { ITicketMessageApiResponse } from '../../models/entities/ticket-message.model';
+import { ITicketMessageApiResponse, ITicketMessagesApiResponse } from '../../models/entities/ticket-message.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,48 +11,48 @@ import { Observable } from 'rxjs';
 export class TicketMessageService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiTickets = this.BASE_URL + '/api/tickets'
+  private apiTicketsMessage = this.BASE_URL + '/api/messages'
 
   //Services
   http = inject(HttpClient)
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getAllServiceTickets(): Observable<ITicketMessageApiResponse> {
+  getTicketMessages(): Observable<ITicketMessagesApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-    return this.http.get<ITicketMessageApiResponse>(`${this.apiTickets}`, {
+    return this.http.get<ITicketMessagesApiResponse>(`${this.apiTicketsMessage}`, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  getOneServiceTicket(id: number): Observable<ITicketMessageApiResponse> {
+  getTicketMessage(id: number): Observable<ITicketMessageApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<ITicketMessageApiResponse>(`${this.apiTickets}/${id}`, {
+    return this.http.get<ITicketMessageApiResponse>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  createServiceTicket(serviceTicket: any): Observable<HttpResponse<any>> {
+  createTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiTickets}`, serviceTicket, {
+    return this.http.post<HttpResponse<any>>(`${this.apiTicketsMessage}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  updateServiceTicket(serviceTicket: any): Observable<HttpResponse<any>> {
+  updateTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiTickets}`, serviceTicket, {
+    return this.http.post<HttpResponse<any>>(`${this.apiTicketsMessage}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
     })
   }
 
-  deleteServiceTicket(id: number): Observable<HttpResponse<any>> {
+  deleteTicketMessage (id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiTickets}/${id}`, {
+    return this.http.delete<HttpResponse<any>>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
     })

@@ -1,6 +1,11 @@
-export interface IServiceApiResponse {
+export interface IServicesApiResponse {
     success: boolean;
     data: IServiceModel[];
+}
+
+export interface IServiceApiResponse {
+    success: boolean;
+    data: IServiceModel;
 }
 
 export interface IServiceModel {

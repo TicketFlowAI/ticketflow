@@ -1,6 +1,11 @@
-export interface IServiceTermApiResponse {
+export interface IServiceTermsApiResponse {
     success: boolean;
     data: IServiceTermModel[];
+}
+
+export interface IServiceTermApiResponse {
+    success: boolean;
+    data: IServiceTermModel;
 }
 
 export interface IServiceTermModel {

@@ -15,161 +15,136 @@ export class ServiceManagement {
   serviceTaxService: ServiceTaxService = inject(ServiceTaxService)
   serviceCategoryService: ServiceCategoryService = inject(ServiceCategoryService)
 
-  getOneCompleteService() {
-    return this.serviceService.getAllServices().pipe(
+  getAllServices(): Observable<ServiceModel[] | []> {
+    return this.serviceService.getServices().pipe(
       map((services) => services.data),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
+        return of([]);
+      })
+    );
+  }
+
+  getOneService(id: number): Observable<ServiceModel | null> {
+    return this.serviceService.getService(id).pipe(
+      map((service) => service.data),
+      catchError(() => {
         return of(null);
       })
     );
   }
 
-  getAllServices(): Observable<ServiceModel[] | []> {
-    return this.serviceService.getAllServices().pipe(
-      map((response) => response.data),
-      catchError((error) => {
-        console.log(error);
-        return of([]);
+  addService(serviceModelToAdd: ServiceModel){
+    return this.serviceService.createService(serviceModelToAdd).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
+      })
+    );
+  }
+
+  updateService(serviceModelToUpdate: ServiceModel) {
+    return this.serviceService.updateService(serviceModelToUpdate).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
+      })
+    );
+  }
+
+  deleteService(id: number) {
+    return this.serviceService.deleteService(id).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
       })
     );
   }
 
   getAllServiceTaxes(): Observable<ServiceTaxModel[] | []> {
-    return this.serviceTaxService.getAllServiceTaxes().pipe(
+    return this.serviceTaxService.getServiceTaxes().pipe(
+      map((serviceTaxes) => serviceTaxes.data),
+      catchError(() => {
+        return of([]);
+      })
+    );
+  }
+
+  getOneServiceTax(id: number) {
+    return this.serviceTaxService.getServiceTax(id).pipe(
       map((serviceTax) => serviceTax.data),
-      catchError((error) => {
-        console.log(error);
-        return of([]);
-      })
-    );
-  }
-
-  getAllServiceCategories(): Observable<ServiceCategoryModel[] | []> {
-    return this.serviceCategoryService.getAllServiceCategories().pipe(
-      map((serviceCategories) => serviceCategories.data),
-      catchError((error) => {
-        console.log(error);
-        return of([]);
-      })
-    );
-  }
-
-  getSigleService(id: number): Observable<ServiceModel | null> {
-    return this.serviceService.getOneService(id).pipe(
-      map((service) => service.data[0]),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of(null);
       })
     );
   }
 
-  getSigleServiceTax(id: number) {
-    return this.serviceTaxService.getOneServiceTax(id).pipe(
-      map((serviceTax) => serviceTax.data[0]),
-      catchError((error) => {
-        console.log(error);
-        return of(null);
-      })
-    );
-  }
-
-  getSigleServiceCategory(id: number) {
-    return this.serviceCategoryService.getOneServiceCategory(id).pipe(
-      map((serviceCategory) => serviceCategory.data[0]),
-      catchError((error) => {
-        console.log(error);
-        return of(null);
-      })
-    );
-  }
-
-  addOneService(serviceModelToAdd: ServiceModel){
-    return this.serviceService.createService(serviceModelToAdd).pipe(
-      map(() => true),
-      catchError((error) => {
-        console.log(error);
-        return of(false);
-      })
-    );
-  }
-
-  addOneServiceTax(serviceTaxModelToAdd: ServiceTaxModel) {
+  addServiceTax(serviceTaxModelToAdd: ServiceTaxModel) {
     return this.serviceTaxService.createServiceTax(serviceTaxModelToAdd).pipe(
       map(() => true),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of(false);
       })
     );
   }
 
-  addOneServiceCategory(serviceCategoryModelToAdd: ServiceCategoryModel) {
-    return this.serviceCategoryService.createServiceCategory(serviceCategoryModelToAdd).pipe(
-      map(() => true),
-      catchError((error) => {
-        console.log(error);
-        return of(false);
-      })
-    );
-  }
-
-  updateOneService(serviceModelToUpdate: ServiceModel) {
-    return this.serviceService.updateService(serviceModelToUpdate).pipe(
-      map(() => true),
-      catchError((error) => {
-        console.log(error);
-        return of(false);
-      })
-    );
-  }
-
-  updateOneServiceTax(serviceTaxModelToUpdate: ServiceTaxModel) {
+  updateServiceTax(serviceTaxModelToUpdate: ServiceTaxModel) {
     return this.serviceTaxService.updateServiceTax(serviceTaxModelToUpdate).pipe(
       map(() => true),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of(false);
       })
     );
   } 
 
-  updateOneServiceCategory(serviceCategoryModelToUpdate: ServiceCategoryModel) {
-    return this.serviceCategoryService.updateServiceCategory(serviceCategoryModelToUpdate).pipe(
-      map(() => true),
-      catchError((error) => {
-        console.log(error);
-        return of(false);
-      })
-    );
-  }
-
-  deleteOneService(id: number) {
-    return this.serviceService.deleteService(id).pipe(
-      map(() => true),
-      catchError((error) => {
-        console.log(error);
-        return of(false);
-      })
-    );
-  }
-
-  deleteOneServiceTax(id: number) {
+  deleteServiceTax(id: number) {
     return this.serviceTaxService.deleteServiceTax(id).pipe(
       map(() => true),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of(false);
       })
     );
   }
 
-  deleteOneServiceCategory(id: number): Observable<boolean> {
+  getAllServiceCategories(): Observable<ServiceCategoryModel[] | []> {
+    return this.serviceCategoryService.getServiceCategories().pipe(
+      map((serviceCategories) => serviceCategories.data),
+      catchError(() => {
+        return of([]);
+      })
+    );
+  }
+
+  getOneServiceCategory(id: number) {
+    return this.serviceCategoryService.getServiceCategory(id).pipe(
+      map((serviceCategory) => serviceCategory.data),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
+
+  addServiceCategory(serviceCategoryModelToAdd: ServiceCategoryModel) {
+    return this.serviceCategoryService.createServiceCategory(serviceCategoryModelToAdd).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
+      })
+    );
+  }
+
+  updateServiceCategory(serviceCategoryModelToUpdate: ServiceCategoryModel) {
+    return this.serviceCategoryService.updateServiceCategory(serviceCategoryModelToUpdate).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
+      })
+    );
+  }
+
+  deleteServiceCategory(id: number): Observable<boolean> {
     return this.serviceCategoryService.deleteServiceCategory(id).pipe(
       map(() => true),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         return of(false);
       })
     );

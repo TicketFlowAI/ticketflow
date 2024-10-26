@@ -1,6 +1,11 @@
-export interface IServiceTaxApiResponse {
+export interface IServiceTaxesApiResponse {
     success: boolean;
     data: IServiceTaxModel[];
+}
+
+export interface IServiceTaxApiResponse {
+    success: boolean;
+    data: IServiceTaxModel;
 }
 
 export interface IServiceTaxModel {

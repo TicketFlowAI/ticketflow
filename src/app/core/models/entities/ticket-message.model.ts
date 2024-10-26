@@ -1,6 +1,11 @@
-export interface ITicketMessageApiResponse {
+export interface ITicketMessagesApiResponse {
   success: boolean;
   data: ITicketMessageModel[];
+}
+
+export interface ITicketMessageApiResponse {
+  success: boolean;
+  data: ITicketMessageModel;
 }
 
 export interface ITicketMessageModel {
