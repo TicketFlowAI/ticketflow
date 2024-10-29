@@ -35,7 +35,7 @@ export class ServiceService {
   }
 
   createService(service: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<HttpResponse<any>>(`${this.apiServices}`, service, {
       headers: customHeaders,
       withCredentials: true,
@@ -43,8 +43,8 @@ export class ServiceService {
   }
 
   updateService(service: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiServices}`, service, {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<HttpResponse<any>>(`${this.apiServices}/${service.id}`, service, {
       headers: customHeaders,
       withCredentials: true,
     })

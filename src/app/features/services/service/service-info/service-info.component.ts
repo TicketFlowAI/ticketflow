@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -9,9 +10,6 @@ import {
 } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceModel } from '../../../../core/models/entities/service.model';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-service-info',
@@ -23,8 +21,6 @@ import { CommonModule } from '@angular/common';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatFormFieldModule,
-    MatInputModule,
   ],
   templateUrl: './service-info.component.html',
   styleUrl: './service-info.component.scss',

@@ -29,13 +29,13 @@ export class ServiceContractService {
  }
 
  createServiceContract(serviceContract: any): Observable<HttpResponse<any>> {
-   const customHeader = this.customHeadersService.addAppJson().getHeaders();
+   const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
    return this.http.post<any>(`${this.apiServiceContract}`, serviceContract, { headers: customHeader, withCredentials: true, observe: 'response'});
  }
 
  updateServiceContract(serviceContract: any): Observable<HttpResponse<any>> {
-   const customHeader = this.customHeadersService.addAppJson().getHeaders();
-   return this.http.put<any>(`${this.apiServiceContract}`, serviceContract ,{ headers: customHeader, withCredentials: true, observe: 'response' });
+   const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+   return this.http.put<any>(`${this.apiServiceContract}/${serviceContract.id}`, serviceContract ,{ headers: customHeader, withCredentials: true, observe: 'response' });
  }
 
  deleteServiceContract(id: number): Observable<HttpResponse<any>> {

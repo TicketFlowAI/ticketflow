@@ -78,6 +78,64 @@
         "RETURN": "Regresar"
       }
     },
+    "SERVICE-CONTRACTS": {
+      "SEARCH": "Buscar...",
+
+      "READ-SERVICE-CONTRACT-INFO": "Ver Detalles",
+      "READ-SERVICE-CONTRACT-INFO-DESC": "De clic aquí para poder ver la información del servicio contratado",
+
+      "EDIT-SERVICE-CONTRACT-INFO": "Editar Servicio Contratado",
+      "EDIT-SERVICE-CONTRACT-INFO-DESC": "De clic aquí para poder editar el servicio contratado",
+
+      "DELETE": "Borrar",
+      
+      "ADMIN": {
+        "SERVICE-CONTRACTS": "Administrar Contrataciones",
+        "CREATE-SERVICE-CONTRACT": "Nueva Contratación",
+        "MANAGE-SERVICE-CONTRACT-TERMS": "Periodos"
+      },
+
+      "SERVICE-CONTRACT-MANAGEMENT": {
+        "CREATE-SERVICE-CONTRACT": "Crear Servicio Contratado",
+        "EDIT-SERVICE-CONTRACT": "Editar Servicio Contratado",
+        "SERVICE-CONTRACT-COMPANY": "Empresa",
+        "SERVICE-CONTRACT-SERVICE": "Servicio",
+        "SERVICE-CONTRACT-TERM": "Periodo",
+        "SAVE": "Guardar"
+      },
+
+      "SERVICE-CONTRACT-INFO": {
+        "TITLE": "Información del Servicio Contratado",
+        "SERVICE-CONTRACT-COMPANY": "Empresa",
+        "SERVICE-CONTRACT-SERVICE": "Servicio",
+        "SERVICE-CONTRACT-TERM": "Periodo",
+        "RETURN": "Regresar"
+      }
+    },
+    "SERVICE-CONTRACT-TERMS": {
+      "SEARCH": "Buscar...",
+
+      "EDIT-SERVICE-CONTRACT-TERM-INFO": "Editar Periodo",
+      "EDIT-SERVICE-CONTRACT-TERM-INFO-DESC": "De clic aquí para poder editar perido",
+
+      "DELETE": "Borrar",
+      
+      "ADMIN": {
+        "SERVICE-CONTRACT-TERMS": "Administrar Periodos",
+        "RETURN": "Regresar",
+        "CREATE-SERVICE-CONTRACT-TERM": "Crear Nuevo Periodo",
+        "MONTH": "Mes",
+        "MONTHS": "Meses"
+      },
+
+      "SERVICE-CONTRACT-TERM-MANAGEMENT": {
+        "CREATE-SERVICE-CONTRACT-TERM": "Crear Periodo",
+        "EDIT-SERVICE-CONTRACT-TERM": "Editar Periodo",
+        "SERVICE-CONTRACT-TERM-TERM": "Periodo",
+        "SERVICE-CONTRACT-TERM-MONTHS": "Meses",
+        "SAVE": "Guardar"
+      }
+    },
     "SERVICES": {
       "SEARCH": "Buscar...",
 
@@ -97,8 +155,8 @@
       },
 
       "SERVICE-MANAGEMENT": {
-        "CREATE-SERVICE": "Crear Empresa",
-        "EDIT-SERVICE": "Editar Empresa",
+        "CREATE-SERVICE": "Crear Servicio",
+        "EDIT-SERVICE": "Editar Servicio",
         "SERVICE-DESC": "Descripción",
         "SERVICE-PRICE": "Precio",
         "SERVICE-CATEGORY": "Categoría",
@@ -180,8 +238,7 @@
         "USER-LASTNAME": "Apellido",
         "USER-EMAIL": "Correo electrónico",
         "USER-COMPANY": "Empresa",
-        "USER-CREATE-DATE": "Fecha de creación",
-        "USER-UPDATE-DATE": "Fecha de actualización",
+        "USER-ROLE": "Rol",
         "SAVE": "Guardar"
       },
       "USER-INFO": {
@@ -190,8 +247,7 @@
         "USER-LASTNAME": "Apellido",
         "USER-EMAIL": "Correo electrónico",
         "USER-COMPANY": "Empresa",
-        "USER-CREATE-DATE": "Fecha de creación",
-        "USER-UPDATE-DATE": "Fecha de actualización",
+        "USER-ROLE": "Rol",
         "RETURN": "Regresar"
       }
     }
@@ -201,6 +257,7 @@
     "HEADER": {
       "ADMIN": {
         "COMPANY": "Empresas",
+        "SERVICE-CONTRACTS": "Contrataciones",
         "SERVICES": "Servicios",
         "USERS": "Usuarios",
         "TICKETS": "Tickets"

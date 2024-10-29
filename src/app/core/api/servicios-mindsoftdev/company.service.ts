@@ -38,18 +38,8 @@ export class CompanyService {
     );
   }
 
-  updateCompany(company: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-
-    return this.http.put<any>(`${this.apiCompany}`, company, {
-      headers: customHeaders,
-      withCredentials: true,
-    }
-    );
-  } 
-
   createCompany(company: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
 
     return this.http.post<HttpResponse<any>>(`${this.apiCompany}`, company, {
       headers: customHeaders,
@@ -57,6 +47,16 @@ export class CompanyService {
     }
     );
   }
+
+  updateCompany(company: any): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
+
+    return this.http.put<any>(`${this.apiCompany}/${company.id}`, company, {
+      headers: customHeaders,
+      withCredentials: true,
+    }
+    );
+  } 
 
   deleteCompany(id: number) {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()

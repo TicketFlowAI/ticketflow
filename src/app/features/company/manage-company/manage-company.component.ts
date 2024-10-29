@@ -38,13 +38,13 @@ export class ManageCompanyComponent {
   readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
   readonly companyData = inject<CompanyModel>(MAT_DIALOG_DATA);
 
-  nameFormControl = new FormControl('', [Validators.required])
-  dniFormControl = new FormControl('', [Validators.required])
-  emailFormControl = new FormControl('', [Validators.required, Validators.email])
-  addressFormControl = new FormControl('', [Validators.required])
-  phoneFormControl = new FormControl('', [Validators.required])
-  stateFormControl = new FormControl('', [Validators.required])
-  cityFormControl = new FormControl('', [Validators.required])
+  nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  dniFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  emailFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] })
+  addressFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  phoneFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  stateFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  cityFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
 
   companyForm = new FormGroup({
     name: this.nameFormControl,
@@ -75,13 +75,13 @@ export class ManageCompanyComponent {
     const formValue = this.companyForm.value
     let company = new CompanyModel(
       0,
-      formValue.name ?? '',
-      formValue.dni ?? '',
-      formValue.email ?? '',
-      formValue.address ?? '',
-      formValue.phone ?? '',
-      formValue.state ?? '',
-      formValue.city ?? ''
+      formValue.name,
+      formValue.dni,
+      formValue.email,
+      formValue.address,
+      formValue.phone,
+      formValue.state,
+      formValue.city
     )
 
     if (this.companyData) {

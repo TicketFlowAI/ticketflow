@@ -35,7 +35,7 @@ export class ServiceTaxService {
   }
 
   createServiceTax(serviceTax: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<HttpResponse<any>>(`${this.apiServiceTax}`, serviceTax, {
       headers: customHeaders,
       withCredentials: true,
@@ -43,8 +43,8 @@ export class ServiceTaxService {
   }
 
   updateServiceTax(serviceTax: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiServiceTax}`, serviceTax, {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<HttpResponse<any>>(`${this.apiServiceTax}/${serviceTax.id}`, serviceTax, {
       headers: customHeaders,
       withCredentials: true,
     })

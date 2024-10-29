@@ -35,7 +35,7 @@ export class TicketMessageService {
   }
 
   createTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<HttpResponse<any>>(`${this.apiTicketsMessage}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
@@ -43,8 +43,8 @@ export class TicketMessageService {
   }
 
   updateTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiTicketsMessage}`, ticketMessage, {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<HttpResponse<any>>(`${this.apiTicketsMessage}/${ticketMessage.id}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
     })

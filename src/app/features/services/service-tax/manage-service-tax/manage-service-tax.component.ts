@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.model';
-import { ServiceManagement } from '../../../../core/services/service-management.service';
+import { ServiceManagementService } from '../../../../core/services/service-management.service';
 
 @Component({
   selector: 'app-manage-service-tax',
@@ -27,12 +27,12 @@ import { ServiceManagement } from '../../../../core/services/service-management.
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceTaxComponent {
-  private serviceManagementService = inject(ServiceManagement);
+  private serviceManagementService = inject(ServiceManagementService);
   readonly dialogRef = inject(MatDialogRef<ManageServiceTaxComponent>);
   readonly serviceTaxData = inject<ServiceTaxModel>(MAT_DIALOG_DATA);
 
-  taxDescriptionFormControl = new FormControl('', [Validators.required])
-  taxValueFormControl = new FormControl(0, [Validators.required])
+  taxDescriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  taxValueFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
 
   serviceTaxForm = new FormGroup({
     description: this.taxDescriptionFormControl,
@@ -53,14 +53,14 @@ export class ManageServiceTaxComponent {
     const formValue = this.serviceTaxForm.value
     let serviceTax = new ServiceTaxModel(
       0,
-      formValue.description ?? '',
-      formValue.value ?? 0,
+      formValue.description,
+      formValue.value,
     )
 
     if (this.serviceTaxData) {
       serviceTax.id = this.serviceTaxData.id
       
-      this.serviceManagementService.updateServiceTax(serviceTax).subscribe({
+      this.serviceManagementService.editServiceTax(serviceTax).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }

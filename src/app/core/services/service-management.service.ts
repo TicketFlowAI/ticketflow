@@ -10,7 +10,7 @@ import { ServiceCategoryModel } from '../models/entities/service-category.model'
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceManagement {
+export class ServiceManagementService {
   serviceService: ServiceService = inject(ServiceService)
   serviceTaxService: ServiceTaxService = inject(ServiceTaxService)
   serviceCategoryService: ServiceCategoryService = inject(ServiceCategoryService)
@@ -42,7 +42,7 @@ export class ServiceManagement {
     );
   }
 
-  updateService(serviceModelToUpdate: ServiceModel) {
+  editService(serviceModelToUpdate: ServiceModel) {
     return this.serviceService.updateService(serviceModelToUpdate).pipe(
       map(() => true),
       catchError(() => {
@@ -87,7 +87,7 @@ export class ServiceManagement {
     );
   }
 
-  updateServiceTax(serviceTaxModelToUpdate: ServiceTaxModel) {
+  editServiceTax(serviceTaxModelToUpdate: ServiceTaxModel) {
     return this.serviceTaxService.updateServiceTax(serviceTaxModelToUpdate).pipe(
       map(() => true),
       catchError(() => {
@@ -132,7 +132,7 @@ export class ServiceManagement {
     );
   }
 
-  updateServiceCategory(serviceCategoryModelToUpdate: ServiceCategoryModel) {
+  editServiceCategory(serviceCategoryModelToUpdate: ServiceCategoryModel) {
     return this.serviceCategoryService.updateServiceCategory(serviceCategoryModelToUpdate).pipe(
       map(() => true),
       catchError(() => {

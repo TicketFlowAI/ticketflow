@@ -7,15 +7,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ServiceModel } from '../../../../core/models/entities/service.model';
-import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink } from '@angular/router';
+import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
+import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
+import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
+
 
 @Component({
-  selector: 'app-all-services',
+  selector: 'app-all-service-contracts',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,35 +30,34 @@ import { RouterLink } from '@angular/router';
     MatIconModule,
     FaIconComponent,
   ],
-  templateUrl: './all-services.component.html',
-  styleUrl: './all-services.component.scss',
+  templateUrl: './all-service-contracts.component.html',
+  styleUrl: './all-service-contracts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AllServicesComponent {
+export class AllServiceContractsComponent {
   protected readonly faPencil = faPencil;
   protected readonly faInfoCircle = faInfoCircle;
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
 
-  private serviceManagementService = inject(ServiceManagementService)
+  private serviceContractManagementService = inject(ServiceContractManagementService)
   private dialogManagerService = inject(DialogManagerService)
   private cdr = inject(ChangeDetectorRef)
 
-  services: ServiceModel[] = []
-  filteredServices: ServiceModel[] = [];
-  pagedServices: ServiceModel[] = [];
+  serviceContracts: ServiceContractModel[] = []
+  filteredServiceContracts: ServiceContractModel[] = [];
+  pagedServiceContracts: ServiceContractModel[] = [];
 
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
   
   ngOnInit(): void {
-    this.serviceManagementService.getAllServices().subscribe({
+    this.serviceContractManagementService.getAllServiceContracts().subscribe({
       next: (response) => {
-
-        this.services = response;
-        this.filteredServices = this.services;
-        this.updatePagedServices();
+        this.serviceContracts = response;
+        this.filteredServiceContracts = this.serviceContracts;
+        this.updatePagedServiceContracts();
         this.cdr.detectChanges();
       }
     });
@@ -66,37 +66,37 @@ export class AllServicesComponent {
   onFilterChange(): void {
     const filterText = this.filterText.toLowerCase();
 
-    this.filteredServices = this.services.filter(service =>
-      service.description.toLowerCase().includes(filterText) ||
-      service.category.toLowerCase().includes(filterText) ||
-      service.price.toString().toLowerCase().includes(filterText) ||
-      service.tax_description.toLowerCase().includes(filterText)
+    this.filteredServiceContracts = this.serviceContracts.filter(service =>
+      service.company.toLowerCase().includes(filterText) ||
+      service.service.toLowerCase().includes(filterText) ||
+      service.service_term.toLowerCase().includes(filterText) ||
+      service.price.toString().toLowerCase().includes(filterText)
     );
     this.pageIndex = 0;
-    this.updatePagedServices();
+    this.updatePagedServiceContracts();
   }
 
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updatePagedServices();
+    this.updatePagedServiceContracts();
   }
 
-  private updatePagedServices(): void {
+  private updatePagedServiceContracts(): void {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.pagedServices = this.filteredServices.slice(startIndex, endIndex);
+    this.pagedServiceContracts = this.filteredServiceContracts.slice(startIndex, endIndex);
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar el servicio del listado?")
+    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar este servicio contratado del listado?")
   }
 
-  openServiceInfoDialog(service: ServiceModel) {
-    this.dialogManagerService.openServiceInfoDialog(service)
+  openServiceContractInfoDialog(serviceContract: ServiceContractModel) {
+    this.dialogManagerService.openServiceContractInfoDialog(serviceContract)
   }
 
-  openServiceManageDialog(service: ServiceModel | null) {
-    this.dialogManagerService.openManageServiceDialog(service)
+  openServiceContractManageDialog(serviceContract: ServiceContractModel | null) {
+    this.dialogManagerService.openManageServiceContractDialog(serviceContract)
   }
 }

@@ -8,10 +8,10 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CompanyModel } from '../../../core/models/entities/company.model';
+import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
 
 @Component({
-  selector: 'app-company-info',
+  selector: 'app-service-contract-info',
   standalone: true,
   imports: [
     TranslocoDirective,
@@ -20,13 +20,13 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
     MatDialogActions,
     MatDialogClose,
   ],
-  templateUrl: './company-info.component.html',
-  styleUrl: './company-info.component.scss',
+  templateUrl: './service-contract-info.component.html',
+  styleUrl: './service-contract-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CompanyInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<CompanyInfoComponent>);
-  readonly company = inject<CompanyModel>(MAT_DIALOG_DATA);
+export class ServiceContractInfoComponent {
+  readonly dialogRef = inject(MatDialogRef<ServiceContractInfoComponent>);
+  readonly serviceContract = inject<ServiceContractModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {
     this.dialogRef.close();

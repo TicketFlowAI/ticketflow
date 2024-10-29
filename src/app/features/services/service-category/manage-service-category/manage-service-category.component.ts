@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ServiceManagement } from '../../../../core/services/service-management.service';
+import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
 
 @Component({
@@ -27,16 +27,16 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceCategoryComponent {
-  private serviceManagementService = inject(ServiceManagement);
+  private serviceManagementService = inject(ServiceManagementService);
   readonly dialogRef = inject(MatDialogRef<ManageServiceCategoryComponent>);
   readonly serviceCategoryData = inject<ServiceCategoryModel>(MAT_DIALOG_DATA);
 
-  categoryFormControl = new FormControl('', [Validators.required])
+  categoryFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
 
   serviceCategoryForm = new FormGroup({
     category: this.categoryFormControl,
   })
-
+  
   serviceCategory: ServiceCategoryModel | null = null;
 
   ngOnInit(): void {
@@ -50,13 +50,13 @@ export class ManageServiceCategoryComponent {
     const formValue = this.serviceCategoryForm.value
     let serviceCategory = new ServiceCategoryModel(
       0,
-      formValue.category ?? '',
+      formValue.category,
     )
 
     if (this.serviceCategoryData) {
       serviceCategory.id = this.serviceCategoryData.id
       
-      this.serviceManagementService.updateServiceCategory(serviceCategory).subscribe({
+      this.serviceManagementService.editServiceCategory(serviceCategory).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }

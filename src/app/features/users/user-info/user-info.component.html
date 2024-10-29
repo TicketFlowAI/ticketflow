@@ -30,7 +30,15 @@
                 <p class="fs-6 fw-medium">{{t ('USER-COMPANY')}}:</p>
             </div>
             <div class="col-md-6">
-                <p class="fs-6">{{userCompany.name}}</p>
+                <p class="fs-6">{{user.company_name}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('USER-ROLE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{user.role[0]}}</p>
             </div>
         </div>
     </mat-dialog-content>

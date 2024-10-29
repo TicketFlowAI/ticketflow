@@ -1,0 +1,35 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SERVICE-CONTRACT-TERMS.SERVICE-CONTRACT-TERM-MANAGEMENT'">
+    @if(!serviceContractTermData) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-SERVICE-CONTRACT-TERM')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-SERVICE-CONTRACT-TERM')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="serviceContractTermForm">
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('SERVICE-CONTRACT-TERM-TERM')}}</mat-label>
+                    <input matInput [formControl]="termFormControl">
+                    <mat-icon matSuffix>description</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('SERVICE-CONTRACT-TERM-MONTHS')}}</mat-label>
+                    <input type="number" matInput [formControl]="monthsFormControl">
+                    <mat-icon matSuffix>date_range</mat-icon>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

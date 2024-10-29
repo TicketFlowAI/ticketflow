@@ -44,10 +44,10 @@ export class ManageUserComponent {
   readonly dialogRef = inject(MatDialogRef<UserManagementService>);
   readonly userData = inject<UserModel>(MAT_DIALOG_DATA);
 
-  nameFormControl = new FormControl('', [Validators.required])
-  lastnameFormControl = new FormControl('', [Validators.required])
-  emailFormControl = new FormControl('', [Validators.required, Validators.email])
-  companyFormControl = new FormControl(0, [Validators.required])
+  nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  lastnameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  emailFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] })
+  companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
 
   userForm = new FormGroup({
     name: this.nameFormControl,
@@ -81,10 +81,12 @@ export class ManageUserComponent {
     const formValue = this.userForm.value
     let user = new UserModel(
       0,
-      formValue.name ?? '',
-      formValue.lastname ?? '',
-      formValue.email ?? '',
-      formValue.company ?? 1,
+      formValue.name,
+      formValue.lastname,
+      formValue.email,
+      formValue.company,
+      [],
+      ''
     )
 
     if (this.userData) {

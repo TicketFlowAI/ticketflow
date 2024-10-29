@@ -14,6 +14,7 @@ export interface IUserModel {
   lastname: string;
   email: string;
   company_id: number;
+  role: string[]
   company_name: string;
 }
 
@@ -24,6 +25,7 @@ export class UserModel implements IUserModel {
     public lastname: string = '',
     public email: string = '',
     public company_id: number = 0,
+    public role: string[] = [],
     public company_name: string = '',
   ) {
   }

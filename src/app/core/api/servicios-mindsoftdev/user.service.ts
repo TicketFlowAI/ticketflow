@@ -41,7 +41,7 @@ export class UserService {
 
   updateUser(user: any): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.put<any>(`${this.apiUsers}`, user ,{ headers: customHeader, withCredentials: true, observe: 'response' });
+    return this.http.put<any>(`${this.apiUsers}/${user.id}`, user ,{ headers: customHeader, withCredentials: true, observe: 'response' });
   }
 
   deleteUser(id: number): Observable<HttpResponse<any>> {

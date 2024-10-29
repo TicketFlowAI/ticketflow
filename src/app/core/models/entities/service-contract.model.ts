@@ -10,17 +10,25 @@ export interface IServiceContractApiResponse {
 
 export interface IServiceContractModel {
     id: number;
-    comapany_id: number;
+    company_id: number;
     service_id: number;
     service_term_id: number;
+    company: string;
+    service: string;
+    service_term: string;
+    price: number;
 }
 
 export class ServiceContractModel implements IServiceContractModel {
     constructor(
         public id: number = 0,
-        public comapany_id: number = 0,
+        public company_id: number = 0,
         public service_id: number = 0,
         public service_term_id: number = 0,
+        public company: string = '',
+        public service: string = '',
+        public service_term: string = '',
+        public price: number = 0,
     ) {
     }
 }

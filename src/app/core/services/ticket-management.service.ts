@@ -8,7 +8,7 @@ import { TicketMessageModel } from '../models/entities/ticket-message.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TicketManagerService {
+export class TicketManagementService {
   private ticketService = inject(TicketService)
   private ticketMessageService = inject(TicketMessageService)
 

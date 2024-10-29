@@ -78,6 +78,64 @@
         "RETURN": "Return"
       }
     },
+    "SERVICE-CONTRACTS": {
+      "SEARCH": "Search...",
+  
+      "READ-SERVICE-INFO": "View Details",
+      "READ-SERVICE-INFO-DESC": "Click here to view the service contract information",
+  
+      "EDIT-SERVICE-INFO": "Edit Service Contract",
+      "EDIT-SERVICE-INFO-DESC": "Click here to edit the service contract",
+  
+      "DELETE": "Delete",
+      
+      "ADMIN": {
+        "SERVICES": "Manage Contracts",
+        "CREATE-SERVICE-CONTRACT": "Create Contract",
+        "MANAGE-SERVICE-CONTRACT-TERMS": "Terms"
+      },
+  
+      "SERVICE-CONTRACT-MANAGEMENT": {
+        "CREATE-SERVICE-CONTRACT-TERM": "Create Service Contract",
+        "EDIT-SERVICE-CONTRACT-TERM": "Edit Service Contract",
+        "SERVICE-CONTRACT-COMPANY": "Company",
+        "SERVICE-CONTRACT-SERVICE": "Service",
+        "SERVICE-CONTRACT-TERM": "Term",
+        "SAVE": "Save"
+      },
+  
+      "SERVICE-CONTRACT-INFO": {
+        "TITLE": "Service Contract Information",
+        "SERVICE-CONTRACT-COMPANY": "Company",
+        "SERVICE-CONTRACT-SERVICE": "Service",
+        "SERVICE-CONTRACT-TERM": "Term",
+        "RETURN": "Return"
+      }
+    },
+    "SERVICE-CONTRACT-TERMS": {
+      "SEARCH": "Search...",
+
+      "EDIT-SERVICE-CONTRACT-TERM-INFO": "Edit Term",
+      "EDIT-SERVICE-CONTRACT-TERM-INFO-DESC": "Click here to edit the term",
+
+      "DELETE": "Delete",
+      
+      "ADMIN": {
+        "SERVICE-CONTRACT-TERMS": "Manage Terms",
+        "RETURN": "Return",
+        "CREATE-SERVICE-CONTRACT-TERM": "Create New Term",
+        "MONTH": "Month",
+        "MONTHS": "Months"
+      },
+
+      "SERVICE-CONTRACT-TERM-MANAGEMENT": {
+        "CREATE-SERVICE-TERM": "Create Term",
+        "EDIT-SERVICE": "Edit Term",
+        "SERVICE-CONTRACT-TERM-TERM": "Term",
+        "SERVICE-CONTRACT-TERM-MONTHS": "Months",
+        "SAVE": "Save"
+      }
+    },
     "SERVICES": {
       "SEARCH": "Search...",
 
@@ -97,8 +155,8 @@
       },
 
       "SERVICE-MANAGEMENT": {
-        "CREATE-SERVICE": "Create Company",
-        "EDIT-SERVICE": "Edit Company",
+        "CREATE-SERVICE": "Create Service",
+        "EDIT-SERVICE": "Edit Service",
         "SERVICE-DESC": "Description",
         "SERVICE-PRICE": "Price",
         "SERVICE-CATEGORY": "Category",
@@ -180,8 +238,7 @@
         "USER-LASTNAME": "Lastname",
         "USER-EMAIL": "Email",
         "USER-COMPANY": "Company",
-        "USER-CREATE-DATE": "Created at",
-        "USER-UPDATE-DATE": "Updated at",
+        "USER-ROLE": "Role",
         "SAVE": "Save"
       },
       "USER-INFO": {
@@ -190,8 +247,7 @@
         "USER-LASTNAME": "Lastname",
         "USER-EMAIL": "Email",
         "USER-COMPANY": "Company",
-        "USER-CREATE-DATE": "Created at",
-        "USER-UPDATE-DATE": "Updated at",
+        "USER-ROLE": "Role",
         "RETURN": "Return"
       }
     }
@@ -200,6 +256,7 @@
     "HEADER": {
       "ADMIN": {
         "COMPANY": "Companies",
+        "SERVICE-CONTRACTS": "Contracts",
         "SERVICES": "Services",
         "USERS": "Users",
         "TICKETS": "Tickets"

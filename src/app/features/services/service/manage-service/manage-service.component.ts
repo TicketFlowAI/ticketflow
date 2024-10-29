@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,10 +13,10 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ServiceModel } from '../../../../core/models/entities/service.model';
-import { ServiceManagement } from '../../../../core/services/service-management.service';
+import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.model';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
-import { concatMap } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 
@@ -41,14 +41,16 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceComponent {
-  private serviceManagementService = inject(ServiceManagement);
+  private serviceManagementService = inject(ServiceManagementService);
+  private cdr = inject(ChangeDetectorRef);
+
   readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
   readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
 
-  descriptionFormControl = new FormControl('', [Validators.required])
-  priceFormControl = new FormControl(0, [Validators.required])
-  categoryFormControl = new FormControl(0, [Validators.required])
-  taxFormControl = new FormControl(0, [Validators.required])
+  descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  priceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  categoryFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  taxFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
 
   serviceForm = new FormGroup({
     description: this.descriptionFormControl,
@@ -62,21 +64,27 @@ export class ManageServiceComponent {
   taxes: ServiceTaxModel[] = [];
 
   ngOnInit(): void {
-    this.serviceManagementService.getAllServiceCategories().pipe(
-      concatMap(categories => {
-        this.categories = categories
-        return this.serviceManagementService.getAllServiceTaxes()
+    if (this.serviceData) {
+      this.service = this.serviceData
+      this.descriptionFormControl.setValue(this.service.description)
+      this.priceFormControl.setValue(this.service.price)
+      this.categoryFormControl.setValue(this.service.category_id);
+      this.taxFormControl.setValue(this.service.tax_id);
+    }
+
+    forkJoin({
+      categories: this.serviceManagementService.getAllServiceCategories(),
+      taxes: this.serviceManagementService.getAllServiceTaxes()
+    }).pipe(
+      catchError(() => {
+        return of({ categories: [], taxes: []})
       })
     ).subscribe({
-      next: (taxes) => {
-        this.taxes = taxes;
-        if (this.serviceData) {
-          this.service = this.serviceData
-          this.descriptionFormControl.setValue(this.service.description)
-          this.priceFormControl.setValue(this.service.price)
-          this.categoryFormControl.setValue(this.service.category_id);
-          this.taxFormControl.setValue(this.service.tax_id);
-        }
+      next: ({categories, taxes}) => {
+        this.categories = categories
+        this.taxes = taxes
+
+        this.cdr.detectChanges();
       }
     })
   }
@@ -85,18 +93,18 @@ export class ManageServiceComponent {
     const formValue = this.serviceForm.value
     let service = new ServiceModel(
       0,
-      formValue.category ?? 1,
+      formValue.description,
+      formValue.category,
+      formValue.tax,
+      formValue.price,
       '',
-      formValue.tax ?? 1,
-      '',
-      formValue.price ?? 0,
-      formValue.description ?? '',
+      ''
     )
 
     if (this.serviceData) {
       service.id = this.serviceData.id
-      
-      this.serviceManagementService.updateService(service).subscribe({
+
+      this.serviceManagementService.editService(service).subscribe({
         next: (edited) => {
           console.log('Response:', edited)
         }

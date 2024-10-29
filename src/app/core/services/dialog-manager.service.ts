@@ -16,6 +16,11 @@ import { ServiceInfoComponent } from '../../features/services/service/service-in
 import { UserModel } from '../models/entities/user.model';
 import { ManageUserComponent } from '../../features/users/manage-user/manage-user.component';
 import { UserInfoComponent } from '../../features/users/user-info/user-info.component';
+import { ServiceContractModel } from '../models/entities/service-contract.model';
+import { ServiceContractInfoComponent } from '../../features/service-contracts/service-contract/service-contract-info/service-contract-info.component';
+import { ManageServiceContractComponent } from '../../features/service-contracts/service-contract/manage-service-contract/manage-service-contract.component';
+import { ManageServiceContractTermComponent } from '../../features/service-contracts/service-contract-term/manage-service-contract-term/manage-service-contract-term.component';
+import { ServiceContractTermModel } from '../models/entities/service-contract-term.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +30,8 @@ export class DialogManagerService {
 
 
   openLoginDialog(){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
 
     this.dialogService.open(LoginComponent, {
       width: '500px',
@@ -59,8 +64,8 @@ export class DialogManagerService {
   }
 
   openManageCompanyDialog(company: CompanyModel | null){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
     
     this.dialogService.open(ManageCompanyComponent, {
       width: '800px',
@@ -87,8 +92,8 @@ export class DialogManagerService {
   }
 
   openServiceInfoDialog(service: ServiceModel){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
     
     this.dialogService.open(ServiceInfoComponent, {
       width: '500px',
@@ -100,8 +105,8 @@ export class DialogManagerService {
   }
 
   openManageServiceDialog(service: ServiceModel | null){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
     
     this.dialogService.open(ManageServiceComponent, {
       width: '500px',
@@ -113,8 +118,8 @@ export class DialogManagerService {
   }
 
   openManageServiceCategoryDialog(serviceCategory: ServiceCategoryModel | null){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
 
     this.dialogService.open(ManageServiceCategoryComponent, {
       width: '500px',
@@ -126,8 +131,8 @@ export class DialogManagerService {
   }
 
   openManageServiceTaxDialog(serviceTax: ServiceTaxModel | null){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
     
     this.dialogService.open(ManageServiceTaxComponent, {
       width: '500px',
@@ -138,6 +143,45 @@ export class DialogManagerService {
     });
   }
 
+  openServiceContractInfoDialog(serviceContract: ServiceContractModel){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(ServiceContractInfoComponent, {
+      width: '500px',
+      height: '325px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: serviceContract
+    });
+  }
+
+  openManageServiceContractDialog(serviceContract: ServiceContractModel | null){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(ManageServiceContractComponent, {
+      width: '500px',
+      height: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: serviceContract
+    });
+  }
+
+  openManageServiceContractTermDialog(serviceContractTerm: ServiceContractTermModel | null){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(ManageServiceContractTermComponent, {
+      width: '500px',
+      height: '310px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: serviceContractTerm
+    });
+  }
+
   openUserInfoDialog(user: UserModel){
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
@@ -145,7 +189,7 @@ export class DialogManagerService {
     this.dialogService.open(UserInfoComponent, {
       width: '600px',
       maxWidth: '100vw',
-      height: '450px',
+      height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: user
@@ -153,8 +197,8 @@ export class DialogManagerService {
   }
 
   openManageUserDialog(user: UserModel | null){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
     
     this.dialogService.open(ManageUserComponent, {
       width: '600px',
@@ -167,8 +211,8 @@ export class DialogManagerService {
   }
 
   openNewTicketDialog(){
-    const enterAnimationDuration = '0ms'
-    const exitAnimationDuration = '0ms'
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
 
     this.dialogService.open(LoginComponent, {
       width: '500px',

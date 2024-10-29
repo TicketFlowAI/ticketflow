@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ServiceManagement } from '../../../../core/services/service-management.service';
+import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
@@ -39,7 +39,7 @@ export class AllServiceCategoriesComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
 
-  private serviceManagementService = inject(ServiceManagement)
+  private serviceManagementService = inject(ServiceManagementService)
   private dialogManagerService = inject(DialogManagerService)
   private cdr = inject(ChangeDetectorRef)
 

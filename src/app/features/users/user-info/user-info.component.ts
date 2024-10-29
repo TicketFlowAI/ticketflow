@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -8,11 +9,8 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { UserModel } from '../../../core/models/entities/user.model';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
+import { UserModel } from '../../../core/models/entities/user.model';
 import { CompanyModel } from '../../../core/models/entities/company.model';
 
 @Component({
@@ -25,8 +23,6 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatFormFieldModule,
-    MatInputModule,
   ],
   templateUrl: './user-info.component.html',
   styleUrl: './user-info.component.scss',
