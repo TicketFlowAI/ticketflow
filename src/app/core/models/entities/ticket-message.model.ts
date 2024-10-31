@@ -10,17 +10,18 @@ export interface ITicketMessageApiResponse {
 
 export interface ITicketMessageModel {
   id: number;
+  content: string;
   ticket_id: number;
   user_id: number;
-  content: string;
+
 }
 
 export class TicketMessageModel implements ITicketMessageModel {
   constructor(
     public id: number = 0,
+    public content: string = '',
     public ticket_id: number = 0,
     public user_id: number = 0,
-    public content: string = '',
   ) {
   }
 }

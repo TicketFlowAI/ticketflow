@@ -78,26 +78,91 @@
         "RETURN": "Return"
       }
     },
+    "TICKETS": {
+      "SEARCH": "Search...",
+
+      "READ-TICKET-INFO": "View Details",
+      "READ-TICKET-INFO-DESC": "Click here to view the ticket information",
+
+      "EDIT-TICKET-INFO": "Edit Ticket",
+      "EDIT-TICKET-INFO-DESC": "Click here to edit the ticket",
+
+      "DELETE": "Delete",
+      
+      "ADMIN": {
+        "TICKETS": "Manage Tickets",
+        "CREATE-TICKET": "New Ticket",
+        "MANAGE-TICKET-MESSAGES": "View Messages"
+      },
+
+      "TICKET-MANAGEMENT": {
+        "CREATE-TICKET": "Create Ticket",
+        "EDIT-TICKET": "Edit Ticket",
+        "TICKET-TITLE": "Title",
+        "TICKET-PRIORITY": "Priority",
+        "TICKET-HUMAN-INTERACTION": "Needs Human Interaction",
+        "YES": "Yes",
+        "NO": "No",
+        "TICKET-COMPLEXITY": "Complexity",
+        "TICKET-USER": "User",
+        "TICKET-COMPANY": "Company", 
+        "TICKET-SERVICE": "Service", 
+        "SAVE": "Save"
+      },
+
+      "TICKET-INFO": {
+        "TITLE": "Ticket Information",
+        "TICKET-TITLE": "Title",
+        "TICKET-PRIORITY": "Priority",
+        "TICKET-HUMAN-INTERACTION": "Needs Human Interaction",
+        "TICKET-COMPLEXITY": "Complexity",
+        "TICKET-USER": "User",
+        "TICKET-COMPANY": "Company", 
+        "TICKET-SERVICE": "Service", 
+        "RETURN": "Return"
+      }
+    },
+    "TICKET-MESSAGES": {
+      "SEARCH": "Search...",
+
+      "EDIT-TICKET-MESSAGE-INFO": "Edit Message",
+      "EDIT-TICKET-MESSAGE-INFO-DESC": "Click here to edit the message",
+
+      "DELETE": "Delete",
+      
+      "ADMIN": {
+        "TICKET-MESSAGES": "Manage Messages",
+        "CREATE-TICKET-MESSAGE": "New Message"
+      },
+
+      "TICKET-MESSAGE-MANAGEMENT": {
+        "CREATE-TICKET": "Create Message",
+        "EDIT-TICKET": "Edit Message",
+        "TICKET-MESSAGE-CONTENT": "Message",
+        "TICKET-MESSAGE-USER": "User", 
+        "SAVE": "Save"
+      }
+    },
     "SERVICE-CONTRACTS": {
       "SEARCH": "Search...",
   
-      "READ-SERVICE-INFO": "View Details",
-      "READ-SERVICE-INFO-DESC": "Click here to view the service contract information",
+      "READ-SERVICE-CONTRACT-INFO": "View Details",
+      "READ-SERVICE-CONTRACT-INFO-DESC": "Click here to view the service contract information",
   
-      "EDIT-SERVICE-INFO": "Edit Service Contract",
-      "EDIT-SERVICE-INFO-DESC": "Click here to edit the service contract",
+      "EDIT-SERVICE-CONTRACT-INFO": "Edit Service Contract",
+      "EDIT-SERVICE-CONTRACT-INFO-DESC": "Click here to edit the service contract",
   
       "DELETE": "Delete",
       
       "ADMIN": {
-        "SERVICES": "Manage Contracts",
+        "SERVICE-CONTRACTS": "Manage Contracts",
         "CREATE-SERVICE-CONTRACT": "Create Contract",
         "MANAGE-SERVICE-CONTRACT-TERMS": "Terms"
       },
   
       "SERVICE-CONTRACT-MANAGEMENT": {
-        "CREATE-SERVICE-CONTRACT-TERM": "Create Service Contract",
-        "EDIT-SERVICE-CONTRACT-TERM": "Edit Service Contract",
+        "CREATE-SERVICE-CONTRACT": "Create Service Contract",
+        "EDIT-SERVICE-CONTRACT": "Edit Service Contract",
         "SERVICE-CONTRACT-COMPANY": "Company",
         "SERVICE-CONTRACT-SERVICE": "Service",
         "SERVICE-CONTRACT-TERM": "Term",
@@ -129,8 +194,8 @@
       },
 
       "SERVICE-CONTRACT-TERM-MANAGEMENT": {
-        "CREATE-SERVICE-TERM": "Create Term",
-        "EDIT-SERVICE": "Edit Term",
+        "CREATE-SERVICE-CONTRACT-TERM": "Create Term",
+        "EDIT-SERVICE-CONTRACT-TERM": "Edit Term",
         "SERVICE-CONTRACT-TERM-TERM": "Term",
         "SERVICE-CONTRACT-TERM-MONTHS": "Months",
         "SAVE": "Save"

@@ -85,7 +85,7 @@ export class ManageUserComponent {
       formValue.lastname,
       formValue.email,
       formValue.company,
-      [],
+      '',
       ''
     )
 

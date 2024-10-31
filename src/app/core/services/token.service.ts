@@ -17,6 +17,12 @@ export class TokenService {
     return '';
   }
 
+  tokenExists(): boolean {
+    const token = this.cookieService.get(this.TOKEN_KEY)
+    if (token) return true;
+    return false;
+  }
+
   clearToken() {
     this.cookieService.delete(this.TOKEN_KEY);
   }

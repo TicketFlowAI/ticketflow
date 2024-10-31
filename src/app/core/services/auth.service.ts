@@ -2,29 +2,33 @@ import { inject, Injectable, signal } from '@angular/core';
 import { TokenService } from "./token.service";
 import { LoginRequest } from "../models/requests/login.request";
 import { catchError, concatMap, of } from "rxjs";
-import { IUserModel } from "../models/entities/user.model";
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
 import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
-import { HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpStatusCode } from '@angular/common/http';
+import { UserManagementService } from './user-management.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   //Services
+  private userManagementService = inject(UserManagementService)
   private sanctumService = inject(SanctumService)
   private authenticationService = inject(AuthenticationService)
   private tokenService = inject(TokenService)
   private spinnerService = inject(SpinnerService)
 
-  //Variables n properties
-  isAuthenticated = signal<boolean>(false)
-  user!: IUserModel
-
   //Methods
-  isUserLoggedIn() {
-    if(this.tokenService.getToken() != '') this.isAuthenticated.set(true)
+  authenticate() {
+    if(this.tokenService.tokenExists())
+    {
+      this.userManagementService.getMyUser().subscribe({
+        next: (user) => {
+            this.userManagementService.currentUser.set(user)
+        },
+      })
+    }
   }
 
   login(loginRequest: LoginRequest) {
@@ -37,8 +41,8 @@ export class AuthService {
         return of(null);
       })
     ).subscribe({
-      next: (result) => {
-        if(result != null) this.isAuthenticated.set(true);
+      next: () => {
+        this.authenticate()
         this.spinnerService.hideSpinner()
       }
     }
@@ -48,13 +52,11 @@ export class AuthService {
   logout() {
     this.authenticationService.logout().subscribe({
       next: (response) => {
-        if(response.status !== HttpStatusCode.Ok) return
-
-        this.isAuthenticated.set(false)
-        this.tokenService.clearAll();
+        if(response.status === HttpStatusCode.Ok){
+          this.tokenService.clearAll();
+        }
       },
       error: () => {
-        console.log()
       } 
     })
   }

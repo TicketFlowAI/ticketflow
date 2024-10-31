@@ -5,9 +5,10 @@ import { AllServicesComponent } from './features/services/service/all-services/a
 import { AllServiceCategoriesComponent } from './features/services/service-category/all-service-categories/all-service-categories.component';
 import { AllServiceTaxesComponent } from './features/services/service-tax/all-service-taxes/all-service-taxes.component';
 import { AllUsersComponent } from './features/users/all-users/all-users.component';
-import { AllTicketsComponent } from './features/tickets/all-tickets/all-tickets.component';
+import { AllTicketsComponent } from './features/tickets/ticket/all-tickets/all-tickets.component';
 import { AllServiceContractsComponent } from './features/service-contracts/service-contract/all-service-contracts/all-service-contracts.component';
 import { AllServiceContractTermsComponent } from './features/service-contracts/service-contract-term/all-service-contract-terms/all-service-contract-terms.component';
+import { AllTicketMessagesComponent } from './features/tickets/ticket-message/all-ticket-messages/all-ticket-messages.component';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,7 @@ export const routes: Routes = [
   },
   {
     path: 'ticket-message',
-    component: AllTicketsComponent
+    component: AllTicketMessagesComponent
   },
   {
     path: 'service-categories',

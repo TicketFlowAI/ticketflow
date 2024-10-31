@@ -12,14 +12,14 @@
         </button>
         <div class="collapse navbar-collapse justify-content-sm-center justify-content-md-end" id="collapsableNav">
           <ul class="navbar-nav mb-2 mb-lg-0">
-            @if(isAuthenticated) {
-              @if(userRole === 'Admin') {
+            @if(currentUser) {
+              @if(this.userManagementService.isUserAdmin()) {
                 <ng-container [ngTemplateOutlet]="adminTemplate"/>
               }
-              @if(userRole === 'Team') {
+              @if(this.userManagementService.isUserTechnician()) {
                 <ng-container [ngTemplateOutlet]="teamTemplate"/>
               }
-              @if(userRole === 'Client') {
+              @if(this.userManagementService.isUserClient()) {
                 <ng-container [ngTemplateOutlet]="clientTemplate"/>
               }
             }
@@ -82,7 +82,9 @@
       <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
          aria-expanded="false">
         <fa-icon [icon]="faUser"></fa-icon>
-        {{ userName }}
+        @if(currentUser){
+          {{ currentUser.name }} {{ currentUser.lastname}}
+        }
       </a>
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a OpenLogin class="dropdown-item">
@@ -99,7 +101,9 @@
       <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
         <fa-icon [icon]="faUser"></fa-icon>
-        {{ userName }}
+        @if(currentUser){
+          {{ currentUser.name }} {{ currentUser.lastname}}
+        }
       </a>
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a OpenLogin class="dropdown-item">
@@ -136,7 +140,9 @@
       <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
         <fa-icon [icon]="faUser"></fa-icon>
-        {{ userName }}
+        @if(currentUser){
+          {{ currentUser.name }} {{ currentUser.lastname}}
+        }
       </a>
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a OpenLogin class="dropdown-item">

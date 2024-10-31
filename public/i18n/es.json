@@ -78,6 +78,71 @@
         "RETURN": "Regresar"
       }
     },
+    "TICKETS": {
+      "SEARCH": "Buscar...",
+
+      "READ-TICKET-INFO": "Ver Detalles",
+      "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
+
+      "EDIT-TICKET-INFO": "Editar Ticket",
+      "EDIT-TICKET-INFO-DESC": "De clic aquí para poder editar el ticket",
+
+      "DELETE": "Borrar",
+      
+      "ADMIN": {
+        "TICKETS": "Administrar Tickets",
+        "CREATE-TICKET": "Nuevo Ticket",
+        "MANAGE-TICKET-MESSAGES": "Ver Mensajes"
+      },
+
+      "TICKET-MANAGEMENT": {
+        "CREATE-TICKET": "Crear Ticket",
+        "EDIT-TICKET": "Editar Ticket",
+        "TICKET-TITLE": "Título",
+        "TICKET-PRIORITY": "Prioridad",
+        "TICKET-HUMAN-INTERACTION": "Necesita Interacción Humana",
+        "TICKET-COMPLEXITY": "Complejidad",
+        "TICKET-USER": "Usuario",
+        "TICKET-COMPANY": "Empresa", 
+        "TICKET-SERVICE": "Servicio", 
+        "SAVE": "Guardar"
+      },
+
+      "TICKET-INFO": {
+        "TITLE": "Información del Ticket",
+        "TICKET-TITLE": "Título",
+        "TICKET-PRIORITY": "Prioridad",
+        "TICKET-HUMAN-INTERACTION": "Necesita Interacción Humana",
+        "YES": "Si",
+        "NO": "No",
+        "TICKET-COMPLEXITY": "Complejidad",
+        "TICKET-USER": "Usuario",
+        "TICKET-COMPANY": "Empresa", 
+        "TICKET-SERVICE": "Servicio", 
+        "RETURN": "Regresar"
+      }
+    },
+    "TICKET-MESSAGES": {
+      "SEARCH": "Buscar...",
+
+      "EDIT-TICKET-MESSAGE-INFO": "Editar Mensaje",
+      "EDIT-TICKET-MESSAGE-INFO-DESC": "De clic aquí para poder editar el mensaje",
+
+      "DELETE": "Borrar",
+      
+      "ADMIN": {
+        "TICKET-MESSAGES": "Administrar Mensajes",
+        "CREATE-TICKET-MESSAGE": "Nuevo Mensaje"
+      },
+
+      "TICKET-MESSAGE-MANAGEMENT": {
+        "CREATE-TICKET": "Crear Mensaje",
+        "EDIT-TICKET": "Editar Mensaje",
+        "TICKET-MESSAGE-CONTENT": "Mensaje",
+        "TICKET-MESSAGE-USER": "Usuario", 
+        "SAVE": "Guardar"
+      }
+    },
     "SERVICE-CONTRACTS": {
       "SEARCH": "Buscar...",
 
@@ -251,7 +316,6 @@
         "RETURN": "Regresar"
       }
     }
-
   },
   "SHARED": {
     "HEADER": {

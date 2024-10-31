@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HeaderComponent} from "./shared/components/header/header.component";
 import {FooterComponent} from "./shared/components/footer/footer.component";
-import { UserSessionService } from './core/services/user-sesion.service';
+import { UserManagementService } from './core/services/user-management.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,10 @@ import { UserSessionService } from './core/services/user-sesion.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  userSessionService = inject(UserSessionService)
+  private authService = inject(AuthService)
   title = 'Ticketflow';
 
   constructor() {
-    this.userSessionService.checkUserInitialState();
-  }
-
-  sum(a: number, b: number) {
-    return a + b;
+      this.authService.authenticate();
   }
 }

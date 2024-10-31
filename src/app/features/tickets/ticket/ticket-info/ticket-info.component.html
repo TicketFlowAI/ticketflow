@@ -1,0 +1,68 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.TICKETS.TICKET-INFO'">
+    <h2 class="fw-semibold" mat-dialog-title>{{t ('TITLE')}}</h2>
+    <mat-dialog-content>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-TITLE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.title}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-PRIORITY')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.priority}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-HUMAN-INTERACTION')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{(ticket.needsHumanInteraction? t('YES') : t('NO'))}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-COMPLEXITY')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.complexity}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-USER')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.user_name}} {{ticket.user_lastname}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-COMPANY')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.company_name}}</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="fs-6 fw-medium">{{t ('TICKET-SERVICE')}}:</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-6">{{ticket.service_desc}}</p>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onReturnClick()" cdkFocusInitial>{{t('RETURN')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>

@@ -9,6 +9,7 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
+import { UserManagementService } from '../../../core/services/user-management.service';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent {
   //SERVICES
   private dialogRef = inject(MatDialogRef<LoginComponent>);
   private authService = inject(AuthService);
+  private userManagementService = inject(UserManagementService);
   private fb = inject(FormBuilder)
 
   //PROPS N VARS
@@ -50,7 +52,7 @@ export class LoginComponent {
   //CONSTRUCTOR
   constructor() {
     effect(() => {
-      if(this.authService.isAuthenticated()) this.dialogRef.close();
+      if(this.userManagementService.currentUser()) this.dialogRef.close();
     })
   }
 

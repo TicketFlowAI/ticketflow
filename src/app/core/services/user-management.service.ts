@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { UserService } from '../api/servicios-mindsoftdev/user.service';
 import { UserModel } from '../models/entities/user.model';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -8,6 +8,46 @@ import { catchError, map, Observable, of } from 'rxjs';
 })
 export class UserManagementService {
   private userService = inject(UserService)
+
+  currentUser = signal<UserModel | null>(null)
+
+  isUserAdmin() {
+    if(this.currentUser() != null)
+      return this.currentUser()?.role === 'super-admin'
+
+    else
+      return false
+ 
+  }
+
+  isUserTechnician() {
+    if(this.currentUser() != null)
+      return this.currentUser()?.role === 'technician'
+    else
+      return false 
+  }
+
+  isUserClient() {
+    if(this.currentUser() != null) 
+      return this.currentUser()?.role === 'client'
+    
+    else
+      return false
+  }
+
+  getMyUser() {
+    return this.userService.getMyUser().pipe(
+      map((response) => {
+        if(response.success)
+          return response.data
+        else
+          return null
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    )
+  }
 
   getAllUsers(): Observable<UserModel[] | []> {
     return this.userService.getUsers().pipe(

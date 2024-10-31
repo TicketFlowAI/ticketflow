@@ -11,8 +11,8 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faFlag, faMoon, faSun, faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { MatButton } from "@angular/material/button";
 import { OpenLoginDirective } from "../../directives/open-login.directive";
-import { IUserModel } from '../../../core/models/entities/user.model';
-import { UserSessionService } from '../../../core/services/user-sesion.service';
+import { UserManagementService } from '../../../core/services/user-management.service';
+import { UserModel } from '../../../core/models/entities/user.model';
 
 @Component({
   selector: 'app-header',
@@ -39,18 +39,13 @@ export class HeaderComponent implements OnInit {
   protected readonly faUser = faUser;
   protected readonly faSignInAlt = faSignInAlt;
 
-  user!: IUserModel;
-
-  userSessionService: UserSessionService = inject(UserSessionService)
-  cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
+  userManagementService: UserManagementService = inject(UserManagementService)
   authService: AuthService = inject(AuthService)
+  cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   translocoService: TranslocoService = inject(TranslocoService)
   themeService: ThemeService = inject(ThemeService)
 
-  isAuthenticated = false;
-  userName = ''
-  userRole = ''
-
+  currentUser: UserModel | null = null
 
   @ViewChild('noAuthTemplate') NoAuthTemplate!: TemplateRef<any>
   @ViewChild('adminTemplate') AdminTemplate!: TemplateRef<any>
@@ -59,17 +54,13 @@ export class HeaderComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      this.isAuthenticated = this.authService.isAuthenticated()
-      this.userName = this.userSessionService.currentUser().name + ' ' + this.userSessionService.currentUser().lastname;
-      this.userRole = 'Admin';
-      this.cdr.detectChanges();
+      this.onEffectCurrentUser()
     });
+  }
 
-    effect(() => {
-      this.userName = this.userSessionService.currentUser().name + ' ' + this.userSessionService.currentUser().lastname;
-      this.userRole = 'Admin';
-      this.cdr.detectChanges();
-    });
+  onEffectCurrentUser() {
+    this.currentUser = this.userManagementService.currentUser();
+    this.cdr.detectChanges();
   }
 
   ngOnInit() {

@@ -21,6 +21,9 @@ import { ServiceContractInfoComponent } from '../../features/service-contracts/s
 import { ManageServiceContractComponent } from '../../features/service-contracts/service-contract/manage-service-contract/manage-service-contract.component';
 import { ManageServiceContractTermComponent } from '../../features/service-contracts/service-contract-term/manage-service-contract-term/manage-service-contract-term.component';
 import { ServiceContractTermModel } from '../models/entities/service-contract-term.model';
+import { TicketModel } from '../models/entities/ticket.model';
+import { ManageTicketComponent } from '../../features/tickets/ticket/manage-ticket/manage-ticket.component';
+import { TicketInfoComponent } from '../../features/tickets/ticket/ticket-info/ticket-info.component';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +91,34 @@ export class DialogManagerService {
       enterAnimationDuration,
       exitAnimationDuration,
       data: company
+    });
+  }
+
+  openManageTicketDialog(ticket: TicketModel | null){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(ManageTicketComponent, {
+      width: '800px',
+      maxWidth: '100vw',
+      height: '500px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: ticket
+    });
+  }
+
+  openTicketInfoDialog(ticket: TicketModel){
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+    
+    this.dialogService.open(TicketInfoComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '450px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: ticket
     });
   }
 
