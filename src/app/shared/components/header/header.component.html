@@ -29,7 +29,7 @@
 
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item px-2 dropdown">
-              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <fa-icon class="text-light" [icon]="faFlag"></fa-icon>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -66,7 +66,7 @@
           t('CLIENT.HOME') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
-        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
           aria-expanded="false">
           <fa-icon [icon]="faUser"></fa-icon>
           {{ t('ACCOUNT') }}
@@ -90,7 +90,7 @@
           aria-current="page">{{ t('CLIENT.COMPANY') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
-        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
           aria-expanded="false">
           <fa-icon [icon]="faUser"></fa-icon>
           @if(currentUser){
@@ -111,7 +111,7 @@
   <ng-template #teamTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item px-2 dropdown">
-        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
           aria-expanded="false">
           <fa-icon [icon]="faUser"></fa-icon>
           @if(currentUser){
@@ -152,7 +152,7 @@
           aria-current="page">{{ t('ADMIN.COMPANY') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
-        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
           aria-expanded="false">
           <fa-icon [icon]="faUser"></fa-icon>
           @if(currentUser){

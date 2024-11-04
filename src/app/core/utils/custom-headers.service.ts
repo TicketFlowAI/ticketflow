@@ -6,7 +6,7 @@ import { TokenService } from '../services/token.service';
   providedIn: 'root'
 })
 export class CustomHeadersService {
-  private tokenService = inject(TokenService)
+  private readonly tokenService = inject(TokenService)
   private headers: HttpHeaders = new HttpHeaders();
 
   addAppJson(): this {
