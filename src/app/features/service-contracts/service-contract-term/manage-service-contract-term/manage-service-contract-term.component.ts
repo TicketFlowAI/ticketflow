@@ -30,7 +30,6 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
     ReactiveFormsModule
   ],
   templateUrl: './manage-service-contract-term.component.html',
-  styleUrl: './manage-service-contract-term.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceContractTermComponent {

@@ -23,7 +23,6 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
     ReactiveFormsModule
   ],
   templateUrl: './manage-service-category.component.html',
-  styleUrl: './manage-service-category.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceCategoryComponent {

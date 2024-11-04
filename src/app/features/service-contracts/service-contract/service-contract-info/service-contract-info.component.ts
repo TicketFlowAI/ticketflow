@@ -21,7 +21,6 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
     MatDialogClose,
   ],
   templateUrl: './service-contract-info.component.html',
-  styleUrl: './service-contract-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceContractInfoComponent {

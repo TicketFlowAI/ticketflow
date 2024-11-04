@@ -23,7 +23,6 @@ import { ServiceModel } from '../../../../core/models/entities/service.model';
     MatDialogClose,
   ],
   templateUrl: './service-info.component.html',
-  styleUrl: './service-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceInfoComponent {

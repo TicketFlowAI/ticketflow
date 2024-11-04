@@ -28,7 +28,6 @@ import { CompanyManagementService } from '../../../core/services/company-managem
     FaIconComponent
   ],
   templateUrl: './all-companies.component.html',
-  styleUrl: './all-companies.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllCompaniesComponent implements OnInit {

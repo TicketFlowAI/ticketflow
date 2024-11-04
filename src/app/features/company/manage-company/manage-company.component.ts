@@ -30,7 +30,6 @@ import { CompanyManagementService } from '../../../core/services/company-managem
     ReactiveFormsModule
   ],
   templateUrl: './manage-company.component.html',
-  styleUrl: './manage-company.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageCompanyComponent {

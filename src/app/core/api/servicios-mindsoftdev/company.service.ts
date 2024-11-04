@@ -11,7 +11,7 @@ import { ICompaniesApiResponse, ICompanyApiResponse } from '../../models/entitie
 export class CompanyService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiCompany = this.BASE_URL + '/api/companies'
+  private readonly apiCompany = this.BASE_URL + '/api/companies'
 
   //Services
   http = inject(HttpClient)

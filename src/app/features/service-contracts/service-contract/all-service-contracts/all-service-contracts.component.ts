@@ -31,7 +31,6 @@ import { ServiceContractManagementService } from '../../../../core/services/serv
     FaIconComponent,
   ],
   templateUrl: './all-service-contracts.component.html',
-  styleUrl: './all-service-contracts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllServiceContractsComponent {

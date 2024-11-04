@@ -36,7 +36,6 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
     MatSelectModule
   ],
   templateUrl: './manage-service-contract.component.html',
-  styleUrl: './manage-service-contract.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceContractComponent {

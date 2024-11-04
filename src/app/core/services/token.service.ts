@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
@@ -7,9 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 export class TokenService {
   private readonly TOKEN_KEY = 'XSRF-TOKEN';
   private readonly SESSION_KEY = 'mindsoft_ticketflow_session';
-
-  constructor(private cookieService: CookieService) {
-  }
+  private readonly cookieService = inject(CookieService)
 
   getToken(): string {
     const token = this.cookieService.get(this.TOKEN_KEY)

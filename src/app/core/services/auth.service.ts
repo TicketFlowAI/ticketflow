@@ -13,11 +13,11 @@ import { UserManagementService } from './user-management.service';
 })
 export class AuthService {
   //Services
-  private userManagementService = inject(UserManagementService)
-  private sanctumService = inject(SanctumService)
-  private authenticationService = inject(AuthenticationService)
-  private tokenService = inject(TokenService)
-  private spinnerService = inject(SpinnerService)
+  private readonly userManagementService = inject(UserManagementService)
+  private readonly sanctumService = inject(SanctumService)
+  private readonly authenticationService = inject(AuthenticationService)
+  private readonly tokenService = inject(TokenService)
+  private readonly spinnerService = inject(SpinnerService)
 
   //Methods
   authenticate() {

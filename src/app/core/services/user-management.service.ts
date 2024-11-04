@@ -7,9 +7,9 @@ import { catchError, map, Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class UserManagementService {
-  private userService = inject(UserService)
+  private readonly userService = inject(UserService)
 
-  currentUser = signal<UserModel | null>(null)
+  public currentUser = signal<UserModel | null>(null)
 
   isUserAdmin() {
     if(this.currentUser() != null)

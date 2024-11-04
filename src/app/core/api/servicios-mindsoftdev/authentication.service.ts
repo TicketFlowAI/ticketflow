@@ -11,7 +11,7 @@ import { CustomHeadersService } from '../../utils/custom-headers.service';
 export class AuthenticationService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiAuthentication = this.BASE_URL + ''
+  private readonly apiAuthentication = this.BASE_URL + ''
 
   //Services
   http = inject(HttpClient)

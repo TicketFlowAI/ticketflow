@@ -9,8 +9,8 @@ import { TicketMessageModel } from '../models/entities/ticket-message.model';
   providedIn: 'root'
 })
 export class TicketManagementService {
-  private ticketService = inject(TicketService)
-  private ticketMessageService = inject(TicketMessageService)
+  private readonly ticketService = inject(TicketService)
+  private readonly ticketMessageService = inject(TicketMessageService)
 
   getAllTickets(): Observable<TicketModel[] | []> {
     return this.ticketService.getTickets().pipe(

@@ -10,7 +10,7 @@ import { CustomHeadersService } from '../../utils/custom-headers.service';
 export class SanctumService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiSanctum = this.BASE_URL + '/sanctum'
+  private readonly apiSanctum = this.BASE_URL + '/sanctum'
 
   //Services
   http = inject(HttpClient)

@@ -11,7 +11,7 @@ import { IServiceTaxApiResponse, IServiceTaxesApiResponse } from '../../models/e
 export class ServiceTaxService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiServiceTax = this.BASE_URL + '/api/taxes'
+  private readonly apiServiceTax = this.BASE_URL + '/api/taxes'
 
   //Services
   http = inject(HttpClient)

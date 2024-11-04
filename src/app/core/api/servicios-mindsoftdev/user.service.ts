@@ -11,8 +11,8 @@ import { CustomHeadersService } from '../../utils/custom-headers.service';
 export class UserService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiUser = this.BASE_URL + '/api/user'
-  private apiUsers = this.BASE_URL + '/api/users'
+  private readonly apiUser = this.BASE_URL + '/api/user'
+  private readonly apiUsers = this.BASE_URL + '/api/users'
 
   //Services
   http = inject(HttpClient)

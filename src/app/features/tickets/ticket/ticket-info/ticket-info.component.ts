@@ -23,7 +23,6 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
     MatDialogClose,
   ],
   templateUrl: './ticket-info.component.html',
-  styleUrl: './ticket-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketInfoComponent {

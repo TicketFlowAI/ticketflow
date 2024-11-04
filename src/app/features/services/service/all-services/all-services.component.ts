@@ -30,7 +30,6 @@ import { RouterLink } from '@angular/router';
     FaIconComponent,
   ],
   templateUrl: './all-services.component.html',
-  styleUrl: './all-services.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllServicesComponent {

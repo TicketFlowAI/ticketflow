@@ -25,7 +25,6 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
     MatDialogClose,
   ],
   templateUrl: './user-info.component.html',
-  styleUrl: './user-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfoComponent {

@@ -11,7 +11,7 @@ import { IServiceContractTermApiResponse, IServiceContractTermsApiResponse } fro
 export class ServiceContractTermService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiServiceTerms = this.BASE_URL + '/api/serviceTerms'
+  private readonly apiServiceTerms = this.BASE_URL + '/api/serviceTerms'
 
   //ServiceTerms
   http = inject(HttpClient)

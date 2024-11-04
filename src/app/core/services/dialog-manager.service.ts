@@ -31,7 +31,6 @@ import { TicketInfoComponent } from '../../features/tickets/ticket/ticket-info/t
 export class DialogManagerService {
   private readonly dialogService: MatDialog = inject(MatDialog)
 
-
   openLoginDialog() {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'

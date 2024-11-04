@@ -11,7 +11,7 @@ import { IServiceApiResponse, IServicesApiResponse } from '../../models/entities
 export class ServiceService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiServices = this.BASE_URL + '/api/services'
+  private readonly apiServices = this.BASE_URL + '/api/services'
 
   //Services
   http = inject(HttpClient)

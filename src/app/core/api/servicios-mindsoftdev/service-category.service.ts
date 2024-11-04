@@ -11,7 +11,7 @@ import { IServiceCategoriesApiResponse, IServiceCategoryApiResponse } from '../.
 export class ServiceCategoryService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiCategories = this.BASE_URL + '/api/categories'
+  private readonly apiCategories = this.BASE_URL + '/api/categories'
 
   //Services
   http = inject(HttpClient)

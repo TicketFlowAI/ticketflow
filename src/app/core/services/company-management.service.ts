@@ -7,7 +7,7 @@ import { CompanyModel } from '../models/entities/company.model';
   providedIn: 'root'
 })
 export class CompanyManagementService {
-  private companyService = inject(CompanyService)
+  private readonly companyService = inject(CompanyService)
 
   getAllCompanies(): Observable<CompanyModel[] | []> {
     return this.companyService.getCompanies().pipe(

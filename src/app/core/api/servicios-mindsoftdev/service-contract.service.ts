@@ -11,7 +11,7 @@ import { IServiceContractApiResponse, IServiceContractsApiResponse } from '../..
 export class ServiceContractService {
  //Variables
  private readonly BASE_URL = environment.apiEndpoint
- private apiServiceContract = this.BASE_URL + '/api/servicecontracts'
+ private readonly apiServiceContract = this.BASE_URL + '/api/servicecontracts'
 
  //Services
  http = inject(HttpClient)

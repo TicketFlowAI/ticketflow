@@ -9,8 +9,8 @@ import { ServiceContractTermModel } from '../models/entities/service-contract-te
   providedIn: 'root'
 })
 export class ServiceContractManagementService {
-  private serviceContractService = inject(ServiceContractService)
-  private serviceContractTermService = inject(ServiceContractTermService)
+  private readonly serviceContractService = inject(ServiceContractService)
+  private readonly serviceContractTermService = inject(ServiceContractTermService)
 
   getAllServiceContracts(): Observable<ServiceContractModel[] | []> {
     return this.serviceContractService.getServiceContracts().pipe(

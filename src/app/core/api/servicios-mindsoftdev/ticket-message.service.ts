@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class TicketMessageService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
-  private apiTicketsMessage = this.BASE_URL + '/api/messages'
+  private readonly apiTicketsMessage = this.BASE_URL + '/api/messages'
 
   //Services
   http = inject(HttpClient)

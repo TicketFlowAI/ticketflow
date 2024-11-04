@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -21,7 +20,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
     MatDialogClose,
   ],
   templateUrl: './action-confirmation.component.html',
-  styleUrl: './action-confirmation.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionConfirmationComponent {

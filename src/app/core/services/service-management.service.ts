@@ -11,9 +11,9 @@ import { ServiceCategoryModel } from '../models/entities/service-category.model'
   providedIn: 'root'
 })
 export class ServiceManagementService {
-  serviceService: ServiceService = inject(ServiceService)
-  serviceTaxService: ServiceTaxService = inject(ServiceTaxService)
-  serviceCategoryService: ServiceCategoryService = inject(ServiceCategoryService)
+  private readonly serviceService: ServiceService = inject(ServiceService)
+  private readonly serviceTaxService: ServiceTaxService = inject(ServiceTaxService)
+  private readonly serviceCategoryService: ServiceCategoryService = inject(ServiceCategoryService)
 
   getAllServices(): Observable<ServiceModel[] | []> {
     return this.serviceService.getServices().pipe(

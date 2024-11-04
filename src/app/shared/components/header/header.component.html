@@ -3,33 +3,33 @@
     <nav class="navbar navbar-expand-lg bg-">
       <div class="container-fluid">
         <a class="navbar-brand" ScrollToTopInstant [routerLink]="['/']">
-          <img class="brand-logo" ngSrc="../../../../../logos/logo_inline_dark.svg"
-               alt="mindSoftLogo" width="140"
-               height="21" priority>
+          <img class="brand-logo" ngSrc="../../../../../logos/logo_inline_dark.svg" alt="mindSoftLogo" width="140"
+            height="21" priority>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableNav" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableNav"
+          aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-sm-center justify-content-md-end" id="collapsableNav">
+        <div class="collapse navbar-collapse justify-content-center justify-content-md-end" id="collapsableNav">
+
+          @if(currentUser) {
+            @if(this.userManagementService.isUserAdmin()) {
+            <ng-container [ngTemplateOutlet]="adminTemplate" />
+            }
+            @if(this.userManagementService.isUserTechnician()) {
+            <ng-container [ngTemplateOutlet]="teamTemplate" />
+            }
+            @if(this.userManagementService.isUserClient()) {
+            <ng-container [ngTemplateOutlet]="clientTemplate" />
+            }
+          }
+          @else {
+          <ng-container [ngTemplateOutlet]="noAuthTemplate" />
+          }
+
           <ul class="navbar-nav mb-2 mb-lg-0">
-            @if(currentUser) {
-              @if(this.userManagementService.isUserAdmin()) {
-                <ng-container [ngTemplateOutlet]="adminTemplate"/>
-              }
-              @if(this.userManagementService.isUserTechnician()) {
-                <ng-container [ngTemplateOutlet]="teamTemplate"/>
-              }
-              @if(this.userManagementService.isUserClient()) {
-                <ng-container [ngTemplateOutlet]="clientTemplate"/>
-              }
-            }
-            @else {
-              <ng-container [ngTemplateOutlet]="noAuthTemplate"/>
-            }
-            
             <li class="nav-item px-2 dropdown">
-              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                 aria-expanded="false">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <fa-icon class="text-light" [icon]="faFlag"></fa-icon>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -48,9 +48,9 @@
             <li class="nav-item" (click)="toggleTheme()">
               <a class="nav-link text-light" aria-current="page">
                 @if ((this.themeService.currentTheme$ | async) === 'light') {
-                  <fa-icon [icon]="faMoon"></fa-icon>
+                <fa-icon [icon]="faMoon"></fa-icon>
                 } @else {
-                  <fa-icon [icon]="faSun"></fa-icon>
+                <fa-icon [icon]="faSun"></fa-icon>
                 }
               </a>
             </li>
@@ -60,107 +60,114 @@
     </nav>
   </header>
   <ng-template #noAuthTemplate>
-    <li class="nav-item px-2">
-      <a [routerLink]="" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('CLIENT.HOME') }}</a>
-    </li>
-    <li class="nav-item px-2 dropdown">
-      <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false">
-        <fa-icon [icon]="faUser"></fa-icon>
-        {{ t('ACCOUNT') }}
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a OpenLogin class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('LOGIN') }}</a></li>
-      </ul>
-    </li>
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2">
+        <a [routerLink]="" ScrollToTop class="nav-link active link-underline text-light fs-6" aria-current="page">{{
+          t('CLIENT.HOME') }}</a>
+      </li>
+      <li class="nav-item px-2 dropdown">
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <fa-icon [icon]="faUser"></fa-icon>
+          {{ t('ACCOUNT') }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a OpenLogin class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('LOGIN') }}</a></li>
+        </ul>
+      </li>
+    </ul>
   </ng-template>
   <ng-template #clientTemplate>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('CLIENT.TICKETS') }}</a>
-    </li>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('CLIENT.COMPANY') }}</a>
-    </li>
-    <li class="nav-item px-2 dropdown">
-      <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false">
-        <fa-icon [icon]="faUser"></fa-icon>
-        @if(currentUser){
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2">
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('CLIENT.TICKETS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('CLIENT.COMPANY') }}</a>
+      </li>
+      <li class="nav-item px-2 dropdown">
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <fa-icon [icon]="faUser"></fa-icon>
+          @if(currentUser){
           {{ currentUser.name }} {{ currentUser.lastname}}
-        }
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a OpenLogin class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('PROFILE') }}</a></li>
-        <li><a (click)="logout()" class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('LOGOUT') }}</a></li>
-      </ul>
-    </li>
+          }
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a OpenLogin class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('PROFILE') }}</a></li>
+          <li><a (click)="logout()" class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('LOGOUT') }}</a></li>
+        </ul>
+      </li>
+    </ul>
   </ng-template>
   <ng-template #teamTemplate>
-    <li class="nav-item px-2 dropdown">
-      <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2 dropdown">
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
-        <fa-icon [icon]="faUser"></fa-icon>
-        @if(currentUser){
+          <fa-icon [icon]="faUser"></fa-icon>
+          @if(currentUser){
           {{ currentUser.name }} {{ currentUser.lastname}}
-        }
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a OpenLogin class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('PROFILE') }}</a></li>
-        <li><a (click)="logout()" class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('LOGOUT') }}</a></li>
-      </ul>
-    </li>
+          }
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a OpenLogin class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('PROFILE') }}</a></li>
+          <li><a (click)="logout()" class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('LOGOUT') }}</a></li>
+        </ul>
+      </li>
+    </ul>
   </ng-template>
   <ng-template #adminTemplate>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('ADMIN.TICKETS') }}</a>
-    </li>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('ADMIN.USERS') }}</a>
-    </li>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('ADMIN.SERVICES') }}</a>
-    </li>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('ADMIN.SERVICE-CONTRACTS') }}</a>
-    </li>
-    <li class="nav-item px-2">
-      <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-         aria-current="page">{{ t('ADMIN.COMPANY') }}</a>
-    </li>
-    <li class="nav-item px-2 dropdown">
-      <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2">
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.TICKETS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.USERS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.SERVICES') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.SERVICE-CONTRACTS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.COMPANY') }}</a>
+      </li>
+      <li class="nav-item px-2 dropdown">
+        <a class="nav-link dropdown-toggle account text-dark text-uppercase" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
-        <fa-icon [icon]="faUser"></fa-icon>
-        @if(currentUser){
+          <fa-icon [icon]="faUser"></fa-icon>
+          @if(currentUser){
           {{ currentUser.name }} {{ currentUser.lastname}}
-        }
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a OpenLogin class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('PROFILE') }}</a></li>
-        <li><a (click)="logout()" class="dropdown-item">
-          <fa-icon [icon]="faSignInAlt"></fa-icon>
-          {{ t('LOGOUT') }}</a></li>
-      </ul>
-    </li>
+          }
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a OpenLogin class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('PROFILE') }}</a></li>
+          <li><a (click)="logout()" class="dropdown-item">
+              <fa-icon [icon]="faSignInAlt"></fa-icon>
+              {{ t('LOGOUT') }}</a></li>
+        </ul>
+      </li>
+    </ul>
   </ng-template>
 </ng-container>
-

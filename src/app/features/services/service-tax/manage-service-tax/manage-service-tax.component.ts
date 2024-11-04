@@ -23,7 +23,6 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
     ReactiveFormsModule
   ],
   templateUrl: './manage-service-tax.component.html',
-  styleUrl: './manage-service-tax.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceTaxComponent {

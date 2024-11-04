@@ -8,12 +8,9 @@ import {TranslocoDirective} from "@jsverse/transloco";
     TranslocoDirective,
   ],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-
-
   getYear() {
     return (new Date()).getFullYear().toString();
   }

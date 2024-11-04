@@ -7,7 +7,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class ThemeService {
   //SERVICES
-  private cookieService = inject(CookieService)
+  private readonly cookieService = inject(CookieService)
 
   //PROPS N VARS
   private readonly THEME_KEY = 'theme'

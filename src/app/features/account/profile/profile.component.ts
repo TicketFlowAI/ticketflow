@@ -1,24 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { UserSessionService } from '../../../core/services/user-sesion.service';
 import { UserModel } from '../../../core/models/entities/user.model';
-import { getBrowserCultureLang } from '@jsverse/transloco';
+import { UserManagementService } from '../../../core/services/user-management.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
   //SERVICES
-  private userSessionService = inject(UserSessionService)
+  private userManagementService = inject(UserManagementService)
   private fb = inject(FormBuilder)
 
   //PROPS N VARIABLES
-  public currentUser!: UserModel
+  public currentUser: UserModel | null = null
   editable = false;
 
   nameFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
@@ -31,8 +29,9 @@ export class ProfileComponent {
     email: this.emailFormControl,
   }
   )
+
   constructor() {
-    this.currentUser = this.userSessionService.currentUser();
+    this.currentUser = this.userManagementService.currentUser();
   }
 
   //METHODS

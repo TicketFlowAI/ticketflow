@@ -29,7 +29,6 @@ import { UserManagementService } from '../../../core/services/user-management.se
     RouterLink
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {

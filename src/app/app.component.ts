@@ -8,11 +8,10 @@ import { AuthService } from './core/services/auth.service';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  private authService = inject(AuthService)
+  private readonly authService = inject(AuthService)
   title = 'Ticketflow';
 
   constructor() {

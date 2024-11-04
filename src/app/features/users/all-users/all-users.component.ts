@@ -28,7 +28,6 @@ import { UserModel } from '../../../core/models/entities/user.model';
     FormsModule
   ],
   templateUrl: './all-users.component.html',
-  styleUrl: './all-users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllUsersComponent {

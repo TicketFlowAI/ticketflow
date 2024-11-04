@@ -39,7 +39,6 @@ import { UserModel } from '../../../../core/models/entities/user.model';
     MatSelectModule
   ],
   templateUrl: './manage-ticket.component.html',
-  styleUrl: './manage-ticket.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageTicketComponent {
