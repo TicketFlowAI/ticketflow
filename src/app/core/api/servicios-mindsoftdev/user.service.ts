@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IUserModelResponse, IUsersModelResponse, UserModel } from '../../models/entities/user.model';
+import { IUserModelResponse, IUsersModelResponse } from '../../models/entities/user.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
 @Injectable({

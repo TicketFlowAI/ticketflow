@@ -56,7 +56,7 @@ export class CompanyService {
       withCredentials: true,
     }
     );
-  } 
+  }
 
   deleteCompany(id: number) {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()

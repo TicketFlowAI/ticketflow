@@ -50,7 +50,7 @@ export class TicketMessageService {
     })
   }
 
-  deleteTicketMessage (id: number): Observable<HttpResponse<any>> {
+  deleteTicketMessage(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.delete<HttpResponse<any>>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,

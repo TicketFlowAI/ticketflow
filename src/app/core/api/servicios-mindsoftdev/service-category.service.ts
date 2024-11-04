@@ -52,7 +52,7 @@ export class ServiceCategoryService {
 
   deleteServiceCategory(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiCategories}/${id}` ,{
+    return this.http.delete<HttpResponse<any>>(`${this.apiCategories}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
     })
