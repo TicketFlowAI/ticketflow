@@ -20,6 +20,10 @@ export const routes: Routes = [
     component: AllServiceContractsComponent
   },
   {
+    path: 'service-contract/:companyId',
+    component: AllServiceContractsComponent
+  },
+  {
     path: 'service-contract-term',
     component: AllServiceContractTermsComponent
   },
@@ -37,6 +41,10 @@ export const routes: Routes = [
   },
   {
     path: 'ticket-message',
+    component: AllTicketMessagesComponent
+  },
+  {
+    path: 'ticket-message/:ticketId',
     component: AllTicketMessagesComponent
   },
   {

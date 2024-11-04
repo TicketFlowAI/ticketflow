@@ -23,6 +23,11 @@ export class ServiceContractService {
    return this.http.get<IServiceContractsApiResponse>(`${this.apiServiceContract}`, { headers: customHeader, withCredentials: true});
  }
 
+ getServiceContractsByCompany(id: number): Observable<IServiceContractsApiResponse> {
+  const customHeader = this.customHeadersService.addAppJson().getHeaders();
+  return this.http.get<IServiceContractsApiResponse>(`${this.apiServiceContract}/bycompany/${id}`, { headers: customHeader, withCredentials: true});
+}
+
  getServiceContract(id: number): Observable<IServiceContractApiResponse> {
    const customHeader = this.customHeadersService.addAppJson().getHeaders();
    return this.http.get<IServiceContractApiResponse>(`${this.apiServiceContract}/${id}`, { headers: customHeader, withCredentials: true});

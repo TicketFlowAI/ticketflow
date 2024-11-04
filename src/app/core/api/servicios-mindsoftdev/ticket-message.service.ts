@@ -18,9 +18,9 @@ export class TicketMessageService {
   customHeadersService = inject(CustomHeadersService)
 
   //Methods
-  getTicketMessages(): Observable<ITicketMessagesApiResponse> {
+  getTicketMessages(id: string): Observable<ITicketMessagesApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-    return this.http.get<ITicketMessagesApiResponse>(`${this.apiTicketsMessage}`, {
+    return this.http.get<ITicketMessagesApiResponse>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
     })

@@ -1,17 +1,13 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.TICKETS'">
     <div class="companies container py-4">
         <div class="row">
-            <div class="col-md-6 text-center text-md-start align-content-center">
+            <div class="col-md-9 text-center text-md-start align-content-center">
                 <h2>{{t('ADMIN.TICKETS')}}</h2>
             </div>
             <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button [routerLink]="['/ticket-message']" type="button" class="btn btn-primary">{{t('ADMIN.MANAGE-TICKET-MESSAGES')}}</button>
-                </div>
-            </div>
-            <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openTicketManageDialog(null)"><fa-icon [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-TICKET')}}</button>
+                    <button type="button" class="btn btn-primary" (click)="openTicketManageDialog(null)"><fa-icon
+                            [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-TICKET')}}</button>
                 </div>
             </div>
         </div>
@@ -31,11 +27,21 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate">{{ticket.title}}</mat-panel-title>
                         <mat-panel-description class="row">
-                            <div class="col-6 text-center">
-                                {{ticket.service_desc}}
+                            <div class="col-6 justify-content-center">
+                                <div class="row justify-content-center">
+                                    <div class="col-6">
+                                        <div class="row justify-content-center">
+                                            <button [routerLink]="['/ticket-message/', ticket.id]" type="button" class="btn btn-secondary">
+                                                Ver
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6 text-center">
-                                {{ticket.user_name}} {{ticket.user_lastname}}
+                            
+                            <div class="col-6 d-flex align-content-center justify-content-end text-end">
+                                <p class="mt-3 fs-6 d-none d-md-flex" [ngClass]="{'green': true}">Abierto</p>
+                                <mat-icon class="mt-3 fs-6" [ngClass]="{'green': true}">brightness_1</mat-icon>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -66,7 +72,7 @@
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="openConfirmationDialog()">
+                                    <button type="button" class="btn btn-danger" (click)="openConfirmationDialog()">
                                         <fa-icon [icon]="faX"></fa-icon> {{t('DELETE')}}
                                     </button>
                                 </div>

@@ -84,15 +84,15 @@ export class ManageTicketComponent {
     }
 
     forkJoin({
-      serviceContracts: this.serviceContractManagementService.getAllServiceContracts(),
+      //serviceContracts: this.serviceContractManagementService.getAllServiceContracts(),
       user: this.userManagemenstService.getMyUser()
     }).pipe(
       catchError(() => {
-        return of({ serviceContracts: [], user: null})
+        return of({ /*serviceContracts: [],*/ user: null})
       })
     ).subscribe({
-      next: ({serviceContracts, user}) => {
-        this.serviceContracts = serviceContracts
+      next: ({/*serviceContracts,*/ user}) => {
+        //this.serviceContracts = serviceContracts
         this.user = user
 
         this.cdr.detectChanges();

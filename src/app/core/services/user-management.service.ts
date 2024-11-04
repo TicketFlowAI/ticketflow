@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { UserService } from '../api/servicios-mindsoftdev/user.service';
-import { UserModel } from '../models/entities/user.model';
+import { UserModel, UserRoles } from '../models/entities/user.model';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -13,35 +13,32 @@ export class UserManagementService {
 
   isUserAdmin() {
     if(this.currentUser() != null)
-      return this.currentUser()?.role === 'super-admin'
-
+      return this.currentUser()?.role === UserRoles.Admin;
     else
-      return false
- 
+      return false;
   }
 
   isUserTechnician() {
     if(this.currentUser() != null)
-      return this.currentUser()?.role === 'technician'
+      return this.currentUser()?.role === UserRoles.Technician;
     else
-      return false 
+      return false;
   }
 
   isUserClient() {
     if(this.currentUser() != null) 
-      return this.currentUser()?.role === 'client'
-    
+      return this.currentUser()?.role === UserRoles.Client;
     else
-      return false
+      return false;
   }
 
   getMyUser() {
     return this.userService.getMyUser().pipe(
       map((response) => {
         if(response.success)
-          return response.data
+          return response.data;
         else
-          return null
+          return null;
       }),
       catchError(() => {
         return of(null);
@@ -71,7 +68,7 @@ export class UserManagementService {
     return this.userService.createUser(newUser).pipe(
       map(() => true),
       catchError(() => {
-        return of(false)
+        return of(false);
       })
     )
   }
@@ -80,7 +77,7 @@ export class UserManagementService {
     return this.userService.updateUser(editUser).pipe(
       map(() => true),
       catchError(() => {
-        return of(false)
+        return of(false);
       })
     )
   }
@@ -89,7 +86,7 @@ export class UserManagementService {
     return this.userService.deleteUser(id).pipe(
       map(() => true),
       catchError(() => {
-        return of(false)
+        return of(false);
       })
     )
   }

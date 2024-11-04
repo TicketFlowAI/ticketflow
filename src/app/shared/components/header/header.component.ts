@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit, TemplateRef, ViewChild
 } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { AsyncPipe, NgOptimizedImage, NgTemplateOutlet } from "@angular/common";
 import { ScrollToTopInstantDirective } from "../../directives/scroll-to-top-instant.directive";
 import { TranslocoDirective, TranslocoService } from "@jsverse/transloco";
@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
 
   userManagementService: UserManagementService = inject(UserManagementService)
   authService: AuthService = inject(AuthService)
+  router: Router = inject(Router)
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   translocoService: TranslocoService = inject(TranslocoService)
   themeService: ThemeService = inject(ThemeService)
@@ -84,5 +85,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigateByUrl('/')
+    this.cdr.detectChanges()
   }
 }

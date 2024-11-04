@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -35,6 +35,8 @@ import { ServiceContractManagementService } from '../../../../core/services/serv
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllServiceContractsComponent {
+  @Input() companyId!: string;
+
   protected readonly faPencil = faPencil;
   protected readonly faInfoCircle = faInfoCircle;
   protected readonly faPlus = faPlus;
@@ -52,15 +54,27 @@ export class AllServiceContractsComponent {
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
   
-  ngOnInit(): void {
-    this.serviceContractManagementService.getAllServiceContracts().subscribe({
-      next: (response) => {
-        this.serviceContracts = response;
-        this.filteredServiceContracts = this.serviceContracts;
-        this.updatePagedServiceContracts();
-        this.cdr.detectChanges();
-      }
-    });
+  ngOnInit() {
+    if(this.companyId) {
+      this.serviceContractManagementService.getAllServiceContractsFromCompany(parseInt(this.companyId)).subscribe({
+        next: (response) => {
+          this.serviceContracts = response;
+          this.filteredServiceContracts = this.serviceContracts;
+          this.updatePagedServiceContracts();
+          this.cdr.detectChanges();
+        }
+      });
+    }
+    else {
+      this.serviceContractManagementService.getAllServiceContracts().subscribe({
+        next: (response) => {
+          this.serviceContracts = response;
+          this.filteredServiceContracts = this.serviceContracts;
+          this.updatePagedServiceContracts();
+          this.cdr.detectChanges();
+        }
+      });
+    }
   }
 
   onFilterChange(): void {

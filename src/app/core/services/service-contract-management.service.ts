@@ -21,6 +21,15 @@ export class ServiceContractManagementService {
     )
   }
 
+  getAllServiceContractsFromCompany(companyId: number): Observable<ServiceContractModel[] | []> {
+    return this.serviceContractService.getServiceContractsByCompany(companyId).pipe(
+      map((serviceContracts) => serviceContracts.data),
+      catchError(() => {
+        return of([]);
+      })
+    )
+  }
+
   getOneServiceContract(id: number): Observable<ServiceContractModel | null> {
     return this.serviceContractService.getServiceContract(id).pipe(
       map((serviceContract) => serviceContract.data),

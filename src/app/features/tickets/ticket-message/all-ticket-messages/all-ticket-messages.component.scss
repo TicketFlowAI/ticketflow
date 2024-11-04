@@ -1,0 +1,21 @@
+.message-container {
+    max-height: calc(100dvh - 300px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+}
+
+.message {}
+.my-message {
+    height: fit-content;
+    background-color: #4591ff
+}
+
+.other-message {
+    height: fit-content;
+    background-color: #0C6EFD
+}

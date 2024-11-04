@@ -123,25 +123,16 @@
       }
     },
     "TICKET-MESSAGES": {
-      "SEARCH": "Buscar...",
 
-      "EDIT-TICKET-MESSAGE-INFO": "Editar Mensaje",
-      "EDIT-TICKET-MESSAGE-INFO-DESC": "De clic aquí para poder editar el mensaje",
-
-      "DELETE": "Borrar",
-      
       "ADMIN": {
-        "TICKET-MESSAGES": "Administrar Mensajes",
-        "CREATE-TICKET-MESSAGE": "Nuevo Mensaje"
+        "TICKET-MESSAGES": "Mensajes con Cliente"
+      },
+      "CLIENT": {
+        "TICKET-MESSAGES": "Mensajes con Soporte"
       },
 
-      "TICKET-MESSAGE-MANAGEMENT": {
-        "CREATE-TICKET": "Crear Mensaje",
-        "EDIT-TICKET": "Editar Mensaje",
-        "TICKET-MESSAGE-CONTENT": "Mensaje",
-        "TICKET-MESSAGE-USER": "Usuario", 
-        "SAVE": "Guardar"
-      }
+      "NEW-MESSAGE": "Nuevo Mensaje",
+      "RETURN": "Regresar"
     },
     "SERVICE-CONTRACTS": {
       "SEARCH": "Buscar...",
@@ -331,7 +322,8 @@
       },
       "CLIENT": {
         "HOME": "Inicio",
-        "COMPANY": "Mis empresas"
+        "COMPANY": "Mis empresas",
+        "TICKETS": "Tickets De Soporte"
       },
 
       "ES": "Español",

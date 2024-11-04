@@ -57,15 +57,15 @@ export class TicketManagementService {
     )
   }
 
-  getAllTicketMessages(): Observable<TicketMessageModel[] | []> {
-    return this.ticketMessageService.getTicketMessages().pipe(
+  getAllMessagesFromTicket(ticketId: string): Observable<TicketMessageModel[] | []> {
+    return this.ticketMessageService.getTicketMessages(ticketId).pipe(
       map((ticketMessages) => ticketMessages.data),
       catchError(() => {
         return of([]);
       })
     )
   }
-
+  
   getOneTicketMessage(id: number): Observable<TicketMessageModel | null> {
     return this.ticketMessageService.getTicketMessage(id).pipe(
       map((ticketMessage) => ticketMessage.data),

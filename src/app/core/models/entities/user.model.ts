@@ -8,6 +8,13 @@ export interface IUserModelResponse {
   data: IUserModel;
 }
 
+export enum UserRoles {
+  Admin = 'super-admin',
+  Technician = 'technician',
+  Client = 'client',
+  Completed = 'Completed',
+}
+
 export interface IUserModel {
   id: number;
   name: string;

@@ -12,7 +12,7 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
 
@@ -22,6 +22,7 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
   imports: [
     CommonModule,
     RouterLink,
+    RouterModule,
     TranslocoDirective,
     MatExpansionModule,
     MatPaginatorModule,
@@ -43,6 +44,7 @@ export class AllTicketsComponent {
 
   private ticketManagementService = inject(TicketManagementService)
   private dialogManagerService = inject(DialogManagerService)
+  private router = inject(Router)
   private cdr = inject(ChangeDetectorRef)
 
   tickets: TicketModel[] = []
@@ -89,6 +91,10 @@ export class AllTicketsComponent {
     this.pagedTickets = this.filteredTickets.slice(startIndex, endIndex);
   }
 
+  goToTicketMessage(id: number) {
+    this.router.navigateByUrl(`/ticket-message/${id}`)
+  }
+  
   openConfirmationDialog() {
     this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar el ticket del listado?")
   }

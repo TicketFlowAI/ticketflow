@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { TokenService } from "./token.service";
 import { LoginRequest } from "../models/requests/login.request";
 import { catchError, concatMap, of } from "rxjs";
@@ -52,8 +52,9 @@ export class AuthService {
   logout() {
     this.authenticationService.logout().subscribe({
       next: (response) => {
-        if(response.status === HttpStatusCode.Ok){
+        if(response.status === HttpStatusCode.NoContent){
           this.tokenService.clearAll();
+          this.userManagementService.currentUser.set(null)
         }
       },
       error: () => {
