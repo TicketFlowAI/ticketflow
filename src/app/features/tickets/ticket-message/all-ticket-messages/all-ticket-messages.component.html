@@ -28,16 +28,14 @@
             <div class="message-container">
                 @for (message of ticketMessages; track message.id) {
                     <!--First we diecide what template to show: team or client based on the currentUser role-->
-                    @if(this.userManagementService.isUserAdmin() || this.userManagementService.isUserTechnician()) {
-                         <!--We place the messages in the correct side of the conversation-->
-                        @if(message.user_role !== clientRole) {
-                            <div class="row mt-3 justify-content-end ">
+                        @if(userManagementService.isUserClient()) {
+                            <div [ngClass]="message.user_role === clientRole ? 'justify-content-end' : 'justify-content-start'" class="row mt-3">
                                 <div class="col-9">
                                     <div class="row text-start">
                                         <p class="fw-semibold">{{message.user_name}} {{message.user_lastname}} </p>
                                     </div>
                                     <div class="row">
-                                        <div class="my-message p-3 rounded-4">
+                                        <div [ngClass]="message.user_role === clientRole ? 'my-message' : 'other-message'" class="p-3 rounded-4">
                                             <p class="text-light">{{message.content}}</p>
                                         </div>
                                     </div>
@@ -48,13 +46,13 @@
                             </div>
                         }
                         @else {
-                            <div class="row mt-3 justify-content-start">
+                            <div [ngClass]="message.user_role !== clientRole ? 'justify-content-end' : 'justify-content-start'" class="row mt-3 justify-content-start">
                                 <div class="col-9">
                                     <div class="row text-start">
                                         <p class="fw-semibold">{{message.user_name}} {{message.user_lastname}} </p>
                                     </div>
                                     <div class="row">
-                                        <div class="other-message p-3 rounded-4">
+                                        <div [ngClass]="message.user_role !== clientRole ? 'my-message' : 'other-message'" class="p-3 rounded-4">
                                             <p class="text-light">{{message.content}}</p>
                                         </div>
                                     </div>
@@ -65,44 +63,6 @@
                             </div>
                         }
                     }
-                    @else {
-                         <!--We place the messages in the correct side of the conversation-->
-                         @if(message.user_role === clientRole) {
-                            <div class="row mt-3 justify-content-end ">
-                                <div class="col-9">
-                                    <div class="row text-start">
-                                        <p class="fw-semibold">{{message.user_name}} {{message.user_lastname}} </p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="my-message p-3 rounded-4">
-                                            <p class="text-light">{{message.content}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row text-end">
-                                        <p>{{message.timestamp | date:'dd/MM/yyyy HH:mm'}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        @else {
-                            <div class="row mt-3 justify-content-start">
-                                <div class="col-9">
-                                    <div class="row text-start">
-                                        <p class="fw-semibold">{{message.user_name}} {{message.user_lastname}} </p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="other-message p-3 rounded-4">
-                                            <p class="text-light">{{message.content}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row text-end">
-                                        <p>{{message.timestamp | date:'dd/MM/yyyy HH:mm'}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                }
             </div>
         </div>
         <div class="row">
