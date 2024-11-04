@@ -1,12 +1,10 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {SanctumService} from "./core/api/servicios-mindsoftdev/sanctum.service";
-import {provideHttpClient} from "@angular/common/http";
-import {provideHttpClientTesting} from "@angular/common/http/testing";
-import {AuthService} from "./core/services/auth.service";
-import {provideTransloco} from "@jsverse/transloco";
-import {isDevMode} from "@angular/core";
-import {TranslocoHttpLoader} from "./transloco-loader";
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideTransloco } from "@jsverse/transloco";
+import { isDevMode } from "@angular/core";
+import { TranslocoHttpLoader } from "./transloco-loader";
 
 describe('AppComponent', () => {
   let component: AppComponent;
