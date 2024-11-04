@@ -36,9 +36,9 @@ export class AllUsersComponent {
   protected readonly faBuilding = faBuilding;
   protected readonly faPlus = faPlus;
 
-  private userManagementService = inject(UserManagementService)
-  private dialogManagerService = inject(DialogManagerService)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly userManagementService = inject(UserManagementService)
+  private readonly dialogManagerService = inject(DialogManagerService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   users: UserModel[] = []
   filteredUsers: UserModel[] = [];

@@ -33,9 +33,9 @@ import { CompanyManagementService } from '../../../core/services/company-managem
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageCompanyComponent {
-  private companyManagementService = inject(CompanyManagementService);
-  readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
-  readonly companyData = inject<CompanyModel>(MAT_DIALOG_DATA);
+  private readonly companyManagementService = inject(CompanyManagementService);
+  private readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
+  public readonly companyData = inject<CompanyModel>(MAT_DIALOG_DATA);
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   dniFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

@@ -39,9 +39,9 @@ export class AllServiceTaxesComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
 
-  private serviceManagementService = inject(ServiceManagementService)
-  private dialogManagerService = inject(DialogManagerService)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly serviceManagementService = inject(ServiceManagementService)
+  private readonly dialogManagerService = inject(DialogManagerService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   serviceTaxes: ServiceTaxModel[] = []
   filteredServiceTaxes: ServiceTaxModel[] = [];

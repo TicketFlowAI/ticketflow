@@ -36,9 +36,9 @@ export class AllCompaniesComponent implements OnInit {
   protected readonly faBuilding = faBuilding;
   protected readonly faPlus = faPlus;
 
-  private companyManagementService = inject(CompanyManagementService)
-  private dialogManagerService = inject(DialogManagerService)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly companyManagementService = inject(CompanyManagementService)
+  private readonly dialogManagerService = inject(DialogManagerService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   companies: CompanyModel[] = []
   filteredCompanies: CompanyModel[] = [];

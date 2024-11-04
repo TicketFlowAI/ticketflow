@@ -24,8 +24,8 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceContractInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<ServiceContractInfoComponent>);
-  readonly serviceContract = inject<ServiceContractModel>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<ServiceContractInfoComponent>);
+  public readonly serviceContract = inject<ServiceContractModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {
     this.dialogRef.close();

@@ -12,8 +12,8 @@ import { UserManagementService } from '../../../core/services/user-management.se
 })
 export class ProfileComponent {
   //SERVICES
-  private userManagementService = inject(UserManagementService)
-  private fb = inject(FormBuilder)
+  private readonly userManagementService = inject(UserManagementService)
+  private readonly fb = inject(FormBuilder)
 
   //PROPS N VARIABLES
   public currentUser: UserModel | null = null

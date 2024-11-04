@@ -26,8 +26,8 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<TicketInfoComponent>);
-  readonly ticket = inject<TicketModel>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<TicketInfoComponent>);
+  public readonly ticket = inject<TicketModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {
     this.dialogRef.close();

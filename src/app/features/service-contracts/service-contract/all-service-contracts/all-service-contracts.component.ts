@@ -41,9 +41,9 @@ export class AllServiceContractsComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
 
-  private serviceContractManagementService = inject(ServiceContractManagementService)
-  private dialogManagerService = inject(DialogManagerService)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly serviceContractManagementService = inject(ServiceContractManagementService)
+  private readonly dialogManagerService = inject(DialogManagerService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   serviceContracts: ServiceContractModel[] = []
   filteredServiceContracts: ServiceContractModel[] = [];

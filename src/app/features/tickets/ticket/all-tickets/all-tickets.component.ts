@@ -7,12 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ServiceModel } from '../../../../core/models/entities/service.model';
-import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
 
@@ -42,10 +40,9 @@ export class AllTicketsComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
 
-  private ticketManagementService = inject(TicketManagementService)
-  private dialogManagerService = inject(DialogManagerService)
-  private router = inject(Router)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly ticketManagementService = inject(TicketManagementService)
+  private readonly dialogManagerService = inject(DialogManagerService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   tickets: TicketModel[] = []
   filteredTickets: TicketModel[] = [];
@@ -54,7 +51,7 @@ export class AllTicketsComponent {
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
-  
+
   ngOnInit(): void {
     this.ticketManagementService.getAllTickets().subscribe({
       next: (tickets) => {
@@ -91,10 +88,6 @@ export class AllTicketsComponent {
     this.pagedTickets = this.filteredTickets.slice(startIndex, endIndex);
   }
 
-  goToTicketMessage(id: number) {
-    this.router.navigateByUrl(`/ticket-message/${id}`)
-  }
-  
   openConfirmationDialog() {
     this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar el ticket del listado?")
   }

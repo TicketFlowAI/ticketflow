@@ -33,10 +33,10 @@ import { UserManagementService } from '../../../core/services/user-management.se
 })
 export class LoginComponent {
   //SERVICES
-  private dialogRef = inject(MatDialogRef<LoginComponent>);
-  private authService = inject(AuthService);
-  private userManagementService = inject(UserManagementService);
-  private fb = inject(FormBuilder)
+  private readonly dialogRef = inject(MatDialogRef<LoginComponent>);
+  private readonly authService = inject(AuthService);
+  private readonly userManagementService = inject(UserManagementService);
+  private readonly fb = inject(FormBuilder)
 
   //PROPS N VARS
   emailFormControl = new FormControl('', [Validators.required, Validators.email])

@@ -33,10 +33,10 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceContractTermComponent {
-  private serviceContractManagementService = inject(ServiceContractManagementService);
+  private readonly serviceContractManagementService = inject(ServiceContractManagementService);
 
-  readonly dialogRef = inject(MatDialogRef<ManageServiceContractTermComponent>);
-  readonly serviceContractTermData = inject<ServiceContractTermModel>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<ManageServiceContractTermComponent>);
+  public readonly serviceContractTermData = inject<ServiceContractTermModel>(MAT_DIALOG_DATA);
 
   termFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   monthsFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })

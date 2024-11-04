@@ -39,10 +39,10 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceContractComponent {
-  private serviceContractManagementService = inject(ServiceContractManagementService);
-  private serviceManagementService = inject(ServiceManagementService);
-  private companyManagementService = inject(CompanyManagementService);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly serviceContractManagementService = inject(ServiceContractManagementService);
+  private readonly serviceManagementService = inject(ServiceManagementService);
+  private readonly companyManagementService = inject(CompanyManagementService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly dialogRef = inject(MatDialogRef<ManageServiceContractComponent>);
   readonly serviceContractData = inject<ServiceContractModel>(MAT_DIALOG_DATA);

@@ -40,11 +40,11 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceComponent {
-  private serviceManagementService = inject(ServiceManagementService);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly serviceManagementService = inject(ServiceManagementService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
-  readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
+  public readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   priceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })

@@ -26,8 +26,8 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceCategoryComponent {
-  private serviceManagementService = inject(ServiceManagementService);
-  readonly dialogRef = inject(MatDialogRef<ManageServiceCategoryComponent>);
+  private readonly serviceManagementService = inject(ServiceManagementService);
+  private readonly dialogRef = inject(MatDialogRef<ManageServiceCategoryComponent>);
   readonly serviceCategoryData = inject<ServiceCategoryModel>(MAT_DIALOG_DATA);
 
   categoryFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

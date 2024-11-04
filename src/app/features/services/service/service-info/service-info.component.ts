@@ -26,7 +26,7 @@ import { ServiceModel } from '../../../../core/models/entities/service.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<ServiceInfoComponent>);
+  private readonly dialogRef = inject(MatDialogRef<ServiceInfoComponent>);
   readonly service = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {

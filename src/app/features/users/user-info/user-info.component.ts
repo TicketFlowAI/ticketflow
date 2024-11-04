@@ -28,10 +28,10 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<UserInfoComponent>);
+  private readonly dialogRef = inject(MatDialogRef<UserInfoComponent>);
   readonly user = inject<UserModel>(MAT_DIALOG_DATA);
 
-  private companyManagementService = inject(CompanyManagementService)
+  private readonly companyManagementService = inject(CompanyManagementService)
   userCompany: CompanyModel | null = null;
 
   cosntructor() {

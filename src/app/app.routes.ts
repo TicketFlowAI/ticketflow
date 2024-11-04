@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import {ChangePasswordComponent} from "./features/account/change-password/change-password.component";
 import { AllCompaniesComponent } from './features/company/all-companies/all-companies.component';
 import { AllServicesComponent } from './features/services/service/all-services/all-services.component';
 import { AllServiceCategoriesComponent } from './features/services/service-category/all-service-categories/all-service-categories.component';
@@ -54,9 +53,5 @@ export const routes: Routes = [
   {
     path: 'service-taxes',
     component: AllServiceTaxesComponent
-  },
-  {
-    path: 'change-password',
-    component: ChangePasswordComponent
   },
 ];

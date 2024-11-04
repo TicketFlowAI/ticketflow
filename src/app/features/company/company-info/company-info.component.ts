@@ -24,8 +24,8 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyInfoComponent {
-  readonly dialogRef = inject(MatDialogRef<CompanyInfoComponent>);
-  readonly company = inject<CompanyModel>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<CompanyInfoComponent>);
+  public readonly company = inject<CompanyModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {
     this.dialogRef.close();

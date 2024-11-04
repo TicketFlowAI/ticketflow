@@ -26,8 +26,8 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceTaxComponent {
-  private serviceManagementService = inject(ServiceManagementService);
-  readonly dialogRef = inject(MatDialogRef<ManageServiceTaxComponent>);
+  private readonly serviceManagementService = inject(ServiceManagementService);
+  private readonly dialogRef = inject(MatDialogRef<ManageServiceTaxComponent>);
   readonly serviceTaxData = inject<ServiceTaxModel>(MAT_DIALOG_DATA);
 
   taxDescriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

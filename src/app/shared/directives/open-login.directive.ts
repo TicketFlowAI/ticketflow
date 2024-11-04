@@ -6,7 +6,7 @@ import {DialogManagerService} from "../../core/services/dialog-manager.service";
   standalone: true
 })
 export class OpenLoginDirective {
-  private dialogManagerService = inject(DialogManagerService)
+  private readonly dialogManagerService = inject(DialogManagerService)
 
   @HostListener('click', ['$event'])
   OpenLogin(event: Event){

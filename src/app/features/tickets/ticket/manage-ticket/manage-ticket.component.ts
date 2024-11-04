@@ -42,13 +42,12 @@ import { UserModel } from '../../../../core/models/entities/user.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageTicketComponent {
-  private ticketManagementService = inject(TicketManagementService);
-  private serviceContractManagementService = inject(ServiceContractManagementService);
-  private userManagemenstService = inject(UserManagementService);
-  private  = inject(ServiceContractManagementService);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly ticketManagementService = inject(TicketManagementService);
+  private readonly serviceContractManagementService = inject(ServiceContractManagementService);
+  private readonly userManagemenstService = inject(UserManagementService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly dialogRef = inject(MatDialogRef<ManageTicketComponent>);
+  private readonly dialogRef = inject(MatDialogRef<ManageTicketComponent>);
   readonly ticketData = inject<TicketModel>(MAT_DIALOG_DATA);
 
   titleFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

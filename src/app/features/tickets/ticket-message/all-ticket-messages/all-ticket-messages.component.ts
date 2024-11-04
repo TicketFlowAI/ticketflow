@@ -35,9 +35,9 @@ import { UserRoles } from '../../../../core/models/entities/user.model';
 export class AllTicketMessagesComponent {
   protected readonly faArrowLeft = faArrowLeft;
 
-  private ticketManagementService = inject(TicketManagementService)
-  userManagementService = inject(UserManagementService)
-  private cdr = inject(ChangeDetectorRef)
+  private readonly ticketManagementService = inject(TicketManagementService)
+  public readonly userManagementService = inject(UserManagementService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   @Input() ticketId!: string
   message = ''

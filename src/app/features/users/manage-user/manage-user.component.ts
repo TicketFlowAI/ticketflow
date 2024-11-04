@@ -35,14 +35,13 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule
   ],
   templateUrl: './manage-user.component.html',
-  styleUrl: './manage-user.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageUserComponent {
-  private userManagementService = inject(UserManagementService);
-  private companyManagementService = inject(CompanyManagementService);
-  readonly dialogRef = inject(MatDialogRef<UserManagementService>);
-  readonly userData = inject<UserModel>(MAT_DIALOG_DATA);
+  private readonly userManagementService = inject(UserManagementService);
+  private readonly companyManagementService = inject(CompanyManagementService);
+  private readonly dialogRef = inject(MatDialogRef<UserManagementService>);
+  private readonly userData = inject<UserModel>(MAT_DIALOG_DATA);
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   lastnameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
