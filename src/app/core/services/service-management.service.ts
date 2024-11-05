@@ -6,6 +6,8 @@ import { ServiceCategoryService } from '../api/servicios-mindsoftdev/service-cat
 import { ServiceModel } from '../models/entities/service.model';
 import { ServiceTaxModel } from '../models/entities/service-tax.model';
 import { ServiceCategoryModel } from '../models/entities/service-category.model';
+import { MessageService } from '../../shared/services/message.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,9 @@ export class ServiceManagementService {
   private readonly serviceService: ServiceService = inject(ServiceService)
   private readonly serviceTaxService: ServiceTaxService = inject(ServiceTaxService)
   private readonly serviceCategoryService: ServiceCategoryService = inject(ServiceCategoryService)
+
+  private readonly messageService = inject(MessageService)
+  private readonly translocoService = inject(TranslocoService)
 
   getAllServices(): Observable<ServiceModel[] | []> {
     return this.serviceService.getServices().pipe(
@@ -35,27 +40,45 @@ export class ServiceManagementService {
 
   addService(serviceModelToAdd: ServiceModel){
     return this.serviceService.createService(serviceModelToAdd).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.SERVICE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
 
   editService(serviceModelToUpdate: ServiceModel) {
     return this.serviceService.updateService(serviceModelToUpdate).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.SERVICE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
 
   deleteService(id: number) {
     return this.serviceService.deleteService(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.SERVICE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
@@ -80,27 +103,45 @@ export class ServiceManagementService {
 
   addServiceTax(serviceTaxModelToAdd: ServiceTaxModel) {
     return this.serviceTaxService.createServiceTax(serviceTaxModelToAdd).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.SERVICE-TAX');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
 
   editServiceTax(serviceTaxModelToUpdate: ServiceTaxModel) {
     return this.serviceTaxService.updateServiceTax(serviceTaxModelToUpdate).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.SERVICE-TAX');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   } 
 
   deleteServiceTax(id: number) {
     return this.serviceTaxService.deleteServiceTax(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.SERVICE-TAX');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
@@ -125,27 +166,45 @@ export class ServiceManagementService {
 
   addServiceCategory(serviceCategoryModelToAdd: ServiceCategoryModel) {
     return this.serviceCategoryService.createServiceCategory(serviceCategoryModelToAdd).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.SERVICE-CATEGORY');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
 
   editServiceCategory(serviceCategoryModelToUpdate: ServiceCategoryModel) {
     return this.serviceCategoryService.updateServiceCategory(serviceCategoryModelToUpdate).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.SERVICE-CATEGORY');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }
 
   deleteServiceCategory(id: number): Observable<boolean> {
     return this.serviceCategoryService.deleteServiceCategory(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.SERVICE-CATEGORY');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       })
     );
   }

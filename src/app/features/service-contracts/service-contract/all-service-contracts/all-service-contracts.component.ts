@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { RouterLink } from '@angular/router';
@@ -43,7 +43,9 @@ export class AllServiceContractsComponent {
 
   private readonly serviceContractManagementService = inject(ServiceContractManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   serviceContracts: ServiceContractModel[] = []
   filteredServiceContracts: ServiceContractModel[] = [];
@@ -102,7 +104,8 @@ export class AllServiceContractsComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar este servicio contratado del listado?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openServiceContractInfoDialog(serviceContract: ServiceContractModel) {

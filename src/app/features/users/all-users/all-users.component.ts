@@ -3,10 +3,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faFileContract, faFilePen, faBuilding, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { FormsModule } from '@angular/forms';
@@ -35,11 +35,14 @@ export class AllUsersComponent {
   protected readonly faFilePen = faFilePen;
   protected readonly faBuilding = faBuilding;
   protected readonly faPlus = faPlus;
+  protected readonly faX = faX;
 
   private readonly userManagementService = inject(UserManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
-  private readonly cdr = inject(ChangeDetectorRef)
 
+  private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
+  
   users: UserModel[] = []
   filteredUsers: UserModel[] = [];
   pagedUsers: UserModel[] = [];
@@ -84,7 +87,8 @@ export class AllUsersComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar este usuario del listado?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-USER');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openUserInfoDialog(user: UserModel) {

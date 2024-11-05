@@ -37,6 +37,7 @@ export class AllTicketMessagesComponent {
 
   private readonly ticketManagementService = inject(TicketManagementService)
   public readonly userManagementService = inject(UserManagementService)
+  
   private readonly cdr = inject(ChangeDetectorRef)
 
   @Input() ticketId!: string

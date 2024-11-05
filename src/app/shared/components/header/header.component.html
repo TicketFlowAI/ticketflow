@@ -45,8 +45,8 @@
               </ul>
             </li>
 
-            <li class="nav-item" (click)="toggleTheme()">
-              <a class="nav-link text-light" aria-current="page">
+            <li class="nav-item">
+              <a class="nav-link text-light" aria-current="page" (click)="toggleTheme()">
                 @if ((this.themeService.currentTheme$ | async) === 'light') {
                 <fa-icon [icon]="faMoon"></fa-icon>
                 } @else {

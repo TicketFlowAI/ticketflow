@@ -4,11 +4,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faFileContract, faFilePen, faBuilding, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
@@ -35,10 +35,13 @@ export class AllCompaniesComponent implements OnInit {
   protected readonly faFilePen = faFilePen;
   protected readonly faBuilding = faBuilding;
   protected readonly faPlus = faPlus;
+  protected readonly faX = faX;
 
   private readonly companyManagementService = inject(CompanyManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   companies: CompanyModel[] = []
   filteredCompanies: CompanyModel[] = [];
@@ -85,7 +88,8 @@ export class AllCompaniesComponent implements OnInit {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar esta empresa del listado?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-COMPANY');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openCompanyInfoDialog(company: CompanyModel) {

@@ -1,6 +1,4 @@
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit, TemplateRef, ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { AsyncPipe, NgOptimizedImage, NgTemplateOutlet } from "@angular/common";
 import { ScrollToTopInstantDirective } from "../../directives/scroll-to-top-instant.directive";
@@ -13,6 +11,7 @@ import { MatButton } from "@angular/material/button";
 import { OpenLoginDirective } from "../../directives/open-login.directive";
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-header',
@@ -39,19 +38,15 @@ export class HeaderComponent implements OnInit {
   protected readonly faUser = faUser;
   protected readonly faSignInAlt = faSignInAlt;
 
-  userManagementService: UserManagementService = inject(UserManagementService)
-  authService: AuthService = inject(AuthService)
-  router: Router = inject(Router)
-  cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
-  translocoService: TranslocoService = inject(TranslocoService)
-  themeService: ThemeService = inject(ThemeService)
+  public readonly userManagementService: UserManagementService = inject(UserManagementService)
+  private readonly authService: AuthService = inject(AuthService)
+  private readonly messageService = inject(MessageService)
+  private readonly router: Router = inject(Router)
+  private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
+  private readonly translocoService: TranslocoService = inject(TranslocoService)
+  public readonly themeService: ThemeService = inject(ThemeService)
 
   currentUser: UserModel | null = null
-
-  @ViewChild('noAuthTemplate') NoAuthTemplate!: TemplateRef<any>
-  @ViewChild('adminTemplate') AdminTemplate!: TemplateRef<any>
-  @ViewChild('teamTemplate') TeamTemplate!: TemplateRef<any>
-  @ViewChild('clientTemplate') ClientTemplate!: TemplateRef<any>
 
   constructor() {
     effect(() => {
@@ -77,6 +72,7 @@ export class HeaderComponent implements OnInit {
 
   switchLanguage(lang: string) {
     this.translocoService.setActiveLang(lang);
+
   }
 
   toggleTheme() {

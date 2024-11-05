@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import { RouterLink } from '@angular/router';
@@ -41,7 +41,9 @@ export class AllServiceContractTermsComponent {
 
   private readonly serviceContractManagementService = inject(ServiceContractManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   serviceContractTerms: ServiceContractTermModel[] = []
   filteredServiceContractTerms: ServiceContractTermModel[] = [];
@@ -86,7 +88,8 @@ export class AllServiceContractTermsComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar este periodo del listado?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT-TERM');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openServiceContractTermManageDialog(serviceContract: ServiceContractTermModel | null) {

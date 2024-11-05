@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faPencil, faX, faPlus, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +41,9 @@ export class AllServiceTaxesComponent {
 
   private readonly serviceManagementService = inject(ServiceManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   serviceTaxes: ServiceTaxModel[] = []
   filteredServiceTaxes: ServiceTaxModel[] = [];
@@ -86,7 +88,8 @@ export class AllServiceTaxesComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar el impuesto?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-TAX');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openServiceTaxManageDialog(serviceTax: ServiceTaxModel | null) {

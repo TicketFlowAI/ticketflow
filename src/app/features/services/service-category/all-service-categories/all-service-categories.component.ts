@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +41,9 @@ export class AllServiceCategoriesComponent {
 
   private readonly serviceManagementService = inject(ServiceManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   serviceCategories: ServiceCategoryModel[] = []
   filteredServiceCategories: ServiceCategoryModel[] = [];
@@ -85,7 +87,8 @@ export class AllServiceCategoriesComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar la categoría?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CATEGORY');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openServiceCategoryManageDialog(serviceCategory: ServiceCategoryModel | null) {

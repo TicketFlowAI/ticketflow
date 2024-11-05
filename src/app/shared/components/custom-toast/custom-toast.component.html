@@ -1,0 +1,28 @@
+<div class="toast-container">
+    @for(message of messageService.messages(); track message) {
+    <div [@toastAnimation]="'visible'" class="row justify-content-end">
+        <div [ngClass]="message.type" class="message text">
+            <div class="d-flex">
+                <div class="align-content-center">
+                    @if(message.type === 'success') {
+                        <mat-icon class="w-100 h-100 text-light fs-2">check_circle</mat-icon>
+                    }
+                    @if(message.type === 'warning') {
+                        <mat-icon class="w-100 h-100 text-light fs-2">warning</mat-icon>
+                    }
+                    @if(message.type === 'info') {
+                        <mat-icon class="w-100 h-100 text-light fs-2">info</mat-icon>
+                    }
+                    @if(message.type === 'error') {
+                        <mat-icon class="w-100 h-100 text-light fs-2">error</mat-icon>
+                    }
+                    
+                </div>
+                <div class="ps-2 fs-6 mt-1">
+                    {{ message.message }}
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>  

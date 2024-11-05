@@ -2,12 +2,17 @@ import { inject, Injectable, signal } from '@angular/core';
 import { UserService } from '../api/servicios-mindsoftdev/user.service';
 import { UserModel, UserRoles } from '../models/entities/user.model';
 import { catchError, map, Observable, of } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
+import { MessageService } from '../../shared/services/message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserManagementService {
   private readonly userService = inject(UserService)
+
+  private readonly messageService = inject(MessageService)
+  private readonly translocoService = inject(TranslocoService)
 
   public currentUser = signal<UserModel | null>(null)
 

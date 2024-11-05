@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ServiceModel } from '../../../../core/models/entities/service.model';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
@@ -40,7 +40,9 @@ export class AllServicesComponent {
 
   private readonly serviceManagementService = inject(ServiceManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
+
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly translocoService = inject(TranslocoService)
 
   services: ServiceModel[] = []
   filteredServices: ServiceModel[] = [];
@@ -88,7 +90,8 @@ export class AllServicesComponent {
   }
 
   openConfirmationDialog() {
-    this.dialogManagerService.openActionConfrimationDialog("¿Está seguro que desea eliminar el servicio del listado?")
+    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE');
+    this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
   openServiceInfoDialog(service: ServiceModel) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -40,8 +40,9 @@ import { MatSelectModule } from '@angular/material/select';
 export class ManageUserComponent {
   private readonly userManagementService = inject(UserManagementService);
   private readonly companyManagementService = inject(CompanyManagementService);
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly dialogRef = inject(MatDialogRef<UserManagementService>);
-  private readonly userData = inject<UserModel>(MAT_DIALOG_DATA);
+  public readonly userData = inject<UserModel | null>(MAT_DIALOG_DATA);
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   lastnameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
@@ -56,24 +57,21 @@ export class ManageUserComponent {
   })
 
   companies: CompanyModel[] = []
-  user: UserModel | null = null;
-
-  constructor() {
-    this.companyManagementService.getAllCompanies().subscribe({
-      next: (companies) => {
-        this.companies = companies
-      }
-    })
-  }
 
   ngOnInit(): void {
     if (this.userData) {
-      this.user = this.userData
-      this.nameFormControl.setValue(this.user.name)
-      this.lastnameFormControl.setValue(this.user.lastname)
-      this.emailFormControl.setValue(this.user.email)
-      this.companyFormControl.setValue(this.user.company_id)
+      this.nameFormControl.setValue(this.userData.name)
+      this.lastnameFormControl.setValue(this.userData.lastname)
+      this.emailFormControl.setValue(this.userData.email)
+      this.companyFormControl.setValue(this.userData.company_id)
     }
+
+    this.companyManagementService.getAllCompanies().subscribe({
+      next: (companies) => {
+        this.companies = companies
+        this.cdr.markForCheck()
+      }
+    })
   }
 
   onSaveClick(): void {

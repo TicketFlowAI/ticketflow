@@ -108,6 +108,9 @@ export class ManageTicketComponent {
       formValue.complexity,
       formValue.serviceContract,
       formValue.user,
+      1,
+      false, 
+      true,//As is a new ticket and has a message from the client side, the notification to the techinician will be auto setted to true
       '',
       '',
       0,

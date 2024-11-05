@@ -4,6 +4,8 @@ import { ServiceContractModel } from '../models/entities/service-contract.model'
 import { ServiceContractService } from '../api/servicios-mindsoftdev/service-contract.service';
 import { ServiceContractTermService } from '../api/servicios-mindsoftdev/service-contract-term.service';
 import { ServiceContractTermModel } from '../models/entities/service-contract-term.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { MessageService } from '../../shared/services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,9 @@ import { ServiceContractTermModel } from '../models/entities/service-contract-te
 export class ServiceContractManagementService {
   private readonly serviceContractService = inject(ServiceContractService)
   private readonly serviceContractTermService = inject(ServiceContractTermService)
+
+  private readonly messageService = inject(MessageService)
+  private readonly translocoService = inject(TranslocoService)
 
   getAllServiceContracts(): Observable<ServiceContractModel[] | []> {
     return this.serviceContractService.getServiceContracts().pipe(
@@ -41,8 +46,14 @@ export class ServiceContractManagementService {
 
   addServiceContract(newServiceContract: ServiceContractModel): Observable<boolean> {
     return this.serviceContractService.createServiceContract(newServiceContract).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.SERVICE-CONTRACT');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -50,8 +61,14 @@ export class ServiceContractManagementService {
 
   editServiceContract(editServiceContract: ServiceContractModel): Observable<boolean> {
     return this.serviceContractService.updateServiceContract(editServiceContract).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.SERVICE-CONTRACT');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -59,8 +76,14 @@ export class ServiceContractManagementService {
 
   deleteServiceContract(id: number): Observable<boolean> {
     return this.serviceContractService.deleteServiceContract(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.SERVICE-CONTRACT');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -86,8 +109,14 @@ export class ServiceContractManagementService {
 
   addServiceContractTerm(newServiceContractTerm: ServiceContractTermModel): Observable<boolean> {
     return this.serviceContractTermService.createServiceContractTerm(newServiceContractTerm).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.SERVICE-CONTRACT-TERM');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -95,8 +124,14 @@ export class ServiceContractManagementService {
 
   editServiceContractTerm(editServiceContractTerm: ServiceContractTermModel): Observable<boolean> {
     return this.serviceContractTermService.updateServiceContractTerm(editServiceContractTerm).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.SERVICE-CONTRACT-TERM');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -104,8 +139,14 @@ export class ServiceContractManagementService {
 
   deleteServiceContractTerm(id: number): Observable<boolean> {
     return this.serviceContractTermService.deleteServiceContractTerm(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.SERVICE-CONTRACT-TERM');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )

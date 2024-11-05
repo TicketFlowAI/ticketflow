@@ -16,6 +16,9 @@ export interface ITicketModel {
   complexity: number;
   service_contract_id: number;
   user_id: number;
+  status: number;
+  newClientMessage: boolean;
+  newTechnicianMessage: boolean;
   user_name: string;
   user_lastname: string;
   company_id: number;
@@ -33,6 +36,9 @@ export class TicketModel implements ITicketModel {
     public complexity: number = 0,
     public service_contract_id: number = 0,
     public user_id: number = 0,
+    public status: number = 1,
+    public newClientMessage: boolean = false,
+    public newTechnicianMessage: boolean = false,
     public user_name: string = '',
     public user_lastname: string = '',
     public company_id: number = 0,

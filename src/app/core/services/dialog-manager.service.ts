@@ -43,7 +43,7 @@ export class DialogManagerService {
     });
   }
 
-  openActionConfrimationDialog(message: string): Observable<boolean> {
+  openActionConfirmationDialog(message: string): Observable<boolean> {
     const enterAnimationDuration = '200ms'
     const exitAnimationDuration = '200ms'
 

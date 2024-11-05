@@ -81,11 +81,18 @@
     "TICKETS": {
       "SEARCH": "Buscar...",
 
+      "SEE-CONVERSATION": "Ver",
+      "STATUS-OPEN": "Abierto",
+      "STATUS-CLOSED": "Cerrado",
+
       "READ-TICKET-INFO": "Ver Detalles",
       "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
 
       "EDIT-TICKET-INFO": "Editar Ticket",
       "EDIT-TICKET-INFO-DESC": "De clic aquí para poder editar el ticket",
+
+      "CLOSE-TICKET": "Cerrar Ticket",
+      "CLOSE-TICKET-DESC": "De clic aquí para cerrar el ticket si ya se completo la atención al usuario",
 
       "DELETE": "Borrar",
       
@@ -339,9 +346,54 @@
     },
     "DIALOGS": {
       "CONFIRMATION": {
+        "DELETE-COMPANY": "¿Está seguro que desea eliminar esta empresa?",
+        "DELETE-SERVICE-CONTRACT": "¿Está seguro que desea eliminar esta contratación?",
+        "DELETE-SERVICE-CONTRACT-TERM": "¿Está seguro que desea eliminar este periodo?",
+        "DELETE-SERVICE": "¿Está seguro que desea eliminar este servicio?",
+        "DELETE-SERVICE-TAX": "¿Está seguro que desea eliminar este impuesto?",
+        "DELETE-SERVICE-CATEGORY": "¿Está seguro que desea eliminar esta categoría?",
+        "DELETE-TICKET": "¿Está seguro que desea eliminar este ticket?",
+        "DELETE-USER": "¿Está seguro que desea eliminar este usuario?",
         "TITLE": "Confirmation",
         "CANCEL": "Cancel",
         "OK": "Continue"
+      }
+    },
+    "TOASTS": {
+      "CRUD": {
+        "CREATE": {
+          "COMPANY": "Empresa creada exitosamente",
+          "SERVICE-CONTRACT": "Contratación creada exitosamente",
+          "SERVICE-CONTRACT-TERM": "Periodo creado exitosamente",
+          "SERVICE": "Servicio creado exitosamente",
+          "SERVICE-TAX": "Impuesto creado exitosamente",
+          "SERVICE-CATEGORY": "Categoría creada exitosamente",
+          "TICKET": "Ticket creado exitosamente",
+          "USER": "Usuario creado exitosamente",
+          "ERROR": "Ha ocurrido un error en la creación"
+        },
+        "EDIT": {
+          "COMPANY": "Empresa modificada exitosamente",
+          "SERVICE-CONTRACT": "Contratación modificada exitosamente",
+          "SERVICE-CONTRACT-TERM": "Periodo modificado exitosamente",
+          "SERVICE": "Servicio modificado exitosamente",
+          "SERVICE-TAX": "Impuesto modificado exitosamente",
+          "SERVICE-CATEGORY": "Categoría modificada exitosamente",
+          "TICKET": "Ticket modificado exitosamente",
+          "USER": "Usuario modificado exitosamente",
+          "ERROR": "Ha ocurrido un error en la modificación"
+        },
+        "DELETE": {
+          "COMPANY": "Empresa eliminada exitosamente",
+          "SERVICE-CONTRACT": "Contratación eliminada exitosamente",
+          "SERVICE-CONTRACT-TERM": "Periodo eliminado exitosamente",
+          "SERVICE": "Servicio eliminado exitosamente",
+          "SERVICE-TAX": "Impuesto eliminado exitosamente",
+          "SERVICE-CATEGORY": "Categoría eliminada exitosamente",
+          "TICKET": "Ticket eliminado exitosamente",
+          "USER": "Usuario eliminado exitosamente",
+          "ERROR": "Ha ocurrido un error en la eliminación"
+        }
       }
     }
   }

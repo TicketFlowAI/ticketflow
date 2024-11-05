@@ -40,8 +40,15 @@
                             </div>
                             
                             <div class="col-6 d-flex align-content-center justify-content-end text-end">
-                                <p class="mt-3 fs-6 d-none d-md-flex" [ngClass]="{'green': true}">Abierto</p>
-                                <mat-icon class="mt-3 fs-6" [ngClass]="{'green': true}">brightness_1</mat-icon>
+                                <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}" class="mt-3 fs-6 d-none d-md-flex">
+                                    @if(ticket.status === 1) {
+                                        {{t('STATUS-OPEN')}}
+                                    }
+                                    @if(ticket.status === 2) {
+                                        {{t('STATUS-CLOSED')}}
+                                    }
+                                </p>
+                                <mat-icon [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}" class="mt-3 fs-6">brightness_1</mat-icon>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>

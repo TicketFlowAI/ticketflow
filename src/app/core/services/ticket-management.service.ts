@@ -4,6 +4,8 @@ import { TicketService } from '../api/servicios-mindsoftdev/ticket.service';
 import { TicketMessageService } from '../api/servicios-mindsoftdev/ticket-message.service';
 import { TicketModel } from '../models/entities/ticket.model';
 import { TicketMessageModel } from '../models/entities/ticket-message.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { MessageService } from '../../shared/services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,9 @@ import { TicketMessageModel } from '../models/entities/ticket-message.model';
 export class TicketManagementService {
   private readonly ticketService = inject(TicketService)
   private readonly ticketMessageService = inject(TicketMessageService)
+
+  private readonly messageService = inject(MessageService)
+  private readonly translocoService = inject(TranslocoService)
 
   getAllTickets(): Observable<TicketModel[] | []> {
     return this.ticketService.getTickets().pipe(
@@ -32,8 +37,14 @@ export class TicketManagementService {
 
   addTicket(newTicket: TicketModel): Observable<boolean> {
     return this.ticketService.createTicket(newTicket).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.TICKET');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -41,8 +52,14 @@ export class TicketManagementService {
 
   editTicket(editTicket: TicketModel): Observable<boolean> {
     return this.ticketService.updateTicket(editTicket).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.TICKET');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -50,8 +67,14 @@ export class TicketManagementService {
 
   deleteTicket(id: number): Observable<boolean> {
     return this.ticketService.deleteTicket(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.TICKET');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
