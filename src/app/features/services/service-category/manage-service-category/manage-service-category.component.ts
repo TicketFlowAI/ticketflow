@@ -56,16 +56,16 @@ export class ManageServiceCategoryComponent {
       serviceCategory.id = this.serviceCategoryData.id
       
       this.serviceManagementService.editServiceCategory(serviceCategory).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
     }
     else {
       this.serviceManagementService.addServiceCategory(serviceCategory).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )

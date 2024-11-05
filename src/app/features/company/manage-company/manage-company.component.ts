@@ -87,16 +87,16 @@ export class ManageCompanyComponent {
       company.id = this.companyData.id
       
       this.companyManagementService.editCompany(company).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
     }
     else {
       this.companyManagementService.addCompany(company).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )

@@ -102,6 +102,8 @@ export class TicketManagementService {
     return this.ticketMessageService.createTicketMessage(newTicketMessage).pipe(
       map(() => true),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -111,6 +113,8 @@ export class TicketManagementService {
     return this.ticketMessageService.updateTicketMessage(editTicketMessage).pipe(
       map(() => true),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )
@@ -120,6 +124,8 @@ export class TicketManagementService {
     return this.ticketMessageService.deleteTicketMessage(id).pipe(
       map(() => true),
       catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
         return of(false)
       })
     )

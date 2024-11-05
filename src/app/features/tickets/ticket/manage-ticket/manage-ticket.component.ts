@@ -66,31 +66,29 @@ export class ManageTicketComponent {
     serviceContract: this.serviceContractFormControl,
   })
 
-  ticket: TicketModel | null = null;
   serviceContracts: ServiceContractModel[] = [];
   user: UserModel | null = null;
 
   ngOnInit(): void {
     if (this.ticketData) {
-      this.ticket = this.ticketData
-      this.titleFormControl.setValue(this.ticket.title)
-      this.priorityFormControl.setValue(this.ticket.priority)
-      this.humanInteractionFormControl.setValue(this.ticket.needsHumanInteraction);
-      this.complexityFormControl.setValue(this.ticket.complexity);
-      this.userFormControl.setValue(this.ticket.user_id);
-      this.serviceContractFormControl.setValue(this.ticket.service_contract_id);
+      this.titleFormControl.setValue(this.ticketData.title)
+      this.priorityFormControl.setValue(this.ticketData.priority)
+      this.humanInteractionFormControl.setValue(this.ticketData.needsHumanInteraction);
+      this.complexityFormControl.setValue(this.ticketData.complexity);
+      this.userFormControl.setValue(this.ticketData.user_id);
+      this.serviceContractFormControl.setValue(this.ticketData.service_contract_id);
     }
 
     forkJoin({
-      //serviceContracts: this.serviceContractManagementService.getAllServiceContracts(),
+      serviceContracts: this.serviceContractManagementService.getAllServiceContracts(),
       user: this.userManagemenstService.getMyUser()
     }).pipe(
       catchError(() => {
-        return of({ /*serviceContracts: [],*/ user: null})
+        return of({ serviceContracts: [], user: null})
       })
     ).subscribe({
-      next: ({/*serviceContracts,*/ user}) => {
-        //this.serviceContracts = serviceContracts
+      next: ({serviceContracts, user}) => {
+        this.serviceContracts = serviceContracts
         this.user = user
 
         this.cdr.detectChanges();
@@ -123,16 +121,16 @@ export class ManageTicketComponent {
       ticket.id = this.ticketData.id
 
       this.ticketManagementService.editTicket(ticket).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
     }
     else {
       this.ticketManagementService.addTicket(ticket).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )

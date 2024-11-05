@@ -37,7 +37,7 @@ export class AllTicketMessagesComponent {
 
   private readonly ticketManagementService = inject(TicketManagementService)
   public readonly userManagementService = inject(UserManagementService)
-  
+
   private readonly cdr = inject(ChangeDetectorRef)
 
   @Input() ticketId!: string
@@ -89,11 +89,8 @@ export class AllTicketMessagesComponent {
 
     this.clearMessageInterval()
     this.ticketManagementService.addTicketMessage(newTicketMessage).subscribe({
-      next: (result) => {
-        if(result)
-          this.checkMessages()
-        else
-          this.checkMessages()
+      next: () => {
+        this.checkMessages()
       }
     })
   }

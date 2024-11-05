@@ -68,16 +68,16 @@ export class ManageServiceContractTermComponent {
       serviceContractTerm.id = this.serviceContractTermData.id
 
       this.serviceContractManagementService.editServiceContractTerm(serviceContractTerm).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
     }
     else {
       this.serviceContractManagementService.addServiceContractTerm(serviceContractTerm).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )

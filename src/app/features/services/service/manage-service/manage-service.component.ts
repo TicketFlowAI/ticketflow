@@ -104,16 +104,16 @@ export class ManageServiceComponent {
       service.id = this.serviceData.id
 
       this.serviceManagementService.editService(service).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
     }
     else {
       this.serviceManagementService.addService(service).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
+        next: () => {
+          this.dialogRef.close()
         }
       }
       )
