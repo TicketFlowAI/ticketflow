@@ -238,16 +238,4 @@ export class DialogManagerService {
       data: user
     });
   }
-
-  openNewTicketDialog() {
-    const enterAnimationDuration = '100ms'
-    const exitAnimationDuration = '100ms'
-
-    this.dialogService.open(LoginComponent, {
-      width: '500px',
-      height: '400px',
-      enterAnimationDuration,
-      exitAnimationDuration
-    });
-  }
 }

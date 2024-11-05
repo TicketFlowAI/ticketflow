@@ -3,7 +3,6 @@ import { AuthenticationService } from './authentication.service';
 import { CustomHeadersService } from "../../utils/custom-headers.service";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { HttpHeaders, provideHttpClient } from "@angular/common/http";
-import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../../models/requests/login.request';
 
@@ -11,7 +10,6 @@ describe('AuthenticationService', () => {
   const API_URL = environment.apiEndpoint;
   let service: AuthenticationService;
   let httpMock: HttpTestingController;
-  let cookieServiceSpy: jasmine.SpyObj<CookieService>;
 
   beforeEach(() => {
     const cookieSpy = jasmine.createSpyObj('CookieService', ['get', 'set', 'clearAll'])
@@ -19,13 +17,11 @@ describe('AuthenticationService', () => {
       providers: [
         CustomHeadersService,
         provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: CookieService, useValue: cookieSpy }
+        provideHttpClientTesting()
       ],
     });
     service = TestBed.inject(AuthenticationService);
     httpMock = TestBed.inject(HttpTestingController);
-    cookieServiceSpy = TestBed.inject(CookieService) as jasmine.SpyObj<CookieService>;;
   });
 
   afterEach(() => {

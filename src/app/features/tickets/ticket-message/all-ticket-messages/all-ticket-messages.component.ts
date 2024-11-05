@@ -79,7 +79,7 @@ export class AllTicketMessagesComponent {
   }
 
   clearMessageInterval() {
-    this.messageInterval.clear;
+    this.messageInterval.clear();
   }
 
   send() {
