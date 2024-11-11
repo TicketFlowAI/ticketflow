@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +16,6 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -55,20 +54,12 @@ export class ManageServiceCategoryComponent {
     if (this.serviceCategoryData) {
       serviceCategory.id = this.serviceCategoryData.id
       
-      this.serviceManagementService.editServiceCategory(serviceCategory).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.editServiceCategory(serviceCategory)
+      .subscribe(() => { this.dialogRef.close() })
     }
     else {
-      this.serviceManagementService.addServiceCategory(serviceCategory).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.addServiceCategory(serviceCategory)
+      .subscribe(() => {this.dialogRef.close()} )
     }
   }
 }

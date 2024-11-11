@@ -12,6 +12,7 @@ import { DialogManagerService } from '../../../core/services/dialog-manager.serv
 import { FormsModule } from '@angular/forms';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-users',
@@ -42,7 +43,7 @@ export class AllUsersComponent {
 
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly translocoService = inject(TranslocoService)
-  
+
   users: UserModel[] = []
   filteredUsers: UserModel[] = [];
   pagedUsers: UserModel[] = [];
@@ -52,6 +53,10 @@ export class AllUsersComponent {
   filterText = ''; // Texto de filtro
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  private loadUsers() {
     this.userManagementService.getAllUsers().subscribe({
       next: (users) => {
         this.users = users;
@@ -86,16 +91,26 @@ export class AllUsersComponent {
     this.pagedUsers = this.filteredUsers.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-USER');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
-  }
-
   openUserInfoDialog(user: UserModel) {
     this.dialogManagerService.openUserInfoDialog(user)
   }
 
+  deleteUsers(userId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-USER');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.userManagementService.deleteUser(userId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadUsers() } )
+  }
+
   openUserManageDialog(user: UserModel | null) {
-    this.dialogManagerService.openManageUserDialog(user)
+    this.dialogManagerService.openManageUserDialog(user).subscribe(
+      () => { this.loadUsers() }
+    )
   }
 }

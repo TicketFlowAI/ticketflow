@@ -24,6 +24,7 @@ import { ServiceContractTermModel } from '../models/entities/service-contract-te
 import { TicketModel } from '../models/entities/ticket.model';
 import { ManageTicketComponent } from '../../features/tickets/ticket/manage-ticket/manage-ticket.component';
 import { TicketInfoComponent } from '../../features/tickets/ticket/ticket-info/ticket-info.component';
+import { TicketDialogData } from '../models/dialogs/ticket-dialog-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,20 +56,21 @@ export class DialogManagerService {
       data: message
     });
 
-    dialogRef.afterClosed().pipe(
-      map(result => console.log(result))
-    );
-
     return dialogRef.afterClosed().pipe(
-      map(result => result)
-    );
+      map((result) => {
+        if(result)
+          return true;
+        else
+          return false;
+      })
+    )
   }
 
   openManageCompanyDialog(company: CompanyModel | null) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageCompanyComponent, {
+    const dialogRef = this.dialogService.open(ManageCompanyComponent, {
       width: '800px',
       maxWidth: '100vw',
       height: '500px',
@@ -76,13 +78,17 @@ export class DialogManagerService {
       exitAnimationDuration,
       data: company
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openCompanyInfoDialog(company: CompanyModel) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(CompanyInfoComponent, {
+    const dialogRef = this.dialogService.open(CompanyInfoComponent, {
       width: '600px',
       maxWidth: '100vw',
       height: '450px',
@@ -90,20 +96,30 @@ export class DialogManagerService {
       exitAnimationDuration,
       data: company
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
-  openManageTicketDialog(ticket: TicketModel | null) {
+  openManageTicketDialog(data: TicketDialogData) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageTicketComponent, {
+    let height = data.ticket? '460px' : '570px';
+
+    const dialogRef = this.dialogService.open(ManageTicketComponent, {
       width: '800px',
       maxWidth: '100vw',
-      height: '500px',
+      height: height,
       enterAnimationDuration,
       exitAnimationDuration,
-      data: ticket
+      data: data
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openTicketInfoDialog(ticket: TicketModel) {
@@ -137,39 +153,51 @@ export class DialogManagerService {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageServiceComponent, {
+    const dialogRef = this.dialogService.open(ManageServiceComponent, {
       width: '500px',
       height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: service
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openManageServiceCategoryDialog(serviceCategory: ServiceCategoryModel | null) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageServiceCategoryComponent, {
+    const dialogRef = this.dialogService.open(ManageServiceCategoryComponent, {
       width: '500px',
       height: '230px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceCategory
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openManageServiceTaxDialog(serviceTax: ServiceTaxModel | null) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageServiceTaxComponent, {
+    const dialogRef = this.dialogService.open(ManageServiceTaxComponent, {
       width: '500px',
       height: '310px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceTax
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openServiceContractInfoDialog(serviceContract: ServiceContractModel) {
@@ -189,26 +217,34 @@ export class DialogManagerService {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageServiceContractComponent, {
+    const dialogRef = this.dialogService.open(ManageServiceContractComponent, {
       width: '500px',
       height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceContract
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openManageServiceContractTermDialog(serviceContractTerm: ServiceContractTermModel | null) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageServiceContractTermComponent, {
+    const dialogRef = this.dialogService.open(ManageServiceContractTermComponent, {
       width: '500px',
       height: '310px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceContractTerm
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 
   openUserInfoDialog(user: UserModel) {
@@ -229,7 +265,7 @@ export class DialogManagerService {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    this.dialogService.open(ManageUserComponent, {
+    const dialogRef = this.dialogService.open(ManageUserComponent, {
       width: '600px',
       maxWidth: '100vw',
       height: '460px',
@@ -237,5 +273,9 @@ export class DialogManagerService {
       exitAnimationDuration,
       data: user
     });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
   }
 }

@@ -23,7 +23,7 @@ export class TicketMessageService {
     return this.http.get<ITicketMessagesApiResponse>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   getTicketMessage(id: number): Observable<ITicketMessageApiResponse> {
@@ -31,30 +31,33 @@ export class TicketMessageService {
     return this.http.get<ITicketMessageApiResponse>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   createTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiTicketsMessage}`, ticketMessage, {
+    return this.http.post<any>(`${this.apiTicketsMessage}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   updateTicketMessage(ticketMessage: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.put<HttpResponse<any>>(`${this.apiTicketsMessage}/${ticketMessage.id}`, ticketMessage, {
+    return this.http.put<any>(`${this.apiTicketsMessage}/${ticketMessage.id}`, ticketMessage, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   deleteTicketMessage(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiTicketsMessage}/${id}`, {
+    return this.http.delete<any>(`${this.apiTicketsMessage}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 }

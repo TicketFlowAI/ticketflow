@@ -1,32 +1,31 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
-import { SpinnerService } from '../../shared/services/spinner.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
 import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
-import { of, throwError } from 'rxjs';
-import { HttpResponse, HttpStatusCode } from '@angular/common/http';
-import { LoginRequest } from '../models/requests/login.request';
+import { IUserModel } from '../models/entities/user.model';
+import { UserManagementService } from './user-management.service';
+import { of } from 'rxjs';
 
 describe('AuthService', () => {
   let service: AuthService;
   let tokenServiceSpy: jasmine.SpyObj<TokenService>;
   let sanctumServiceSpy: jasmine.SpyObj<SanctumService>;
   let authenticationServiceSpy: jasmine.SpyObj<AuthenticationService>;
-  let spinnerServiceSpy: jasmine.SpyObj<SpinnerService>;
+  let userManagementServiceSpy: jasmine.SpyObj<UserManagementService>
 
   beforeEach(() => {
+    const userManagementSpy = jasmine.createSpyObj('UserManagementService', ['getMyUser', 'currentUser']);
     const tokenSpy = jasmine.createSpyObj('TokenService', ['getToken', 'clearAll']);
     const sanctumSpy = jasmine.createSpyObj('SanctumService', ['getCsrfCookie']);
     const authSpy = jasmine.createSpyObj('AuthenticationService', ['loginWithCredentials', 'logout']);
-    const spinnerSpy = jasmine.createSpyObj('SpinnerService', ['showSpinner', 'hideSpinner']);
 
     TestBed.configureTestingModule({
       providers: [
         { provide: TokenService, useValue: tokenSpy },
         { provide: SanctumService, useValue: sanctumSpy },
         { provide: AuthenticationService, useValue: authSpy },
-        { provide: SpinnerService, useValue: spinnerSpy },
+        { provide: UserManagementService, useValue: userManagementSpy },
         AuthService,
       ],
     });
@@ -35,56 +34,31 @@ describe('AuthService', () => {
     tokenServiceSpy = TestBed.inject(TokenService) as jasmine.SpyObj<TokenService>;
     sanctumServiceSpy = TestBed.inject(SanctumService) as jasmine.SpyObj<SanctumService>;
     authenticationServiceSpy = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
-    spinnerServiceSpy = TestBed.inject(SpinnerService) as jasmine.SpyObj<SpinnerService>;
+    userManagementServiceSpy = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should set isAuthenticated to true if token exists', () => {
-    tokenServiceSpy.getToken.and.returnValue('dummy_token');
+  it('should autenticate the user if token exists', () => {
+    tokenServiceSpy.tokenExists.and.returnValue(true)
 
-    service.isUserLoggedIn();
+    const mockUser: IUserModel = {
+      "id": 1,
+      "name": "Mindsoft",
+      "lastname": "Admin",
+      "email": "info@mindsoft.biz",
+      "role": "super-admin",
+      "company_id": 1,
+      "company_name": "Mindsoft"
+    }
 
-    expect(service.isAuthenticated()).toBeTrue();
-  });
+    userManagementServiceSpy.getMyUser.and.returnValue(of(mockUser));
 
-  it('should call spinner and login with credentials on login', () => {
-    const loginRequest: LoginRequest = { email: 'test@example.com', password: 'password' };
-  
-    sanctumServiceSpy.getCsrfCookie.and.returnValue(of(new HttpResponse({ status: 200 })));
-    authenticationServiceSpy.loginWithCredentials.and.returnValue((of(new HttpResponse({ status: 200 }))));
-  
-    service.login(loginRequest);
-  
-    expect(spinnerServiceSpy.showSpinner).toHaveBeenCalled();
-    expect(sanctumServiceSpy.getCsrfCookie).toHaveBeenCalled();
-    expect(authenticationServiceSpy.loginWithCredentials).toHaveBeenCalledWith(loginRequest);
-    expect(service.isAuthenticated()).toBeTrue();
-    expect(spinnerServiceSpy.hideSpinner).toHaveBeenCalled();
-  });
+    service.authenticate()
 
-  it('should handle login error and hide spinner', () => {
-    const loginRequest: LoginRequest = { email: 'test@example.com', password: 'password' };
-    sanctumServiceSpy.getCsrfCookie.and.returnValue(of(new HttpResponse({ status: 200 })));
-    authenticationServiceSpy.loginWithCredentials.and.returnValue(throwError(() => new Error('Login failed')));
-
-    service.login(loginRequest);
-
-    expect(spinnerServiceSpy.showSpinner).toHaveBeenCalled();
-    expect(spinnerServiceSpy.hideSpinner).toHaveBeenCalled();
-    expect(service.isAuthenticated()).toBeFalse();
-  });
-
-  it('should logout and clear token on successful logout', () => {
-    const httpResponse = new HttpResponse({ status: HttpStatusCode.Ok });
-    authenticationServiceSpy.logout.and.returnValue(of(httpResponse));
-
-    service.logout();
-
-    expect(authenticationServiceSpy.logout).toHaveBeenCalled();
-    expect(service.isAuthenticated()).toBeFalse();
-    expect(tokenServiceSpy.clearAll).toHaveBeenCalled();
+    expect(userManagementServiceSpy.getMyUser).toHaveBeenCalled()
+    expect(userManagementServiceSpy.currentUser.set).toHaveBeenCalled()
   });
 });

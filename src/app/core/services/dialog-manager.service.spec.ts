@@ -34,15 +34,4 @@ describe('DialogManagerService', () => {
       exitAnimationDuration: '0ms'
     });
   });
-
-  it('should open the new ticket dialog', () => {
-    service.openNewTicketDialog()
-
-    expect(matDialogSpy.open).toHaveBeenCalledWith(LoginComponent, {
-      width: '500px',
-      height: '400px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms'
-    });
-  });
 });

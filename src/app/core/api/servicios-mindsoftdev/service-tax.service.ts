@@ -23,7 +23,7 @@ export class ServiceTaxService {
     return this.http.get<IServiceTaxesApiResponse>(`${this.apiServiceTax}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   getServiceTax(id: number): Observable<IServiceTaxApiResponse> {
@@ -31,30 +31,33 @@ export class ServiceTaxService {
     return this.http.get<IServiceTaxApiResponse>(`${this.apiServiceTax}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   createServiceTax(serviceTax: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiServiceTax}`, serviceTax, {
+    return this.http.post<any>(`${this.apiServiceTax}`, serviceTax, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   updateServiceTax(serviceTax: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.put<HttpResponse<any>>(`${this.apiServiceTax}/${serviceTax.id}`, serviceTax, {
+    return this.http.put<any>(`${this.apiServiceTax}/${serviceTax.id}`, serviceTax, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   deleteServiceTax(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiServiceTax}/${id}` ,{
+    return this.http.delete<any>(`${this.apiServiceTax}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 }

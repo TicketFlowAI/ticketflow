@@ -12,6 +12,7 @@ import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-companies',
@@ -52,6 +53,10 @@ export class AllCompaniesComponent implements OnInit {
   filterText = ''; // Texto de filtro
 
   ngOnInit(): void {
+    this.loadCompanies();
+  }
+
+  loadCompanies() {
     this.companyManagementService.getAllCompanies().subscribe({
       next: (companies) => {
         this.companies = companies;
@@ -87,9 +92,17 @@ export class AllCompaniesComponent implements OnInit {
     this.pagedCompanies = this.filteredCompanies.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-COMPANY');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  deleteCompany(companyId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-COMPANY');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.companyManagementService.deleteCompany(companyId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadCompanies() } )
   }
 
   openCompanyInfoDialog(company: CompanyModel) {
@@ -97,6 +110,8 @@ export class AllCompaniesComponent implements OnInit {
   }
 
   openCompanyManageDialog(company: CompanyModel | null) {
-    this.dialogManagerService.openManageCompanyDialog(company)
+    this.dialogManagerService.openManageCompanyDialog(company).subscribe(
+      () => { this.loadCompanies() }
+    )
   }
 }

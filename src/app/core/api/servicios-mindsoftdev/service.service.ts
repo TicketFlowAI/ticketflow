@@ -23,7 +23,7 @@ export class ServiceService {
     return this.http.get<IServicesApiResponse>(`${this.apiServices}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   getService(id: number): Observable<IServiceApiResponse> {
@@ -31,30 +31,33 @@ export class ServiceService {
     return this.http.get<IServiceApiResponse>(`${this.apiServices}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   createService(service: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiServices}`, service, {
+    return this.http.post<any>(`${this.apiServices}`, service, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   updateService(service: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.put<HttpResponse<any>>(`${this.apiServices}/${service.id}`, service, {
+    return this.http.put<any>(`${this.apiServices}/${service.id}`, service, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   deleteService(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiServices}/${id}`, {
+    return this.http.delete<any>(`${this.apiServices}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 }

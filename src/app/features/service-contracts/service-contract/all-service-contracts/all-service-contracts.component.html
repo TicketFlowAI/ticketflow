@@ -26,16 +26,16 @@
 
         <div class="row my-2">
             <mat-accordion class="my-2" [multi]="false">
-                @for(service of pagedServiceContracts; track service.id) {
+                @for(serviceContract of pagedServiceContracts; track serviceContract.id) {
                 <mat-expansion-panel class="mt-2">
                     <mat-expansion-panel-header>
-                        <mat-panel-title class="text-truncate">{{service.company}}</mat-panel-title>
+                        <mat-panel-title class="text-truncate">{{serviceContract.company}}</mat-panel-title>
                         <mat-panel-description class="row">
                             <div class="col-6 text-center">
-                                {{service.service}}
+                                {{serviceContract.service}}
                             </div>
                             <div class="col-6 text-center">
-                                {{service.price | currency: 'USD'}}
+                                {{serviceContract.price | currency: 'USD'}}
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -43,7 +43,7 @@
                     <div class="ps-md-4 mt-2">
                         <div class="row ">
                             <div class="col-md-4">
-                                <a href="javascript:void(0);" (click)="openServiceContractInfoDialog(service)">
+                                <a href="javascript:void(0);" (click)="openServiceContractInfoDialog(serviceContract)">
                                     <fa-icon class="pe-2" [icon]="faInfoCircle"></fa-icon> {{t('READ-SERVICE-CONTRACT-INFO')}}
                                 </a>
                             </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="row fs-6">
                             <div class="col-md-4">
-                                <a href="javascript:void(0);" (click)="openServiceContractManageDialog(service)">
+                                <a href="javascript:void(0);" (click)="openServiceContractManageDialog(serviceContract)">
                                     <fa-icon class="pe-2" [icon]="faPencil"></fa-icon> {{t('EDIT-SERVICE-CONTRACT-INFO')}}
                                 </a>
                             </div>
@@ -66,7 +66,7 @@
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="openConfirmationDialog()">
+                                    <button  type="button" class="btn btn-danger"(click)="deleteServiceContract(serviceContract.id)">
                                         <fa-icon [icon]="faX"></fa-icon> {{t('DELETE')}}
                                     </button>
                                 </div>

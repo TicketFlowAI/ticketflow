@@ -112,6 +112,7 @@
         "TICKET-USER": "Usuario",
         "TICKET-COMPANY": "Empresa", 
         "TICKET-SERVICE": "Servicio", 
+        "TICKET-MESSAGE": "Mensaje", 
         "SAVE": "Guardar"
       },
 

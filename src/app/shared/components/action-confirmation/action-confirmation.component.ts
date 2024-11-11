@@ -17,7 +17,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './action-confirmation.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,13 +24,12 @@ import { TranslocoDirective } from '@jsverse/transloco';
 export class ActionConfirmationComponent {
   readonly dialogRef = inject(MatDialogRef<ActionConfirmationComponent>);
   readonly data = inject<string>(MAT_DIALOG_DATA);
-
+  
   onNoClick(): void {
     this.dialogRef.close(false);
   }
 
   onCancelClick(): void {
-    
     this.dialogRef.close(false);
   }
 

@@ -13,6 +13,7 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink } from '@angular/router';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-services',
@@ -53,9 +54,12 @@ export class AllServicesComponent {
   filterText = ''; // Texto de filtro
   
   ngOnInit(): void {
+    this.loadServices()
+  }
+
+  loadServices() {
     this.serviceManagementService.getAllServices().subscribe({
       next: (response) => {
-
         this.services = response;
         this.filteredServices = this.services;
         this.updatePagedServices();
@@ -89,9 +93,17 @@ export class AllServicesComponent {
     this.pagedServices = this.filteredServices.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  deleteService(serviceId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.serviceManagementService.deleteService(serviceId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadServices() } )
   }
 
   openServiceInfoDialog(service: ServiceModel) {
@@ -99,6 +111,8 @@ export class AllServicesComponent {
   }
 
   openServiceManageDialog(service: ServiceModel | null) {
-    this.dialogManagerService.openManageServiceDialog(service)
+    this.dialogManagerService.openManageServiceDialog(service).subscribe(
+      () => { this.loadServices() }
+    )
   }
 }

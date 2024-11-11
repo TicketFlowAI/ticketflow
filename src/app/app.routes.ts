@@ -39,10 +39,6 @@ export const routes: Routes = [
     component: AllTicketsComponent
   },
   {
-    path: 'ticket-message',
-    component: AllTicketMessagesComponent
-  },
-  {
     path: 'ticket-message/:ticketId',
     component: AllTicketMessagesComponent
   },

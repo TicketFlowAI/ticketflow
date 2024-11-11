@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { UserService } from './user.service';
 import { CustomHeadersService } from "../../utils/custom-headers.service";
-import { provideHttpClient } from "@angular/common/http";
+import { HttpStatusCode, provideHttpClient } from "@angular/common/http";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { environment } from '../../../../environments/environment';
-import { UserModel } from '../../models/entities/user.model';
+import { IUserModelResponse, UserModel } from '../../models/entities/user.model';
 
 describe('UserService', () => {
   const API_URL = environment.apiEndpoint + '/api/user';
@@ -32,23 +32,22 @@ describe('UserService', () => {
   });
 
   it('should get the User', () => {
-    const dummyData = 
-    { id: 1, 
-      name: "Mindsoft", 
-      lastname: "Admin", 
-      email: "dennis.ocana@mindsoft.biz",
-      email_verified_at: null, 
-      two_factor_secret: null, 
-      two_factor_recovery_codes: null, 
-      company: 1, 
-      deleted_at: null, 
-      created_at: "2024-10-06T19:17:04.000000Z", 
-      updated_at: "2024-10-06T19:17:04.000000Z" 
+    const dummyData: IUserModelResponse = {
+      success: true,
+      data: {
+        "id": 1,
+        "name": "Mindsoft",
+        "lastname": "Admin",
+        "email": "info@mindsoft.biz",
+        "role": "super-admin",
+        "company_id": 1,
+        "company_name": "Mindsoft"
+      }
     }
 
-    service.getUser().subscribe((response) => {
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(dummyData);
+    service.getMyUser().subscribe((response) => {
+      expect(response.success).toBe(dummyData.success);
+      expect(response.data).toEqual(dummyData.data);
     });
 
     const req = httpMock.expectOne(API_URL);
@@ -56,23 +55,22 @@ describe('UserService', () => {
     req.flush(dummyData, { status: 200, statusText: 'OK' });
   });
 
-  it('should update the user data and return the user updated', () => {
-    const dummyData: UserModel = 
-    { id: 1, 
-      name: "New Name", 
-      lastname: "New LastName", 
-      email: "NewMail@mail.com",
-      email_verified_at: null, 
-      two_factor_secret: null, 
-      two_factor_recovery_codes: null, 
-      company: 1, 
-      deleted_at: null, 
-      created_at: new Date('2024-10-06T19:17:04.000000Z'), 
-      updated_at: new Date() 
+  it('should update the user data and return succesfully', () => {
+    const dummyData: IUserModelResponse = {
+      success: true,
+      data: {
+        "id": 1,
+        "name": "Mindsoft",
+        "lastname": "Admin",
+        "email": "info@mindsoft.biz",
+        "role": "super-admin",
+        "company_id": 1,
+        "company_name": "Mindsoft"
+      }
     }
 
-    service.updateUser(dummyData).subscribe((userUpdated) => {
-      expect(userUpdated).toEqual(dummyData);
+    service.updateUser(dummyData).subscribe((response) => {
+      expect(response.status).toEqual(HttpStatusCode.Ok);
     });
 
     const req = httpMock.expectOne(API_URL);

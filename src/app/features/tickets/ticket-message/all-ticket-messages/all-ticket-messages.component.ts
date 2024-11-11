@@ -76,10 +76,10 @@ export class AllTicketMessagesComponent {
         this.cdr.markForCheck()
       }
     })
-  }
+  } 
 
   clearMessageInterval() {
-    this.messageInterval.clear();
+    clearInterval(this.messageInterval);
   }
 
   send() {

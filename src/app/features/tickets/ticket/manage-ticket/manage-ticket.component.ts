@@ -21,6 +21,8 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { UserModel } from '../../../../core/models/entities/user.model';
+import { TicketMessageModel } from '../../../../core/models/entities/ticket-message.model';
+import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
 
 @Component({
   selector: 'app-manage-ticket',
@@ -48,7 +50,7 @@ export class ManageTicketComponent {
   private readonly cdr = inject(ChangeDetectorRef);
 
   private readonly dialogRef = inject(MatDialogRef<ManageTicketComponent>);
-  readonly ticketData = inject<TicketModel>(MAT_DIALOG_DATA);
+  readonly data = inject<TicketDialogData>(MAT_DIALOG_DATA);
 
   titleFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   priorityFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
@@ -56,6 +58,7 @@ export class ManageTicketComponent {
   complexityFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
   userFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
   serviceContractFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  messageFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
 
   ticketForm = new FormGroup({
     title: this.titleFormControl,
@@ -64,19 +67,24 @@ export class ManageTicketComponent {
     complexity: this.complexityFormControl,
     user: this.userFormControl,
     serviceContract: this.serviceContractFormControl,
+    message: this.messageFormControl
   })
 
   serviceContracts: ServiceContractModel[] = [];
   user: UserModel | null = null;
 
   ngOnInit(): void {
-    if (this.ticketData) {
-      this.titleFormControl.setValue(this.ticketData.title)
-      this.priorityFormControl.setValue(this.ticketData.priority)
-      this.humanInteractionFormControl.setValue(this.ticketData.needsHumanInteraction);
-      this.complexityFormControl.setValue(this.ticketData.complexity);
-      this.userFormControl.setValue(this.ticketData.user_id);
-      this.serviceContractFormControl.setValue(this.ticketData.service_contract_id);
+    if (this.data.ticket) {
+      this.titleFormControl.setValue(this.data.ticket.title)
+      this.priorityFormControl.setValue(this.data.ticket.priority)
+      this.humanInteractionFormControl.setValue(this.data.ticket.needsHumanInteraction);
+      this.complexityFormControl.setValue(this.data.ticket.complexity);
+      this.userFormControl.setValue(this.data.ticket.user_id);
+      this.serviceContractFormControl.setValue(this.data.ticket.service_contract_id);
+    }
+
+    if (this.data.serviceContract) {
+      this.serviceContractFormControl.setValue(this.data.serviceContract.id);
     }
 
     forkJoin({
@@ -84,10 +92,10 @@ export class ManageTicketComponent {
       user: this.userManagemenstService.getMyUser()
     }).pipe(
       catchError(() => {
-        return of({ serviceContracts: [], user: null})
+        return of({ serviceContracts: [], user: null })
       })
     ).subscribe({
-      next: ({serviceContracts, user}) => {
+      next: ({ serviceContracts, user }) => {
         this.serviceContracts = serviceContracts
         this.user = user
 
@@ -107,7 +115,7 @@ export class ManageTicketComponent {
       formValue.serviceContract,
       formValue.user,
       1,
-      false, 
+      false,
       true,//As is a new ticket and has a message from the client side, the notification to the techinician will be auto setted to true
       '',
       '',
@@ -117,23 +125,14 @@ export class ManageTicketComponent {
       ''
     )
 
-    if (this.ticketData) {
-      ticket.id = this.ticketData.id
-
-      this.ticketManagementService.editTicket(ticket).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+    if (this.data.ticket) {
+      ticket.id = this.data.ticket.id;
+      this.ticketManagementService.editTicket(ticket)
+      .subscribe( () => { this.dialogRef.close() })
     }
     else {
-      this.ticketManagementService.addTicket(ticket).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.ticketManagementService.addTicket(ticket)
+      .subscribe( () => { this.dialogRef.close() })
     }
   }
 }

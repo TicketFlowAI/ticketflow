@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-service-contract-terms',
@@ -54,6 +55,10 @@ export class AllServiceContractTermsComponent {
   filterText = ''; // Texto de filtro
   
   ngOnInit(): void {
+    this.loadServiceContractTerms();
+  }
+
+  loadServiceContractTerms() {
     this.serviceContractManagementService.getAllServiceContractTerms().subscribe({
       next: (response) => {
         this.serviceContractTerms = response;
@@ -87,12 +92,22 @@ export class AllServiceContractTermsComponent {
     this.pagedServiceContractTerms = this.filteredServiceContractTerms.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT-TERM');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  deleteServiceContractTerm(serviceContractTermId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT-TERM');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.serviceContractManagementService.deleteServiceContractTerm(serviceContractTermId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadServiceContractTerms() } )
   }
 
   openServiceContractTermManageDialog(serviceContract: ServiceContractTermModel | null) {
-    this.dialogManagerService.openManageServiceContractTermDialog(serviceContract)
+    this.dialogManagerService.openManageServiceContractTermDialog(serviceContract).subscribe(
+      () => { this.loadServiceContractTerms() }
+    )
   }
 }

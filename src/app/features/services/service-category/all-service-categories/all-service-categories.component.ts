@@ -13,6 +13,7 @@ import { faPencil, faX, faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
 import { RouterLink } from '@angular/router';
+import { concatMap, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-service-categories',
@@ -42,8 +43,8 @@ export class AllServiceCategoriesComponent {
   private readonly serviceManagementService = inject(ServiceManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
 
+  private readonly translocoService: TranslocoService = inject(TranslocoService)
   private readonly cdr = inject(ChangeDetectorRef)
-  private readonly translocoService = inject(TranslocoService)
 
   serviceCategories: ServiceCategoryModel[] = []
   filteredServiceCategories: ServiceCategoryModel[] = [];
@@ -54,6 +55,10 @@ export class AllServiceCategoriesComponent {
   filterText = ''; // Texto de filtro
 
   ngOnInit(): void {
+    this.loadCategories()
+  }
+
+  loadCategories() {
     this.serviceManagementService.getAllServiceCategories().subscribe({
       next: (response) => {
         this.serviceCategories = response;
@@ -86,12 +91,22 @@ export class AllServiceCategoriesComponent {
     this.pagedServiceCategories = this.filteredServiceCategories.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CATEGORY');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  deleteCategory(serviceCategoryId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CATEGORY');
+
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.serviceManagementService.deleteServiceCategory(serviceCategoryId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadCategories() } )
   }
 
   openServiceCategoryManageDialog(serviceCategory: ServiceCategoryModel | null) {
-    this.dialogManagerService.openManageServiceCategoryDialog(serviceCategory)
+    this.dialogManagerService.openManageServiceCategoryDialog(serviceCategory).subscribe(
+      () => { this.loadCategories() }
+    )
   }
 }

@@ -13,6 +13,7 @@ import {faPencil, faX, faPlus, faArrowLeft} from "@fortawesome/free-solid-svg-ic
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.model';
 import { RouterLink } from '@angular/router';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-service-taxes',
@@ -54,6 +55,10 @@ export class AllServiceTaxesComponent {
   filterText = ''; // Texto de filtro
 
   ngOnInit(): void {
+    this.loadServiceTaxes();
+  }
+
+  loadServiceTaxes() {
     this.serviceManagementService.getAllServiceTaxes().subscribe({
       next: (response) => {
         this.serviceTaxes = response;
@@ -86,13 +91,23 @@ export class AllServiceTaxesComponent {
     const endIndex = startIndex + this.pageSize;
     this.pagedServiceTaxes = this.filteredServiceTaxes.slice(startIndex, endIndex);
   }
-
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-TAX');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  
+  deleteServiceTax(serviceTaxId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-TAX');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.serviceManagementService.deleteServiceTax(serviceTaxId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadServiceTaxes() } )
   }
 
   openServiceTaxManageDialog(serviceTax: ServiceTaxModel | null) {
-    this.dialogManagerService.openManageServiceTaxDialog(serviceTax)
+    this.dialogManagerService.openManageServiceTaxDialog(serviceTax).subscribe(
+      () => { this.loadServiceTaxes() }
+    )
   }
 }

@@ -18,7 +18,6 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './company-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

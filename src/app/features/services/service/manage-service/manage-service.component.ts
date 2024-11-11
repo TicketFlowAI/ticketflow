@@ -103,20 +103,12 @@ export class ManageServiceComponent {
     if (this.serviceData) {
       service.id = this.serviceData.id
 
-      this.serviceManagementService.editService(service).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.editService(service)
+      .subscribe( () => { this.dialogRef.close() })
     }
     else {
-      this.serviceManagementService.addService(service).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.addService(service)
+      .subscribe( () => { this.dialogRef.close() })
     }
   }
 }

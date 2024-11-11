@@ -17,8 +17,11 @@ export class UserManagementService {
   public currentUser = signal<UserModel | null>(null)
 
   isUserAdmin() {
-    if(this.currentUser() != null)
+    if(this.currentUser() != null) 
+    {
+
       return this.currentUser()?.role === UserRoles.Admin;
+    }
     else
       return false;
   }

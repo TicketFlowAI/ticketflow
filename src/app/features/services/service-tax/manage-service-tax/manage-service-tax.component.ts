@@ -59,20 +59,12 @@ export class ManageServiceTaxComponent {
     if (this.serviceTaxData) {
       serviceTax.id = this.serviceTaxData.id
       
-      this.serviceManagementService.editServiceTax(serviceTax).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.editServiceTax(serviceTax)
+      .subscribe( () => { this.dialogRef.close() })
     }
     else {
-      this.serviceManagementService.addServiceTax(serviceTax).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.serviceManagementService.addServiceTax(serviceTax)
+      .subscribe( () => { this.dialogRef.close() })
     }
   }
 }

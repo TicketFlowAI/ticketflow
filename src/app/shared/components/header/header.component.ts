@@ -40,7 +40,6 @@ export class HeaderComponent implements OnInit {
 
   public readonly userManagementService: UserManagementService = inject(UserManagementService)
   private readonly authService: AuthService = inject(AuthService)
-  private readonly messageService = inject(MessageService)
   private readonly router: Router = inject(Router)
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   private readonly translocoService: TranslocoService = inject(TranslocoService)

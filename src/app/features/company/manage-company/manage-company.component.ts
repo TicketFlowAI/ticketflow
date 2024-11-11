@@ -86,20 +86,12 @@ export class ManageCompanyComponent {
     if (this.companyData) {
       company.id = this.companyData.id
       
-      this.companyManagementService.editCompany(company).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.companyManagementService.editCompany(company)
+      .subscribe( () => { this.dialogRef.close() })
     }
     else {
-      this.companyManagementService.addCompany(company).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
-      }
-      )
+      this.companyManagementService.addCompany(company)
+      .subscribe( () => { this.dialogRef.close() })
     }
   }
 }

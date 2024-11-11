@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
+import { concatMap, of } from 'rxjs';
 
 
 @Component({
@@ -54,28 +55,24 @@ export class AllServiceContractsComponent {
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
-  
+
   ngOnInit() {
-    if(this.companyId) {
-      this.serviceContractManagementService.getAllServiceContractsFromCompany(parseInt(this.companyId)).subscribe({
+    this.loadServiceContracts()
+  }
+
+  loadServiceContracts() {
+    const serviceContracts$ = this.companyId ? this.serviceContractManagementService.getAllServiceContractsFromCompany(parseInt(this.companyId)) : this.serviceContractManagementService.getAllServiceContracts();
+    
+    serviceContracts$.subscribe(
+      {
         next: (response) => {
           this.serviceContracts = response;
           this.filteredServiceContracts = this.serviceContracts;
           this.updatePagedServiceContracts();
           this.cdr.detectChanges();
         }
-      });
-    }
-    else {
-      this.serviceContractManagementService.getAllServiceContracts().subscribe({
-        next: (response) => {
-          this.serviceContracts = response;
-          this.filteredServiceContracts = this.serviceContracts;
-          this.updatePagedServiceContracts();
-          this.cdr.detectChanges();
-        }
-      });
-    }
+      }
+    );
   }
 
   onFilterChange(): void {
@@ -103,9 +100,14 @@ export class AllServiceContractsComponent {
     this.pagedServiceContracts = this.filteredServiceContracts.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  deleteServiceContract(serviceContractId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        return result? this.serviceContractManagementService.deleteServiceContract(serviceContractId) : of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadServiceContracts() } )
   }
 
   openServiceContractInfoDialog(serviceContract: ServiceContractModel) {
@@ -113,6 +115,8 @@ export class AllServiceContractsComponent {
   }
 
   openServiceContractManageDialog(serviceContract: ServiceContractModel | null) {
-    this.dialogManagerService.openManageServiceContractDialog(serviceContract)
+    this.dialogManagerService.openManageServiceContractDialog(serviceContract).subscribe(
+      () => { this.loadServiceContracts() }
+    )
   }
 }

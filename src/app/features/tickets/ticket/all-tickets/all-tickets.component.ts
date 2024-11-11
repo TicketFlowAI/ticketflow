@@ -13,6 +13,8 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
+import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
+import { concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-all-tickets',
@@ -55,6 +57,10 @@ export class AllTicketsComponent {
   filterText = ''; // Texto de filtro
 
   ngOnInit(): void {
+    this.loadTickets();
+  }
+
+  loadTickets() {
     this.ticketManagementService.getAllTickets().subscribe({
       next: (tickets) => {
         this.tickets = tickets;
@@ -95,11 +101,23 @@ export class AllTicketsComponent {
     this.dialogManagerService.openActionConfirmationDialog(transate)
   }
 
-  openTicketInfoDialog(ticket: TicketModel) {
-    this.dialogManagerService.openTicketInfoDialog(ticket)
+  deleteTicket(ticketId: number) {
+    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-TICKET');
+    
+    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
+      concatMap((result) => {
+        if(result)
+          return this.ticketManagementService.deleteTicket(ticketId)
+        else
+          return of(null)
+      })
+    ).subscribe( (result) => { if(result) this.loadTickets() } )
   }
 
   openTicketManageDialog(ticket: TicketModel | null) {
-    this.dialogManagerService.openManageTicketDialog(ticket)
+    let data: TicketDialogData = { ticket, serviceContract: null }
+    this.dialogManagerService.openManageTicketDialog(data).subscribe(
+      () => { this.loadTickets() }
+    )
   }
 }

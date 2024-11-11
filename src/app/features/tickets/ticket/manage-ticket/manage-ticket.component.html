@@ -1,1 +1,56 @@
-<p>manage-ticket works!</p>
+<ng-container *transloco="let t; prefix: 'FEATURES.TICKETS.TICKET-MANAGEMENT'">
+    @if(!data.ticket) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-TICKET')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-TICKET')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="ticketForm">
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('TICKET-TITLE')}}</mat-label>
+                    <input matInput [formControl]="titleFormControl">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('TICKET-PRIORITY')}}</mat-label>
+                    <input matInput [formControl]="priorityFormControl">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('TICKET-COMPLEXITY')}}</mat-label>
+                    <input matInput [formControl]="complexityFormControl">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>{{t('TICKET-SERVICE')}}</mat-label>
+                    <mat-select [formControl]="serviceContractFormControl">
+                        @for(serviceContact of serviceContracts; track serviceContact.id) {
+                        <mat-option [value]="serviceContact.id">{{serviceContact.service}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            @if(!data.ticket) {
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{t('TICKET-MESSAGE')}}</mat-label>
+                    <textarea matInput [formControl]="messageFormControl"></textarea>
+                </mat-form-field>
+            </div>
+            }
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>

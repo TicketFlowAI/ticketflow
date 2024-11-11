@@ -89,20 +89,12 @@ export class ManageUserComponent {
     if (this.userData) {
       user.id = this.userData.id
       
-      this.userManagementService.editUser(user).subscribe({
-        next: (edited) => {
-          console.log('Response:', edited)
-        }
-      }
-      )
+      this.userManagementService.editUser(user)
+      .subscribe( () => { this.dialogRef.close() })
     }
     else {
-      this.userManagementService.addUser(user).subscribe({
-        next: (created) => {
-          console.log('Response:', created)
-        }
-      }
-      )
+      this.userManagementService.addUser(user)
+      .subscribe( () => { this.dialogRef.close() })
     }
   }
 }

@@ -23,7 +23,7 @@ export class ServiceContractTermService {
     return this.http.get<IServiceContractTermsApiResponse>(`${this.apiServiceTerms}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   getServiceContractTerm(id: number): Observable<IServiceContractTermApiResponse> {
@@ -31,30 +31,33 @@ export class ServiceContractTermService {
     return this.http.get<IServiceContractTermApiResponse>(`${this.apiServiceTerms}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
-    })
+    });
   }
 
   createServiceContractTerm(serviceContractTerm: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<HttpResponse<any>>(`${this.apiServiceTerms}`, serviceContractTerm, {
+    return this.http.post<any>(`${this.apiServiceTerms}`, serviceContractTerm, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   updateServiceContractTerm(serviceContractTerm: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.put<HttpResponse<any>>(`${this.apiServiceTerms}/${serviceContractTerm.id}`, serviceContractTerm, {
+    return this.http.put<any>(`${this.apiServiceTerms}/${serviceContractTerm.id}`, serviceContractTerm, {
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 
   deleteServiceContractTerm(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<HttpResponse<any>>(`${this.apiServiceTerms}/${id}` ,{
+    return this.http.delete<any>(`${this.apiServiceTerms}/${id}` ,{
       headers: customHeaders,
       withCredentials: true,
-    })
+      observe: 'response'
+    });
   }
 }
