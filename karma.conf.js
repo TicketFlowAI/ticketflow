@@ -30,8 +30,9 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/ticketflow'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'html' },         // Mantén el reporte en HTML
+        { type: 'text-summary' }, // Mantén el texto resumen
+        { type: 'lcov' }          // Agrega el formato LCOV (necesario para SonarCloud)
       ]
     },
     reporters: ['spec'],
