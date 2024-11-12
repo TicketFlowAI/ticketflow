@@ -36,7 +36,7 @@ yarn-error.log
 testem.log
 /typings
 
-# Test Coverage Ignores
+# Test Coverage Ignore
 coverage/*
 !coverage/ticketflow/
 coverage/ticketflow/*
