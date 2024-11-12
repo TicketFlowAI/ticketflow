@@ -4,7 +4,7 @@ import { CustomHeadersService } from "../../utils/custom-headers.service";
 import { HttpStatusCode, provideHttpClient } from "@angular/common/http";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { environment } from '../../../../environments/environment';
-import { IUserModelResponse, UserModel } from '../../models/entities/user.model';
+import { IUserModelResponse } from '../../models/entities/user.model';
 
 describe('UserService', () => {
   const API_URL = environment.apiEndpoint + '/api/user';
