@@ -41,7 +41,6 @@ coverage/*
 !coverage/ticketflow/
 coverage/ticketflow/*
 !coverage/ticketflow/lcov.info
-!coverage/ticketflow/index.html
 
 # System files
 .DS_Store
