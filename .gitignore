@@ -36,6 +36,13 @@ yarn-error.log
 testem.log
 /typings
 
+# Test Coverage Ignores
+coverage/*
+!coverage/ticketflow/
+coverage/ticketflow/*
+!coverage/ticketflow/lcov.info
+!coverage/ticketflow/index.html
+
 # System files
 .DS_Store
 Thumbs.db
