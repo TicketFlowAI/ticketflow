@@ -13,7 +13,7 @@ import { faPencil, faX, faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
 import { RouterLink } from '@angular/router';
-import { concatMap, of, take, tap } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-service-categories',
@@ -92,17 +92,35 @@ export class AllServiceCategoriesComponent {
   }
 
   deleteCategory(serviceCategoryId: number) {
-    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CATEGORY');
-
-    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.serviceManagementService.deleteServiceCategory(serviceCategoryId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadCategories() } )
+    const deleteMessage = this.translocoService.translateObject(
+      'SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CATEGORY'
+    );
+  
+    this.dialogManagerService
+      .openActionConfirmationDialog(deleteMessage)
+      .pipe(
+        concatMap((result) =>
+          result
+            ? this.handleDeleteCategory(serviceCategoryId)
+            : this.handleCancelDelete()
+        )
+      )
+      .subscribe();
   }
+  
+  private handleDeleteCategory(serviceCategoryId: number) {
+    return this.serviceManagementService
+      .deleteServiceCategory(serviceCategoryId)
+      .pipe(
+        tap(() => {
+          this.loadCategories();
+        })
+      );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
+  }  
 
   openServiceCategoryManageDialog(serviceCategory: ServiceCategoryModel | null) {
     this.dialogManagerService.openManageServiceCategoryDialog(serviceCategory).subscribe(

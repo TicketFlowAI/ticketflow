@@ -12,7 +12,7 @@ import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-companies',
@@ -96,13 +96,18 @@ export class AllCompaniesComponent implements OnInit {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-COMPANY');
     
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.companyManagementService.deleteCompany(companyId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadCompanies() } )
+      concatMap((result) => result ? this.handleDeleteCompany(companyId) : this.handleCancelDelete())
+    ).subscribe();
+  }
+  
+  private handleDeleteCompany(companyId: number) {
+    return this.companyManagementService.deleteCompany(companyId).pipe(
+      tap(() => this.loadCompanies())
+    );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
   }
 
   openCompanyInfoDialog(company: CompanyModel) {

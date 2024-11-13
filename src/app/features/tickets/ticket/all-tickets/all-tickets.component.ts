@@ -14,7 +14,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-tickets',
@@ -103,15 +103,22 @@ export class AllTicketsComponent {
 
   deleteTicket(ticketId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-TICKET');
-    
+  
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.ticketManagementService.deleteTicket(ticketId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadTickets() } )
+      concatMap((result) =>
+        result ? this.handleDeleteTicket(ticketId) : this.handleCancelDelete()
+      )
+    ).subscribe();
+  }
+  
+  private handleDeleteTicket(ticketId: number) {
+    return this.ticketManagementService.deleteTicket(ticketId).pipe(
+      tap(() => this.loadTickets())
+    );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
   }
 
   openTicketManageDialog(ticket: TicketModel | null) {

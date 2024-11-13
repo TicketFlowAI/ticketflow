@@ -7,11 +7,9 @@ import { AuthService } from "../../../core/services/auth.service";
 import { ThemeService } from "../../../core/services/theme.service";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faFlag, faMoon, faSun, faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
-import { MatButton } from "@angular/material/button";
 import { OpenLoginDirective } from "../../directives/open-login.directive";
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
-import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +22,6 @@ import { MessageService } from '../../services/message.service';
     NgTemplateOutlet,
     AsyncPipe,
     FaIconComponent,
-    MatButton,
     OpenLoginDirective
   ],
   templateUrl: './header.component.html',

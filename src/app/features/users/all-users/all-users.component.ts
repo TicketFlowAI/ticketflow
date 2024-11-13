@@ -4,7 +4,6 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { RouterLink } from '@angular/router';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +11,7 @@ import { DialogManagerService } from '../../../core/services/dialog-manager.serv
 import { FormsModule } from '@angular/forms';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-users',
@@ -21,7 +20,6 @@ import { concatMap, of } from 'rxjs';
     TranslocoDirective,
     MatExpansionModule,
     MatPaginatorModule,
-    RouterLink,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
@@ -97,16 +95,23 @@ export class AllUsersComponent {
 
   deleteUsers(userId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-USER');
-    
+  
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.userManagementService.deleteUser(userId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadUsers() } )
+      concatMap((result) =>
+        result ? this.handleDeleteUser(userId) : this.handleCancelDelete()
+      )
+    ).subscribe();
   }
+  
+  private handleDeleteUser(userId: number) {
+    return this.userManagementService.deleteUser(userId).pipe(
+      tap(() => this.loadUsers())
+    );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
+  }  
 
   openUserManageDialog(user: UserModel | null) {
     this.dialogManagerService.openManageUserDialog(user).subscribe(

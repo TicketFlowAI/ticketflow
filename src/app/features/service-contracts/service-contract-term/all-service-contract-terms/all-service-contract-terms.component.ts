@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-service-contract-terms',
@@ -96,13 +96,18 @@ export class AllServiceContractTermsComponent {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT-TERM');
     
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.serviceContractManagementService.deleteServiceContractTerm(serviceContractTermId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadServiceContractTerms() } )
+      concatMap((result) => result ? this.handleDeleteServiceContractTerm(serviceContractTermId) : this.handleCancelDelete())
+    ).subscribe();
+  }
+
+  private handleDeleteServiceContractTerm(serviceContractTermId: number) {
+    return this.serviceContractManagementService.deleteServiceContractTerm(serviceContractTermId).pipe(
+      tap(() => this.loadServiceContractTerms())
+    );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
   }
 
   openServiceContractTermManageDialog(serviceContract: ServiceContractTermModel | null) {

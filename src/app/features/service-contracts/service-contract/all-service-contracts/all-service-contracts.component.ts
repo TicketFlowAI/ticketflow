@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 
 @Component({
@@ -101,13 +101,34 @@ export class AllServiceContractsComponent {
   }
 
   deleteServiceContract(serviceContractId: number) {
-    const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT');
-    
-    this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        return result? this.serviceContractManagementService.deleteServiceContract(serviceContractId) : of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadServiceContracts() } )
+    const deleteMessage = this.translocoService.translateObject(
+      'SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT'
+    );
+  
+    this.dialogManagerService
+      .openActionConfirmationDialog(deleteMessage)
+      .pipe(
+        concatMap((result) =>
+          result
+            ? this.handleDeleteServiceContract(serviceContractId)
+            : this.handleCancelDelete()
+        )
+      )
+      .subscribe();
+  }
+  
+  private handleDeleteServiceContract(serviceContractId: number) {
+    return this.serviceContractManagementService
+      .deleteServiceContract(serviceContractId)
+      .pipe(
+        tap(() => {
+          this.loadServiceContracts();
+        })
+      );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
   }
 
   openServiceContractInfoDialog(serviceContract: ServiceContractModel) {

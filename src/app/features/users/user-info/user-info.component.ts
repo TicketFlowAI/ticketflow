@@ -8,9 +8,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CompanyManagementService } from '../../../core/services/company-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
-import { CompanyModel } from '../../../core/models/entities/company.model';
 
 @Component({
   selector: 'app-user-info',

@@ -13,7 +13,7 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink } from '@angular/router';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-all-services',
@@ -95,16 +95,28 @@ export class AllServicesComponent {
 
   deleteService(serviceId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE');
-    
+  
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
-      concatMap((result) => {
-        if(result)
-          return this.serviceManagementService.deleteService(serviceId)
-        else
-          return of(null)
-      })
-    ).subscribe( (result) => { if(result) this.loadServices() } )
+      concatMap((result) => 
+        result 
+          ? this.handleDeleteService(serviceId) 
+          : this.handleCancelDelete()
+      )
+    ).subscribe();
   }
+  
+  private handleDeleteService(serviceId: number) {
+    return this.serviceManagementService.deleteService(serviceId).pipe(
+      tap(() => {
+        this.loadServices();
+      })
+    );
+  }
+  
+  private handleCancelDelete() {
+    return of(null);
+  }
+  
 
   openServiceInfoDialog(service: ServiceModel) {
     this.dialogManagerService.openServiceInfoDialog(service)
