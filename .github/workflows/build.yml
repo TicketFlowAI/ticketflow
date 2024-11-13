@@ -28,7 +28,7 @@ jobs:
       - name: Build project and generate coverage
         run: |
           npm test --watch=false --code-coverage # Genera la cobertura en la carpeta coverage
-          npm build --prod # Construye el proyecto
+          npm run build --prod # Construye el proyecto
 
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
