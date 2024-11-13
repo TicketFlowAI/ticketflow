@@ -43,7 +43,7 @@ export class ManageServiceComponent {
   private readonly serviceManagementService = inject(ServiceManagementService);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  private readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
+  public readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
   public readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

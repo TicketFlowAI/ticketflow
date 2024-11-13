@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -20,13 +19,12 @@ import { ServiceModel } from '../../../../core/models/entities/service.model';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './service-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceInfoComponent {
-  private readonly dialogRef = inject(MatDialogRef<ServiceInfoComponent>);
+  public readonly dialogRef = inject(MatDialogRef<ServiceInfoComponent>);
   readonly service = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {

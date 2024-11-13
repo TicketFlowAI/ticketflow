@@ -41,7 +41,7 @@ export class ManageUserComponent {
   private readonly userManagementService = inject(UserManagementService);
   private readonly companyManagementService = inject(CompanyManagementService);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly dialogRef = inject(MatDialogRef<UserManagementService>);
+  public readonly dialogRef = inject(MatDialogRef<UserManagementService>);
   public readonly userData = inject<UserModel | null>(MAT_DIALOG_DATA);
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

@@ -7,7 +7,8 @@ import { environment } from '../../../../environments/environment';
 import { IUserModelResponse } from '../../models/entities/user.model';
 
 describe('UserService', () => {
-  const API_URL = environment.apiEndpoint + '/api/user';
+  const API_URL_USER = environment.apiEndpoint + '/api/user';
+  const API_URL_USERS = environment.apiEndpoint + '/api/users';
   let service: UserService;
   let httpMock: HttpTestingController;
 
@@ -50,7 +51,7 @@ describe('UserService', () => {
       expect(response.data).toEqual(dummyData.data);
     });
 
-    const req = httpMock.expectOne(API_URL);
+    const req = httpMock.expectOne(API_URL_USER);
     expect(req.request.method).toBe('GET');
     req.flush(dummyData, { status: 200, statusText: 'OK' });
   });
@@ -69,12 +70,14 @@ describe('UserService', () => {
       }
     }
 
-    service.updateUser(dummyData).subscribe((response) => {
-      expect(response.status).toEqual(HttpStatusCode.Ok);
+    const updateUrl = `${API_URL_USERS}/${dummyData.data.id}`;
+
+    service.updateUser(dummyData.data).subscribe((response) => {
+      expect(response.status).toBe(HttpStatusCode.Ok);
     });
 
-    const req = httpMock.expectOne(API_URL);
+    const req = httpMock.expectOne(updateUrl);
     expect(req.request.method).toBe('PUT');
-    req.flush(dummyData);
+    req.flush(dummyData, { status: 200, statusText: 'OK' });
   });
 });

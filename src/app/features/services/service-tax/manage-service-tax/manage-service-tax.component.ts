@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +16,6 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -27,8 +26,8 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
 })
 export class ManageServiceTaxComponent {
   private readonly serviceManagementService = inject(ServiceManagementService);
-  private readonly dialogRef = inject(MatDialogRef<ManageServiceTaxComponent>);
-  readonly serviceTaxData = inject<ServiceTaxModel>(MAT_DIALOG_DATA);
+  public readonly dialogRef = inject(MatDialogRef<ManageServiceTaxComponent>);
+  public serviceTaxData = inject<ServiceTaxModel | null>(MAT_DIALOG_DATA);
 
   taxDescriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   taxValueFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })

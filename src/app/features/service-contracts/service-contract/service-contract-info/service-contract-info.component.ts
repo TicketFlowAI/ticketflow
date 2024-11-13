@@ -18,13 +18,12 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './service-contract-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceContractInfoComponent {
-  private readonly dialogRef = inject(MatDialogRef<ServiceContractInfoComponent>);
+  public readonly dialogRef = inject(MatDialogRef<ServiceContractInfoComponent>);
   public readonly serviceContract = inject<ServiceContractModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {

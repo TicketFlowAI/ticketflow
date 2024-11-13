@@ -33,7 +33,7 @@ import { UserManagementService } from '../../../core/services/user-management.se
 })
 export class LoginComponent {
   //SERVICES
-  private readonly dialogRef = inject(MatDialogRef<LoginComponent>);
+  public readonly dialogRef = inject(MatDialogRef<LoginComponent>);
   private readonly authService = inject(AuthService);
   private readonly userManagementService = inject(UserManagementService);
   private readonly fb = inject(FormBuilder)

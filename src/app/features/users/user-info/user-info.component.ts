@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -22,26 +21,14 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './user-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfoComponent {
-  private readonly dialogRef = inject(MatDialogRef<UserInfoComponent>);
+  public readonly dialogRef = inject(MatDialogRef<UserInfoComponent>);
   readonly user = inject<UserModel>(MAT_DIALOG_DATA);
 
-  private readonly companyManagementService = inject(CompanyManagementService)
-  userCompany: CompanyModel | null = null;
-
-  cosntructor() {
-    this.companyManagementService.getOneCompany(this.user.company_id).subscribe({
-      next: (company) => {
-        this.userCompany = company
-      }
-    })
-    this.userCompany = new CompanyModel()
-  }
   onReturnClick(): void {
     this.dialogRef.close();
   }

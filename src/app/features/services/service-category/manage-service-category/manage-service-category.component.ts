@@ -26,8 +26,8 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
 })
 export class ManageServiceCategoryComponent {
   private readonly serviceManagementService = inject(ServiceManagementService);
-  private readonly dialogRef = inject(MatDialogRef<ManageServiceCategoryComponent>);
-  readonly serviceCategoryData = inject<ServiceCategoryModel>(MAT_DIALOG_DATA);
+  public readonly dialogRef = inject(MatDialogRef<ManageServiceCategoryComponent>);
+  serviceCategoryData = inject<ServiceCategoryModel | null>(MAT_DIALOG_DATA);
 
   categoryFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
 

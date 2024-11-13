@@ -30,8 +30,8 @@ describe('DialogManagerService', () => {
     expect(matDialogSpy.open).toHaveBeenCalledWith(LoginComponent, {
       width: '500px',
       height: '400px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms'
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms'
     });
   });
 });

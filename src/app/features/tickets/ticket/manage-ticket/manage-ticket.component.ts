@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -21,7 +20,6 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { UserModel } from '../../../../core/models/entities/user.model';
-import { TicketMessageModel } from '../../../../core/models/entities/ticket-message.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
 
 @Component({
@@ -33,7 +31,6 @@ import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -49,7 +46,7 @@ export class ManageTicketComponent {
   private readonly userManagemenstService = inject(UserManagementService);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  private readonly dialogRef = inject(MatDialogRef<ManageTicketComponent>);
+  readonly dialogRef = inject(MatDialogRef<ManageTicketComponent>);
   readonly data = inject<TicketDialogData>(MAT_DIALOG_DATA);
 
   titleFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

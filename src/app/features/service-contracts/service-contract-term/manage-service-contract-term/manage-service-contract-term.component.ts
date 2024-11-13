@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -23,7 +22,6 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -35,7 +33,7 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
 export class ManageServiceContractTermComponent {
   private readonly serviceContractManagementService = inject(ServiceContractManagementService);
 
-  private readonly dialogRef = inject(MatDialogRef<ManageServiceContractTermComponent>);
+  public readonly dialogRef = inject(MatDialogRef<ManageServiceContractTermComponent>);
   public readonly serviceContractTermData = inject<ServiceContractTermModel>(MAT_DIALOG_DATA);
 
   termFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

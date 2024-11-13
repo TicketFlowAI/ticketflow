@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -23,7 +22,7 @@ import { CompanyModel } from '../../../core/models/entities/company.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyInfoComponent {
-  private readonly dialogRef = inject(MatDialogRef<CompanyInfoComponent>);
+  public readonly dialogRef = inject(MatDialogRef<CompanyInfoComponent>);
   public readonly company = inject<CompanyModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {

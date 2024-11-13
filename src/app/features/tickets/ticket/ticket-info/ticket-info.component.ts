@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -20,13 +19,12 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './ticket-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketInfoComponent {
-  private readonly dialogRef = inject(MatDialogRef<TicketInfoComponent>);
+  public readonly dialogRef = inject(MatDialogRef<TicketInfoComponent>);
   public readonly ticket = inject<TicketModel>(MAT_DIALOG_DATA);
 
   onReturnClick(): void {

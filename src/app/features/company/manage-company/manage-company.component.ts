@@ -34,7 +34,7 @@ import { CompanyManagementService } from '../../../core/services/company-managem
 })
 export class ManageCompanyComponent {
   private readonly companyManagementService = inject(CompanyManagementService);
-  private readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
+  public readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
   public readonly companyData = inject<CompanyModel>(MAT_DIALOG_DATA);
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
