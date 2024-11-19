@@ -1,83 +1,117 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserService } from './user.service';
-import { CustomHeadersService } from "../../utils/custom-headers.service";
-import { HttpStatusCode, provideHttpClient } from "@angular/common/http";
-import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { environment } from '../../../../environments/environment';
-import { IUserModelResponse } from '../../models/entities/user.model';
+import {
+  IUsersModelResponse,
+  IUserModelResponse,
+  UserModel,
+} from '../../models/entities/user.model';
 
 describe('UserService', () => {
-  const API_URL_USER = environment.apiEndpoint + '/api/user';
-  const API_URL_USERS = environment.apiEndpoint + '/api/users';
   let service: UserService;
-  let httpMock: HttpTestingController;
+  let httpTestingController: HttpTestingController;
+
+  const mockUsersResponse: IUsersModelResponse = {
+    success: true,
+    data: [
+      new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A'),
+      new UserModel(2, 'Jane', 'Smith', 'jane.smith@example.com', 2, 'Technician', 'Company B'),
+    ],
+  };
+
+  const mockUserResponse: IUserModelResponse = {
+    success: true,
+    data: new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A'),
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        CustomHeadersService,
-        provideHttpClient(),
-        provideHttpClientTesting(),
-      ],
+      imports: [HttpClientTestingModule],
+      providers: [UserService],
     });
     service = TestBed.inject(UserService);
-    httpMock = TestBed.inject(HttpTestingController);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
-  afterAll(() => {
-    httpMock.verify();
-  })
+  afterEach(() => {
+    httpTestingController.verify(); // Verifica que no haya solicitudes pendientes
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get the User', () => {
-    const dummyData: IUserModelResponse = {
-      success: true,
-      data: {
-        "id": 1,
-        "name": "Mindsoft",
-        "lastname": "Admin",
-        "email": "info@mindsoft.biz",
-        "role": "super-admin",
-        "company_id": 1,
-        "company_name": "Mindsoft"
-      }
-    }
-
-    service.getMyUser().subscribe((response) => {
-      expect(response.success).toBe(dummyData.success);
-      expect(response.data).toEqual(dummyData.data);
+  it('should get users', () => {
+    service.getUsers().subscribe((response) => {
+      expect(response).toEqual(mockUsersResponse);
     });
 
-    const req = httpMock.expectOne(API_URL_USER);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users`);
     expect(req.request.method).toBe('GET');
-    req.flush(dummyData, { status: 200, statusText: 'OK' });
+    req.flush(mockUsersResponse);
   });
 
-  it('should update the user data and return succesfully', () => {
-    const dummyData: IUserModelResponse = {
-      success: true,
-      data: {
-        "id": 1,
-        "name": "Mindsoft",
-        "lastname": "Admin",
-        "email": "info@mindsoft.biz",
-        "role": "super-admin",
-        "company_id": 1,
-        "company_name": "Mindsoft"
-      }
-    }
-
-    const updateUrl = `${API_URL_USERS}/${dummyData.data.id}`;
-
-    service.updateUser(dummyData.data).subscribe((response) => {
-      expect(response.status).toBe(HttpStatusCode.Ok);
+  it('should get my user', () => {
+    service.getMyUser().subscribe((response) => {
+      expect(response).toEqual(mockUserResponse);
     });
 
-    const req = httpMock.expectOne(updateUrl);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/user`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUserResponse);
+  });
+
+  it('should get a user by ID', () => {
+    const userId = 1;
+
+    service.getUser(userId).subscribe((response) => {
+      expect(response).toEqual(mockUserResponse);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${userId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUserResponse);
+  });
+
+  it('should create a user', () => {
+    const newUser = new UserModel(0, 'Alice', 'Johnson', 'alice.johnson@example.com', 3, 'Client', 'Company C');
+
+    service.createUser(newUser).subscribe((response) => {
+      expect(response.status).toBe(201);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(newUser);
+
+    req.flush({}, { status: 201, statusText: 'Created' });
+  });
+
+  it('should update a user', () => {
+    const updatedUser = new UserModel(1, 'John Updated', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A');
+
+    service.updateUser(updatedUser).subscribe((response) => {
+      expect(response.status).toBe(200);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${updatedUser.id}`);
     expect(req.request.method).toBe('PUT');
-    req.flush(dummyData, { status: 200, statusText: 'OK' });
+    expect(req.request.body).toEqual(updatedUser);
+
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+
+  it('should delete a user by ID', () => {
+    const userId = 1;
+
+    service.deleteUser(userId).subscribe((response) => {
+      expect(response.status).toBe(200);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${userId}`);
+    expect(req.request.method).toBe('DELETE');
+
+    req.flush({}, { status: 200, statusText: 'OK' });
   });
 });

@@ -314,19 +314,43 @@
         "USER-ROLE": "Rol",
         "RETURN": "Regresar"
       }
+    },
+    "REPORTS": {
+      "GLOBAL": "Reporte General",
+      "BY-TECHNICIAN": "Reporte por técnico",
+
+      "ADMIN": {
+        "REPORTS": "Reportes"
+      },
+
+      "GLOBAL-REPORT": {
+        "SEARCH": "Filtrado por Fecha",
+        "START-DATE": "Fecha de Inicio",
+        "END-DATE": "Fecha de Fin"
+      },
+      "TECHNICIAN-REPORT": {
+        "SEARCH": "Buscar por Técnico"
+      }
     }
   },
   "SHARED": {
     "HEADER": {
       "ADMIN": {
+        "SETTINGS": "Ajustes",
         "COMPANY": "Empresas",
         "SERVICE-CONTRACTS": "Contrataciones",
         "SERVICES": "Servicios",
         "USERS": "Usuarios",
-        "TICKETS": "Tickets"
+        "TICKETS": "Tickets",
+        "REPORTS": "Reportes"
       },
       "TEAM": {
-        
+        "COMPANY": "Empresas",
+        "SERVICE-CONTRACTS": "Contrataciones",
+        "SERVICES": "Servicios",
+        "USERS": "Usuarios",
+        "TICKETS": "Tickets",
+        "REPORTS": "Reportes"
       },
       "CLIENT": {
         "HOME": "Inicio",

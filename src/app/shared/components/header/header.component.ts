@@ -3,10 +3,10 @@ import { Router, RouterLink } from "@angular/router";
 import { AsyncPipe, NgOptimizedImage, NgTemplateOutlet } from "@angular/common";
 import { ScrollToTopInstantDirective } from "../../directives/scroll-to-top-instant.directive";
 import { TranslocoDirective, TranslocoService } from "@jsverse/transloco";
-import { AuthService } from "../../../core/services/auth.service";
+import { AuthManagementService } from "../../../core/services/auth-management.service";
 import { ThemeService } from "../../../core/services/theme.service";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faFlag, faMoon, faSun, faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faFlag, faMoon, faSun, faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { OpenLoginDirective } from "../../directives/open-login.directive";
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
@@ -33,10 +33,11 @@ export class HeaderComponent implements OnInit {
   protected readonly faMoon = faMoon;
   protected readonly faFlag = faFlag;
   protected readonly faUser = faUser;
+  protected readonly faGear = faGear;
   protected readonly faSignInAlt = faSignInAlt;
 
   public readonly userManagementService: UserManagementService = inject(UserManagementService)
-  private readonly authService: AuthService = inject(AuthService)
+  private readonly authManagementService: AuthManagementService = inject(AuthManagementService)
   private readonly router: Router = inject(Router)
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
   private readonly translocoService: TranslocoService = inject(TranslocoService)
@@ -76,7 +77,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authManagementService.logout();
     this.router.navigateByUrl('/')
     this.cdr.detectChanges()
   }

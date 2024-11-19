@@ -5,7 +5,10 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTransloco } from '@jsverse/transloco';
 import { isDevMode } from '@angular/core';
 import { TranslocoHttpLoader } from '../../../../transloco-loader';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('ManageServiceContractComponent', () => {
   let component: ManageServiceContractComponent;
@@ -13,7 +16,13 @@ describe('ManageServiceContractComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManageServiceContractComponent],
+      imports: [
+        ManageServiceContractComponent, // Componente standalone
+        MatDialogModule, // Asegúrate de incluir este si `MatDialog` se utiliza
+        ReactiveFormsModule, // Para los formularios
+        MatFormFieldModule, // Para los campos de formulario
+        MatSelectModule, // Para los selects
+      ],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -26,11 +35,17 @@ describe('ManageServiceContractComponent', () => {
           },
           loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock para MatDialogRef
-        { provide: MAT_DIALOG_DATA, useValue: { id: 1, company_id: 2, service_id: 3, service_term_id: 4 } }, // Mock para MAT_DIALOG_DATA
+        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock de MatDialogRef
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            serviceContract: { id: 1, company_id: 1, service_id: 3, service_term_id: 4 },
+            companyId: 1,
+          },
+        }, // Mock de MAT_DIALOG_DATA
       ],
     }).compileComponents();
-
+  
     fixture = TestBed.createComponent(ManageServiceContractComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -41,7 +56,7 @@ describe('ManageServiceContractComponent', () => {
   });
 
   it('should initialize form with data from MAT_DIALOG_DATA', () => {
-    expect(component.companyFormControl.value).toBe(2);
+    expect(component.companyFormControl.value).toBe(1);
     expect(component.serviceFormControl.value).toBe(3);
     expect(component.serviceContactTermFormControl.value).toBe(4);
   });

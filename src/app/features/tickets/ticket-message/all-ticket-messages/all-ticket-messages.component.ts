@@ -85,7 +85,16 @@ export class AllTicketMessagesComponent {
   send() {
     if(this.message == '') return 
 
-    const newTicketMessage = new TicketMessageModel()
+    const newTicketMessage = new TicketMessageModel(
+      0,
+      parseInt(this.ticketId),
+      this.message,
+      this.userManagementService.currentUser()?.id,
+      '',
+      '',
+      '',
+      new Date()
+    )
 
     this.clearMessageInterval()
     this.ticketManagementService.addTicketMessage(newTicketMessage).subscribe({

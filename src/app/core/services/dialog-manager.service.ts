@@ -25,6 +25,7 @@ import { TicketModel } from '../models/entities/ticket.model';
 import { ManageTicketComponent } from '../../features/tickets/ticket/manage-ticket/manage-ticket.component';
 import { TicketInfoComponent } from '../../features/tickets/ticket/ticket-info/ticket-info.component';
 import { TicketDialogData } from '../models/dialogs/ticket-dialog-data.model';
+import { ServiceContractDialogData } from '../models/dialogs/service-contact-dialog-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -213,7 +214,7 @@ export class DialogManagerService {
     });
   }
 
-  openManageServiceContractDialog(serviceContract: ServiceContractModel | null) {
+  openManageServiceContractDialog(data: ServiceContractDialogData) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
@@ -222,7 +223,7 @@ export class DialogManagerService {
       height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
-      data: serviceContract
+      data: data
     });
 
     return dialogRef.afterClosed().pipe(

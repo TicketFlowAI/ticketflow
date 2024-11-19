@@ -318,14 +318,21 @@
   "SHARED": {
     "HEADER": {
       "ADMIN": {
+        "SETTINGS": "Settings",
         "COMPANY": "Companies",
         "SERVICE-CONTRACTS": "Contracts",
         "SERVICES": "Services",
         "USERS": "Users",
-        "TICKETS": "Tickets"
+        "TICKETS": "Tickets",
+        "REPORTS": "Reports"
       },
       "TEAM": {
-
+        "COMPANY": "Companies",
+        "SERVICE-CONTRACTS": "Contracts",
+        "SERVICES": "Services",
+        "USERS": "Users",
+        "TICKETS": "Tickets",
+        "REPORTS": "Reports"
       },
       "CLIENT": {
         "HOME": "Home",

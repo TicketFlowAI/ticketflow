@@ -8,7 +8,7 @@ import { CustomHeadersService } from '../../utils/custom-headers.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthService {
   //Variables
   private readonly BASE_URL = environment.apiEndpoint
   private readonly apiAuthentication = this.BASE_URL + ''

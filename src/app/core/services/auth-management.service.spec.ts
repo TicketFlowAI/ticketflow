@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
+import { AuthManagementService } from './auth-management.service';
 import { TokenService } from './token.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
-import { AuthenticationService } from '../api/servicios-mindsoftdev/authentication.service';
+import { AuthService } from '../api/servicios-mindsoftdev/auth.service';
 import { IUserModel } from '../models/entities/user.model';
 import { UserManagementService } from './user-management.service';
 import { of } from 'rxjs';
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let service: AuthManagementService;
   let tokenServiceSpy: jasmine.SpyObj<TokenService>;
   let sanctumServiceSpy: jasmine.SpyObj<SanctumService>;
-  let authenticationServiceSpy: jasmine.SpyObj<AuthenticationService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
   let userManagementServiceSpy: jasmine.SpyObj<UserManagementService>
 
   beforeEach(() => {
@@ -31,16 +31,16 @@ describe('AuthService', () => {
       providers: [
         { provide: TokenService, useValue: tokenSpy },
         { provide: SanctumService, useValue: sanctumSpy },
-        { provide: AuthenticationService, useValue: authSpy },
+        { provide: AuthService, useValue: authSpy },
         { provide: UserManagementService, useValue: userManagementSpy },
-        AuthService,
+        AuthManagementService,
       ],
     });
   
-    service = TestBed.inject(AuthService);
+    service = TestBed.inject(AuthManagementService);
     tokenServiceSpy = TestBed.inject(TokenService) as jasmine.SpyObj<TokenService>;
     sanctumServiceSpy = TestBed.inject(SanctumService) as jasmine.SpyObj<SanctumService>;
-    authenticationServiceSpy = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
+    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     userManagementServiceSpy = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
   });
 

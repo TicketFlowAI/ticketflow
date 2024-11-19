@@ -19,7 +19,6 @@ export class UserManagementService {
   isUserAdmin() {
     if(this.currentUser() != null) 
     {
-
       return this.currentUser()?.role === UserRoles.Admin;
     }
     else

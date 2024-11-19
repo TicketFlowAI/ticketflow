@@ -17,7 +17,7 @@
             <ng-container [ngTemplateOutlet]="adminTemplate" />
             }
             @if(this.userManagementService.isUserTechnician()) {
-            <ng-container [ngTemplateOutlet]="teamTemplate" />
+            <ng-container [ngTemplateOutlet]="technicianTemplate" />
             }
             @if(this.userManagementService.isUserClient()) {
             <ng-container [ngTemplateOutlet]="clientTemplate" />
@@ -108,8 +108,32 @@
       </li>
     </ul>
   </ng-template>
-  <ng-template #teamTemplate>
+  <ng-template #technicianTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2">
+        <a [routerLink]="['/technician-report/1']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.REPORTS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.TICKETS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.USERS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.SERVICES') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.SERVICE-CONTRACTS') }}</a>
+      </li>
+      <li class="nav-item px-2">
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('TEAM.COMPANY') }}</a>
+      </li>
       <li class="nav-item px-2 dropdown">
         <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
           aria-expanded="false">
@@ -131,6 +155,10 @@
   </ng-template>
   <ng-template #adminTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item px-2">
+        <a [routerLink]="['/report']" ScrollToTop class="nav-link active link-underline text-light fs-6"
+          aria-current="page">{{ t('ADMIN.REPORTS') }}</a>
+      </li>
       <li class="nav-item px-2">
         <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
           aria-current="page">{{ t('ADMIN.TICKETS') }}</a>
@@ -162,10 +190,16 @@
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a OpenLogin class="dropdown-item">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
-              {{ t('PROFILE') }}</a></li>
+              {{ t('PROFILE') }}</a>
+          </li>
           <li><a (click)="logout()" class="dropdown-item">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
-              {{ t('LOGOUT') }}</a></li>
+              {{ t('LOGOUT') }}</a>
+          </li>
+          <li><a [routerLink]="['/settings']" class="dropdown-item">
+            <fa-icon [icon]="faGear"></fa-icon>
+            {{ t('ADMIN.SETTINGS') }}</a>
+        </li>
         </ul>
       </li>
     </ul>

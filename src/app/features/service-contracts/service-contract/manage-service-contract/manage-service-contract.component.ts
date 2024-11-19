@@ -19,6 +19,7 @@ import { CompanyManagementService } from '../../../../core/services/company-mana
 import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
 import { CompanyModel } from '../../../../core/models/entities/company.model';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
+import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
 
 @Component({
   selector: 'app-manage-service-contract',
@@ -43,7 +44,7 @@ export class ManageServiceContractComponent {
   private readonly cdr = inject(ChangeDetectorRef);
 
   readonly dialogRef = inject(MatDialogRef<ManageServiceContractComponent>);
-  readonly serviceContractData = inject<ServiceContractModel>(MAT_DIALOG_DATA);
+  readonly data = inject<ServiceContractDialogData>(MAT_DIALOG_DATA);
 
   companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
   serviceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
@@ -62,11 +63,15 @@ export class ManageServiceContractComponent {
 
 
   ngOnInit(): void {
-    if (this.serviceContractData) {
-      this.serviceContract = this.serviceContractData
-      this.companyFormControl.setValue(this.serviceContract.company_id)
-      this.serviceFormControl.setValue(this.serviceContract.service_id)
-      this.serviceContactTermFormControl.setValue(this.serviceContract.service_term_id);
+    if (this.data.serviceContract) {
+      this.serviceContract = this.data.serviceContract
+      this.companyFormControl.setValue(this.data.serviceContract.company_id)
+      this.serviceFormControl.setValue(this.data.serviceContract.service_id)
+      this.serviceContactTermFormControl.setValue(this.data.serviceContract.service_term_id);
+    }
+
+    if (this.data.companyId) {
+      this.companyFormControl.setValue(this.data.companyId)
     }
 
     forkJoin({
@@ -99,8 +104,8 @@ export class ManageServiceContractComponent {
       ''
     )
 
-    if (this.serviceContractData) {
-      serviceContract.id = this.serviceContractData.id
+    if (this.data.serviceContract) {
+      serviceContract.id = this.data.serviceContract.id
 
       this.serviceContractManagementService.editServiceContract(serviceContract).subscribe({
         next: () => {

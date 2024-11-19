@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {HeaderComponent} from "./shared/components/header/header.component";
-import {FooterComponent} from "./shared/components/footer/footer.component";
-import { AuthService } from './core/services/auth.service';
+import { HeaderComponent } from "./shared/components/header/header.component";
+import { FooterComponent } from "./shared/components/footer/footer.component";
+import { AuthManagementService } from './core/services/auth-management.service';
 import { CustomToastComponent } from "./shared/components/custom-toast/custom-toast.component";
 
 @Component({
@@ -12,10 +12,10 @@ import { CustomToastComponent } from "./shared/components/custom-toast/custom-to
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  private readonly authService = inject(AuthService)
+  private readonly authManagementService = inject(AuthManagementService)
   title = 'Ticketflow';
 
   constructor() {
-      this.authService.authenticate();
+    this.authManagementService.authenticate();
   }
 }

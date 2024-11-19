@@ -1,0 +1,16 @@
+mat-icon {
+    font-size: 100px;
+    height: 100px ;
+    width: 100px;
+}
+
+.report-card {
+    scale: 1;
+    transition: 500ms;
+    &:hover {
+        transition: 500ms;
+        scale: 1.02;
+        cursor: pointer;
+        box-shadow: 1px 1px 10px var(--bs-body-color);
+    }
+}

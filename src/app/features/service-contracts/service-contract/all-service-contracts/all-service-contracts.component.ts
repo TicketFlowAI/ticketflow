@@ -14,6 +14,7 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { concatMap, of, tap } from 'rxjs';
+import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class AllServiceContractsComponent {
 
   loadServiceContracts() {
     const serviceContracts$ = this.companyId ? this.serviceContractManagementService.getAllServiceContractsFromCompany(parseInt(this.companyId)) : this.serviceContractManagementService.getAllServiceContracts();
-    
+
     serviceContracts$.subscribe(
       {
         next: (response) => {
@@ -104,19 +105,17 @@ export class AllServiceContractsComponent {
     const deleteMessage = this.translocoService.translateObject(
       'SHARED.DIALOGS.CONFIRMATION.DELETE-SERVICE-CONTRACT'
     );
-  
+
     this.dialogManagerService
       .openActionConfirmationDialog(deleteMessage)
       .pipe(
         concatMap((result) =>
-          result
-            ? this.handleDeleteServiceContract(serviceContractId)
-            : this.handleCancelDelete()
+          result ? this.handleDeleteServiceContract(serviceContractId) : this.handleCancelDelete()
         )
       )
       .subscribe();
   }
-  
+
   private handleDeleteServiceContract(serviceContractId: number) {
     return this.serviceContractManagementService
       .deleteServiceContract(serviceContractId)
@@ -126,7 +125,7 @@ export class AllServiceContractsComponent {
         })
       );
   }
-  
+
   private handleCancelDelete() {
     return of(null);
   }
@@ -136,7 +135,11 @@ export class AllServiceContractsComponent {
   }
 
   openServiceContractManageDialog(serviceContract: ServiceContractModel | null) {
-    this.dialogManagerService.openManageServiceContractDialog(serviceContract).subscribe(
+    let data: ServiceContractDialogData = {
+      serviceContract,
+      companyId: this.companyId ? parseInt(this.companyId) : null
+    }
+    this.dialogManagerService.openManageServiceContractDialog(data).subscribe(
       () => { this.loadServiceContracts() }
     )
   }

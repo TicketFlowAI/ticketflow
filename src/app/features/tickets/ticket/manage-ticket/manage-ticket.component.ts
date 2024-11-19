@@ -95,7 +95,6 @@ export class ManageTicketComponent {
       next: ({ serviceContracts, user }) => {
         this.serviceContracts = serviceContracts
         this.user = user
-
         this.cdr.detectChanges();
       }
     })

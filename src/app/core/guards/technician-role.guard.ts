@@ -2,7 +2,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { UserManagementService } from '../services/user-management.service';
 import { inject } from '@angular/core';
 
-export const teamRoleGuard: CanActivateFn = () => {
+export const technicianRoleGuard: CanActivateFn = (route, state) => {
   const userManagementService = inject(UserManagementService);
   const router = inject(Router);
 
@@ -14,7 +14,7 @@ export const teamRoleGuard: CanActivateFn = () => {
 
   //No refresh Navigation
   if (currentUser) {
-    hasAccess = userManagementService.isUserTechnician() || userManagementService.isUserAdmin();
+    hasAccess = userManagementService.isUserTechnician();
 
     if (!hasAccess) router.navigate(['/']);
 
@@ -29,7 +29,7 @@ export const teamRoleGuard: CanActivateFn = () => {
       currentUser = userManagementService.currentUser();
       if (currentUser || (intervalAttempts >= intervalMaxAttempts)) {
         clearInterval(interval);
-        hasAccess = userManagementService.isUserTechnician() || userManagementService.isUserAdmin();
+        hasAccess  = userManagementService.isUserTechnician();
         
         if (!hasAccess) router.navigate(['/']);
 

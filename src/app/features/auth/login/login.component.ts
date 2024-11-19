@@ -1,13 +1,13 @@
-import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
-import {TranslocoDirective} from "@jsverse/transloco";
-import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
-import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
-import {MatIcon} from "@angular/material/icon";
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
-import { AuthService } from '../../../core/services/auth.service';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { MatDialogActions, MatDialogContent, MatDialogRef } from "@angular/material/dialog";
+import { TranslocoDirective } from "@jsverse/transloco";
+import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MatInput } from "@angular/material/input";
+import { MatIcon } from "@angular/material/icon";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { RouterLink } from "@angular/router";
+import { AuthManagementService } from '../../../core/services/auth-management.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
 import { UserManagementService } from '../../../core/services/user-management.service';
 
@@ -34,7 +34,7 @@ import { UserManagementService } from '../../../core/services/user-management.se
 export class LoginComponent {
   //SERVICES
   public readonly dialogRef = inject(MatDialogRef<LoginComponent>);
-  private readonly authService = inject(AuthService);
+  private readonly authManagementService = inject(AuthManagementService);
   private readonly userManagementService = inject(UserManagementService);
   private readonly fb = inject(FormBuilder)
 
@@ -51,7 +51,7 @@ export class LoginComponent {
   //CONSTRUCTOR
   constructor() {
     effect(() => {
-      if(this.userManagementService.currentUser()) this.dialogRef.close();
+      if (this.userManagementService.currentUser()) this.dialogRef.close();
     })
   }
 
@@ -65,12 +65,12 @@ export class LoginComponent {
     this.dialogRef.close();
   }
 
-  submitLoginForm(){
+  submitLoginForm() {
     const loginFormValue = this.loginFrom.value;
     const loginRequest = new LoginRequest();
-    loginRequest.email = loginFormValue.email?? ''
-    loginRequest.password = loginFormValue.password?? ''
+    loginRequest.email = loginFormValue.email ?? ''
+    loginRequest.password = loginFormValue.password ?? ''
 
-    this.authService.login(loginRequest)
+    this.authManagementService.login(loginRequest)
   }
 }

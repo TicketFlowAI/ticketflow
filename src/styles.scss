@@ -31,6 +31,8 @@ $btn-font-size: 16px;
   --mdc-dialog-subhead-color: #FFFFFF;
   --mdc-dialog-supporting-text-color: #FFFFFF;
 
+  --mdc-elevated-card-container-color: #2A2E34;
+
   --mdc-filled-text-field-container-color: #2B3035;
   --mdc-filled-text-field-input-text-color: #FFFFFF;
   --mdc-filled-text-field-label-text-color: #FFFFFF;
@@ -214,15 +216,6 @@ hr {
   background-color: var(--bs-body-bg) !important;
 }
 
-mat-card {
-  border-radius: 1rem !important;
-  background-color: var(--bg-element) !important;
-
-  mat-card {
-    background-color: var(--bs-body-bg) !important;
-  }
-
-}
 
 .mat-mdc-checkbox .mdc-form-field {
   color: var(--text-color) !important;
