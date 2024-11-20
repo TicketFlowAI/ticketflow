@@ -145,6 +145,20 @@ describe('DialogManagerService', () => {
     });
   });
 
+  it('should open the ServiceInfoComponent dialog', () => {
+    const mockService = { id: 1, name: 'Service A' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openServiceInfoDialog(mockService as any);
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '500px',
+      height: '325px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockService,
+    });
+  });
+
   it('should open the ManageServiceCategoryComponent dialog and return true after closing', (done) => {
     matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
     service.openManageServiceCategoryDialog(null).subscribe((result) => {
