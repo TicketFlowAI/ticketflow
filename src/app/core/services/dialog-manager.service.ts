@@ -89,7 +89,7 @@ export class DialogManagerService {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    const dialogRef = this.dialogService.open(CompanyInfoComponent, {
+    this.dialogService.open(CompanyInfoComponent, {
       width: '600px',
       maxWidth: '100vw',
       height: '450px',
@@ -97,22 +97,16 @@ export class DialogManagerService {
       exitAnimationDuration,
       data: company
     });
-
-    return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
-    )
   }
 
   openManageTicketDialog(data: TicketDialogData) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
-    let height = data.ticket? '460px' : '570px';
-
     const dialogRef = this.dialogService.open(ManageTicketComponent, {
       width: '800px',
       maxWidth: '100vw',
-      height: height,
+      height: data.ticket? '460px' : '570px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: data

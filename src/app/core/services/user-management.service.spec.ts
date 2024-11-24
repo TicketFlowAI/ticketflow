@@ -86,14 +86,25 @@ describe('UserManagementService', () => {
     service.currentUser.set(null);
     expect(service.isUserAdmin()).toBeFalse();
     expect(service.isUserTechnician()).toBeFalse();
+    expect(service.isUserTeam()).toBeFalse();
     expect(service.isUserClient()).toBeFalse();
   });
 
-  it('should get the current user successfully', (done) => {
+  it('should get the current user if the response is successfully', (done) => {
     userServiceMock.getMyUser.and.returnValue(of({ success: true, data: mockUser }));
 
     service.getMyUser().subscribe((user) => {
       expect(user).toEqual(mockUser);
+      expect(userServiceMock.getMyUser).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should not get the current user if the response is not successfully', (done) => {
+    userServiceMock.getMyUser.and.returnValue(of({ success: false, data: mockUser }));
+
+    service.getMyUser().subscribe((user) => {
+      expect(user).toEqual(null);
       expect(userServiceMock.getMyUser).toHaveBeenCalled();
       done();
     });

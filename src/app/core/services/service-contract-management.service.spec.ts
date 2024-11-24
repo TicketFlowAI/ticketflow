@@ -99,6 +99,26 @@ describe('ServiceContractManagementService', () => {
     });
   });
 
+  it('should get all service contracts from a company successfully', (done) => {
+    contractServiceMock.getServiceContractsByCompany.and.returnValue(of({ success: true, data: mockServiceContracts }));
+
+    service.getAllServiceContractsFromCompany(1).subscribe((contracts) => {
+      expect(contracts).toEqual(mockServiceContracts);
+      expect(contractServiceMock.getServiceContractsByCompany).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while getting all service contracts from a company', (done) => {
+    contractServiceMock.getServiceContractsByCompany.and.returnValue(throwError(() => new Error('Error fetching service contracts')));
+
+    service.getAllServiceContractsFromCompany(1).subscribe((contracts) => {
+      expect(contracts).toEqual([]);
+      expect(contractServiceMock.getServiceContractsByCompany).toHaveBeenCalled();
+      done();
+    });
+  });
+
   it('should get one service contract successfully', (done) => {
     contractServiceMock.getServiceContract.and.returnValue(of({ success: true, data: mockServiceContract }));
 
@@ -197,6 +217,26 @@ describe('ServiceContractManagementService', () => {
     });
   });
 
+  it('should get all service contract terms successfully', (done) => {
+    contractTermServiceMock.getServiceContractTerms.and.returnValue(of({ success: true, data: mockServiceContractTerms }));
+
+    service.getAllServiceContractTerms().subscribe((contractTerms) => {
+      expect(contractTerms).toEqual(mockServiceContractTerms);
+      expect(contractTermServiceMock.getServiceContractTerms).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while getting all service contract terms', (done) => {
+    contractTermServiceMock.getServiceContractTerms.and.returnValue(throwError(() => new Error('Error fetching service contract terms')));
+        
+    service.getAllServiceContractTerms().subscribe((contractTerms) => {
+      expect(contractTerms).toEqual([]);
+      expect(contractTermServiceMock.getServiceContractTerms).toHaveBeenCalled();
+      done();
+    });
+  });
+
   it('should add a service contract term successfully', (done) => {
     contractTermServiceMock.createServiceContractTerm.and.returnValue(of(new HttpResponse({ status: 201 })));
     translocoServiceMock.translateObject.and.returnValue([]);
@@ -223,7 +263,6 @@ describe('ServiceContractManagementService', () => {
     });
   });
 
-  // Edit
   it('should edit a service contract term successfully', (done) => {
     contractTermServiceMock.updateServiceContractTerm.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
@@ -236,6 +275,7 @@ describe('ServiceContractManagementService', () => {
       done();
     });
   });
+  
 
   it('should handle error while editing a service contract term', (done) => {
     contractTermServiceMock.updateServiceContractTerm.and.returnValue(throwError(() => new Error('Error updating service contract term')));
@@ -250,7 +290,6 @@ describe('ServiceContractManagementService', () => {
     });
   });
 
-  // Delete
   it('should delete a service contract term successfully', (done) => {
     contractTermServiceMock.deleteServiceContractTerm.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
