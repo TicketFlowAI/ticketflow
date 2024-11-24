@@ -32,21 +32,18 @@ export class AuthManagementService {
   }
 
   login(loginRequest: LoginRequest) {
-    this.spinnerService.showSpinner();
-
     this.sanctumService.getCsrfCookie().pipe(
       concatMap(() => this.authService.loginWithCredentials(loginRequest)),
       catchError(() => {
-        this.spinnerService.hideSpinner()
         return of(null);
       })
     ).subscribe({
-      next: () => {
-        this.authenticate()
-        this.spinnerService.hideSpinner()
+      next: (response) => {
+        if (response) {
+          this.authenticate();
+        }
       }
-    }
-    )
+    });
   }
 
   logout() {
@@ -56,9 +53,7 @@ export class AuthManagementService {
           this.tokenService.clearAll();
           this.userManagementService.currentUser.set(null)
         }
-      },
-      error: () => {
-      } 
+      }
     })
   }
 }

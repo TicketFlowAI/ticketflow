@@ -114,6 +114,36 @@ describe('DialogManagerService', () => {
       data: mockTicketDialogData,
     });
   });
+
+  it('should open the ManageTicketComponent dialog with the correct height based on ticket data', () => {
+    const mockWithTicket = { ticket: {} };
+    const mockWithoutTicket = { ticket: null };
+
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    // Call service with data containing a ticket
+    service.openManageTicketDialog(mockWithTicket as any);
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '800px',
+      maxWidth: '100vw',
+      height: '460px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockWithTicket,
+    });
+  
+    // Call service with data containing no ticket
+    service.openManageTicketDialog(mockWithoutTicket as any);
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '800px',
+      maxWidth: '100vw',
+      height: '570px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockWithoutTicket,
+    });
+  });
+  
   
   it('should open the TicketInfoComponent dialog', () => {
     const mockTicket = { id: 1, title: 'Ticket A' };

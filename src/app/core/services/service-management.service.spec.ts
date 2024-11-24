@@ -115,6 +115,26 @@ describe('ServiceManagementService', () => {
     });
   });
 
+  it('should get one service successfully', (done) => {
+    serviceServiceMock.getService.and.returnValue(of({ success: true, data: mockService }));
+
+    service.getOneService(1).subscribe((service) => {
+      expect(service).toEqual(mockService);
+      expect(serviceServiceMock.getService).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while getting one service', (done) => {
+    serviceServiceMock.getService.and.returnValue(throwError(() => new Error('Error fetching one service')));
+
+    service.getOneService(1).subscribe((service) => {
+      expect(service).toBeNull();
+      expect(serviceServiceMock.getService).toHaveBeenCalled();
+      done();
+    });
+  });
+
   it('should add a service successfully', (done) => {
     serviceServiceMock.createService.and.returnValue(of(new HttpResponse({ status: 201 })));
     translocoServiceMock.translateObject.and.returnValue([]);

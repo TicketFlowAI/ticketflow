@@ -237,6 +237,26 @@ describe('ServiceContractManagementService', () => {
     });
   });
 
+  it('should get one service contract term successfully', (done) => {
+    contractTermServiceMock.getServiceContractTerm.and.returnValue(of({ success: true, data: mockServiceContractTerm }));
+
+    service.getOneServiceContractTerm(1).subscribe((contract) => {
+      expect(contract).toEqual(mockServiceContractTerm);
+      expect(contractTermServiceMock.getServiceContractTerm).toHaveBeenCalledWith(1);
+      done();
+    });
+  });
+
+  it('should handle error while getting one service contract term', (done) => {
+    contractTermServiceMock.getServiceContractTerm.and.returnValue(throwError(() => new Error('Error fetching service contract')));
+
+    service.getOneServiceContractTerm(1).subscribe((contract) => {
+      expect(contract).toBeNull();
+      expect(contractTermServiceMock.getServiceContractTerm).toHaveBeenCalledWith(1);
+      done();
+    });
+  });
+
   it('should add a service contract term successfully', (done) => {
     contractTermServiceMock.createServiceContractTerm.and.returnValue(of(new HttpResponse({ status: 201 })));
     translocoServiceMock.translateObject.and.returnValue([]);

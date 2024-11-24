@@ -41,8 +41,29 @@ describe('TokenService', () => {
     expect(token).toBe('');
   });
 
-  it('should clear the token', () => {
+  it('should return true if the token exists', () => {
+    cookieServiceSpy.get.and.returnValue('token');
+
+    const result = service.tokenExists();
+    expect(result).toBeTrue;
+  });
+
+  it('should return false if no token exists', () => {
+    cookieServiceSpy.get.and.returnValue('');
+
+    const result = service.tokenExists();
+    expect(result).toBeTrue;
+  });
+
+  it('should clearall the token', () => {
     service.clearToken();
     expect(cookieServiceSpy.delete).toHaveBeenCalledWith('XSRF-TOKEN');
+
+  });
+
+  it('should clear all data related to the token', () => {
+    service.clearAll();
+    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('XSRF-TOKEN');
+    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('mindsoft_ticketflow_session');
   });
 });
