@@ -32,6 +32,13 @@ export class UserManagementService {
       return false;
   }
 
+  isUserTeam() {
+    if(this.currentUser() != null)
+      return this.currentUser()?.role === UserRoles.Technician || this.currentUser()?.role === UserRoles.Admin;
+    else
+      return false;
+  }
+
   isUserClient() {
     if(this.currentUser() != null) 
       return this.currentUser()?.role === UserRoles.Client;

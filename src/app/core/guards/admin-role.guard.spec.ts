@@ -1,96 +1,118 @@
-import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { CanActivateFn, Router } from '@angular/router';
 import { adminRoleGuard } from './admin-role.guard';
 import { UserManagementService } from '../services/user-management.service';
+import { UserModel, UserRoles } from '../models/entities/user.model';
+
+const userAdminMock = new UserModel(
+  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Admin, 'SomeCompany'
+)
+
+const userNoAdminMock = new UserModel(
+  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Client, 'SomeCompany'
+)
+
+const userManagementServiceMock: {
+  currentUser: () => UserModel | null;
+  isUserAdmin: () => boolean;
+} = {
+  currentUser: () => null,
+  isUserAdmin: () => false
+}
 
 describe('adminRoleGuard', () => {
-  let userManagementServiceMock: jasmine.SpyObj<UserManagementService>;
-  let routerMock: jasmine.SpyObj<Router>;
+  const executeGuard: CanActivateFn = (...guardParameters) =>
+    TestBed.runInInjectionContext(() => adminRoleGuard(...guardParameters));
 
   beforeEach(() => {
-    const userManagementServiceSpy = jasmine.createSpyObj('UserManagementService', ['currentUser', 'isUserAdmin']);
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
     TestBed.configureTestingModule({
       providers: [
-        { provide: UserManagementService, useValue: userManagementServiceSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
-    });
+        { provide: UserManagementService, useValue: userManagementServiceMock },
+      ]
+    })
+  }
+  )
 
-    userManagementServiceMock = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
-    routerMock = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+  it('should be created', () => {
+    expect(executeGuard).toBeTruthy();
   });
 
-  it('should return false and navigate to "/" if there is no current user', () => {
-    userManagementServiceMock.currentUser.and.returnValue(null);
+  it('should not grant access if current user is not admin on no refresh navigation', () => {
+    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
+    const isUserAdminSpy = spyOn(userManagementServiceMock, 'isUserAdmin')
+    const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
 
-    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any));
+    currentUserSpy.and.returnValue(userNoAdminMock)
+    isUserAdminSpy.and.returnValue(false)
 
-    expect(result).toBeFalse();
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/']);
+    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any))
+
+    expect(result).toBeFalse()
+    expect(navigateSpy).toHaveBeenCalledWith(['/']);
   });
 
-  it('should return false if the current user is not an admin', () => {
-    userManagementServiceMock.currentUser.and.returnValue({
-      id: 1,
-      name: 'John',
-      lastname: 'Doe',
-      email: 'eazmple@gmail.com',
-      role: 'client',
-      company_id: 1,
-      company_name: 'example company',
-    });
-    userManagementServiceMock.isUserAdmin.and.returnValue(false);
+  it('should grant access if current user is admin on no refresh navigation', () => {
+    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
+    const isUserAdminSpy = spyOn(userManagementServiceMock, 'isUserAdmin')
 
-    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any));
+    currentUserSpy.and.returnValue(userAdminMock)
+    isUserAdminSpy.and.returnValue(true)
 
-    expect(result).toBeFalse();
-    expect(routerMock.navigate).not.toHaveBeenCalled();
+    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any))
+
+    expect(result).toBeTrue()
   });
 
-  it('should return true if the current user is an admin (super-admin)', () => {
-    userManagementServiceMock.currentUser.and.returnValue({
-      id: 1,
-      name: 'Jane',
-      lastname: 'Doe',
-      email: 'eazmple@gmail.com',
-      role: 'super-admin',
-      company_id: 1,
-      company_name: 'example company',
-    });
-    userManagementServiceMock.isUserAdmin.and.returnValue(true);
+  it('should not grant access if current user is not admin on refresh navigation', fakeAsync(() => {
+    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
+    const isUserAdminSpy = spyOn(userManagementServiceMock, 'isUserAdmin')
+    const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
 
-    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any));
+    currentUserSpy.and.returnValue(null)
+    isUserAdminSpy.and.returnValue(false)
 
-    expect(result).toBeTrue();
-    expect(routerMock.navigate).not.toHaveBeenCalled();
-  });
+    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any))
 
-  it('should not call isUserAdmin if there is no current user', () => {
-    userManagementServiceMock.currentUser.and.returnValue(null);
-  
-    TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any));
-  
-    expect(userManagementServiceMock.isUserAdmin).not.toHaveBeenCalled();
-  });
-  
-  it('should return false if the current user has no role defined', () => {
-    userManagementServiceMock.currentUser.and.returnValue({
-      id: 1,
-      name: 'John',
-      lastname: 'Doe',
-      email: 'eazmple@gmail.com',
-      role: 'non-specified', // Sin rol explícito
-      company_id: 1,
-      company_name: 'example company',
-    });
-    userManagementServiceMock.isUserAdmin.and.returnValue(false);
-  
-    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any));
-  
-    expect(result).toBeFalse();
-    expect(routerMock.navigate).not.toHaveBeenCalled();
-  });
+    let resolvedResult: boolean | undefined;
 
+    if (result instanceof Promise) {
+      result.then((res) => {
+        if (typeof res === 'boolean') {
+          resolvedResult = res;
+        }
+      });
+      tick(2000);
+    } else if (typeof result === 'boolean') {
+      resolvedResult = result;
+    }
+
+    expect(resolvedResult).toBeFalse();
+    expect(navigateSpy).toHaveBeenCalledWith(['/']);
+  }));
+
+
+  it('should grant access if current user is admin on refresh navigation', fakeAsync(() => {
+    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
+    const isUserAdminSpy = spyOn(userManagementServiceMock, 'isUserAdmin')
+    
+    currentUserSpy.and.returnValue(null)
+    isUserAdminSpy.and.returnValue(true)
+
+    const result = TestBed.runInInjectionContext(() => adminRoleGuard({} as any, {} as any))
+
+    let resolvedResult: boolean | undefined;
+
+    if (result instanceof Promise) {
+      result.then((res) => {
+        if (typeof res === 'boolean') {
+          resolvedResult = res;
+        }
+      });
+      tick(2000);
+    } else if (typeof result === 'boolean') {
+      resolvedResult = result;
+    }
+
+    expect(resolvedResult).toBeTrue();
+  }));
 });

@@ -14,7 +14,7 @@ export const teamRoleGuard: CanActivateFn = () => {
 
   //No refresh Navigation
   if (currentUser) {
-    hasAccess = userManagementService.isUserTechnician() || userManagementService.isUserAdmin();
+    hasAccess = userManagementService.isUserTeam();
 
     if (!hasAccess) router.navigate(['/']);
 
@@ -29,7 +29,7 @@ export const teamRoleGuard: CanActivateFn = () => {
       currentUser = userManagementService.currentUser();
       if (currentUser || (intervalAttempts >= intervalMaxAttempts)) {
         clearInterval(interval);
-        hasAccess = userManagementService.isUserTechnician() || userManagementService.isUserAdmin();
+        hasAccess = userManagementService.isUserTeam();
         
         if (!hasAccess) router.navigate(['/']);
 

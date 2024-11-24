@@ -3,15 +3,38 @@ import { CanActivateFn, Router } from '@angular/router';
 import { UserManagementService } from '../services/user-management.service';
 
 export const adminRoleGuard: CanActivateFn = () => {
-  const userManagementService = inject(UserManagementService)
+  const userManagementService = inject(UserManagementService);
   const router = inject(Router);
 
-  const currentUser = userManagementService.currentUser();
+  let currentUser = userManagementService.currentUser();
+  let hasAccess = false
+  const intervalMaxAttempts = 2;
+  const intervalSeconds = 1;
+  let intervalAttempts = 0;
 
-  if (!currentUser) {
-    router.navigate(['/']);
-    return false;
+  //No refresh Navigation
+  if (currentUser) {
+    hasAccess = userManagementService.isUserAdmin();
+
+    if (!hasAccess) router.navigate(['/']);
+
+    return hasAccess;
   }
 
-  return userManagementService.isUserAdmin();
+  //On refresh
+  return new Promise<boolean>((resolve) => {
+    const interval = setInterval(() => {
+      intervalAttempts++;
+      
+      currentUser = userManagementService.currentUser();
+      if (currentUser || (intervalAttempts >= intervalMaxAttempts)) {
+        clearInterval(interval);
+        hasAccess = userManagementService.isUserAdmin();
+        
+        if (!hasAccess) router.navigate(['/']);
+
+        resolve(hasAccess);
+      }
+    }, intervalSeconds * 1000);
+  });
 };

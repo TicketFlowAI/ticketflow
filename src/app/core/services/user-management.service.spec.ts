@@ -67,6 +67,16 @@ describe('UserManagementService', () => {
     expect(service.isUserTechnician()).toBeTrue();
   });
 
+  it('should identify a team user with admin Role correctly', () => {
+    service.currentUser.set({ ...mockUser, role: UserRoles.Admin });
+    expect(service.isUserTeam()).toBeTrue();
+  });
+
+  it('should identify a team user with technician Role correctly', () => {
+    service.currentUser.set({ ...mockUser, role: UserRoles.Technician });
+    expect(service.isUserTeam()).toBeTrue();
+  });
+
   it('should identify a client user correctly', () => {
     service.currentUser.set({ ...mockUser, role: UserRoles.Client });
     expect(service.isUserClient()).toBeTrue();
