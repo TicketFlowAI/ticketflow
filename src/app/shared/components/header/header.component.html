@@ -98,7 +98,7 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a OpenLogin class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a></li>
           <li><a (click)="logout()" class="dropdown-item">
@@ -143,7 +143,7 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a OpenLogin class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a></li>
           <li><a (click)="logout()" class="dropdown-item">
@@ -188,7 +188,7 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a OpenLogin class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a>
           </li>

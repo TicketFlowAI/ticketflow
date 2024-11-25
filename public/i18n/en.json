@@ -1,5 +1,16 @@
 {
   "FEATURES": {
+    "ACCOUNT": {
+      "PROFILE": {
+        "MY-PROFILE": "My Profile",
+        "USER-NAME": "Name",
+        "USER-LASTNAME": "Lastname",
+        "USER-EMAIL": "Email",
+        "USER-COMPANY": "Company",
+        "USER-ROLE": "Role",
+        "SAVE": "Save"
+      }
+    },
     "AUTH": {
       "LOGIN": {
         "EMAIL-TITLE": "Email",

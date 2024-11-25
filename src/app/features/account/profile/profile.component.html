@@ -1,1 +1,56 @@
-<p>profile works!</p>
+<ng-container *transloco="let t; prefix: 'FEATURES.ACCOUNT.PROFILE'">
+    <div class="profile container pt-4">
+        <div class="row justify-content-center">
+            <div class="d-flex align-items-center mx-md-5">
+                <mat-icon class="profile-icon me-2">account_circle</mat-icon>
+                <h2 class="mb-0">{{t('MY-PROFILE')}}</h2>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-5">
+                <div class="row">
+                    <p>{{t('USER-NAME')}}</p>
+                </div>
+                <div class="row">
+                    <mat-form-field class="" appearance="fill">
+                        <input matInput [formControl]="nameFormControl">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p>{{t('USER-LASTNAME')}}</p>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <input matInput [formControl]="nameFormControl">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5">
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{t('USER-NAME')}}</mat-label>
+                        <input matInput [formControl]="nameFormControl">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <mat-form-field class="" appearance="fill">
+                        <mat-label>{{t('USER-LASTNAME')}}</mat-label>
+                        <input matInput [formControl]="nameFormControl">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

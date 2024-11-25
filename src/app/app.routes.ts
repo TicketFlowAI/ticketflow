@@ -13,6 +13,8 @@ import { ReportComponent } from './features/reports/report/report.component';
 import { adminRoleGuard } from './core/guards/admin-role.guard';
 import { teamRoleGuard } from './core/guards/team-role.guard';
 import { ReportByTechnicianComponent } from './features/reports/report-by-technician/report-by-technician.component';
+import { ProfileComponent } from './features/account/profile/profile.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,17 +23,24 @@ export const routes: Routes = [
     canActivate: [adminRoleGuard]
   },
   {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'companies',
-    component: AllCompaniesComponent
+    component: AllCompaniesComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'service-contract',
     component: AllServiceContractsComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'service-contract/:companyId',
-    component: AllServiceContractsComponent
+    component: AllServiceContractsComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'service-contract-term',
@@ -60,11 +69,13 @@ export const routes: Routes = [
   },
   {
     path: 'tickets',
-    component: AllTicketsComponent
+    component: AllTicketsComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'ticket-message/:ticketId',
-    component: AllTicketMessagesComponent
+    component: AllTicketMessagesComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'report',

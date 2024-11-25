@@ -1,5 +1,16 @@
 {
   "FEATURES": {
+    "ACCOUNT": {
+      "PROFILE": {
+        "MY-PROFILE": "Mi Perfil",
+        "USER-NAME": "Nombre",
+        "USER-LASTNAME": "Apellido",
+        "USER-EMAIL": "Correo electrónico",
+        "USER-COMPANY": "Empresa",
+        "USER-ROLE": "Rol",
+        "SAVE": "Guardar"
+      }
+    },
     "AUTH": {
       "LOGIN": {
         "EMAIL-TITLE": "Correo electrónico",
@@ -19,13 +30,7 @@
 
         "COMPANY": "Mis Empresas"
       },
-      "REGISTER": {
-
-      },
       "CHANGE-PASSWORD": {
-
-      },
-      "VERIFY": {
 
       }
     },
