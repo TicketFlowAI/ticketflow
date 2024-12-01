@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
 import { CompanyService } from '../api/servicios-mindsoftdev/company.service';
 import { CompanyModel } from '../models/entities/company.model';
 import { MessageService } from '../../shared/services/message.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,37 @@ export class CompanyManagementService {
   
   private readonly messageService = inject(MessageService)
   private readonly translocoService = inject(TranslocoService)
+  private readonly spinnerService = inject(SpinnerService)
 
   getAllCompanies(): Observable<CompanyModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    
     return this.companyService.getCompanies().pipe(
       map((companies) => companies.data),
       catchError(() => {
         return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
-    )
+    );
   }
-
+  
   getOneCompany(id: number): Observable<CompanyModel | null> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
     return this.companyService.getCompany(id).pipe(
       map((company) => company.data),
       catchError(() => {
         return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
 
   addCompany(newCompany: CompanyModel): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
     return this.companyService.createCompany(newCompany).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.COMPANY');
@@ -43,6 +55,9 @@ export class CompanyManagementService {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
@@ -58,6 +73,9 @@ export class CompanyManagementService {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
@@ -73,6 +91,9 @@ export class CompanyManagementService {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { UserModel } from '../../../core/models/entities/user.model';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-users',
@@ -24,8 +25,9 @@ import { concatMap, of, tap } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     FaIconComponent,
-    FormsModule
-  ],
+    FormsModule,
+    GlobalSpinnerComponent
+],
   templateUrl: './all-users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

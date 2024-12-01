@@ -313,7 +313,7 @@ describe('ServiceContractManagementService', () => {
   it('should delete a service contract term successfully', (done) => {
     contractTermServiceMock.deleteServiceContractTerm.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
-
+    
     service.deleteServiceContractTerm(1).subscribe((result) => {
       expect(result).toBeTrue();
       expect(contractTermServiceMock.deleteServiceContractTerm).toHaveBeenCalledWith(1);

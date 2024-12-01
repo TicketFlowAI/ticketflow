@@ -5,11 +5,12 @@ import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInput } from "@angular/material/input";
 import { MatIcon } from "@angular/material/icon";
-import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatIconButton } from "@angular/material/button";
 import { RouterLink } from "@angular/router";
 import { AuthManagementService } from '../../../core/services/auth-management.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
 import { UserManagementService } from '../../../core/services/user-management.service';
+import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-login',
@@ -23,11 +24,11 @@ import { UserManagementService } from '../../../core/services/user-management.se
     MatInput,
     MatIcon,
     MatIconButton,
-    MatButton,
     MatDialogContent,
     MatDialogActions,
-    RouterLink
-  ],
+    RouterLink,
+    DialogSpinnerComponent
+],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

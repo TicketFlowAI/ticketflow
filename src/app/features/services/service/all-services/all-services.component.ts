@@ -14,6 +14,7 @@ import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink } from '@angular/router';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-services',
@@ -29,7 +30,8 @@ import { concatMap, of, tap } from 'rxjs';
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-services.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

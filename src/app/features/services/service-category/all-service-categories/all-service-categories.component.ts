@@ -14,6 +14,7 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
 import { RouterLink } from '@angular/router';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-service-categories',
@@ -29,7 +30,8 @@ import { concatMap, of, tap } from 'rxjs';
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-service-categories.component.html',
   styleUrl: './all-service-categories.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

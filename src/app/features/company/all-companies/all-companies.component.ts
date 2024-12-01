@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from '../../../shared/components/global-spinner/global-spinner.component';
 
 @Component({
   selector: 'app-all-companies',
@@ -26,8 +27,9 @@ import { concatMap, of, tap } from 'rxjs';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    FaIconComponent
-  ],
+    FaIconComponent,
+    GlobalSpinnerComponent
+],
   templateUrl: './all-companies.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

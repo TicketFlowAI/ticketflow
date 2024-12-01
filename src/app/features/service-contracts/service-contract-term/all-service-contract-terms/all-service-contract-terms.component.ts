@@ -14,6 +14,7 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-service-contract-terms',
@@ -29,7 +30,8 @@ import { concatMap, of, tap } from 'rxjs';
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-service-contract-terms.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -8,6 +8,9 @@
         "USER-EMAIL": "Email",
         "USER-COMPANY": "Company",
         "USER-ROLE": "Role",
+        "USER-ADMIN": "Admin",
+        "USER-TECHNICIAN": "Tecnician",
+        "USER-CLIENT": "Client",
         "SAVE": "Save"
       }
     },

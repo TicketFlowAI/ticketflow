@@ -7,6 +7,7 @@ import { IUserModel } from '../models/entities/user.model';
 import { UserManagementService } from './user-management.service';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 const mockResponseSuccess = new HttpResponse({ status: 200 });
 const mockResponseError = new HttpResponse({ status: 500 });
@@ -17,26 +18,28 @@ describe('AuthService', () => {
   let sanctumServiceSpy: jasmine.SpyObj<SanctumService>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let userManagementServiceSpy: jasmine.SpyObj<UserManagementService>
+  let spinnerServiceSpy: jasmine.SpyObj<SpinnerService>
 
   beforeEach(() => {
     const userManagementSpy = jasmine.createSpyObj('UserManagementService', ['getMyUser']);
-    
-    // Configura currentUser como un objeto con set como spy
+
     userManagementSpy.currentUser = {
-      set: jasmine.createSpy('set'), // Ahora es un spy
+      set: jasmine.createSpy('set'),
       value: null,
     };
   
     const tokenSpy = jasmine.createSpyObj('TokenService', ['getToken', 'tokenExists', 'clearAll']);
     const sanctumSpy = jasmine.createSpyObj('SanctumService', ['getCsrfCookie']);
     const authSpy = jasmine.createSpyObj('AuthService', ['loginWithCredentials', 'logout']);
-  
+    const spinnerSpy = jasmine.createSpyObj('SpinnerService', ['showDialogSpinner', 'showGlobalSpinner', 'hideDialogSpinner', 'hideGlobalSpinner']);
+
     TestBed.configureTestingModule({
       providers: [
         { provide: TokenService, useValue: tokenSpy },
         { provide: SanctumService, useValue: sanctumSpy },
         { provide: AuthService, useValue: authSpy },
         { provide: UserManagementService, useValue: userManagementSpy },
+        { provide: SpinnerService, useValue: spinnerSpy },
         AuthManagementService,
       ],
     });
@@ -46,6 +49,7 @@ describe('AuthService', () => {
     sanctumServiceSpy = TestBed.inject(SanctumService) as jasmine.SpyObj<SanctumService>;
     authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     userManagementServiceSpy = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
+    spinnerServiceSpy = TestBed.inject(SpinnerService) as jasmine.SpyObj<SpinnerService>;
   });  
 
   it('should be created', () => {

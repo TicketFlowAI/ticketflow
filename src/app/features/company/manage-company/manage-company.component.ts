@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
+import { DialogSpinnerComponent } from "../../../shared/components/dialog-spinner/dialog-spinner.component";
 
 @Component({
   selector: 'app-manage-company',
@@ -25,8 +26,9 @@ import { CompanyManagementService } from '../../../core/services/company-managem
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    DialogSpinnerComponent
+],
   templateUrl: './manage-company.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -15,6 +15,7 @@ import { TicketManagementService } from '../../../../core/services/ticket-manage
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-tickets',
@@ -31,7 +32,8 @@ import { concatMap, of, tap } from 'rxjs';
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-tickets.component.html',
   styleUrl: './all-tickets.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

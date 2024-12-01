@@ -14,6 +14,7 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.model';
 import { RouterLink } from '@angular/router';
 import { concatMap, of, tap } from 'rxjs';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-service-taxes',
@@ -29,7 +30,8 @@ import { concatMap, of, tap } from 'rxjs';
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-service-taxes.component.html',
   styleUrl: './all-service-taxes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

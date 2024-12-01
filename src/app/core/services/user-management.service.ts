@@ -1,9 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { UserService } from '../api/servicios-mindsoftdev/user.service';
 import { UserModel, UserRoles } from '../models/entities/user.model';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, finalize, map, Observable, of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { MessageService } from '../../shared/services/message.service';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class UserManagementService {
   private readonly userService = inject(UserService)
 
   private readonly messageService = inject(MessageService)
+  private readonly spinnerService = inject(SpinnerService)
   private readonly translocoService = inject(TranslocoService)
 
   public currentUser = signal<UserModel | null>(null)
@@ -61,10 +63,15 @@ export class UserManagementService {
   }
 
   getAllUsers(): Observable<UserModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
     return this.userService.getUsers().pipe(
       map((users) => users.data),
       catchError(() => {
         return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -74,33 +81,51 @@ export class UserManagementService {
       map((user) => user.data),
       catchError(() => {
         return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
 
   addUser(newUser: UserModel): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
     return this.userService.createUser(newUser).pipe(
       map(() => true),
       catchError(() => {
         return of(false);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
 
   editUser(editUser: UserModel): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
     return this.userService.updateUser(editUser).pipe(
       map(() => true),
       catchError(() => {
         return of(false);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
 
   deleteUser(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
     return this.userService.deleteUser(id).pipe(
       map(() => true),
       catchError(() => {
         return of(false);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }

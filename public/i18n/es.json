@@ -8,6 +8,9 @@
         "USER-EMAIL": "Correo electrónico",
         "USER-COMPANY": "Empresa",
         "USER-ROLE": "Rol",
+        "USER-ADMIN": "Administrador",
+        "USER-TECHNICIAN": "Técnico",
+        "USER-CLIENT": "Cliente",
         "SAVE": "Guardar"
       }
     },

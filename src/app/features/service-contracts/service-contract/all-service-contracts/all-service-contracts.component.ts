@@ -15,6 +15,7 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { concatMap, of, tap } from 'rxjs';
 import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 
 @Component({
@@ -31,7 +32,8 @@ import { ServiceContractDialogData } from '../../../../core/models/dialogs/servi
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-  ],
+    GlobalSpinnerComponent
+],
   templateUrl: './all-service-contracts.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -27,12 +27,12 @@ export class ProfileComponent {
   private readonly fb = inject(FormBuilder)
 
   //PROPS N VARIABLES
-  public currentUser: UserModel | null = null
+  public currentUser: UserModel
   editable = false;
 
-  nameFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
-  lastnameFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
-  emailFormControl = new FormControl('', [Validators.required, Validators.email])
+  nameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
+  lastnameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
+  emailFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]})
 
   userForm = this.fb.group({
     username: this.nameFormControl,
@@ -42,15 +42,28 @@ export class ProfileComponent {
   )
 
   constructor() {
-    this.currentUser = this.userManagementService.currentUser();
-  }
+    this.currentUser = this.userManagementService.currentUser()?? new UserModel();
 
-  //METHODS
-  editData() {
-    this.editable = !this.editable;
+    if(this.currentUser) {
+      this.nameFormControl.setValue(this.currentUser.name);
+      this.lastnameFormControl.setValue(this.currentUser.lastname);
+      this.emailFormControl.setValue(this.currentUser.email);
+    }
   }
 
   saveInfo() {
     const formValues = this.userForm.value
+
+    const userEdit : UserModel = {
+      id: this.currentUser.id,
+      name: formValues.username?? '',
+      lastname: formValues.lastname?? '',
+      email: formValues.email?? '',
+      company_id: this.currentUser.company_id,
+      company_name: this.currentUser.company_name,
+      role: formValues.username?? '',
+    }
+
+    this.userManagementService.editUser(userEdit).subscribe()
   }
 }

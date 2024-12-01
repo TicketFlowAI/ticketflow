@@ -1,0 +1,21 @@
+<div>
+    @if (spinnerState.show) {
+      <div
+        [class.fullscreen]="spinnerState.fullscreen"
+        [class.partial]="!spinnerState.fullscreen"
+        class="spinner-container"
+      >
+        @if (spinnerState.hasBackdrop) {
+          <div class="backdrop"></div>
+        }
+        <div
+          class="spinner"
+          [style.width.px]="spinnerState.size"
+          [style.height.px]="spinnerState.size"
+          [style.borderTopColor]="spinnerState.color"
+          [style.borderWidth.px]="spinnerState.thickness"
+        ></div>
+      </div>
+    }
+  </div>
+  

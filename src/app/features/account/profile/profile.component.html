@@ -1,9 +1,11 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.ACCOUNT.PROFILE'">
     <div class="profile container pt-4">
         <div class="row justify-content-center">
-            <div class="d-flex align-items-center mx-md-5">
-                <mat-icon class="profile-icon me-2">account_circle</mat-icon>
-                <h2 class="mb-0">{{t('MY-PROFILE')}}</h2>
+            <div class="col-md-10">
+                <div class="d-flex align-items-center">
+                    <mat-icon class="profile-icon me-2">account_circle</mat-icon>
+                    <h2 class="mb-0"> {{t('MY-PROFILE')}}</h2>
+                </div>
             </div>
         </div>
         
@@ -12,6 +14,34 @@
                 <hr>
             </div>
         </div>
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-5">
+                <div class="row">
+                    <p>{{t('USER-COMPANY')}}</p>
+                </div>
+                <div class="row">
+                    <h4>{{this.currentUser.company_name}}</h4>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p>{{t('USER-ROLE')}}</p>
+                </div>
+                <div class="row">
+                    @if(this.currentUser.role == 'super-admin') {
+                        <h4>{{t('USER-ADMIN')}}</h4>
+                    }
+                    @if(this.currentUser.role == 'technician') {
+                        <h4>{{t('USER-TECHNICIAN')}}</h4>
+                    }
+                    @if(this.currentUser.role == 'client') {
+                        <h4>{{t('USER-CLIENT')}}</h4>
+                    }
+                </div>
+            </div>
+        </div>
+        
         <div class="row justify-content-center mt-2">
             <div class="col-md-5">
                 <div class="row">
@@ -29,26 +59,29 @@
                 </div>
                 <div class="row">
                     <mat-form-field appearance="fill">
-                        <input matInput [formControl]="nameFormControl">
+                        <input matInput [formControl]="lastnameFormControl">
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-5">
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-10">
+                <div class="row">
+                    <p>{{t('USER-EMAIL')}}</p>
+                </div>
                 <div class="row">
                     <mat-form-field appearance="fill">
-                        <mat-label>{{t('USER-NAME')}}</mat-label>
-                        <input matInput [formControl]="nameFormControl">
+                        <input matInput [formControl]="emailFormControl">
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <mat-form-field class="" appearance="fill">
-                        <mat-label>{{t('USER-LASTNAME')}}</mat-label>
-                        <input matInput [formControl]="nameFormControl">
-                    </mat-form-field>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-4">
+                <div class="row mx-3">
+                    <button (click)="saveInfo()" class="btn btn-primary">{{t('SAVE')}}</button>
                 </div>
             </div>
         </div>

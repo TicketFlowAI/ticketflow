@@ -76,7 +76,7 @@ describe('UserManagementService', () => {
     service.currentUser.set({ ...mockUser, role: UserRoles.Technician });
     expect(service.isUserTeam()).toBeTrue();
   });
-
+  
   it('should identify a client user correctly', () => {
     service.currentUser.set({ ...mockUser, role: UserRoles.Client });
     expect(service.isUserClient()).toBeTrue();
@@ -193,7 +193,7 @@ describe('UserManagementService', () => {
 
   it('should handle error while editing a user', (done) => {
     userServiceMock.updateUser.and.returnValue(throwError(() => new Error('Error updating user')));
-
+    
     service.editUser(mockUser).subscribe((result) => {
       expect(result).toBeFalse();
       expect(userServiceMock.updateUser).toHaveBeenCalledWith(mockUser);

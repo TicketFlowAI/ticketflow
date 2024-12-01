@@ -26,15 +26,18 @@ export class AuthManagementService {
       this.userManagementService.getMyUser().subscribe({
         next: (user) => {
             this.userManagementService.currentUser.set(user)
+            this.spinnerService.hideDialogSpinner();
         },
       })
     }
   }
 
   login(loginRequest: LoginRequest) {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     this.sanctumService.getCsrfCookie().pipe(
       concatMap(() => this.authService.loginWithCredentials(loginRequest)),
       catchError(() => {
+        this.spinnerService.hideDialogSpinner();
         return of(null);
       })
     ).subscribe({
