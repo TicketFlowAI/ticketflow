@@ -39,6 +39,7 @@ export class CompanyService {
     return this.http.post<HttpResponse<any>>(`${this.apiCompany}`, company, {
       headers: customHeaders,
       withCredentials: true,
+      observe: 'response'
     });
   }
 
@@ -47,14 +48,16 @@ export class CompanyService {
     return this.http.put<any>(`${this.apiCompany}/${company.id}`, company, {
       headers: customHeaders,
       withCredentials: true,
+      observe: 'response'
     });
   }
 
-  deleteCompany(id: number) {
+  deleteCompany(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
-    return this.http.delete<HttpResponse<any>>(`${this.apiCompany}/${id}`, {
+    return this.http.delete<any>(`${this.apiCompany}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
+      observe: 'response'
     });
   }
 }

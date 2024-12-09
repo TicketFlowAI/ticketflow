@@ -1,0 +1,60 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SETTINGS.EMAIL-SETTINGS'">
+    <div class="companies container py-4">
+        <div class="row">
+            <div class="col-md-9 align-content-center py-3 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                   <h3>{{t('EMAIL-TEMPLATES')}}</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <mat-form-field>
+                <mat-label>{{ t('SEARCH')}}</mat-label>
+                <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        
+        <div class="row my-2">
+            <mat-accordion class="my-2" [multi]="false">
+                @for(emailTemplate of pagedEmailTemplates; track emailTemplate.id) {
+                <mat-expansion-panel class="mt-2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-truncate">{{emailTemplate.template_name}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <div class="ps-md-4 mt-2">
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                                <a href="javascript:void(0);" (click)="openEmailemplateManageDialog(emailTemplate)">
+                                    <fa-icon class="pe-2" [icon]="faPencil"></fa-icon> {{t('EDIT-EMAIL-TEMPLATE')}}
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('EDIT-EMAIL-TEMPLATE-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-3">
+                                <div class="row justify-content-end">
+                                    <button  type="button" class="btn btn-danger"(click)="deleteEmailTemplate(emailTemplate.id)">
+                                        <fa-icon [icon]="faX"></fa-icon> {{t('DELETE')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                }
+            </mat-accordion>
+
+            <mat-paginator [length]="emailTemplates.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
+                (page)="onPageChange($event)" aria-label="Select page">
+            </mat-paginator>
+            
+        </div>
+    </div>
+</ng-container>

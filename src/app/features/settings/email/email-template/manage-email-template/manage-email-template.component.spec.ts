@@ -1,19 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralSettingsComponent } from './general-settings.component';
+import { ManageEmailTemplateComponent } from './manage-email-template.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { isDevMode } from '@angular/core';
 import { provideTransloco } from '@jsverse/transloco';
-import { TranslocoHttpLoader } from '../../../transloco-loader';
+import { TranslocoHttpLoader } from '../../../../../transloco-loader';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EmailTemplateModel } from '../../../../../core/models/entities/email-template.model';
 
-describe('GeneralSettingsComponent', () => {
-  let component: GeneralSettingsComponent;
-  let fixture: ComponentFixture<GeneralSettingsComponent>;
+describe('ManageEmailTemplateComponent', () => {
+  let component: ManageEmailTemplateComponent;
+  let fixture: ComponentFixture<ManageEmailTemplateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GeneralSettingsComponent],
+      imports: [ManageEmailTemplateComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -26,11 +28,16 @@ describe('GeneralSettingsComponent', () => {
           },
           loader: TranslocoHttpLoader
         }),
+        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock para MatDialogRef
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: new EmailTemplateModel(1, 'Template Exmaple', '<html><html/>'),
+        },
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GeneralSettingsComponent);
+    fixture = TestBed.createComponent(ManageEmailTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

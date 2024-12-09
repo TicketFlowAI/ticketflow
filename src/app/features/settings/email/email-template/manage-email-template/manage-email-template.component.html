@@ -1,0 +1,39 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SETTINGS.EMAIL-SETTINGS'">
+    @if(!emailTemplateData) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-TEMPLATE')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-TEMPLATE')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="emailTemplateForm">
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('TEMPLATE-NAME')}}</mat-label>
+                    <input matInput [formControl]="templateNameFormControl">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>{{t('TEMPLATE-BODY')}}</mat-label>
+                    <input matInput type="text" [formControl]="bodyFormControl">
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="bodyFormControl.setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="copyToClipboard($event)">
+                        <mat-icon>{{copyIcon}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

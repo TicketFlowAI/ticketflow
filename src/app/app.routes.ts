@@ -15,12 +15,18 @@ import { teamRoleGuard } from './core/guards/team-role.guard';
 import { ReportByTechnicianComponent } from './features/reports/report-by-technician/report-by-technician.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
+import { EmailSettingsComponent } from './features/settings/email/email-settings/email-settings.component';
 
 export const routes: Routes = [
   {
     path: 'settings',
     component: GeneralSettingsComponent,
     canActivate: [adminRoleGuard]
+  },
+  {
+    path: 'email-settings',
+    component: EmailSettingsComponent,
+    canActivate: [teamRoleGuard],
   },
   {
     path: 'profile',

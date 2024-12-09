@@ -14,6 +14,29 @@
         "SAVE": "Guardar"
       }
     },
+    "SETTINGS": {
+      "GENERAL-SETTINGS": {
+        "GENERAL-SETTINGS": "Configuraciones Generales",
+        "EMAIL-SETTINGS": "Configuración de Correos",
+        "IA-SETTINGS": "Configuración de IA"
+      },
+      "EMAIL-SETTINGS": {
+        "EMAIL-SETTINGS": "Configuración de Correos",
+        "RETURN": "Regresar",
+        "EMAIL-TEMPLATES": "Plantillas de Correo",
+        "SEARCH": "Buscar plantilla",
+        "EDIT-EMAIL-TEMPLATE": "Editar Plantilla",
+        "EDIT-EMAIL-TEMPLATE-DESC": "De clic aquí para poder ver editar esta plantilla de correo",
+        "DELETE": "Eliminar",
+
+        "CREATE-TEMPALTE": "Crear Plantilla",
+        "EDIT-TEMPLATE": "Editar Plantilla",
+
+        "TEMPLATE-NAME": "Nombre de la Plantilla",
+        "TEMPLATE-BODY": "Html de la Plantilla",
+        "SAVE": "Guardar"
+      }
+    },
     "AUTH": {
       "LOGIN": {
         "EMAIL-TITLE": "Correo electrónico",
@@ -380,6 +403,7 @@
     "DIALOGS": {
       "CONFIRMATION": {
         "DELETE-COMPANY": "¿Está seguro que desea eliminar esta empresa?",
+        "DELETE-EMAIL-TEMPLATE": "¿Está seguro que desea eliminar esta plantilla?",
         "DELETE-SERVICE-CONTRACT": "¿Está seguro que desea eliminar esta contratación?",
         "DELETE-SERVICE-CONTRACT-TERM": "¿Está seguro que desea eliminar este periodo?",
         "DELETE-SERVICE": "¿Está seguro que desea eliminar este servicio?",
@@ -396,6 +420,7 @@
       "CRUD": {
         "CREATE": {
           "COMPANY": "Empresa creada exitosamente",
+          "EMAIL-TEMPLATE": "Plantilla de correo creada exitosamente",
           "SERVICE-CONTRACT": "Contratación creada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo creado exitosamente",
           "SERVICE": "Servicio creado exitosamente",
@@ -407,6 +432,7 @@
         },
         "EDIT": {
           "COMPANY": "Empresa modificada exitosamente",
+          "EMAIL-TEMPLATE": "Plantilla de correo modificada exitosamente",
           "SERVICE-CONTRACT": "Contratación modificada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo modificado exitosamente",
           "SERVICE": "Servicio modificado exitosamente",
@@ -418,6 +444,7 @@
         },
         "DELETE": {
           "COMPANY": "Empresa eliminada exitosamente",
+          "EMAIL-TEMPLATE": "Plantilla de correo eliminada exitosamente",
           "SERVICE-CONTRACT": "Contratación eliminada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo eliminado exitosamente",
           "SERVICE": "Servicio eliminado exitosamente",

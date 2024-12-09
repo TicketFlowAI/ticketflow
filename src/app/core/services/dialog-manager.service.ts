@@ -26,6 +26,8 @@ import { ManageTicketComponent } from '../../features/tickets/ticket/manage-tick
 import { TicketInfoComponent } from '../../features/tickets/ticket/ticket-info/ticket-info.component';
 import { TicketDialogData } from '../models/dialogs/ticket-dialog-data.model';
 import { ServiceContractDialogData } from '../models/dialogs/service-contact-dialog-data.model';
+import { EmailTemplateModel } from '../models/entities/email-template.model';
+import { ManageEmailTemplateComponent } from '../../features/settings/email/email-template/manage-email-template/manage-email-template.component';
 
 @Injectable({
   providedIn: 'root'
@@ -267,6 +269,24 @@ export class DialogManagerService {
       enterAnimationDuration,
       exitAnimationDuration,
       data: user
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map(() => {return true;})
+    )
+  }
+
+  openEmailTemplateUserDialog(emailTemplate: EmailTemplateModel | null) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(ManageEmailTemplateComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: emailTemplate
     });
 
     return dialogRef.afterClosed().pipe(

@@ -14,6 +14,29 @@
         "SAVE": "Save"
       }
     },
+    "SETTINGS": {
+      "GENERAL-SETTINGS": {
+        "GENERAL-SETTINGS": "General Settings",
+        "EMAIL-SETTINGS": "Email Settings",
+        "IA-SETTINGS": "IA Settings"
+      },
+      "EMAIL-SETTINGS": {
+        "EMAIL-SETTINGS": "Email Settings",
+        "RETURN": "Return",
+        "EMAIL-TEMPLATES": "Email Templates Settings",
+        "SEARCH": "Search Template",
+        "EDIT-EMAIL-TEMPLATE": "Edit Template",
+        "EDIT-EMAIL-TEMPLATE-DESC": "Click here to manage the email template",
+        "DELETE": "Delete",
+
+        "CREATE-TEMPALTE": "Create Template",
+        "EDIT-TEMPLATE": "Edit Template",
+
+        "TEMPLATE-NAME": "Template Name",
+        "TEMPLATE-BODY": "Template Html",
+        "SAVE": "Save"
+      }
+    },
     "AUTH": {
       "LOGIN": {
         "EMAIL-TITLE": "Email",
@@ -368,6 +391,7 @@
     "DIALOGS": {
       "CONFIRMATION": {
         "DELETE-COMPANY": "Are you sure you want to delete this company?",
+        "DELETE-EMAIL-TEMPLATE": "¿Are you sure you want to delete this template?",
         "DELETE-SERVICE-CONTRACT": "Are you sure you want to delete this contract?",
         "DELETE-SERVICE-CONTRACT-TERM": "Are you sure you want to delete this period?",
         "DELETE-SERVICE": "Are you sure you want to delete this service?",
@@ -384,6 +408,7 @@
       "CRUD": {
         "CREATE": {
           "COMPANY": "Company created successfully",
+          "EMAIL-TEMPLATE": "Template created successfully",
           "SERVICE-CONTRACT": "Contract created successfully",
           "SERVICE-CONTRACT-TERM": "Period created successfully",
           "SERVICE": "Service created successfully",
@@ -395,6 +420,7 @@
         },
         "EDIT": {
           "COMPANY": "Company updated successfully",
+          "EMAIL-TEMPLATE": "Template updated successfully",
           "SERVICE-CONTRACT": "Contract updated successfully",
           "SERVICE-CONTRACT-TERM": "Period updated successfully",
           "SERVICE": "Service updated successfully",
@@ -406,6 +432,7 @@
         },
         "DELETE": {
           "COMPANY": "Company deleted successfully",
+          "EMAIL-TEMPLATE": "Template deleted successfully",
           "SERVICE-CONTRACT": "Contract deleted successfully",
           "SERVICE-CONTRACT-TERM": "Period deleted successfully",
           "SERVICE": "Service deleted successfully",

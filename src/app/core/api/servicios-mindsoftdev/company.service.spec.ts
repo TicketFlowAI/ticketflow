@@ -32,7 +32,7 @@ describe('CompanyService', () => {
   });
 
   afterEach(() => {
-    httpTestingController.verify(); // Verifica que no haya solicitudes pendientes
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -72,7 +72,7 @@ describe('CompanyService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(newCompany);
 
-    req.flush(new HttpResponse({ status: 201, statusText: 'Created' }));
+    req.flush(null, { status: 201, statusText: 'Created' });
   });
 
   it('should update a company', () => {

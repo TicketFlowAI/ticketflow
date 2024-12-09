@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralSettingsComponent } from './general-settings.component';
+import { EmailSettingsComponent } from './email-settings.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { isDevMode } from '@angular/core';
 import { provideTransloco } from '@jsverse/transloco';
-import { TranslocoHttpLoader } from '../../../transloco-loader';
+import { TranslocoHttpLoader } from '../../../../transloco-loader';
 
-describe('GeneralSettingsComponent', () => {
-  let component: GeneralSettingsComponent;
-  let fixture: ComponentFixture<GeneralSettingsComponent>;
+describe('EmailSettingsComponent', () => {
+  let component: EmailSettingsComponent;
+  let fixture: ComponentFixture<EmailSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GeneralSettingsComponent],
+      imports: [EmailSettingsComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -30,7 +30,7 @@ describe('GeneralSettingsComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GeneralSettingsComponent);
+    fixture = TestBed.createComponent(EmailSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
