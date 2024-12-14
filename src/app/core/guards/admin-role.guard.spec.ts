@@ -20,7 +20,7 @@ const userManagementServiceMock: {
   isUserAdmin: () => false
 }
 
-describe('adminRoleGuard', () => {
+describe('AdminRoleGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
     TestBed.runInInjectionContext(() => adminRoleGuard(...guardParameters));
 

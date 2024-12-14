@@ -1,23 +1,42 @@
-import {TestBed} from "@angular/core/testing";
-import {OpenLoginDirective} from "./open-login.directive";
-import {DialogManagerService} from "../../core/services/dialog-manager.service";
-
-const mockDialogManagerService = {
-  openLoginDialog: jasmine.createSpy('openLoginDialog'),
-};
+import { TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { OpenLoginDirective } from './open-login.directive';
+import { DialogManagerService } from '../../core/services/dialog-manager.service';
 
 describe('OpenLoginDirective', () => {
+  let openLoginDialogSpy: jasmine.Spy;
+
+  @Component({
+    template: `<button OpenLogin>Login</button>`, // Componente de prueba con la directiva aplicada
+  })
+  class TestComponent {}
+
   beforeEach(() => {
+    const dialogManagerServiceMock = {
+      openLoginDialog: jasmine.createSpy('openLoginDialog'),
+    };
+
     TestBed.configureTestingModule({
+      declarations: [TestComponent],
       providers: [
-        OpenLoginDirective, // Provee la directiva aquí
-        { provide: DialogManagerService, useValue: mockDialogManagerService }, // Provee el servicio aquí
+        { provide: DialogManagerService, useValue: dialogManagerServiceMock },
       ],
+      imports: [OpenLoginDirective],
     });
+
+    openLoginDialogSpy = TestBed.inject(DialogManagerService)
+      .openLoginDialog as jasmine.Spy;
   });
 
-  it('should create an instance', () => {
-    const directive = TestBed.inject(OpenLoginDirective); // Inyecta la directiva desde el TestBed
-    expect(directive).toBeTruthy();
+  it('should call openLoginDialog when the element is clicked', () => {
+    const fixture = TestBed.createComponent(TestComponent);
+    fixture.detectChanges();
+
+    const buttonElement = fixture.debugElement.query(By.directive(OpenLoginDirective));
+
+    buttonElement.triggerEventHandler('click', new Event('click'));
+
+    expect(openLoginDialogSpy).toHaveBeenCalled();
   });
 });

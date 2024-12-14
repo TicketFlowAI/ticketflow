@@ -21,7 +21,7 @@ const userManagementServiceMock: {
   isUserTeam: () => false
 }
 
-describe('teamRoleGuard', () => {
+describe('TeamRoleGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 
       TestBed.runInInjectionContext(() => teamRoleGuard(...guardParameters));
 

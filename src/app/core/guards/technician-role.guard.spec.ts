@@ -22,7 +22,7 @@ const userManagementServiceMock: {
   isUserTechnician: () => false
 }
 
-describe('technicianRoleGuard', () => {
+describe('TechnicianRoleGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 
       TestBed.runInInjectionContext(() => technicianRoleGuard(...guardParameters));
 

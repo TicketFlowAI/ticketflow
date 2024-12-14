@@ -14,7 +14,7 @@ const userManagementServiceMock: {
   currentUser: () => null
 }
 
-describe('authGuard', () => {
+describe('AuthGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
     TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
@@ -44,7 +44,7 @@ describe('authGuard', () => {
     const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
     const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
 
-    currentUserSpy.and.returnValue(null)
+    currentUserSpy.and.returnValues(null, null);
 
     const result = TestBed.runInInjectionContext(() => authGuard({} as any, {} as any))
 
@@ -65,27 +65,26 @@ describe('authGuard', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/']);
   }));
 
-
   it('should grant access if current user exists on refresh navigation', fakeAsync(() => {
-    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser')
-
-    currentUserSpy.and.returnValue(userMock)
-
-    const result = TestBed.runInInjectionContext(() => authGuard({} as any, {} as any))
-
+    const currentUserSpy = spyOn(userManagementServiceMock, 'currentUser');
+    currentUserSpy.and.returnValues(null, userMock);
+  
+    const result = TestBed.runInInjectionContext(() => authGuard({} as any, {} as any));
+  
     let resolvedResult: boolean | undefined;
-
+  
     if (result instanceof Promise) {
       result.then((res) => {
         if (typeof res === 'boolean') {
           resolvedResult = res;
         }
       });
-      tick(2000);
+      tick(3000);
     } else if (typeof result === 'boolean') {
       resolvedResult = result;
     }
-
+  
     expect(resolvedResult).toBeTrue();
+    expect(currentUserSpy).toHaveBeenCalledTimes(2); 
   }));
 });

@@ -5,7 +5,6 @@ import { IToastMessage } from '../../core/models/shared/toast-message.model';
   providedIn: 'root'
 })
 export class MessageService {
-  // Signal que almacena los mensajes actuales
   messages = signal<IToastMessage[]>([]);
 
   constructor() { }

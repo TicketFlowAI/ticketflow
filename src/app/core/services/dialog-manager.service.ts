@@ -276,7 +276,7 @@ export class DialogManagerService {
     )
   }
 
-  openEmailTemplateUserDialog(emailTemplate: EmailTemplateModel | null) {
+  openManageEmailTemplateDialog(emailTemplate: EmailTemplateModel | null) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 

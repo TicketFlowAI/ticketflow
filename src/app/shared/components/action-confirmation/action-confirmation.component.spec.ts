@@ -1,44 +1,51 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ActionConfirmationComponent } from './action-confirmation.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { provideTransloco } from '@jsverse/transloco';
-import { isDevMode } from '@angular/core';
-import { TranslocoHttpLoader } from '../../../transloco-loader';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { By } from '@angular/platform-browser';
+import { getTranslocoModule } from '../../../transloco-testing.module';
 
 describe('ActionConfirmationComponent', () => {
   let component: ActionConfirmationComponent;
   let fixture: ComponentFixture<ActionConfirmationComponent>;
+  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<ActionConfirmationComponent>>;
 
   beforeEach(async () => {
+    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+
     await TestBed.configureTestingModule({
-      imports: [ActionConfirmationComponent],
+      imports: [
+        ActionConfirmationComponent,
+        getTranslocoModule(),
+      ],
       providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        provideTransloco({
-          config: {
-            availableLangs: ['es', 'en'],
-            defaultLang: 'es',
-            reRenderOnLangChange: true,
-            prodMode: !isDevMode(),
-          },
-          loader: TranslocoHttpLoader
-        }),
-        { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: 'Mock Data' }
-      ]
-    })
-    .compileComponents();
+        { provide: MatDialogRef, useValue: dialogRefSpy }, 
+        { provide: MAT_DIALOG_DATA, useValue: 'Are you sure?' }, 
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ActionConfirmationComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // Inicializa el DOM
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the injected data as the dialog title', () => {
+    const titleElement = fixture.debugElement.query(By.css('h2.title'));
+    expect(titleElement.nativeElement.textContent.trim()).toBe('Are you sure?');
+  });
+
+  it('should call dialogRef.close(false) when "Cancel" button is clicked', () => {
+    const cancelButton = fixture.debugElement.query(By.css('button.btn-danger'));
+    cancelButton.triggerEventHandler('click', {});
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(false);
+  });
+
+  it('should call dialogRef.close(true) when "OK" button is clicked', () => {
+    const okButton = fixture.debugElement.query(By.css('button.btn-success'));
+    okButton.triggerEventHandler('click', {});
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(true);
+  }); 
 });

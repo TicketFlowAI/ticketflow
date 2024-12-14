@@ -60,16 +60,8 @@ export class HeaderComponent implements OnInit {
     this.themeService.setStartTheme()
   }
 
-  closeNavbar() {
-    const navbar = document.getElementById('navbarNav');
-    if (navbar?.classList.contains('show')) {
-      navbar.classList.remove('show');
-    }
-  }
-
   switchLanguage(lang: string) {
     this.translocoService.setActiveLang(lang);
-
   }
 
   toggleTheme() {

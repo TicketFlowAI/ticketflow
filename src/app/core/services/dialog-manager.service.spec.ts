@@ -308,4 +308,20 @@ describe('DialogManagerService', () => {
       data: mockUser,
     });
   });
+
+  it('should open the ManageEmailTemplateComponent dialog and return true after closing', (done) => {
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+    service.openManageEmailTemplateDialog(null).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: null,
+    });
+  });
 });
