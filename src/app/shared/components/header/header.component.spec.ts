@@ -24,10 +24,8 @@ describe('HeaderComponent', () => {
     userManagementServiceMock = jasmine.createSpyObj('UserManagementService', ['currentUser', 'isUserAdmin', 'isUserTechnician', 'isUserClient']);
     authManagementServiceMock = jasmine.createSpyObj('AuthManagementService', ['logout']);
     themeServiceMock = jasmine.createSpyObj('ThemeService', ['setStartTheme', 'toggleTheme']);
-    translocoServiceMock = jasmine.createSpyObj('TranslocoService', ['setActiveLang']);
     routerMock = jasmine.createSpyObj('Router', ['navigateByUrl']);
-
-     userManagementServiceMock.currentUser.and.returnValue(userMock);
+    translocoServiceMock = jasmine.createSpyObj('TranslocoService', ['setActiveLang']);
 
     await TestBed.configureTestingModule({
       imports: [HeaderComponent, getTranslocoModule()],
@@ -35,10 +33,11 @@ describe('HeaderComponent', () => {
         { provide: UserManagementService, useValue: userManagementServiceMock },
         { provide: AuthManagementService, useValue: authManagementServiceMock },
         { provide: ThemeService, useValue: themeServiceMock },
-        { provide: TranslocoService, useValue: translocoServiceMock },
         { provide: Router, useValue: routerMock },
       ],
     }).compileComponents();
+
+    userManagementServiceMock.currentUser.and.returnValue(userMock);
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
@@ -56,11 +55,16 @@ describe('HeaderComponent', () => {
   it('should set the start theme on initialization', () => {
     expect(themeServiceMock.setStartTheme).toHaveBeenCalled();
   });
-
+  
   it('should switch language when switchLanguage is called', () => {
-    component.switchLanguage('en');
-    expect(translocoServiceMock.setActiveLang).toHaveBeenCalledWith('en');
+    const translocoService = TestBed.inject(TranslocoService);
+    spyOn(translocoService, 'setActiveLang').and.callThrough();
+  
+    component.switchLanguage('es');
+  
+    expect(translocoService.setActiveLang).toHaveBeenCalledWith('es');
   });
+  
 
   it('should toggle the theme when toggleTheme is called', () => {
     component.toggleTheme();

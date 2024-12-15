@@ -80,15 +80,39 @@ export class ManageEmailTemplateComponent {
   copyToClipboard(event: MouseEvent): void {
     const valueToCopy = this.bodyFormControl.value || '';
     navigator.clipboard.writeText(valueToCopy).then(() => {
-      this.copyIcon = 'check'; // Change icon to 'check'
-      this.cdr.markForCheck(); // Trigger change detection manually if using OnPush
+      this.copyIcon = 'check'; 
+      this.cdr.markForCheck(); 
 
       setTimeout(() => {
-        this.copyIcon = 'content_copy'; // Revert icon to 'content_copy' after 2 seconds
+        this.copyIcon = 'content_copy'; 
         this.cdr.markForCheck();
-      }, 2000); // 2000ms = 2 seconds
+      }, 2000); 
     }).catch(() => {
       console.error('Failed to copy text to clipboard');
     });
   }
+
+  openEditor(): void {
+    const codepenData = {
+      title: `Plantilla de Correo: ${this.templateNameFormControl.value}`,
+      html: this.bodyFormControl.value,
+    };
+  
+    const form = document.createElement('form');
+    form.action = 'https://codepen.io/pen/define';
+    form.method = 'POST';
+    form.target = '_blank';
+  
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'data';
+    input.value = JSON.stringify(codepenData);
+  
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  }
+
+
 }

@@ -98,9 +98,8 @@ export class AllTicketsComponent {
     this.pagedTickets = this.filteredTickets.slice(startIndex, endIndex);
   }
 
-  openConfirmationDialog() {
-    const transate = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-TICKET');
-    this.dialogManagerService.openActionConfirmationDialog(transate)
+  openTicketInfo(ticket: TicketModel) {
+    this.dialogManagerService.openTicketInfoDialog(ticket)
   }
 
   deleteTicket(ticketId: number) {

@@ -20,8 +20,11 @@
                     <button matSuffix mat-icon-button aria-label="Clear" (click)="bodyFormControl.setValue('')">
                         <mat-icon>close</mat-icon>
                     </button>
-                    <button matSuffix mat-icon-button aria-label="Clear" (click)="copyToClipboard($event)">
+                    <button matSuffix mat-icon-button aria-label="Copy" (click)="copyToClipboard($event)">
                         <mat-icon>{{copyIcon}}</mat-icon>
+                    </button>
+                    <button matSuffix mat-icon-button aria-label="Copy" (click)="openEditor()">
+                        <mat-icon>edit_square</mat-icon>
                     </button>
                 </mat-form-field>
             </div>
