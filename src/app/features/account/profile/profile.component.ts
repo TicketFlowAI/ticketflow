@@ -6,6 +6,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MessageService } from '../../../shared/services/message.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class ProfileComponent {
   //SERVICES
   private readonly userManagementService = inject(UserManagementService)
+  private readonly messageService = inject(MessageService)
   private readonly fb = inject(FormBuilder)
 
   //PROPS N VARIABLES
@@ -33,11 +35,15 @@ export class ProfileComponent {
   nameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
   lastnameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
   emailFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]})
+  passwordFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required]})
+  confirmPasswordFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required]})
 
   userForm = this.fb.group({
     username: this.nameFormControl,
     lastname: this.lastnameFormControl,
     email: this.emailFormControl,
+    password: this.passwordFormControl,
+    confirmPassword: this.confirmPasswordFormControl,
   }
   )
 
@@ -54,6 +60,11 @@ export class ProfileComponent {
   saveInfo() {
     const formValues = this.userForm.value
 
+    if(formValues.password != formValues.confirmPassword) {
+      this.messageService.addWarningMessage("Las contraseñas no coinciden")
+      return
+    }
+
     const userEdit : UserModel = {
       id: this.currentUser.id,
       name: formValues.username?? '',
@@ -61,7 +72,8 @@ export class ProfileComponent {
       email: formValues.email?? '',
       company_id: this.currentUser.company_id,
       company_name: this.currentUser.company_name,
-      role: formValues.username?? '',
+      role: this.currentUser.role,
+      password: formValues.password?? '',
     }
 
     this.userManagementService.editUser(userEdit).subscribe()

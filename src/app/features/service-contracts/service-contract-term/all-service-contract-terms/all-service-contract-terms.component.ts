@@ -113,8 +113,10 @@ export class AllServiceContractTermsComponent {
   }
 
   openServiceContractTermManageDialog(serviceContract: ServiceContractTermModel | null) {
-    this.dialogManagerService.openManageServiceContractTermDialog(serviceContract).subscribe(
-      () => { this.loadServiceContractTerms() }
-    )
+    this.dialogManagerService.openManageServiceContractTermDialog(serviceContract).subscribe({
+      next: (response) => {
+         if(response) this.loadServiceContractTerms() 
+      }
+    })
   }
 }

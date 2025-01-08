@@ -58,6 +58,10 @@ export class ManageCompanyComponent {
   company: CompanyModel | null = null;
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.companyData) {
       this.company = this.companyData
       this.nameFormControl.setValue(this.company.name)
@@ -87,11 +91,11 @@ export class ManageCompanyComponent {
       company.id = this.companyData.id
       
       this.companyManagementService.editCompany(company)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
       this.companyManagementService.addCompany(company)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
   }
 }

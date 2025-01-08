@@ -12,10 +12,13 @@ import { GeneralSettingsComponent } from './features/settings/general-settings/g
 import { ReportComponent } from './features/reports/report/report.component';
 import { adminRoleGuard } from './core/guards/admin-role.guard';
 import { teamRoleGuard } from './core/guards/team-role.guard';
-import { ReportByTechnicianComponent } from './features/reports/report-by-technician/report-by-technician.component';
+import { ReportByTechnicianComponent } from './features/reports/technician/report-by-technician/report-by-technician.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
 import { EmailSettingsComponent } from './features/settings/email/email-settings/email-settings.component';
+import { GlobalReportComponent } from './features/reports/global-report/global-report.component';
+import { PerformanceReportComponent } from './features/reports/technician/performance-report/performance-report.component';
+import { AllUserRolesComponent } from './features/users/user-roles/all-user-roles/all-user-roles.component';
 
 export const routes: Routes = [
   {
@@ -74,6 +77,11 @@ export const routes: Routes = [
     canActivate: [teamRoleGuard]
   },
   {
+    path: 'roles',
+    component: AllUserRolesComponent,
+    canActivate: [adminRoleGuard]
+  },
+  {
     path: 'tickets',
     component: AllTicketsComponent,
     canActivate: [authGuard]
@@ -84,13 +92,23 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'report',
+    path: 'reports',
     component: ReportComponent,
     canActivate: [adminRoleGuard]
   },
   {
-    path: 'technician-report/:companyId',
+    path: 'global-report',
+    component: GlobalReportComponent,
+    canActivate: [adminRoleGuard]
+  },
+  {
+    path: 'technician-report',
     component: ReportByTechnicianComponent,
+    canActivate: [teamRoleGuard]
+  },
+  {
+    path: 'performance-report/:technicianId',
+    component: PerformanceReportComponent,
     canActivate: [teamRoleGuard]
   },
 ];

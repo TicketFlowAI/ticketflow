@@ -60,4 +60,23 @@ export class TicketService {
       observe: 'response'
     });
   }
+
+  closeTicket(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post<any>(`${this.apiTickets}/close/${id}`, null, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  reassignTicket(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    console.log(customHeaders)
+    return this.http.post<any>(`${this.apiTickets}/reassign/${id}`, null, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
 }

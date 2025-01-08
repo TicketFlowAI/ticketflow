@@ -28,6 +28,10 @@ import { TicketDialogData } from '../models/dialogs/ticket-dialog-data.model';
 import { ServiceContractDialogData } from '../models/dialogs/service-contact-dialog-data.model';
 import { EmailTemplateModel } from '../models/entities/email-template.model';
 import { ManageEmailTemplateComponent } from '../../features/settings/email/email-template/manage-email-template/manage-email-template.component';
+import { TechnicianHistoryComponent } from '../../features/tickets/ticket/technician-history/technician-history.component';
+import { UserRoleModel } from '../models/entities/user-role.model';
+import { ManageUserRoleComponent } from '../../features/users/user-roles/manage-user-role/manage-user-role.component';
+import { UserRoleInfoComponent } from '../../features/users/user-roles/user-role-info/user-role-info.component';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +87,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -115,7 +119,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -124,6 +128,20 @@ export class DialogManagerService {
     const exitAnimationDuration = '100ms'
 
     this.dialogService.open(TicketInfoComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '450px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: ticket
+    });
+  }
+
+  openTicketTechnicianHistory(ticket: TicketModel) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    this.dialogService.open(TechnicianHistoryComponent, {
       width: '600px',
       maxWidth: '100vw',
       height: '450px',
@@ -159,7 +177,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -176,7 +194,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -193,7 +211,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -223,7 +241,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -240,7 +258,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 
@@ -272,8 +290,40 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
+  }
+
+  openManageUserRoleDialog(user: UserRoleModel | null) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(ManageUserRoleComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: user
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
+  }
+
+  openUserRoleInfoDialog(userRole: UserRoleModel) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    this.dialogService.open(UserRoleInfoComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: userRole.id
+    });
   }
 
   openManageEmailTemplateDialog(emailTemplate: EmailTemplateModel | null) {
@@ -290,7 +340,7 @@ export class DialogManagerService {
     });
 
     return dialogRef.afterClosed().pipe(
-      map(() => {return true;})
+      map((result) => {return result})
     )
   }
 }

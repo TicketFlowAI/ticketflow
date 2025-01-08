@@ -117,8 +117,10 @@ export class AllCompaniesComponent implements OnInit {
   }
 
   openCompanyManageDialog(company: CompanyModel | null) {
-    this.dialogManagerService.openManageCompanyDialog(company).subscribe(
-      () => { this.loadCompanies() }
-    )
+    this.dialogManagerService.openManageCompanyDialog(company).subscribe({
+      next: (response) => {
+         if(response) this.loadCompanies() 
+      }
+    })
   }
 }

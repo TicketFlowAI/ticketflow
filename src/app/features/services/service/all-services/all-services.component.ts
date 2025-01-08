@@ -125,8 +125,10 @@ export class AllServicesComponent {
   }
 
   openServiceManageDialog(service: ServiceModel | null) {
-    this.dialogManagerService.openManageServiceDialog(service).subscribe(
-      () => { this.loadServices() }
-    )
+    this.dialogManagerService.openManageServiceDialog(service).subscribe({
+      next: (response) => {
+         if(response) this.loadServices() 
+      }
+    })
   }
 }

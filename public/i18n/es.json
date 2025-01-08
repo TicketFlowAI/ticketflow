@@ -6,6 +6,8 @@
         "USER-NAME": "Nombre",
         "USER-LASTNAME": "Apellido",
         "USER-EMAIL": "Correo electrónico",
+        "USER-PASSWORD": "Contraseña",
+        "USER-PASSWORD-2": "Confirmar Contraseña",
         "USER-COMPANY": "Empresa",
         "USER-ROLE": "Rol",
         "USER-ADMIN": "Administrador",
@@ -119,12 +121,17 @@
       "READ-TICKET-INFO": "Ver Detalles",
       "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
 
+      "READ-TICKET-TECHNICIAN-HISTORY": "Ver Historial",
+      "READ-TICKET-TECHNICIAN-HISTORY-DESC": "De clic aquí para poder ver el historial de técnicos por los que ha pasado este ticket",
+
       "EDIT-TICKET-INFO": "Editar Ticket",
       "EDIT-TICKET-INFO-DESC": "De clic aquí para poder editar el ticket",
 
       "CLOSE-TICKET": "Cerrar Ticket",
       "CLOSE-TICKET-DESC": "De clic aquí para cerrar el ticket si ya se completo la atención al usuario",
 
+      "REASSIGN": "Reasignación",
+      "CLOSE": "Cerrar",
       "DELETE": "Borrar",
       
       "ADMIN": {
@@ -158,6 +165,12 @@
         "TICKET-USER": "Usuario",
         "TICKET-COMPANY": "Empresa", 
         "TICKET-SERVICE": "Servicio", 
+        "RETURN": "Regresar"
+      },
+      "TICKET-TECHNICIAN-HISTORY": {
+        "TITLE": "Historial de Técnicos",
+        "TECHNICIAN-NAME": "Técnico",
+        "TECHNICIAN-REPORT": "Ver Reporte",
         "RETURN": "Regresar"
       }
     },
@@ -323,6 +336,7 @@
 
       "ADMIN": {
         "USERS": "Administrar usuarios",
+        "ROLES": "Ver Roles",
         "CREATE-USER": "Crear usuario"
       },
 
@@ -346,6 +360,37 @@
         "RETURN": "Regresar"
       }
     },
+    "ROLES": {
+      "SEARCH": "Buscar...",
+
+      "READ-ROLE-INFO": "Ver Rol",
+      "READ-ROLE-INFO-DESC": "De click aquí para ver más infomación del rol",
+
+      "EDIT-ROLE-INFO": "Editar Rol",
+      "EDIT-ROLE-INFO-DESC": "De click aquí para editar la infomación del rol",
+
+      "DELETE": "Borrar",
+
+      "ADMIN": {
+        "ROLES": "Administrar Roles",
+        "RETURN-TO-USERS": "Regresar",
+        "CREATE-ROLE": "Crear Rol"
+      },
+
+      "ROLE-MANAGEMENT": {
+        "CREATE-ROLE": "Crear Rol",
+        "EDIT-ROLE": "Editar Rol",
+        "ROLE-NAME": "Nombre del Rol",
+        "ROLE-PERMISSIONS": "Permisos del Rol",
+        "SAVE": "Guardar"
+      },
+      "ROLE-INFO": {
+        "TITLE": "Información del Rol",
+        "ROLE-NAME": "Nombre del Rol",
+        "ROLE-PERMISSIONS": "Permisos del Rol",
+        "RETURN": "Regresar"
+      }
+    },
     "REPORTS": {
       "GLOBAL": "Reporte General",
       "BY-TECHNICIAN": "Reporte por técnico",
@@ -359,8 +404,19 @@
         "START-DATE": "Fecha de Inicio",
         "END-DATE": "Fecha de Fin"
       },
+
       "TECHNICIAN-REPORT": {
-        "SEARCH": "Buscar por Técnico"
+        "ADMIN": {
+          "TITLE-LIST": "Técnicos Disponibles",
+          "RETURN": "Regresar",
+          "PERFORMANCE-REPORT-TITLE": "Ver Reporte",
+          "PERFORMANCE-REPORT-DESC": "De clic aqui para poder ver el reporte de desempeño del técnico",
+          "SEARCH": "Buscar técnico",
+          "TITLE-REPORT": "Reporte del técnico"
+        },
+        "TECHNICIAN": {
+          "TITLE": "Mi reporte"
+        }
       }
     }
   },
@@ -411,6 +467,9 @@
         "DELETE-SERVICE-CATEGORY": "¿Está seguro que desea eliminar esta categoría?",
         "DELETE-TICKET": "¿Está seguro que desea eliminar este ticket?",
         "DELETE-USER": "¿Está seguro que desea eliminar este usuario?",
+        "DELETE-ROLE": "¿Está seguro que desea eliminar este rol?",
+        "CLOSE-TICKET": "¿Está seguro que desea cerrar este ticket?",
+        "REASSIGN-TICKET": "¿Está seguro que desea solicitar una reasiganción?",
         "TITLE": "Confirmation",
         "CANCEL": "Cancel",
         "OK": "Continue"
@@ -428,6 +487,7 @@
           "SERVICE-CATEGORY": "Categoría creada exitosamente",
           "TICKET": "Ticket creado exitosamente",
           "USER": "Usuario creado exitosamente",
+          "ROLE": "Rol creado exitosamente",
           "ERROR": "Ha ocurrido un error en la creación"
         },
         "EDIT": {
@@ -440,6 +500,7 @@
           "SERVICE-CATEGORY": "Categoría modificada exitosamente",
           "TICKET": "Ticket modificado exitosamente",
           "USER": "Usuario modificado exitosamente",
+          "ROLE": "Rol modificado exitosamente",
           "ERROR": "Ha ocurrido un error en la modificación"
         },
         "DELETE": {
@@ -452,8 +513,17 @@
           "SERVICE-CATEGORY": "Categoría eliminada exitosamente",
           "TICKET": "Ticket eliminado exitosamente",
           "USER": "Usuario eliminado exitosamente",
+          "ROLE": "Rol eliminado exitosamente",
           "ERROR": "Ha ocurrido un error en la eliminación"
         }
+      },
+      "CUSTOM": {
+        "CLOSE-TICKET-SUCCESS": "Se ha cerrado el ticket exitosamente",
+        "CLOSE-TICKET-ERROR": "Ha ocurrido un error en el cierre del ticket",
+        "REASSIGN-TICKET-SUCCESS":  "Se ha reasignado el ticket exitosamente",
+        "REASSIGN-TICKET-ERROR": "Ha ocurrido un error en la reasignación del ticket",
+        "AUTHENTICATION-FAILED-SERVER-ERROR":  "Ha ocurrido un error en el servidor, inténtelo más tarde",
+        "AUTHENTICATION-FAILED-CREDENTIALS": "Las credenciales son incorrectas"
       }
     }
   }

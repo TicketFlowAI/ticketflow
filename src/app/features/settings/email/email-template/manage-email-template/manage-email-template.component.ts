@@ -50,6 +50,10 @@ export class ManageEmailTemplateComponent {
   service: EmailTemplateModel | null = null;
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.emailTemplateData) {
       this.service = this.emailTemplateData
       this.templateNameFormControl.setValue(this.emailTemplateData.template_name)
@@ -69,11 +73,11 @@ export class ManageEmailTemplateComponent {
       emailTemplate.id = this.emailTemplateData.id
 
       this.emailManagementService.editEmailTemplate(emailTemplate)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
       this.emailManagementService.addEmailTemplate(emailTemplate)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
   }
   
@@ -96,6 +100,7 @@ export class ManageEmailTemplateComponent {
     const codepenData = {
       title: `Plantilla de Correo: ${this.templateNameFormControl.value}`,
       html: this.bodyFormControl.value,
+      js: this.extractVariables(this.bodyFormControl.value),
     };
   
     const form = document.createElement('form');
@@ -114,5 +119,15 @@ export class ManageEmailTemplateComponent {
     document.body.removeChild(form);
   }
 
+  extractVariables(template: string): string[] {
+    const regex = /(\{\{\s*.*?\s*\}\})/g; 
+    let match: RegExpExecArray | null;
+    const variables: string[] = [];
 
+    while ((match = regex.exec(template)) !== null) {
+      variables.push(match[1]);
+    }
+
+    return variables;
+  }
 }

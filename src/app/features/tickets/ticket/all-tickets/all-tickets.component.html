@@ -5,12 +5,14 @@
             <div class="col-md-9 text-center text-md-start align-content-center">
                 <h2>{{t('ADMIN.TICKETS')}}</h2>
             </div>
-            <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openTicketManageDialog(null)"><fa-icon
-                            [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-TICKET')}}</button>
+            @if(showClientElement()) {
+                <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
+                    <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                        <button type="button" class="btn btn-primary" (click)="openTicketManageDialog(null)"><fa-icon
+                                [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-TICKET')}}</button>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div class="row mt-4">
@@ -32,24 +34,37 @@
                                 <div class="row justify-content-center">
                                     <div class="col-6">
                                         <div class="row justify-content-center">
-                                            <button [routerLink]="['/ticket-message/', ticket.id]" type="button" class="btn btn-secondary">
+                                            <button [routerLink]="['/ticket-message/', ticket.id]" type="button"
+                                                class="btn btn-secondary">
                                                 Ver
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="col-6 d-flex align-content-center justify-content-end text-end">
-                                <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}" class="mt-3 fs-6 d-none d-md-flex">
+                                <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}"
+                                    class="mt-3 fs-6 d-none d-md-flex">
                                     @if(ticket.status === 1) {
-                                        {{t('STATUS-OPEN')}}
+                                    {{t('STATUS-OPEN')}}
                                     }
                                     @if(ticket.status === 2) {
-                                        {{t('STATUS-CLOSED')}}
+                                    {{t('STATUS-CLOSED')}}
                                     }
                                 </p>
-                                <mat-icon [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}" class="mt-3 fs-6">brightness_1</mat-icon>
+                                <mat-icon [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2,}"
+                                    class="mt-3 fs-6">brightness_1</mat-icon>
+                                    
+                                @if(showClientElement()) {
+                                    @if(ticket.newTechnicianMessage) {
+                                        <mat-icon class="mt-3 bell">notifications_active</mat-icon>
+                                    }
+                                }
+                                @else {
+                                    @if(ticket.newClientMessage) {
+                                        <mat-icon class="mt-3 bell">notifications_active</mat-icon>
+                                    }
+                                }
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -66,6 +81,20 @@
                             </div>
                             <hr>
                         </div>
+                        @if(showAdminElement()){
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <a href="javascript:void(0);" (click)="openTicketTechnicianHistory(ticket)">
+                                    <fa-icon class="pe-2" [icon]="faInfoCircle"></fa-icon>
+                                    {{t('READ-TICKET-TECHNICIAN-HISTORY')}}
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('READ-TICKET-TECHNICIAN-HISTORY-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        }
                         <div class="row fs-6">
                             <div class="col-md-4">
                                 <a href="javascript:void(0);" (click)="openTicketManageDialog(ticket)">
@@ -77,15 +106,42 @@
                             </div>
                             <hr>
                         </div>
+                        @if(showTechnicianElement()){
+                            <div class="row justify-content-end">
+                                <div class="col-md-3 mt-3 mt-md-0">
+                                    <div class="row justify-content-end px-md-2">
+                                        <button type="button" class="btn btn-secondary" (click)="askForReassign(ticket.id)">
+                                            <fa-icon [icon]="users"></fa-icon> {{t('REASSIGN')}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3 mt-md-0">
+                                    <div class="row justify-content-end px-md-2">
+                                        <button type="button" class="btn btn-danger" (click)="closeTicket(ticket.id)">
+                                            <fa-icon [icon]="faX"></fa-icon> {{t('CLOSE')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        @if(showAdminElement()){
                         <div class="row justify-content-end">
-                            <div class="col-md-3">
-                                <div class="row justify-content-end">
+                            <div class="col-md-3 mt-3 mt-md-0">
+                                <div class="row justify-content-end px-md-2">
+                                    <button type="button" class="btn btn-warning" (click)="closeTicket(ticket.id)">
+                                        <fa-icon [icon]="faX"></fa-icon> {{t('CLOSE')}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-3 mt-md-0">
+                                <div class="row justify-content-end px-md-2">
                                     <button type="button" class="btn btn-danger" (click)="deleteTicket(ticket.id)">
                                         <fa-icon [icon]="faX"></fa-icon> {{t('DELETE')}}
                                     </button>
                                 </div>
                             </div>
                         </div>
+                        }
                     </div>
                 </mat-expansion-panel>
                 }

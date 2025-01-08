@@ -71,6 +71,10 @@ export class ManageTicketComponent {
   user: UserModel | null = null;
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+
     if (this.data.ticket) {
       this.titleFormControl.setValue(this.data.ticket.title)
       this.priorityFormControl.setValue(this.data.ticket.priority)
@@ -124,11 +128,11 @@ export class ManageTicketComponent {
     if (this.data.ticket) {
       ticket.id = this.data.ticket.id;
       this.ticketManagementService.editTicket(ticket)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
       this.ticketManagementService.addTicket(ticket)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
   }
 }

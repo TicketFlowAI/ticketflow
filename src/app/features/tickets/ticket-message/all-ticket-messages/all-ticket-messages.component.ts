@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketMessageModel } from '../../../../core/models/entities/ticket-message.model';
@@ -13,6 +13,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { CommonModule } from '@angular/common';
 import { UserRoles } from '../../../../core/models/entities/user.model';
+import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 
 @Component({
   selector: 'app-all-ticket-messages',
@@ -20,19 +21,22 @@ import { UserRoles } from '../../../../core/models/entities/user.model';
   imports: [
     CommonModule,
     RouterLink,
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatFormFieldModule,
+    MatInputModule,
     FormsModule,
-    MatButtonModule, 
+    MatButtonModule,
     MatIconModule,
     FaIconComponent,
-    TranslocoDirective
-  ],
+    TranslocoDirective,
+    GlobalSpinnerComponent
+],
   templateUrl: './all-ticket-messages.component.html',
   styleUrl: './all-ticket-messages.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllTicketMessagesComponent {
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
+  
   protected readonly faArrowLeft = faArrowLeft;
 
   private readonly ticketManagementService = inject(TicketManagementService)
@@ -70,16 +74,26 @@ export class AllTicketMessagesComponent {
   }
 
   checkMessages() {
+    let scroll: boolean = false
     this.ticketManagementService.getAllMessagesFromTicket(this.ticketId).subscribe({
       next: (ticketMessages) => {
+      
+        if(this.ticketMessages.length == ticketMessages.length) scroll = true;
         this.ticketMessages = ticketMessages;
         this.cdr.markForCheck()
+        if(!scroll) this.scrollToBottom();
       }
     })
   } 
 
   clearMessageInterval() {
     clearInterval(this.messageInterval);
+  }
+
+  scrollToBottom(): void {
+    if (this.messageContainer) {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }
   }
 
   send() {
@@ -96,9 +110,13 @@ export class AllTicketMessagesComponent {
       new Date()
     )
 
-    this.clearMessageInterval()
+    this.message = '';
+    this.ticketMessages.push(newTicketMessage)
+    this.scrollToBottom()
+
     this.ticketManagementService.addTicketMessage(newTicketMessage).subscribe({
       next: () => {
+        
         this.checkMessages()
       }
     })

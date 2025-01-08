@@ -141,8 +141,10 @@ export class AllServiceContractsComponent {
       serviceContract,
       companyId: this.companyId ? parseInt(this.companyId) : null
     }
-    this.dialogManagerService.openManageServiceContractDialog(data).subscribe(
-      () => { this.loadServiceContracts() }
-    )
+    this.dialogManagerService.openManageServiceContractDialog(data).subscribe({
+      next: (response) => {
+         if(response) this.loadServiceContracts() 
+      }
+    })
   }
 }

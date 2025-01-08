@@ -5,12 +5,15 @@ import { catchError, finalize, map, Observable, of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { MessageService } from '../../shared/services/message.service';
 import { SpinnerService } from '../../shared/services/spinner.service';
+import { UserRoleService } from '../api/servicios-mindsoftdev/user-role.service';
+import { UserRoleModel } from '../models/entities/user-role.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserManagementService {
   private readonly userService = inject(UserService)
+  private readonly userRoleService = inject(UserRoleService)
 
   private readonly messageService = inject(MessageService)
   private readonly spinnerService = inject(SpinnerService)
@@ -92,9 +95,15 @@ export class UserManagementService {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userService.createUser(newUser).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.USER');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       }),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
@@ -106,9 +115,15 @@ export class UserManagementService {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userService.updateUser(editUser).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.USER');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       }),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
@@ -120,9 +135,115 @@ export class UserManagementService {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userService.deleteUser(id).pipe(
-      map(() => true),
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.USER');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
       catchError(() => {
-        return of(false);
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  getAllUserRoles(): Observable<UserRoleModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.userRoleService.getUserRoles().pipe(
+      map((users) => users.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
+  getAllPermissions(): Observable<string[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.userRoleService.getPermissions().pipe(
+      map((permissions) => permissions),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
+  getOneUserRole(id: number): Observable<UserRoleModel | null> {
+    return this.userRoleService.getUserRole(id).pipe(
+      map((user) => user.data),
+      catchError(() => {
+        return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  addUserRole(newUserRole: UserRoleModel): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.userRoleService.createUserRole(newUserRole).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ROLE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  editUserRole(editUserRole: UserRoleModel): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.userRoleService.updateUserRole(editUserRole).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ROLE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  deleteUserRole(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.userRoleService.deleteUserRole(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ROLE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
       }),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();

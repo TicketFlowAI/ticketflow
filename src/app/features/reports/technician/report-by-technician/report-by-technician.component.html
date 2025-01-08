@@ -1,0 +1,63 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.REPORTS.TECHNICIAN-REPORT'">
+    <app-global-spinner></app-global-spinner>
+    <div class="report container py-4">
+        <div class="row">
+            <div class="col-md-9 align-content-center">
+                <div class="row text-center text-md-start">
+                    <h2>{{t('ADMIN.TITLE-LIST')}}</h2>
+                </div>
+            </div>
+            <div class="col-md-3 align-content-center">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button [routerLink]="['/reports']" class="btn btn-secondary"> <fa-icon
+                            [icon]="faArrowLeft"></fa-icon>
+                        {{t('ADMIN.RETURN')}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <mat-form-field>
+                <mat-label>{{ t('ADMIN.SEARCH')}}</mat-label>
+                <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="row my-2">
+            <mat-accordion class="my-2" [multi]="false">
+                @for(user of pagedUsers; track user.id) {
+                <mat-expansion-panel class="mt-2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-truncate">{{user.name}} {{user.lastname}}</mat-panel-title>
+                        <mat-panel-description class="row">
+                            <div class="col-6 text-center">
+                                {{user.email}}
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <div class="ps-md-4 mt-2">
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                                <a [routerLink]="['/performance-report/', user.id]"
+                                    routerLinkActive="router-link-active">
+                                    <fa-icon [icon]="faFileLines"></fa-icon> {{t('ADMIN.PERFORMANCE-REPORT-TITLE')}}
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('ADMIN.PERFORMANCE-REPORT-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                }
+            </mat-accordion>
+
+            <mat-paginator [length]="users.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
+                (page)="onPageChange($event)" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</ng-container>

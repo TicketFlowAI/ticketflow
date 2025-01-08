@@ -125,8 +125,10 @@ export class AllServiceCategoriesComponent {
   }  
 
   openServiceCategoryManageDialog(serviceCategory: ServiceCategoryModel | null) {
-    this.dialogManagerService.openManageServiceCategoryDialog(serviceCategory).subscribe(
-      () => { this.loadCategories() }
-    )
+    this.dialogManagerService.openManageServiceCategoryDialog(serviceCategory).subscribe({
+      next: (response) => {
+         if(response) this.loadCategories() 
+      }
+    })
   }
 }

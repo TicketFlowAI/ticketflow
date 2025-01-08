@@ -57,6 +57,10 @@ export class ManageUserComponent {
   companies: CompanyModel[] = []
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.userData) {
       this.nameFormControl.setValue(this.userData.name)
       this.lastnameFormControl.setValue(this.userData.lastname)
@@ -70,6 +74,10 @@ export class ManageUserComponent {
         this.cdr.markForCheck()
       }
     })
+
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
   }
 
   onSaveClick(): void {
@@ -88,11 +96,11 @@ export class ManageUserComponent {
       user.id = this.userData.id
       
       this.userManagementService.editUser(user)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
       this.userManagementService.addUser(user)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
   }
 }

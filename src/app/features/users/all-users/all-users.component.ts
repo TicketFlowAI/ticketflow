@@ -13,6 +13,7 @@ import { UserManagementService } from '../../../core/services/user-management.se
 import { UserModel } from '../../../core/models/entities/user.model';
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../shared/components/global-spinner/global-spinner.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-all-users',
@@ -26,8 +27,9 @@ import { GlobalSpinnerComponent } from "../../../shared/components/global-spinne
     MatInputModule,
     FaIconComponent,
     FormsModule,
-    GlobalSpinnerComponent
-],
+    GlobalSpinnerComponent,
+    RouterLink
+  ],
   templateUrl: './all-users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -97,27 +99,29 @@ export class AllUsersComponent {
 
   deleteUsers(userId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-USER');
-  
+
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
       concatMap((result) =>
         result ? this.handleDeleteUser(userId) : this.handleCancelDelete()
       )
     ).subscribe();
   }
-  
+
   private handleDeleteUser(userId: number) {
     return this.userManagementService.deleteUser(userId).pipe(
       tap(() => this.loadUsers())
     );
   }
-  
+
   private handleCancelDelete() {
     return of(null);
-  }  
+  }
 
   openUserManageDialog(user: UserModel | null) {
-    this.dialogManagerService.openManageUserDialog(user).subscribe(
-      () => { this.loadUsers() }
-    )
+    this.dialogManagerService.openManageUserDialog(user).subscribe({
+      next: (response) => {
+        if (response) this.loadUsers()
+      }
+    })
   }
 }

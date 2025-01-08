@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faPencil, faX, faPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX, faPlus, faInfoCircle, faUsers} from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
@@ -16,6 +16,7 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
+import { UserManagementService } from '../../../../core/services/user-management.service';
 
 @Component({
   selector: 'app-all-tickets',
@@ -43,7 +44,9 @@ export class AllTicketsComponent {
   protected readonly faInfoCircle = faInfoCircle;
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
+  protected readonly users = faUsers;
 
+  private readonly userManagementService = inject(UserManagementService)
   private readonly ticketManagementService = inject(TicketManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
 
@@ -71,6 +74,18 @@ export class AllTicketsComponent {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  showAdminElement() {
+    return this.userManagementService.isUserAdmin()
+  }
+
+  showTechnicianElement() {
+    return this.userManagementService.isUserTechnician()
+  }
+
+  showClientElement() {
+    return this.userManagementService.isUserClient()
   }
 
   onFilterChange(): void {
@@ -102,6 +117,30 @@ export class AllTicketsComponent {
     this.dialogManagerService.openTicketInfoDialog(ticket)
   }
 
+  openTicketTechnicianHistory(ticket: TicketModel) {
+    this.dialogManagerService.openTicketTechnicianHistory(ticket)
+  }
+
+  askForReassign(ticketId: number) {
+    const closeMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.REASSIGN-TICKET');
+  
+    this.dialogManagerService.openActionConfirmationDialog(closeMessage).pipe(
+      concatMap((result) =>
+        result ? this.handleReasignTicket(ticketId) : this.handleCancelDelete()
+      )
+    ).subscribe();
+  }
+
+  closeTicket(ticketId: number) {
+    const closeMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.CLOSE-TICKET');
+  
+    this.dialogManagerService.openActionConfirmationDialog(closeMessage).pipe(
+      concatMap((result) =>
+        result ? this.handleCloseTicket(ticketId) : this.handleCancelDelete()
+      )
+    ).subscribe();
+  }
+
   deleteTicket(ticketId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-TICKET');
   
@@ -110,6 +149,18 @@ export class AllTicketsComponent {
         result ? this.handleDeleteTicket(ticketId) : this.handleCancelDelete()
       )
     ).subscribe();
+  }
+
+  private handleCloseTicket(ticketId: number) {
+    return this.ticketManagementService.closeTicket(ticketId).pipe(
+      tap(() => this.loadTickets())
+    );
+  }
+
+  private handleReasignTicket(ticketId: number) {
+    return this.ticketManagementService.reassignTicket(ticketId).pipe(
+      tap(() => this.loadTickets())
+    );
   }
   
   private handleDeleteTicket(ticketId: number) {
@@ -124,8 +175,10 @@ export class AllTicketsComponent {
 
   openTicketManageDialog(ticket: TicketModel | null) {
     let data: TicketDialogData = { ticket, serviceContract: null }
-    this.dialogManagerService.openManageTicketDialog(data).subscribe(
-      () => { this.loadTickets() }
-    )
+    this.dialogManagerService.openManageTicketDialog(data).subscribe({
+      next: (response) => {
+         if(response) this.loadTickets() 
+      }
+    })
   }
 }

@@ -6,6 +6,8 @@
         "USER-NAME": "Name",
         "USER-LASTNAME": "Lastname",
         "USER-EMAIL": "Email",
+        "USER-PASSWORD": "Password",
+        "USER-PASSWORD-2": "Conform Password",
         "USER-COMPANY": "Company",
         "USER-ROLE": "Role",
         "USER-ADMIN": "Admin",
@@ -125,12 +127,17 @@
       "READ-TICKET-INFO": "View Details",
       "READ-TICKET-INFO-DESC": "Click here to view the ticket information",
 
+      "READ-TICKET-TECHNICIAN-HISTORY": "View Historic",
+      "READ-TICKET-TECHNICIAN-HISTORY-DESC": "Click here to view the history of technicians for whom this ticket has passed.",
+
       "EDIT-TICKET-INFO": "Edit Ticket",
       "EDIT-TICKET-INFO-DESC": "Click here to edit the ticket",
 
       "CLOSE-TICKET": "Close Ticket",
       "CLOSE-TICKET-DESC": "Click here to close the ticket if the user's request was met",
 
+      "REASSIGN": "Reassignment",
+      "CLOSE": "Close",
       "DELETE": "Delete",
       
       "ADMIN": {
@@ -163,6 +170,12 @@
         "TICKET-USER": "User",
         "TICKET-COMPANY": "Company", 
         "TICKET-SERVICE": "Service", 
+        "RETURN": "Return"
+      },
+      "TICKET-TECHNICIAN-HISTORY": {
+        "TITLE": "Technician History",
+        "TECHNICIAN-NAME": "Technician",
+        "TECHNICIAN-REPORT": "View Report",
         "RETURN": "Return"
       }
     },
@@ -350,6 +363,66 @@
         "USER-ROLE": "Role",
         "RETURN": "Return"
       }
+    },
+    "ROLES": {
+      "SEARCH": "Search...",
+
+      "READ-ROLE-INFO": "Ver Rol",
+      "READ-USER-INFO-DESC": "Click here the see the role info",
+
+      "EDIT-ROLE-INFO": "Edit Role",
+      "EDIT-ROLE-INFO-DESC": "Click here to edit the role info",
+
+      "DELETE": "Delete",
+
+      "ADMIN": {
+        "ROLES": "Manage Roles",
+        "RETURN-TO-USERS": "Return",
+        "CREATE-ROLE": "Create Role"
+      },
+
+      "ROLE-MANAGEMENT": {
+        "CREATE-ROLE": "Create Role",
+        "EDIT-ROLE": "Edit Role",
+        "ROLE-NAME": "Role Name",
+        "ROLE-PERMISSIONS": "Role Permissions",
+        "SAVE": "Save"
+      },
+      "ROLE-INFO": {
+        "TITLE": "Role Information",
+        "ROLE-NAME": "Role Name",
+        "ROLE-PERMISSIONS": "Role Permissions",
+        "RETURN": "Regresar"
+      }
+    },
+    "REPORTS": {
+      "GLOBAL": "Global Report",
+      "BY-TECHNICIAN": "Technician Report",
+
+      "ADMIN": {
+        "REPORTS": "Reports"
+      },
+
+      "GLOBAL-REPORT": {
+        "SEARCH": "Filter by Date",
+        "START-DATE": "Start Date",
+        "END-DATE": "End Date"
+      },
+
+      "TECHNICIAN-REPORT": {
+        "ADMIN": {
+          "TITLE-LIST": "Techinicans list",
+          "RETURN": "Return",
+          "SEARCH": "Search technician",
+          "PERFORMANCE-REPORT-TITLE": "Go to Report",
+          "PERFORMANCE-REPORT-DESC": "Click here to se the technician performance report",
+          "TITLE-REPORT": "Techinician Report"
+          
+        },
+        "TECHNICIAN": {
+          "TITLE": "My Report"
+        }
+      }
     }
   },
   "SHARED": {
@@ -399,6 +472,9 @@
         "DELETE-SERVICE-CATEGORY": "Are you sure you want to delete this category?",
         "DELETE-TICKET": "Are you sure you want to delete this ticket?",
         "DELETE-USER": "Are you sure you want to delete this user?",
+        "DELETE-ROLE":"Are you sure you want to delete this role?",
+        "CLOSE-TICKET": "Are you sure you want to close this ticket?",
+        "REASSIGN-TICKET": "Are you sure you want to request a ticket reassignment?",
         "TITLE": "Confirmation",
         "CANCEL": "Cancel",
         "OK": "Ok"
@@ -416,6 +492,7 @@
           "SERVICE-CATEGORY": "Category created successfully",
           "TICKET": "Ticket created successfully",
           "USER": "User created successfully",
+          "ROLE": "Role created successfully",
           "ERROR": "An error occurred during creation"
         },
         "EDIT": {
@@ -428,6 +505,7 @@
           "SERVICE-CATEGORY": "Category updated successfully",
           "TICKET": "Ticket updated successfully",
           "USER": "User updated successfully",
+          "ROLE": "Role updated successfully",
           "ERROR": "An error occurred during the modification"
         },
         "DELETE": {
@@ -440,8 +518,17 @@
           "SERVICE-CATEGORY": "Category deleted successfully",
           "TICKET": "Ticket deleted successfully",
           "USER": "User deleted successfully",
+          "ROLE": "Role deleted successfully",
           "ERROR": "An error occurred during the deletion"
         }
+      },
+      "CUSTOM": {
+        "CLOSE-TICKET-SUCCESS": "Ticket closed successfully",
+        "CLOSE-TICKET-ERROR": "An error occurred while closing the ticket",
+        "REASSIGN-TICKET-SUCCESS": "Ticket reassigned successfully",
+        "REASSIGN-TICKET-ERROR": "An error occurred while reassigning the ticket",
+        "AUTHENTICATION-FAILED-SERVER-ERROR":  "A server side error ocurred, try again later",
+        "AUTHENTICATION-FAILED-CREDENTIALS": "Invalid credentials"
       }
     }
   }

@@ -62,6 +62,10 @@ export class ManageServiceComponent {
   taxes: ServiceTaxModel[] = [];
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.serviceData) {
       this.service = this.serviceData
       this.descriptionFormControl.setValue(this.service.description)
@@ -103,11 +107,11 @@ export class ManageServiceComponent {
       service.id = this.serviceData.id
 
       this.serviceManagementService.editService(service)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
       this.serviceManagementService.addService(service)
-      .subscribe( () => { this.dialogRef.close() })
+      .subscribe( () => { this.dialogRef.close(true) })
     }
   }
 }

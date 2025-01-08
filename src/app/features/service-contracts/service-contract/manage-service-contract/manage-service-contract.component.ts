@@ -63,6 +63,10 @@ export class ManageServiceContractComponent {
 
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.data.serviceContract) {
       this.serviceContract = this.data.serviceContract
       this.companyFormControl.setValue(this.data.serviceContract.company_id)
@@ -109,7 +113,7 @@ export class ManageServiceContractComponent {
 
       this.serviceContractManagementService.editServiceContract(serviceContract).subscribe({
         next: () => {
-          this.dialogRef.close()
+          this.dialogRef.close(true)
         }
       }
       )
@@ -117,7 +121,7 @@ export class ManageServiceContractComponent {
     else {
       this.serviceContractManagementService.addServiceContract(serviceContract).subscribe({
         next: () => {
-          this.dialogRef.close()
+          this.dialogRef.close(true)
         }
       }
       )

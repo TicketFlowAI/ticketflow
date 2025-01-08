@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import {MatCardModule} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -9,7 +10,8 @@ import { MatIcon } from '@angular/material/icon';
   imports: [
     TranslocoDirective,
     MatCardModule,
-    MatIcon
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',

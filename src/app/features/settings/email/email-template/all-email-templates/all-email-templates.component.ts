@@ -114,8 +114,10 @@ export class AllEmailTemplatesComponent {
   }  
 
   openManageEmailTemplateDialog(emailTemplate: EmailTemplateModel | null) {
-    this.dialogManagerService.openManageEmailTemplateDialog(emailTemplate).subscribe(
-      () => { this.loadEmailTemplates() }
-    )
+    this.dialogManagerService.openManageEmailTemplateDialog(emailTemplate).subscribe({
+      next: (response) => {
+         if(response) this.loadEmailTemplates() 
+      }
+    })
   }
 }

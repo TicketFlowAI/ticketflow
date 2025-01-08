@@ -47,6 +47,10 @@ export class ManageServiceContractTermComponent {
   serviceContractTerm: ServiceContractTermModel | null = null;
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.serviceContractTermData) {
       this.serviceContractTerm = this.serviceContractTermData
       this.termFormControl.setValue(this.serviceContractTerm.term)
@@ -66,17 +70,13 @@ export class ManageServiceContractTermComponent {
       serviceContractTerm.id = this.serviceContractTermData.id
 
       this.serviceContractManagementService.editServiceContractTerm(serviceContractTerm).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
+        next: () => {this.dialogRef.close(true) }
       }
       )
     }
     else {
       this.serviceContractManagementService.addServiceContractTerm(serviceContractTerm).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        }
+        next: () => { this.dialogRef.close(true) }
       }
       )
     }

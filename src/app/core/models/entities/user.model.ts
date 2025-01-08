@@ -23,6 +23,7 @@ export interface IUserModel {
   company_id: number;
   role: string
   company_name: string;
+  password: string;
 }
 
 export class UserModel implements IUserModel {
@@ -34,6 +35,7 @@ export class UserModel implements IUserModel {
     public company_id: number = 0,
     public role: string = '',
     public company_name: string = '',
+    public password: string = ''
   ) {
   }
 }

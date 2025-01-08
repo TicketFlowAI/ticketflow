@@ -117,8 +117,10 @@ export class AllServiceTaxesComponent {
   }  
 
   openServiceTaxManageDialog(serviceTax: ServiceTaxModel | null) {
-    this.dialogManagerService.openManageServiceTaxDialog(serviceTax).subscribe(
-      () => { this.loadServiceTaxes() }
-    )
+    this.dialogManagerService.openManageServiceTaxDialog(serviceTax).subscribe({
+      next: (response) => {
+         if(response) this.loadServiceTaxes() 
+      }
+    })
   }
 }

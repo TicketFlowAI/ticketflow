@@ -38,6 +38,10 @@ export class ManageServiceCategoryComponent {
   serviceCategory: ServiceCategoryModel | null = null;
 
   ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+    
     if (this.serviceCategoryData) {
       this.serviceCategory = this.serviceCategoryData
       this.categoryFormControl.setValue(this.serviceCategory.category)
@@ -55,11 +59,11 @@ export class ManageServiceCategoryComponent {
       serviceCategory.id = this.serviceCategoryData.id
       
       this.serviceManagementService.editServiceCategory(serviceCategory)
-      .subscribe(() => { this.dialogRef.close() })
+      .subscribe(() => { this.dialogRef.close(true) })
     }
     else {
       this.serviceManagementService.addServiceCategory(serviceCategory)
-      .subscribe(() => {this.dialogRef.close()} )
+      .subscribe(() => {this.dialogRef.close(true)} )
     }
   }
 }

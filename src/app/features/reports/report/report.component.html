@@ -1,38 +1,38 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.REPORTS'">
-    <div class="companies container py-4 ">
-        <div class="row">
-            <div class="col-md-9 align-content-center">
-                <div class="row text-center text-md-start">
-                    <h2>{{t('ADMIN.REPORTS')}}</h2>
+        <div class="companies container py-4 ">
+            <div class="row">
+                <div class="col-md-9 align-content-center">
+                    <div class="row text-center text-md-start">
+                        <h2>{{t('ADMIN.REPORTS')}}</h2>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-md-6 mt-2 mt-md-0">
+                    <div [routerLink]="['/global-report']" routerLinkActive="router-link-active"  class="row mx-md-1">
+                        <mat-card class="report-card">
+                            <mat-card-content class="text-center">
+                                <mat-icon>public</mat-icon>
+                            </mat-card-content>
+                            <mat-card-footer class="text-center">
+                                <h4>{{t('GLOBAL')}}</h4>
+                            </mat-card-footer>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-2 mt-md-0">
+                    <div class="row mx-md-1">
+                        <mat-card [routerLink]="['/technician-report']" class="report-card">
+                            <mat-card-content class="text-center">
+                                <mat-icon>support_agent</mat-icon>
+                            </mat-card-content>
+                            <mat-card-footer class="text-center">
+                                <h4>{{t('BY-TECHNICIAN')}}</h4>
+                            </mat-card-footer>
+                        </mat-card>
+                    </div>
                 </div>
             </div>
-            <hr>
         </div>
-        <div class="row justify-content-between">
-            <div class="col-md-6 mt-2 mt-md-0">
-                <div class="row mx-md-1">
-                    <mat-card class="report-card">
-                        <mat-card-content class="text-center">
-                            <mat-icon>public</mat-icon>
-                        </mat-card-content>
-                        <mat-card-footer class="text-center">
-                            <h4>{{t('GLOBAL')}}</h4>
-                        </mat-card-footer>
-                    </mat-card>
-                </div>
-            </div>
-            <div class="col-md-6 mt-2 mt-md-0">
-                <div class="row mx-md-1">
-                    <mat-card class="report-card">
-                        <mat-card-content class="text-center">
-                            <mat-icon>support_agent</mat-icon>
-                        </mat-card-content>
-                        <mat-card-footer class="text-center">
-                            <h4>{{t('BY-TECHNICIAN')}}</h4>
-                        </mat-card-footer>
-                    </mat-card>
-                </div>
-            </div>
-        </div>
-    </div>
 </ng-container>
