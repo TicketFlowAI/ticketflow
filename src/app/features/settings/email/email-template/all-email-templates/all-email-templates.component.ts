@@ -29,7 +29,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     FaIconComponent,
 ],
   templateUrl: './all-email-templates.component.html',
-  styleUrl: './all-email-templates.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllEmailTemplatesComponent {

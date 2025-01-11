@@ -1,0 +1,39 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SETTINGS.EMAIL-SETTINGS'">
+    @if(!emailIntervalData) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-INTERVAL')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-INTERVAL')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="emailIntervalForm">
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('INTERVAL-TYPE')}}</mat-label>
+                    <input matInput [formControl]="typeFormControl">
+                    @if (typeFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>{{t('INTERVAL-DAYS')}}</mat-label>
+                    <input matInput type="text" [formControl]="daysFormControl">
+                    @if (daysFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" [disabled]="emailIntervalForm.invalid" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

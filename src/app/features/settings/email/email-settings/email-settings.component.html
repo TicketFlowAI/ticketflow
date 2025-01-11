@@ -2,9 +2,16 @@
     <app-global-spinner></app-global-spinner>
     <div class="container py-4">
         <div class="row">
-            <div class="col-md-9 align-content-center py-3 py-md-0 px-3">
+            <div class="col-md-7 align-content-center py-3 py-md-0 px-3 mt-2">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <h2>{{t('EMAIL-SETTINGS')}}</h2>
+                </div>
+            </div>
+            
+            <div class="col-md-2 align-content-center py-3 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button [routerLink]="['/settings']" routerLinkActive="router-link-active" type="button"
+                        class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon> {{t('RETURN')}}</button>
                 </div>
             </div>
             <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
@@ -12,17 +19,12 @@
                     <button routerLinkActive="router-link-active" type="button" class="btn btn-primary" (click)="openParametersInfo()"> {{t('EMAIL-PARAMETERS')}}</button>
                 </div>
             </div>
-            <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button [routerLink]="['/settings']" routerLinkActive="router-link-active" type="button"
-                        class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon> {{t('RETURN')}}</button>
-                </div>
-            </div>
             <hr>
         </div>
         <div class="row">
             <app-all-email-templates></app-all-email-templates>
-            <hr>
+            <hr class="my-3">
+            <app-all-email-intervals></app-all-email-intervals>
         </div>
     </div>
 </ng-container>

@@ -49,7 +49,7 @@ export class ManageEmailTemplateComponent {
   })
 
   copyIcon: string = 'content_copy';
-  service: EmailTemplateModel | null = null;
+  emailTemplate: EmailTemplateModel | null = null;
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
@@ -57,7 +57,7 @@ export class ManageEmailTemplateComponent {
     });
     
     if (this.emailTemplateData) {
-      this.service = this.emailTemplateData
+      this.emailTemplate = this.emailTemplateData
       this.templateNameFormControl.setValue(this.emailTemplateData.template_name)
       this.bodyFormControl.setValue(this.emailTemplateData.body)
     }

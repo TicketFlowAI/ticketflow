@@ -25,16 +25,7 @@
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Configuración de Correos",
         "RETURN": "Regresar",
-        "EMAIL-TEMPLATES": "Plantillas de Correo",
-        "SEARCH": "Buscar plantilla",
-        "EDIT-EMAIL-TEMPLATE": "Editar Plantilla",
-        "EDIT-EMAIL-TEMPLATE-DESC": "De clic aquí para poder ver editar esta plantilla de correo",
-        "DELETE": "Eliminar",
-        "CREATE-TEMPALTE": "Crear Plantilla",
-        "EDIT-TEMPLATE": "Editar Plantilla",
-        "TEMPLATE-NAME": "Nombre de la Plantilla",
-        "TEMPLATE-BODY": "Html de la Plantilla",
-
+        
         "EMAIL-PARAMETERS": "Parametros de Correos",
         "PARAMETER": "Parametro",
         "PARAMETER-DESC": "Descripción",
@@ -43,6 +34,28 @@
         "PARAMETER2": "Esta variable se utiliza para ser reemplazada por el nombre del Servicio",
         "PARAMETER3": "Esta variable se utiliza para ser reemplazada por la fecha de finalización",
 
+        "EMAIL-TEMPLATES": "Plantillas de Correo",
+        "SEARCH-TEMPLATE": "Buscar plantilla",
+        "EDIT-EMAIL-TEMPLATE": "Editar Plantilla",
+        "EDIT-EMAIL-TEMPLATE-DESC": "De clic aquí para poder ver editar esta plantilla de correo",
+        
+        "CREATE-TEMPLATE": "Crear Plantilla",
+        "EDIT-TEMPLATE": "Editar Plantilla",
+        "TEMPLATE-NAME": "Nombre de la Plantilla",
+        "TEMPLATE-BODY": "Html de la Plantilla",
+
+        "EMAIL-INTERVALS": "Intervalos de Correo",
+        "SEARCH-INTERVAL": "Buscar Intervalo",
+        "EDIT-EMAIL-INTERVAL": "Editar Intervalo",
+        "EDIT-EMAIL-INTERVAL-DESC": "De clic aquí para poder ver editar este intervalo de correo",
+
+        "CREATE-INTERVAL": "Crear Intervalo",
+        "EDIT-INTERVAL": "Editar Intervalo",
+        "INTERVAL-DAYS": "Días del Intervalo",
+        "INTERVAL-TYPE": "Tipo",
+        "INTERVAL-TEMPLATE": "Nombre de la Plantilla",
+
+        "DELETE": "Eliminar",
         "SAVE": "Guardar"
       }
     },
@@ -410,6 +423,7 @@
       "CONFIRMATION": {
         "DELETE-COMPANY": "¿Está seguro que desea eliminar esta empresa?",
         "DELETE-EMAIL-TEMPLATE": "¿Está seguro que desea eliminar esta plantilla?",
+        "DELETE-EMAIL-INTERVAL": "¿Está seguro que desea eliminar este intervalo?",
         "DELETE-SERVICE-CONTRACT": "¿Está seguro que desea eliminar esta contratación?",
         "DELETE-SERVICE-CONTRACT-TERM": "¿Está seguro que desea eliminar este periodo?",
         "DELETE-SERVICE": "¿Está seguro que desea eliminar este servicio?",
@@ -430,6 +444,7 @@
         "CREATE": {
           "COMPANY": "Empresa creada exitosamente",
           "EMAIL-TEMPLATE": "Plantilla de correo creada exitosamente",
+          "EMAIL-INTERVAL": "Intervalo de correo creada exitosamente",
           "SERVICE-CONTRACT": "Contratación creada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo creado exitosamente",
           "SERVICE": "Servicio creado exitosamente",
@@ -443,6 +458,7 @@
         "EDIT": {
           "COMPANY": "Empresa modificada exitosamente",
           "EMAIL-TEMPLATE": "Plantilla de correo modificada exitosamente",
+          "EMAIL-INTERVAL": "Intervalo de correo modificada exitosamente",
           "SERVICE-CONTRACT": "Contratación modificada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo modificado exitosamente",
           "SERVICE": "Servicio modificado exitosamente",
@@ -456,6 +472,7 @@
         "DELETE": {
           "COMPANY": "Empresa eliminada exitosamente",
           "EMAIL-TEMPLATE": "Plantilla de correo eliminada exitosamente",
+          "EMAIL-INTERVAL": "Intervalo de correo eliminada exitosamente",
           "SERVICE-CONTRACT": "Contratación eliminada exitosamente",
           "SERVICE-CONTRACT-TERM": "Periodo eliminado exitosamente",
           "SERVICE": "Servicio eliminado exitosamente",

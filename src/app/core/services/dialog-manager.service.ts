@@ -33,6 +33,8 @@ import { UserRoleModel } from '../models/entities/user-role.model';
 import { ManageUserRoleComponent } from '../../features/users/user-roles/manage-user-role/manage-user-role.component';
 import { UserRoleInfoComponent } from '../../features/users/user-roles/user-role-info/user-role-info.component';
 import { EmailParametersComponent } from '../../features/settings/email/email-parameters/email-parameters.component';
+import { EmailIntervalModel } from '../models/entities/email-interval.model';
+import { ManageEmailIntervalComponent } from '../../features/settings/email/email-interval/manage-email-interval/manage-email-interval.component';
 
 @Injectable({
   providedIn: 'root'
@@ -356,5 +358,23 @@ export class DialogManagerService {
       enterAnimationDuration,
       exitAnimationDuration
     });
+  }
+
+  openManageEmailIntervalDialog(emailInterval: EmailIntervalModel | null) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(ManageEmailIntervalComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: emailInterval
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
   }
 }

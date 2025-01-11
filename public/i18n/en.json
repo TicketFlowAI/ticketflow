@@ -25,24 +25,34 @@
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Email Settings",
         "RETURN": "Return",
-        "EMAIL-TEMPLATES": "Email Templates Settings",
-        "SEARCH": "Search Template",
-        "EDIT-EMAIL-TEMPLATE": "Edit Template",
-        "EDIT-EMAIL-TEMPLATE-DESC": "Click here to manage the email template",
-        "DELETE": "Delete",
-        "CREATE-TEMPALTE": "Create Template",
-        "EDIT-TEMPLATE": "Edit Template",
-        "TEMPLATE-NAME": "Template Name",
-        "TEMPLATE-BODY": "Template Html",
-
+ 
         "EMAIL-PARAMETERS": "Email Parameters",
         "PARAMETER": "Parameter",
         "PARAMETER-DESC": "Description",
-
         "PARAMETER1": "This variable is used to be replaced with the Company name",
         "PARAMETER2": "This variable is used to be replaced with the Service name",
         "PARAMETER3": "This variable is used to be replaced with the End date",
 
+        "EMAIL-TEMPLATES": "Email Templates Settings",
+        "SEARCH-TEMPLATE": "Search Template",
+        "EDIT-EMAIL-TEMPLATE": "Edit Template",
+        "EDIT-EMAIL-TEMPLATE-DESC": "Click here to manage the email template",
+        "CREATE-TEMPLATE": "Create Template",
+        "EDIT-TEMPLATE": "Edit Template",
+        "TEMPLATE-NAME": "Template Name",
+        "TEMPLATE-BODY": "Template Html",
+   
+        "EMAIL-INTERVALS": "Email Intervals",
+        "SEARCH-INTERVAL": "Search Interval",
+        "EDIT-EMAIL-INTERVAL": "Edit Interval",
+        "EDIT-EMAIL-INTERVAL-DESC": "Click here to edit this email interval",
+        "CREATE-INTERVAL": "Create Interval",
+        "EDIT-INTERVAL": "Edit Interval",
+        "INTERVAL-DAYS": "Interval Days",
+        "INTERVAL-TYPE": "Type",
+        "INTERVAL-TEMPLATE": "Template Name",
+      
+        "DELETE": "Delete",
         "SAVE": "Save"
       }
     },
@@ -297,7 +307,8 @@
       "DELETE": "Delete",
       "ADMIN": {
         "USERS": "Manage Users",
-        "CREATE-USER": "Create User"
+        "CREATE-USER": "Create User",
+        "ROLE": "Roles"
       },
       "USER-MANAGEMENT": {
         "CREATE-USER": "Create User",
@@ -409,6 +420,7 @@
       "CONFIRMATION": {
         "DELETE-COMPANY": "Are you sure you want to delete this company?",
         "DELETE-EMAIL-TEMPLATE": "¿Are you sure you want to delete this template?",
+        "DELETE-EMAIL-INTERVAL": "¿Are you sure you want to delete this interval?",
         "DELETE-SERVICE-CONTRACT": "Are you sure you want to delete this contract?",
         "DELETE-SERVICE-CONTRACT-TERM": "Are you sure you want to delete this period?",
         "DELETE-SERVICE": "Are you sure you want to delete this service?",
@@ -429,6 +441,7 @@
         "CREATE": {
           "COMPANY": "Company created successfully",
           "EMAIL-TEMPLATE": "Template created successfully",
+          "EMAIL-INTERVAL": "Interval created successfully",
           "SERVICE-CONTRACT": "Contract created successfully",
           "SERVICE-CONTRACT-TERM": "Period created successfully",
           "SERVICE": "Service created successfully",
@@ -442,6 +455,7 @@
         "EDIT": {
           "COMPANY": "Company updated successfully",
           "EMAIL-TEMPLATE": "Template updated successfully",
+          "EMAIL-INTERVAL": "Interval updated successfully",
           "SERVICE-CONTRACT": "Contract updated successfully",
           "SERVICE-CONTRACT-TERM": "Period updated successfully",
           "SERVICE": "Service updated successfully",
@@ -455,6 +469,7 @@
         "DELETE": {
           "COMPANY": "Company deleted successfully",
           "EMAIL-TEMPLATE": "Template deleted successfully",
+          "EMAIL-INTERVAL": "Interval deleted successfully",
           "SERVICE-CONTRACT": "Contract deleted successfully",
           "SERVICE-CONTRACT-TERM": "Period deleted successfully",
           "SERVICE": "Service deleted successfully",

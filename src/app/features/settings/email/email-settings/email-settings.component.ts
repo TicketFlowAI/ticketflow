@@ -13,6 +13,7 @@ import { faArrowLeft, faPencil, faPlus, faX } from '@fortawesome/free-solid-svg-
 import { AllEmailTemplatesComponent } from "../email-template/all-email-templates/all-email-templates.component";
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
+import { AllEmailIntervalsComponent } from "../email-interval/all-email-intervals/all-email-intervals.component";
 
 @Component({
   selector: 'app-email-settings',
@@ -29,7 +30,8 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
     MatIconModule,
     FaIconComponent,
     AllEmailTemplatesComponent,
-    GlobalSpinnerComponent
+    GlobalSpinnerComponent,
+    AllEmailIntervalsComponent
 ],
   templateUrl: './email-settings.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
