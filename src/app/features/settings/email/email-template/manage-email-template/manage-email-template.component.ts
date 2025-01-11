@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
+import { FieldErrorRequiredComponent } from "../../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 
 @Component({
   selector: 'app-manage-email-template',
@@ -25,8 +26,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatButtonModule
-  ],
+    MatButtonModule,
+    FieldErrorRequiredComponent
+],
   templateUrl: './manage-email-template.component.html',
   styleUrl: './manage-email-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

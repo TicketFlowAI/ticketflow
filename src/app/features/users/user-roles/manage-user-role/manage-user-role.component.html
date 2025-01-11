@@ -18,8 +18,13 @@
                 <mat-form-field>
                     <mat-label>{{t('ROLE-PERMISSIONS')}}</mat-label>
                     <mat-select [formControl]="permissionsFormControl" multiple>
-                        @for (permission of permissions; track permission) {
-                            <mat-option [value]="permission">{{permission}}</mat-option>
+                        @for (permission of permissions; track permission.name) {
+                            @if(selectedPermissions(permission.name)) {
+                                <mat-option [value]="permission.name">{{permission.name}}</mat-option>
+                            }
+                            @else {
+                                <mat-option  [value]="permission.name">{{permission.name}}</mat-option>
+                            }   
                         }
                     </mat-select>
                     <mat-icon matSuffix>checklist_rtl</mat-icon>

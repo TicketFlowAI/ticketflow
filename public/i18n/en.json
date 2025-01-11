@@ -30,12 +30,19 @@
         "EDIT-EMAIL-TEMPLATE": "Edit Template",
         "EDIT-EMAIL-TEMPLATE-DESC": "Click here to manage the email template",
         "DELETE": "Delete",
-
         "CREATE-TEMPALTE": "Create Template",
         "EDIT-TEMPLATE": "Edit Template",
-
         "TEMPLATE-NAME": "Template Name",
         "TEMPLATE-BODY": "Template Html",
+
+        "EMAIL-PARAMETERS": "Email Parameters",
+        "PARAMETER": "Parameter",
+        "PARAMETER-DESC": "Description",
+
+        "PARAMETER1": "This variable is used to be replaced with the Company name",
+        "PARAMETER2": "This variable is used to be replaced with the Service name",
+        "PARAMETER3": "This variable is used to be replaced with the End date",
+
         "SAVE": "Save"
       }
     },
@@ -45,41 +52,28 @@
         "EMAIL-PLACEHOLDER": "Enter your email...",
         "EMAIL-VALIDATOR-REQUIRED": "Enter an email address",
         "EMAIL-VALIDATOR-EMAIL": "Enter a valid email",
-
         "PASSWORD-TITLE": "Password",
         "PASSWORD-PLACEHOLDER": "Enter your password...",
         "PASSWORD-VALIDATOR-REQUIRED": "Enter a password",
-
         "ACCOUNT": "Account",
         "LOGIN": "Login",
         "CREATE-ACCOUNT": "Create Account",
         "RECOVER-PASSWORD": "Recover my password",
         "REGISTER": "Create an account",
-
         "COMPANY": "My Companies"
       },
-      "REGISTER": {
-
-      },
-      "CHANGE-PASSWORD": {
-
-      },
-      "VERIFY": {
-
-      }
+      "REGISTER": {},
+      "CHANGE-PASSWORD": {},
+      "VERIFY": {}
     },
     "COMPANY": {
       "SEARCH": "Search...",
-
       "SERVICE-CONTRACT": "Services Contracted",
       "SERVICE-CONTRACT-DESC": "Click here to manage the contracted services for this company",
-
       "READ-COMPANY-INFO": "Company Details",
       "READ-COMPANY-INFO-DESC": "Click here to see all the informatión releated to this company",
-
       "UPDATE-COMPANY-INFO": "Update Company",
       "UPDATE-COMPANY-INFO-DESC": "Click here to update your company information",
-
       "ADMIN": {
         "COMPANIES": "Companies",
         "NEW-COMPANY": "Create a company"
@@ -92,7 +86,6 @@
         "COMPANIES": "My Companies",
         "NEW-COMPANY": "Create a company"
       },
-
       "COMPANY-MANAGEMENT": {
         "CREATE-COMPANY": "Create Company",
         "EDIT-COMPANY": "Edit Company",
@@ -119,33 +112,25 @@
     },
     "TICKETS": {
       "SEARCH": "Search...",
-
       "SEE-CONVERSATION": "Look",
       "STATUS-OPEN": "Open",
       "STATUS-CLOSED": "Closed",
-
       "READ-TICKET-INFO": "View Details",
       "READ-TICKET-INFO-DESC": "Click here to view the ticket information",
-
       "READ-TICKET-TECHNICIAN-HISTORY": "View Historic",
       "READ-TICKET-TECHNICIAN-HISTORY-DESC": "Click here to view the history of technicians for whom this ticket has passed.",
-
       "EDIT-TICKET-INFO": "Edit Ticket",
       "EDIT-TICKET-INFO-DESC": "Click here to edit the ticket",
-
       "CLOSE-TICKET": "Close Ticket",
       "CLOSE-TICKET-DESC": "Click here to close the ticket if the user's request was met",
-
       "REASSIGN": "Reassignment",
       "CLOSE": "Close",
       "DELETE": "Delete",
-      
       "ADMIN": {
         "TICKETS": "Manage Tickets",
         "CREATE-TICKET": "New Ticket",
         "MANAGE-TICKET-MESSAGES": "View Messages"
       },
-
       "TICKET-MANAGEMENT": {
         "CREATE-TICKET": "Create Ticket",
         "EDIT-TICKET": "Edit Ticket",
@@ -156,11 +141,10 @@
         "NO": "No",
         "TICKET-COMPLEXITY": "Complexity",
         "TICKET-USER": "User",
-        "TICKET-COMPANY": "Company", 
-        "TICKET-SERVICE": "Service", 
+        "TICKET-COMPANY": "Company",
+        "TICKET-SERVICE": "Service",
         "SAVE": "Save"
       },
-
       "TICKET-INFO": {
         "TITLE": "Ticket Information",
         "TICKET-TITLE": "Title",
@@ -168,8 +152,8 @@
         "TICKET-HUMAN-INTERACTION": "Needs Human Interaction",
         "TICKET-COMPLEXITY": "Complexity",
         "TICKET-USER": "User",
-        "TICKET-COMPANY": "Company", 
-        "TICKET-SERVICE": "Service", 
+        "TICKET-COMPANY": "Company",
+        "TICKET-SERVICE": "Service",
         "RETURN": "Return"
       },
       "TICKET-TECHNICIAN-HISTORY": {
@@ -180,34 +164,27 @@
       }
     },
     "TICKET-MESSAGES": {
-
       "ADMIN": {
         "TICKET-MESSAGES": "Messages to Client"
       },
       "CLIENT": {
         "TICKET-MESSAGES": "Messages to Support"
       },
-
       "NEW-MESSAGE": "New Message",
       "RETURN": "Return"
     },
     "SERVICE-CONTRACTS": {
       "SEARCH": "Search...",
-  
       "READ-SERVICE-CONTRACT-INFO": "View Details",
       "READ-SERVICE-CONTRACT-INFO-DESC": "Click here to view the service contract information",
-  
       "EDIT-SERVICE-CONTRACT-INFO": "Edit Service Contract",
       "EDIT-SERVICE-CONTRACT-INFO-DESC": "Click here to edit the service contract",
-  
       "DELETE": "Delete",
-      
       "ADMIN": {
         "SERVICE-CONTRACTS": "Manage Contracts",
         "CREATE-SERVICE-CONTRACT": "Create Contract",
         "MANAGE-SERVICE-CONTRACT-TERMS": "Terms"
       },
-  
       "SERVICE-CONTRACT-MANAGEMENT": {
         "CREATE-SERVICE-CONTRACT": "Create Service Contract",
         "EDIT-SERVICE-CONTRACT": "Edit Service Contract",
@@ -216,7 +193,6 @@
         "SERVICE-CONTRACT-TERM": "Term",
         "SAVE": "Save"
       },
-  
       "SERVICE-CONTRACT-INFO": {
         "TITLE": "Service Contract Information",
         "SERVICE-CONTRACT-COMPANY": "Company",
@@ -227,12 +203,9 @@
     },
     "SERVICE-CONTRACT-TERMS": {
       "SEARCH": "Search...",
-
       "EDIT-SERVICE-CONTRACT-TERM-INFO": "Edit Term",
       "EDIT-SERVICE-CONTRACT-TERM-INFO-DESC": "Click here to edit the term",
-
       "DELETE": "Delete",
-      
       "ADMIN": {
         "SERVICE-CONTRACT-TERMS": "Manage Terms",
         "RETURN": "Return",
@@ -240,7 +213,6 @@
         "MONTH": "Month",
         "MONTHS": "Months"
       },
-
       "SERVICE-CONTRACT-TERM-MANAGEMENT": {
         "CREATE-SERVICE-CONTRACT-TERM": "Create Term",
         "EDIT-SERVICE-CONTRACT-TERM": "Edit Term",
@@ -251,22 +223,17 @@
     },
     "SERVICES": {
       "SEARCH": "Search...",
-
       "READ-SERVICE-INFO": "View Details",
       "READ-SERVICE-INFO-DESC": "Click here to see the complete service info",
-
       "EDIT-SERVICE-INFO": "Edit Service",
       "EDIT-SERVICE-INFO-DESC": "Click here to edit this service",
-
       "DELETE": "Delete",
-
       "ADMIN": {
         "SERVICES": "Manage Services",
         "MANAGE-SERVICE-CATEGORIES": "Categories",
         "MANAGE-SERVICE-TAXES": "Taxes",
         "CREATE-SERVICE": "Create Service"
       },
-
       "SERVICE-MANAGEMENT": {
         "CREATE-SERVICE": "Create Service",
         "EDIT-SERVICE": "Edit Service",
@@ -287,18 +254,14 @@
     },
     "SERVICE-TAXES": {
       "SEARCH": "Search...",
-
       "EDIT-SERVICE-TAX-INFO": "Edit Tax",
       "EDIT-SERVICE-TAX-INFO-DESC": "Click here to edit the tax info",
-
       "DELETE": "Delete",
-
       "ADMIN": {
         "SERVICE-TAXES": "Manage Taxes",
         "RETURN-TO-SERVICES": "Return",
         "CREATE-SERVICE-TAX": "Create Tax"
       },
-
       "SERVICE-TAX-MANAGEMENT": {
         "CREATE-SERVICE-TAX": "Create Tax",
         "EDIT-SERVICE-TAX": "Edit Tax",
@@ -309,18 +272,14 @@
     },
     "SERVICE-CATEGORIES": {
       "SEARCH": "Search...",
-
       "EDIT-SERVICE-CATEGORY-INFO": "Edit Category",
       "EDIT-SERVICE-CATEGORY-INFO-DESC": "Click here to edit the category info",
-
       "DELETE": "Delete",
-
       "ADMIN": {
         "SERVICE-CATEGORIES": "Manage Categories",
         "RETURN-TO-SERVICES": "Return",
         "CREATE-SERVICE-CATEGORY": "Create Category"
       },
-
       "SERVICE-CATEGORY-MANAGEMENT": {
         "CREATE-SERVICE-CATEGORY": "Create Category",
         "EDIT-SERVICE-CATEGORY": "Edit Category",
@@ -330,20 +289,15 @@
     },
     "USERS": {
       "SEARCH": "Search...",
-
       "READ-USER-INFO": "User Info",
       "READ-USER-INFO-DESC": "Click here the see the user info",
-
       "EDIT-USER-INFO": "Edit User",
       "EDIT-USER-INFO-DESC": "Click here to edit the user info",
-
       "DELETE": "Delete",
-
       "ADMIN": {
         "USERS": "Manage Users",
         "CREATE-USER": "Create User"
       },
-
       "USER-MANAGEMENT": {
         "CREATE-USER": "Create User",
         "EDIT-USER": "Edit User",
@@ -366,21 +320,16 @@
     },
     "ROLES": {
       "SEARCH": "Search...",
-
       "READ-ROLE-INFO": "Ver Rol",
       "READ-USER-INFO-DESC": "Click here the see the role info",
-
       "EDIT-ROLE-INFO": "Edit Role",
       "EDIT-ROLE-INFO-DESC": "Click here to edit the role info",
-
       "DELETE": "Delete",
-
       "ADMIN": {
         "ROLES": "Manage Roles",
         "RETURN-TO-USERS": "Return",
         "CREATE-ROLE": "Create Role"
       },
-
       "ROLE-MANAGEMENT": {
         "CREATE-ROLE": "Create Role",
         "EDIT-ROLE": "Edit Role",
@@ -398,17 +347,14 @@
     "REPORTS": {
       "GLOBAL": "Global Report",
       "BY-TECHNICIAN": "Technician Report",
-
       "ADMIN": {
         "REPORTS": "Reports"
       },
-
       "GLOBAL-REPORT": {
         "SEARCH": "Filter by Date",
         "START-DATE": "Start Date",
         "END-DATE": "End Date"
       },
-
       "TECHNICIAN-REPORT": {
         "ADMIN": {
           "TITLE-LIST": "Techinicans list",
@@ -417,7 +363,6 @@
           "PERFORMANCE-REPORT-TITLE": "Go to Report",
           "PERFORMANCE-REPORT-DESC": "Click here to se the technician performance report",
           "TITLE-REPORT": "Techinician Report"
-          
         },
         "TECHNICIAN": {
           "TITLE": "My Report"
@@ -449,10 +394,8 @@
         "COMPANY": "My Companies",
         "TICKETS": "Support Tickets"
       },
-
       "ES": "Spanish",
       "EN": "English",
-
       "ACCOUNT": "Account",
       "LOGIN": "Login",
       "PROFILE": "My Profile",
@@ -472,7 +415,7 @@
         "DELETE-SERVICE-CATEGORY": "Are you sure you want to delete this category?",
         "DELETE-TICKET": "Are you sure you want to delete this ticket?",
         "DELETE-USER": "Are you sure you want to delete this user?",
-        "DELETE-ROLE":"Are you sure you want to delete this role?",
+        "DELETE-ROLE": "Are you sure you want to delete this role?",
         "CLOSE-TICKET": "Are you sure you want to close this ticket?",
         "REASSIGN-TICKET": "Are you sure you want to request a ticket reassignment?",
         "TITLE": "Confirmation",
@@ -527,9 +470,22 @@
         "CLOSE-TICKET-ERROR": "An error occurred while closing the ticket",
         "REASSIGN-TICKET-SUCCESS": "Ticket reassigned successfully",
         "REASSIGN-TICKET-ERROR": "An error occurred while reassigning the ticket",
-        "AUTHENTICATION-FAILED-SERVER-ERROR":  "A server side error ocurred, try again later",
-        "AUTHENTICATION-FAILED-CREDENTIALS": "Invalid credentials"
+        "AUTHENTICATION-FAILED-SERVER-ERROR": "A server side error ocurred, try again later",
+        "AUTHENTICATION-FAILED-CREDENTIALS": "Invalid credentials",
+        "FORM-INVALID": "Missing or invalid information. Check the submited data"
       }
+    },
+    "VALIDATIONS": {
+      "VALIDATION-REQUIRED-INPUT": "A value must be typed",
+      "VALIDATION-REQUIRED-SELECT": "An option must be selected",
+      "VALIDATION-INTEGER": "You must enter a positive integer",
+      "VALIDATION-DECIMAL": "You must enter a positive decimal with dot",
+      "VALIDATION-TEXT": "The text format is incorrect",
+      "VALIDATION-NOT-MATCH": "The fields don`t match",
+      "VALIDATION-EMAIL": "You must enter a valid email",
+      "VALIDATION-NUMBER": "You must enter numbers only",
+      "VALIDATION-FORMAT": "The format is invalid",
+      "VALIDATION-RUC": "The RUC format is incorrect."
     }
   }
 }

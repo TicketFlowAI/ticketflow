@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageService } from '../../../shared/services/message.service';
+import { FieldErrorRequiredComponent } from "../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { FieldErrorEmailComponent } from "../../../shared/components/form-validation/field-error-email/field-error-email.component";
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +19,9 @@ import { MessageService } from '../../../shared/services/message.service';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-  ],
+    FieldErrorRequiredComponent,
+    FieldErrorEmailComponent
+],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -35,8 +39,8 @@ export class ProfileComponent {
   nameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
   lastnameFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)]})
   emailFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]})
-  passwordFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required]})
-  confirmPasswordFormControl = new FormControl('', {nonNullable: true, validators: [Validators.required]})
+  passwordFormControl = new FormControl('', {nonNullable: true})
+  confirmPasswordFormControl = new FormControl('', {nonNullable: true})
 
   userForm = this.fb.group({
     username: this.nameFormControl,

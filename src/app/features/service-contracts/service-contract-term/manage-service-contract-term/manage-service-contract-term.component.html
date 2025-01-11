@@ -12,6 +12,9 @@
                     <mat-label>{{t('SERVICE-CONTRACT-TERM-TERM')}}</mat-label>
                     <input matInput [formControl]="termFormControl">
                     <mat-icon matSuffix>description</mat-icon>
+                    @if (termFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -19,6 +22,12 @@
                     <mat-label>{{t('SERVICE-CONTRACT-TERM-MONTHS')}}</mat-label>
                     <input type="number" matInput [formControl]="monthsFormControl">
                     <mat-icon matSuffix>date_range</mat-icon>
+                    @if (monthsFormControl.hasError('pattern')) {
+                        <field-error-integer-numbers></field-error-integer-numbers>
+                    }
+                    @if (monthsFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
         </form>
@@ -26,7 +35,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="serviceContractTermForm.invalid" (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

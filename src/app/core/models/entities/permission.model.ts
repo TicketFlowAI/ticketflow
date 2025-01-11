@@ -9,11 +9,13 @@ export interface IPermissionsModelResponse {
   }
   
   export interface IPermissionModel {
+    id: number
     name: string
   }
 
   export class PermissionModel implements IPermissionModel {
     constructor(
+      public id: number = 0,
       public name: string = '',
     ) {
     }

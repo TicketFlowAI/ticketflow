@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { MatDialogActions, MatDialogContent, MatDialogRef } from "@angular/material/dialog";
 import { TranslocoDirective } from "@jsverse/transloco";
-import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInput } from "@angular/material/input";
 import { MatIcon } from "@angular/material/icon";
@@ -11,6 +11,8 @@ import { AuthManagementService } from '../../../core/services/auth-management.se
 import { LoginRequest } from '../../../core/models/requests/login.request';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinner/dialog-spinner.component';
+import { FieldErrorEmailComponent } from '../../../shared/components/form-validation/field-error-email/field-error-email.component';
+import { FieldErrorRequiredComponent } from '../../../shared/components/form-validation/field-error-required/field-error-required.component';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,6 @@ import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinne
     TranslocoDirective,
     MatFormField,
     ReactiveFormsModule,
-    MatError,
     MatLabel,
     MatInput,
     MatIcon,
@@ -27,7 +28,9 @@ import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinne
     MatDialogContent,
     MatDialogActions,
     RouterLink,
-    DialogSpinnerComponent
+    DialogSpinnerComponent,
+    FieldErrorEmailComponent,
+    FieldErrorRequiredComponent
 ],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

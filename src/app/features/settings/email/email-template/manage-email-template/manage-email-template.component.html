@@ -11,6 +11,9 @@
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('TEMPLATE-NAME')}}</mat-label>
                     <input matInput [formControl]="templateNameFormControl">
+                    @if (templateNameFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -26,6 +29,9 @@
                     <button matSuffix mat-icon-button aria-label="Copy" (click)="openEditor()">
                         <mat-icon>edit_square</mat-icon>
                     </button>
+                    @if (bodyFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
         </form>
@@ -33,7 +39,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="emailTemplateForm.invalid" (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

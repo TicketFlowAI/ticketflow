@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -12,6 +12,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { faArrowLeft, faPencil, faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 import { AllEmailTemplatesComponent } from "../email-template/all-email-templates/all-email-templates.component";
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
+import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 
 @Component({
   selector: 'app-email-settings',
@@ -31,7 +32,6 @@ import { GlobalSpinnerComponent } from "../../../../shared/components/global-spi
     GlobalSpinnerComponent
 ],
   templateUrl: './email-settings.component.html',
-  styleUrl: './email-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmailSettingsComponent {
@@ -39,4 +39,10 @@ export class EmailSettingsComponent {
   protected readonly faPencil = faPencil;
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
+
+  private readonly dialogManagerService = inject(DialogManagerService)
+
+  openParametersInfo() {
+    this.dialogManagerService.openEmailParametersInfoDialog()
+  }
 }

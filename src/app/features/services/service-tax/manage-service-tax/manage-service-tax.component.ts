@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.model';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
+import { decimalWithDotValidator } from '../../../../shared/validators/custom-validators';
+import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { FieldErrorDecimalNumbersComponent } from "../../../../shared/components/form-validation/field-error-decimal-numbers/field-error-decimal-numbers.component";
 
 @Component({
   selector: 'app-manage-service-tax',
@@ -19,8 +22,10 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    FieldErrorRequiredComponent,
+    FieldErrorDecimalNumbersComponent
+],
   templateUrl: './manage-service-tax.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -30,7 +35,7 @@ export class ManageServiceTaxComponent {
   public serviceTaxData = inject<ServiceTaxModel | null>(MAT_DIALOG_DATA);
 
   taxDescriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  taxValueFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  taxValueFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required, decimalWithDotValidator] })
 
   serviceTaxForm = new FormGroup({
     description: this.taxDescriptionFormControl,

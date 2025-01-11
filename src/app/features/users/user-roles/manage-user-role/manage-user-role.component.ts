@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { PermissionModel } from '../../../../core/models/entities/permission.model';
 
 @Component({
   selector: 'app-manage-user-role',
@@ -30,17 +31,19 @@ export class ManageUserRoleComponent {
   private readonly userManagementService = inject(UserManagementService);
   private readonly cdr = inject(ChangeDetectorRef);
   public readonly dialogRef = inject(MatDialogRef<UserManagementService>);
-  public readonly userRoleData = inject<UserRoleModel | null>(MAT_DIALOG_DATA);
+  public userRoleData = inject<UserRoleModel | null>(MAT_DIALOG_DATA);
+
+  public permission: PermissionModel[] = []
 
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  permissionsFormControl = new FormControl([''], { nonNullable: true, validators: [Validators.required] })
+  permissionsFormControl = new FormControl(this.permission, { nonNullable: true, validators: [Validators.required] })
 
   userRoleForm = new FormGroup({
     name: this.nameFormControl,
     permissions: this.permissionsFormControl,
   })
 
-  permissions: string[] = []
+  permissions: PermissionModel[] = []
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
@@ -50,6 +53,11 @@ export class ManageUserRoleComponent {
     this.loadPermissions()
 
     if (this.userRoleData) {
+      this.userManagementService.getOneUserRole(this.userRoleData.id).subscribe({
+        next: (response) => {
+          this.userRoleData = response;
+        }
+      })
       this.nameFormControl.setValue(this.userRoleData.name)
       this.permissionsFormControl.setValue(this.userRoleData.permissions)
     }
@@ -65,6 +73,19 @@ export class ManageUserRoleComponent {
         this.permissions = permissions
       }
     })
+  }
+
+  selectedPermissions(permissionName: string): boolean {
+    if(this.userRoleData == null) return false;
+
+    console.log(permissionName)
+    console.log(this.userRoleData.permissions)
+    var foundItems = this.userRoleData.permissions.filter(p => p.name == permissionName)
+    console.log(foundItems)
+    if(foundItems.length > 0)
+      return true;
+    else
+      return false
   }
 
   onSaveClick(): void {

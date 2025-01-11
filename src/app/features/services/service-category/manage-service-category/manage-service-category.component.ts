@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
+import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 
 @Component({
   selector: 'app-manage-service-category',
@@ -19,8 +20,9 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    FieldErrorRequiredComponent
+],
   templateUrl: './manage-service-category.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

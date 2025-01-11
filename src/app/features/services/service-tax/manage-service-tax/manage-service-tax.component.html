@@ -11,10 +11,16 @@
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('SERVICE-TAX-DESC')}}</mat-label>
                     <input matInput [formControl]="taxDescriptionFormControl">
+                    @if (taxDescriptionFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('SERVICE-TAX-VALUE')}}</mat-label>
                     <input matInput [formControl]="taxValueFormControl">
+                    @if (taxValueFormControl.hasError('invalidDecimal')) {
+                        <field-error-decimal-numbers></field-error-decimal-numbers>
+                    }
                 </mat-form-field>
             </div>
         </form>
@@ -22,7 +28,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="serviceTaxForm.invalid " (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

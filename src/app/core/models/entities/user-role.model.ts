@@ -13,14 +13,14 @@ export interface IUserRolesModelResponse {
   export interface IUserRoleModel {
     id: number;
     name: string;
-    permissions: string[]
+    permissions: IPermissionModel[]
   }
 
   export class UserRoleModel implements IUserRoleModel {
     constructor(
       public id: number = 0,
       public name: string = '',
-      public permissions: string[] = [],
+      public permissions: PermissionModel[] = [],
     ) {
     }
   }

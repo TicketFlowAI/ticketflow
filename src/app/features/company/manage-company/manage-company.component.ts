@@ -14,6 +14,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
 import { DialogSpinnerComponent } from "../../../shared/components/dialog-spinner/dialog-spinner.component";
+import { FieldErrorEmailComponent } from "../../../shared/components/form-validation/field-error-email/field-error-email.component";
+import { FieldErrorRequiredComponent } from "../../../shared/components/form-validation/field-error-required/field-error-required.component";
 
 @Component({
   selector: 'app-manage-company',
@@ -27,7 +29,9 @@ import { DialogSpinnerComponent } from "../../../shared/components/dialog-spinne
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    DialogSpinnerComponent
+    DialogSpinnerComponent,
+    FieldErrorEmailComponent,
+    FieldErrorRequiredComponent
 ],
   templateUrl: './manage-company.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

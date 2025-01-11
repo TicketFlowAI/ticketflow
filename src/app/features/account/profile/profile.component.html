@@ -1,5 +1,5 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.ACCOUNT.PROFILE'">
-    <div class="profile container pt-4">
+    <div class="profile container py-4">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="d-flex align-items-center">
@@ -50,6 +50,9 @@
                 <div class="row">
                     <mat-form-field class="" appearance="fill">
                         <input matInput [formControl]="nameFormControl">
+                        @if (nameFormControl.hasError('required')) {
+                            <field-error-required></field-error-required>
+                        }
                     </mat-form-field>
                 </div>
             </div>
@@ -60,6 +63,9 @@
                 <div class="row">
                     <mat-form-field appearance="fill">
                         <input matInput [formControl]="lastnameFormControl">
+                        @if (lastnameFormControl.hasError('required')) {
+                            <field-error-required></field-error-required>
+                        }
                     </mat-form-field>
                 </div>
             </div>
@@ -73,6 +79,12 @@
                 <div class="row">
                     <mat-form-field appearance="fill">
                         <input matInput [formControl]="emailFormControl">
+                        @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                            <field-error-email></field-error-email>
+                        }
+                        @if (emailFormControl.hasError('required')) {
+                            <field-error-required></field-error-required>
+                        }
                     </mat-form-field>
                 </div>
             </div>
@@ -102,11 +114,10 @@
             </div>
         </div>
 
-
         <div class="row justify-content-center mt-2">
             <div class="col-md-4">
                 <div class="row mx-3">
-                    <button (click)="saveInfo()" class="btn btn-primary">{{t('SAVE')}}</button>
+                    <button (click)="saveInfo()" class="btn btn-primary" [disabled]="userForm.invalid">{{t('SAVE')}}</button>
                 </div>
             </div>
         </div>

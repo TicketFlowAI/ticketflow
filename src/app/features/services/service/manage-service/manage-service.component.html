@@ -11,14 +11,23 @@
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('SERVICE-DESC')}}</mat-label>
                     <input matInput [formControl]="descriptionFormControl">
+                    @if (descriptionFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('SERVICE-PRICE')}}</mat-label>
-                    <input matInput type="number" class="text-end" [formControl]="priceFormControl">
+                    <input matInput type="text" class="text-end" [formControl]="priceFormControl">
                     <span matTextPrefix>$&nbsp;</span>
                     <span class="ms-2" matTextSuffix> USD</span>
+                    @if (priceFormControl.hasError('invalidDecimal') && !priceFormControl.hasError('required')) {
+                        <field-error-decimal-numbers></field-error-decimal-numbers>
+                    }
+                    @if (priceFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -29,6 +38,9 @@
                             <mat-option [value]="category.id">{{category.category}}</mat-option>
                         }
                     </mat-select>
+                    @if (categoryFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                   </mat-form-field>
             </div>
             <div class="row">
@@ -39,6 +51,9 @@
                             <mat-option [value]="tax.id">{{tax.description}} {{tax.value | percent}}</mat-option>
                         }
                     </mat-select>
+                    @if (categoryFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                   </mat-form-field>
             </div>
         </form>
@@ -46,7 +61,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="serviceForm.invalid" (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

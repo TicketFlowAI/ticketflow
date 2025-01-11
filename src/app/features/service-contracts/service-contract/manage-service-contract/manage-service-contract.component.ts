@@ -20,6 +20,8 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
 import { CompanyModel } from '../../../../core/models/entities/company.model';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
+import { FieldErrorRequiredSelectComponent } from "../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component";
+import { notZeroValidator } from '../../../../shared/validators/custom-validators';
 
 @Component({
   selector: 'app-manage-service-contract',
@@ -32,8 +34,9 @@ import { ServiceContractDialogData } from '../../../../core/models/dialogs/servi
     MatFormFieldModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule
-  ],
+    MatSelectModule,
+    FieldErrorRequiredSelectComponent
+],
   templateUrl: './manage-service-contract.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,9 +49,9 @@ export class ManageServiceContractComponent {
   readonly dialogRef = inject(MatDialogRef<ManageServiceContractComponent>);
   readonly data = inject<ServiceContractDialogData>(MAT_DIALOG_DATA);
 
-  companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  serviceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  serviceContactTermFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  companyFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
+  serviceFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
+  serviceContactTermFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
 
   serviceContractForm = new FormGroup({
     company: this.companyFormControl,

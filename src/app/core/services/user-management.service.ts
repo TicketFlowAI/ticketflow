@@ -7,6 +7,7 @@ import { MessageService } from '../../shared/services/message.service';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { UserRoleService } from '../api/servicios-mindsoftdev/user-role.service';
 import { UserRoleModel } from '../models/entities/user-role.model';
+import { PermissionModel } from '../models/entities/permission.model';
 
 @Injectable({
   providedIn: 'root'
@@ -165,11 +166,11 @@ export class UserManagementService {
     )
   }
 
-  getAllPermissions(): Observable<string[] | []> {
+  getAllPermissions(): Observable<PermissionModel[] | []> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
     return this.userRoleService.getPermissions().pipe(
-      map((permissions) => permissions),
+      map((permissions) => permissions.data),
       catchError(() => {
         return of([]);
       }),

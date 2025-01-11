@@ -30,12 +30,19 @@
         "EDIT-EMAIL-TEMPLATE": "Editar Plantilla",
         "EDIT-EMAIL-TEMPLATE-DESC": "De clic aquí para poder ver editar esta plantilla de correo",
         "DELETE": "Eliminar",
-
         "CREATE-TEMPALTE": "Crear Plantilla",
         "EDIT-TEMPLATE": "Editar Plantilla",
-
         "TEMPLATE-NAME": "Nombre de la Plantilla",
         "TEMPLATE-BODY": "Html de la Plantilla",
+
+        "EMAIL-PARAMETERS": "Parametros de Correos",
+        "PARAMETER": "Parametro",
+        "PARAMETER-DESC": "Descripción",
+
+        "PARAMETER1": "Esta variable se utiliza para ser reemplazada por el nombre de la Empresa",
+        "PARAMETER2": "Esta variable se utiliza para ser reemplazada por el nombre del Servicio",
+        "PARAMETER3": "Esta variable se utiliza para ser reemplazada por la fecha de finalización",
+
         "SAVE": "Guardar"
       }
     },
@@ -45,35 +52,26 @@
         "EMAIL-PLACEHOLDER": "Ingresa tu correo...",
         "EMAIL-VALIDATOR-REQUIRED": "Ingrese un correo electrónico",
         "EMAIL-VALIDATOR-EMAIL": "Ingrese un correo válido",
-
         "PASSWORD-TITLE": "Contraseña",
         "PASSWORD-PLACEHOLDER": "Ingresa tu contraseña...",
         "PASSWORD-VALIDATOR-REQUIRED": "Ingrese una contraseña",
-
         "ACCOUNT": "Cuenta",
         "LOGIN": "Iniciar Sesión",
         "CREATE-ACCOUNT": "Crear Cuenta",
         "RECOVER-PASSWORD": "Recuperar mi contraseña",
         "REGISTER": "Crea una cuenta",
-
         "COMPANY": "Mis Empresas"
       },
-      "CHANGE-PASSWORD": {
-
-      }
+      "CHANGE-PASSWORD": {}
     },
     "COMPANY": {
       "SEARCH": "Buscar...",
-      
       "SERVICE-CONTRACT": "Servicios Contratados",
       "SERVICE-CONTRACT-DESC": "De clic aquí para poder administrar los servicios contratados",
-
       "READ-COMPANY-INFO": "Ver Detalles",
       "READ-COMPANY-INFO-DESC": "De clic aquí para poder ver la información de su empresa",
-
       "UPDATE-COMPANY-INFO": "Actualizar Información",
       "UPDATE-COMPANY-INFO-DESC": "De clic aquí para poder actulizar la información de su compañia",
-
       "ADMIN": {
         "COMPANIES": "Empresas",
         "NEW-COMPANY": "Crear una empresa"
@@ -86,7 +84,6 @@
         "COMPANIES": "Mis Empresas",
         "NEW-COMPANY": "Crear una empresa"
       },
-
       "COMPANY-MANAGEMENT": {
         "CREATE-COMPANY": "Crear Empresa",
         "EDIT-COMPANY": "Editar Empresa",
@@ -113,33 +110,25 @@
     },
     "TICKETS": {
       "SEARCH": "Buscar...",
-
       "SEE-CONVERSATION": "Ver",
       "STATUS-OPEN": "Abierto",
       "STATUS-CLOSED": "Cerrado",
-
       "READ-TICKET-INFO": "Ver Detalles",
       "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
-
       "READ-TICKET-TECHNICIAN-HISTORY": "Ver Historial",
       "READ-TICKET-TECHNICIAN-HISTORY-DESC": "De clic aquí para poder ver el historial de técnicos por los que ha pasado este ticket",
-
       "EDIT-TICKET-INFO": "Editar Ticket",
       "EDIT-TICKET-INFO-DESC": "De clic aquí para poder editar el ticket",
-
       "CLOSE-TICKET": "Cerrar Ticket",
       "CLOSE-TICKET-DESC": "De clic aquí para cerrar el ticket si ya se completo la atención al usuario",
-
       "REASSIGN": "Reasignación",
       "CLOSE": "Cerrar",
       "DELETE": "Borrar",
-      
       "ADMIN": {
         "TICKETS": "Administrar Tickets",
         "CREATE-TICKET": "Nuevo Ticket",
         "MANAGE-TICKET-MESSAGES": "Ver Mensajes"
       },
-
       "TICKET-MANAGEMENT": {
         "CREATE-TICKET": "Crear Ticket",
         "EDIT-TICKET": "Editar Ticket",
@@ -148,12 +137,11 @@
         "TICKET-HUMAN-INTERACTION": "Necesita Interacción Humana",
         "TICKET-COMPLEXITY": "Complejidad",
         "TICKET-USER": "Usuario",
-        "TICKET-COMPANY": "Empresa", 
-        "TICKET-SERVICE": "Servicio", 
-        "TICKET-MESSAGE": "Mensaje", 
+        "TICKET-COMPANY": "Empresa",
+        "TICKET-SERVICE": "Servicio",
+        "TICKET-MESSAGE": "Mensaje",
         "SAVE": "Guardar"
       },
-
       "TICKET-INFO": {
         "TITLE": "Información del Ticket",
         "TICKET-TITLE": "Título",
@@ -163,8 +151,8 @@
         "NO": "No",
         "TICKET-COMPLEXITY": "Complejidad",
         "TICKET-USER": "Usuario",
-        "TICKET-COMPANY": "Empresa", 
-        "TICKET-SERVICE": "Servicio", 
+        "TICKET-COMPANY": "Empresa",
+        "TICKET-SERVICE": "Servicio",
         "RETURN": "Regresar"
       },
       "TICKET-TECHNICIAN-HISTORY": {
@@ -175,34 +163,27 @@
       }
     },
     "TICKET-MESSAGES": {
-
       "ADMIN": {
         "TICKET-MESSAGES": "Mensajes con Cliente"
       },
       "CLIENT": {
         "TICKET-MESSAGES": "Mensajes con Soporte"
       },
-
       "NEW-MESSAGE": "Nuevo Mensaje",
       "RETURN": "Regresar"
     },
     "SERVICE-CONTRACTS": {
       "SEARCH": "Buscar...",
-
       "READ-SERVICE-CONTRACT-INFO": "Ver Detalles",
       "READ-SERVICE-CONTRACT-INFO-DESC": "De clic aquí para poder ver la información del servicio contratado",
-
       "EDIT-SERVICE-CONTRACT-INFO": "Editar Servicio Contratado",
       "EDIT-SERVICE-CONTRACT-INFO-DESC": "De clic aquí para poder editar el servicio contratado",
-
       "DELETE": "Borrar",
-      
       "ADMIN": {
         "SERVICE-CONTRACTS": "Administrar Contrataciones",
         "CREATE-SERVICE-CONTRACT": "Nueva Contratación",
         "MANAGE-SERVICE-CONTRACT-TERMS": "Periodos"
       },
-
       "SERVICE-CONTRACT-MANAGEMENT": {
         "CREATE-SERVICE-CONTRACT": "Crear Servicio Contratado",
         "EDIT-SERVICE-CONTRACT": "Editar Servicio Contratado",
@@ -211,7 +192,6 @@
         "SERVICE-CONTRACT-TERM": "Periodo",
         "SAVE": "Guardar"
       },
-
       "SERVICE-CONTRACT-INFO": {
         "TITLE": "Información del Servicio Contratado",
         "SERVICE-CONTRACT-COMPANY": "Empresa",
@@ -222,12 +202,9 @@
     },
     "SERVICE-CONTRACT-TERMS": {
       "SEARCH": "Buscar...",
-
       "EDIT-SERVICE-CONTRACT-TERM-INFO": "Editar Periodo",
       "EDIT-SERVICE-CONTRACT-TERM-INFO-DESC": "De clic aquí para poder editar perido",
-
       "DELETE": "Borrar",
-      
       "ADMIN": {
         "SERVICE-CONTRACT-TERMS": "Administrar Periodos",
         "RETURN": "Regresar",
@@ -235,7 +212,6 @@
         "MONTH": "Mes",
         "MONTHS": "Meses"
       },
-
       "SERVICE-CONTRACT-TERM-MANAGEMENT": {
         "CREATE-SERVICE-CONTRACT-TERM": "Crear Periodo",
         "EDIT-SERVICE-CONTRACT-TERM": "Editar Periodo",
@@ -246,22 +222,17 @@
     },
     "SERVICES": {
       "SEARCH": "Buscar...",
-
       "READ-SERVICE-INFO": "Ver Detalles",
       "READ-SERVICE-INFO-DESC": "De clic aquí para poder ver la información del servicio",
-
       "EDIT-SERVICE-INFO": "Editar Servicio",
       "EDIT-SERVICE-INFO-DESC": "De clic aquí para poder editar el servicio",
-
       "DELETE": "Borrar",
-      
       "ADMIN": {
         "SERVICES": "Administrar Servicios",
         "MANAGE-SERVICE-CATEGORIES": "Categorías",
         "MANAGE-SERVICE-TAXES": "Impuestos",
         "CREATE-SERVICE": "Crear Servicio"
       },
-
       "SERVICE-MANAGEMENT": {
         "CREATE-SERVICE": "Crear Servicio",
         "EDIT-SERVICE": "Editar Servicio",
@@ -282,18 +253,14 @@
     },
     "SERVICE-TAXES": {
       "SEARCH": "Buscar...",
-
       "EDIT-SERVICE-TAX-INFO": "Editar Impuesto",
       "EDIT-SERVICE-TAX-INFO-DESC": "De clic aquí para editar el impuesto",
-
       "DELETE": "Borrar",
-
       "ADMIN": {
         "SERVICE-TAXES": "Manage Taxes",
         "RETURN-TO-SERVICES": "Regresar",
         "CREATE-SERVICE-TAX": "Create Tax"
       },
-
       "SERVICE-TAX-MANAGEMENT": {
         "CREATE-SERVICE-TAX": "Crear Impuesto",
         "EDIT-SERVICE-TAX": "Editar Impuesto",
@@ -304,18 +271,14 @@
     },
     "SERVICE-CATEGORIES": {
       "SEARCH": "Buscar...",
-
       "EDIT-SERVICE-CATEGORY-INFO": "Editar Categoría",
       "EDIT-SERVICE-CATEGORY-INFO-DESC": "De clic aquí para editar la categoría",
-
       "DELETE": "Borrar",
-
       "ADMIN": {
         "SERVICE-CATEGORIES": "Administrar Categorías",
         "RETURN-TO-SERVICES": "Regresar",
         "CREATE-SERVICE-CATEGORY": "Crear Categoría"
       },
-
       "SERVICE-CATEGORY-MANAGEMENT": {
         "CREATE-SERVICE-CATEGORY": "Crear Categoría",
         "EDIT-SERVICE-CATEGORY": "Editar Categoría",
@@ -325,21 +288,16 @@
     },
     "USERS": {
       "SEARCH": "Buscar...",
-
       "READ-USER-INFO": "Información del usuario",
       "READ-USER-INFO-DESC": "De clic aquí para ver la información del usuario",
-
       "EDIT-USER-INFO": "Editar usuario",
       "EDIT-USER-INFO-DESC": "De clic aquí para editar la información del usuario",
-
       "DELETE": "Eliminar",
-
       "ADMIN": {
         "USERS": "Administrar usuarios",
         "ROLES": "Ver Roles",
         "CREATE-USER": "Crear usuario"
       },
-
       "USER-MANAGEMENT": {
         "CREATE-USER": "Crear usuario",
         "EDIT-USER": "Editar usuario",
@@ -362,21 +320,16 @@
     },
     "ROLES": {
       "SEARCH": "Buscar...",
-
       "READ-ROLE-INFO": "Ver Rol",
       "READ-ROLE-INFO-DESC": "De click aquí para ver más infomación del rol",
-
       "EDIT-ROLE-INFO": "Editar Rol",
       "EDIT-ROLE-INFO-DESC": "De click aquí para editar la infomación del rol",
-
       "DELETE": "Borrar",
-
       "ADMIN": {
         "ROLES": "Administrar Roles",
         "RETURN-TO-USERS": "Regresar",
         "CREATE-ROLE": "Crear Rol"
       },
-
       "ROLE-MANAGEMENT": {
         "CREATE-ROLE": "Crear Rol",
         "EDIT-ROLE": "Editar Rol",
@@ -394,17 +347,14 @@
     "REPORTS": {
       "GLOBAL": "Reporte General",
       "BY-TECHNICIAN": "Reporte por técnico",
-
       "ADMIN": {
         "REPORTS": "Reportes"
       },
-
       "GLOBAL-REPORT": {
         "SEARCH": "Filtrado por Fecha",
         "START-DATE": "Fecha de Inicio",
         "END-DATE": "Fecha de Fin"
       },
-
       "TECHNICIAN-REPORT": {
         "ADMIN": {
           "TITLE-LIST": "Técnicos Disponibles",
@@ -444,10 +394,8 @@
         "COMPANY": "Mis empresas",
         "TICKETS": "Tickets De Soporte"
       },
-
       "ES": "Español",
       "EN": "Inglés",
-
       "ACCOUNT": "Cuenta",
       "LOGIN": "Iniciar Sesión",
       "PROFILE": "Mi Perfil",
@@ -520,11 +468,24 @@
       "CUSTOM": {
         "CLOSE-TICKET-SUCCESS": "Se ha cerrado el ticket exitosamente",
         "CLOSE-TICKET-ERROR": "Ha ocurrido un error en el cierre del ticket",
-        "REASSIGN-TICKET-SUCCESS":  "Se ha reasignado el ticket exitosamente",
+        "REASSIGN-TICKET-SUCCESS": "Se ha reasignado el ticket exitosamente",
         "REASSIGN-TICKET-ERROR": "Ha ocurrido un error en la reasignación del ticket",
-        "AUTHENTICATION-FAILED-SERVER-ERROR":  "Ha ocurrido un error en el servidor, inténtelo más tarde",
-        "AUTHENTICATION-FAILED-CREDENTIALS": "Las credenciales son incorrectas"
+        "AUTHENTICATION-FAILED-SERVER-ERROR": "Ha ocurrido un error en el servidor, inténtelo más tarde",
+        "AUTHENTICATION-FAILED-CREDENTIALS": "Las credenciales son incorrectas",
+        "FORM-INVALID": "Información faltante o erronea, revise el formulario"
       }
+    },
+    "VALIDATIONS": {
+      "VALIDATION-REQUIRED-INPUT": "Este campo es requerido",
+      "VALIDATION-REQUIRED-SELECT": "Debe de escoger al menos una opción",
+      "VALIDATION-INTEGER": "Solo números enteros positivos",
+      "VALIDATION-DECIMAL": "Solo números decimales positivos con punto",
+      "VALIDATION-TEXT": "Debe de ingresar un texto válido",
+      "VALIDATION-NOT-MATCH": "Los campos no coinciden",
+      "VALIDATION-EMAIL": "Debe de ingresar un correo válido",
+      "VALIDATION-NUMBER": "Debe de ingresar únicamente números",
+      "VALIDATION-FORMAT": "El formato no es válido",
+      "VALIDATION-RUC": "El formato del RUC es incorrecto"
     }
   }
 }

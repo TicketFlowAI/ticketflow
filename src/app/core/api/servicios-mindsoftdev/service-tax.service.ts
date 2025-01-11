@@ -53,7 +53,7 @@ export class ServiceTaxService {
   }
 
   deleteServiceTax(id: number): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiServiceTax}/${id}`, {
       headers: customHeaders,
       withCredentials: true,

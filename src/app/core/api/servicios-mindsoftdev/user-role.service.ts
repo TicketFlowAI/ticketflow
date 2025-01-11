@@ -13,6 +13,7 @@ export class UserRoleService {
 //Variables
   private readonly BASE_URL = environment.apiEndpoint
   private readonly apiRole = this.BASE_URL + '/api/roles'
+  private readonly apiPermissions = this.BASE_URL + '/api/permissions'
 
   //Services
   http = inject(HttpClient)
@@ -27,9 +28,9 @@ export class UserRoleService {
     });
   }
 
-  getPermissions(): Observable<string[]> {
+  getPermissions(): Observable<IPermissionsModelResponse> {
     const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<string[]>(`${this.apiRole}/permissions`, {
+    return this.http.get<IPermissionsModelResponse>(`${this.apiPermissions}`, {
       headers: customHeader,
       withCredentials: true
     });

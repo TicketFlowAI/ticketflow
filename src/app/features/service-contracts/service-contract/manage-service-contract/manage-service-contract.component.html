@@ -16,6 +16,9 @@
                         }
                     </mat-select>
                     <mat-icon matSuffix>business</mat-icon>
+                    @if (companyFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                   </mat-form-field>
             </div>
             <div class="row">
@@ -27,6 +30,9 @@
                         }
                     </mat-select>
                     <mat-icon matSuffix>description</mat-icon>
+                    @if (serviceFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                   </mat-form-field>
             </div>
             <div class="row">
@@ -38,6 +44,9 @@
                         }
                     </mat-select>
                     <mat-icon matSuffix>date_range</mat-icon>
+                    @if (serviceContactTermFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                   </mat-form-field>
             </div>
         </form>
@@ -45,7 +54,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="serviceContractForm.invalid" (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

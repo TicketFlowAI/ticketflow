@@ -7,16 +7,23 @@
                     <h2>{{t('ADMIN.USERS')}}</h2>
                 </div>
             </div>
-            <div class="col-md-3 px-3 align-content-center">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button [routerLink]="['/roles']" type="button" class="btn btn-primary">
-                        {{t('ADMIN.ROLES')}}</button>
-                </div>
-            </div>
-            <div class="col-md-3 px-3 align-content-center">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openUserManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
-                        {{t('ADMIN.CREATE-USER')}}</button>
+            <div class="col-md-6">
+                <div class="row justify-content-end">
+                    @if(isAdmin) {
+                        <div class="col-md-5 px-3 align-content-center">
+                            <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                                <button [routerLink]="['/roles']" type="button" class="btn btn-primary">
+                                    {{t('ADMIN.ROLES')}}</button>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-md-5 px-3 align-content-center">
+                        <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                            <button type="button" class="btn btn-primary" (click)="openUserManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
+                                {{t('ADMIN.CREATE-USER')}}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,6 +13,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
+import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { FieldErrorIntegerNumbersComponent } from "../../../../shared/components/form-validation/field-error-integer-numbers/field-error-integer-numbers.component";
 
 @Component({
   selector: 'app-manage-service-contract-term',
@@ -25,8 +27,10 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    FieldErrorRequiredComponent,
+    FieldErrorIntegerNumbersComponent
+],
   templateUrl: './manage-service-contract-term.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -37,7 +41,7 @@ export class ManageServiceContractTermComponent {
   public readonly serviceContractTermData = inject<ServiceContractTermModel>(MAT_DIALOG_DATA);
 
   termFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  monthsFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  monthsFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required, Validators.pattern(/^\d+$/)] })
   
   serviceContractTermForm = new FormGroup({
     term: this.termFormControl,

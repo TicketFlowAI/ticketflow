@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -19,6 +18,10 @@ import { ServiceCategoryModel } from '../../../../core/models/entities/service-c
 import { catchError, forkJoin, of } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { decimalWithDotValidator, notZeroValidator } from '../../../../shared/validators/custom-validators';
+import { FieldErrorDecimalNumbersComponent } from "../../../../shared/components/form-validation/field-error-decimal-numbers/field-error-decimal-numbers.component";
+import { FieldErrorRequiredSelectComponent } from "../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component";
 
 @Component({
   selector: 'app-manage-service',
@@ -33,8 +36,11 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule
-  ],
+    MatSelectModule,
+    FieldErrorRequiredComponent,
+    FieldErrorDecimalNumbersComponent,
+    FieldErrorRequiredSelectComponent
+],
   templateUrl: './manage-service.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,9 +52,9 @@ export class ManageServiceComponent {
   public readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  priceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  categoryFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  taxFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  priceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required, decimalWithDotValidator] })
+  categoryFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
+  taxFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
 
   serviceForm = new FormGroup({
     description: this.descriptionFormControl,

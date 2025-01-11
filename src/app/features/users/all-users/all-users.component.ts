@@ -46,6 +46,8 @@ export class AllUsersComponent {
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly translocoService = inject(TranslocoService)
 
+  public isAdmin = false
+
   users: UserModel[] = []
   filteredUsers: UserModel[] = [];
   pagedUsers: UserModel[] = [];
@@ -56,6 +58,8 @@ export class AllUsersComponent {
 
   ngOnInit(): void {
     this.loadUsers();
+
+    this.isAdmin = this.userManagementService.isUserAdmin()
   }
 
   private loadUsers() {

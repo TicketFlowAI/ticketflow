@@ -9,6 +9,11 @@
             </div>
             <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button routerLinkActive="router-link-active" type="button" class="btn btn-primary" (click)="openParametersInfo()"> {{t('EMAIL-PARAMETERS')}}</button>
+                </div>
+            </div>
+            <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <button [routerLink]="['/settings']" routerLinkActive="router-link-active" type="button"
                         class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon> {{t('RETURN')}}</button>
                 </div>
