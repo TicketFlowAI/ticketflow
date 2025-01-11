@@ -7,6 +7,7 @@ import { TicketMessageModel } from '../models/entities/ticket-message.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { MessageService } from '../../shared/services/message.service';
 import { SpinnerService } from '../../shared/services/spinner.service';
+import { TicketHistoryModel } from '../models/entities/ticket-history.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,15 @@ export class TicketManagementService {
       map((ticket) => ticket.data),
       catchError(() => {
         return of(null);
+      })
+    )
+  }
+
+  getTicketHistory(id: number): Observable<TicketHistoryModel[] | []> {
+    return this.ticketService.getTicketHistory(id).pipe(
+      map((ticket) => ticket.data),
+      catchError(() => {
+        return of([]);
       })
     )
   }

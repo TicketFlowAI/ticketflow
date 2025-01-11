@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faPencil, faX, faPlus, faInfoCircle, faUsers} from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX, faPlus, faInfoCircle, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
@@ -34,7 +34,7 @@ import { UserManagementService } from '../../../../core/services/user-management
     MatIconModule,
     FaIconComponent,
     GlobalSpinnerComponent
-],
+  ],
   templateUrl: './all-tickets.component.html',
   styleUrl: './all-tickets.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -123,7 +123,7 @@ export class AllTicketsComponent {
 
   askForReassign(ticketId: number) {
     const closeMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.REASSIGN-TICKET');
-  
+
     this.dialogManagerService.openActionConfirmationDialog(closeMessage).pipe(
       concatMap((result) =>
         result ? this.handleReasignTicket(ticketId) : this.handleCancelDelete()
@@ -133,7 +133,7 @@ export class AllTicketsComponent {
 
   closeTicket(ticketId: number) {
     const closeMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.CLOSE-TICKET');
-  
+
     this.dialogManagerService.openActionConfirmationDialog(closeMessage).pipe(
       concatMap((result) =>
         result ? this.handleCloseTicket(ticketId) : this.handleCancelDelete()
@@ -141,9 +141,13 @@ export class AllTicketsComponent {
     ).subscribe();
   }
 
+  reOpenTicket(ticketId: number) {
+    this.handleOpenTicket(ticketId)
+  }
+
   deleteTicket(ticketId: number) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-TICKET');
-  
+
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
       concatMap((result) =>
         result ? this.handleDeleteTicket(ticketId) : this.handleCancelDelete()
@@ -162,13 +166,19 @@ export class AllTicketsComponent {
       tap(() => this.loadTickets())
     );
   }
-  
+
+  private handleOpenTicket(ticketId: number) {
+    return this.ticketManagementService.reassignTicket(ticketId).pipe(
+      tap(() => this.loadTickets())
+    );
+  }
+
   private handleDeleteTicket(ticketId: number) {
     return this.ticketManagementService.deleteTicket(ticketId).pipe(
       tap(() => this.loadTickets())
     );
   }
-  
+
   private handleCancelDelete() {
     return of(null);
   }
@@ -177,7 +187,7 @@ export class AllTicketsComponent {
     let data: TicketDialogData = { ticket, serviceContract: null }
     this.dialogManagerService.openManageTicketDialog(data).subscribe({
       next: (response) => {
-         if(response) this.loadTickets() 
+        if (response) this.loadTickets()
       }
     })
   }

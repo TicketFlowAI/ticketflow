@@ -16,6 +16,7 @@ import { CompanyManagementService } from '../../../core/services/company-managem
 import { DialogSpinnerComponent } from "../../../shared/components/dialog-spinner/dialog-spinner.component";
 import { FieldErrorEmailComponent } from "../../../shared/components/form-validation/field-error-email/field-error-email.component";
 import { FieldErrorRequiredComponent } from "../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { UserManagementService } from '../../../core/services/user-management.service';
 
 @Component({
   selector: 'app-manage-company',
@@ -38,6 +39,7 @@ import { FieldErrorRequiredComponent } from "../../../shared/components/form-val
 })
 export class ManageCompanyComponent {
   private readonly companyManagementService = inject(CompanyManagementService);
+  private readonly userManagementService = inject(UserManagementService);
   public readonly dialogRef = inject(MatDialogRef<ManageCompanyComponent>);
   public readonly companyData = inject<CompanyModel>(MAT_DIALOG_DATA);
 
@@ -76,6 +78,12 @@ export class ManageCompanyComponent {
       this.stateFormControl.setValue(this.company.state)
       this.cityFormControl.setValue(this.company.city)
     }
+
+    if(!this.userManagementService.isUserAdmin())
+    {
+      this.nameFormControl.disable()
+      this.dniFormControl.disable()
+    } 
   }
 
   onSaveClick(): void {

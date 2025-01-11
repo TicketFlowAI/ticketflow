@@ -54,7 +54,7 @@ export const routes: Routes = [
   {
     path: 'service-contract-term',
     component: AllServiceContractTermsComponent,
-    canActivate: [teamRoleGuard]
+    canActivate: [adminRoleGuard]
   },
   {
     path: 'services',

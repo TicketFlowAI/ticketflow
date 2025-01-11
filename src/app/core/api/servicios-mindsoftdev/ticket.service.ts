@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 import { ITicketsApiResponse, ITicketApiResponse } from '../../models/entities/ticket.model';
 import { Observable } from 'rxjs';
+import { ITicketHistoryApiResponse } from '../../models/entities/ticket-history.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,15 @@ export class TicketService {
     return this.http.get<ITicketApiResponse>(`${this.apiTickets}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
+    });
+  }
+
+  getTicketHistory(id: number): Observable<ITicketHistoryApiResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    console.log(customHeaders)
+    return this.http.get<ITicketHistoryApiResponse>(`${this.apiTickets}/history/${id}`, {
+      headers: customHeaders,
+      withCredentials: true
     });
   }
 

@@ -16,6 +16,7 @@ import { ServiceContractManagementService } from '../../../../core/services/serv
 import { concatMap, of, tap } from 'rxjs';
 import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
+import { UserManagementService } from '../../../../core/services/user-management.service';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class AllServiceContractsComponent {
   protected readonly faX = faX;
 
   private readonly serviceContractManagementService = inject(ServiceContractManagementService)
+  private readonly userManagementService = inject(UserManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
 
   private readonly cdr = inject(ChangeDetectorRef)
@@ -55,12 +57,17 @@ export class AllServiceContractsComponent {
   filteredServiceContracts: ServiceContractModel[] = [];
   pagedServiceContracts: ServiceContractModel[] = [];
 
+  isAdmin: boolean = false;
+  isTechnician: boolean = false;
+
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
 
   ngOnInit() {
     this.loadServiceContracts()
+    this.isAdmin = this.userManagementService.isUserAdmin();
+    this.isTechnician = this.userManagementService.isUserTechnician();
   }
 
   loadServiceContracts() {

@@ -2,24 +2,9 @@
     <h2 class="fw-semibold" mat-dialog-title>{{t ('TITLE')}}</h2>
     <mat-dialog-content>
         <hr>
-        <div class="row">
-            <div class="col-8">
-                <p class="fs-4 fw-medium">{{t('TECHNICIAN-NAME')}}</p>
-            </div>
-            <div class="col-4">
-                <p class="fs-4 fw-medium">{{t('TECHNICIAN-REPORT')}}</p>
-            </div>
-        </div>
-        @for(technician of technicians; track technician.id) {
+        @for(item of ticketHistory; track item.id) {
             <div class="row">
-                <div class="col-8 align-content-center">
-                    <p class="fs-6">{{technician.name}} {{technician.lastname}}</p>
-                </div>
-                <div class="col-4 justify-content-center text-center">
-                    <button [routerLink]="['/performance-report/', technician.id]" class="btn btn-secondary align-content-center">
-                        <mat-icon class="align-content-center">arrow_forward</mat-icon>
-                    </button>
-                </div>
+                <p class="fs-6"><mat-icon class="me-2">chevron_right</mat-icon> {{item.action}}</p>
             </div>
             <hr>
         }

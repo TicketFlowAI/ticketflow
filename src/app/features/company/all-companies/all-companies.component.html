@@ -73,15 +73,17 @@
                             </div>
                             <hr>
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="col-md-3">
-                                <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="deleteCompany(company.id)"> <fa-icon [icon]="faX"></fa-icon>
-                                        Borrar
-                                    </button>
+                        @if(isAdmin) {
+                            <div class="row justify-content-end">
+                                <div class="col-md-3">
+                                    <div class="row justify-content-end">
+                                        <button  type="button" class="btn btn-danger"(click)="deleteCompany(company.id)"> <fa-icon [icon]="faX"></fa-icon>
+                                            Borrar
+                                         </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }                   
                     </div>
                 </mat-expansion-panel>
                 }

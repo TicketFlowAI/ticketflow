@@ -15,6 +15,7 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
 import { RouterLink } from '@angular/router';
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
+import { UserManagementService } from '../../../../core/services/user-management.service';
 
 @Component({
   selector: 'app-all-services',
@@ -42,6 +43,7 @@ export class AllServicesComponent {
   protected readonly faX = faX;
 
   private readonly serviceManagementService = inject(ServiceManagementService)
+  private readonly userManagementService = inject(UserManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
 
   private readonly cdr = inject(ChangeDetectorRef)
@@ -51,12 +53,15 @@ export class AllServicesComponent {
   filteredServices: ServiceModel[] = [];
   pagedServices: ServiceModel[] = [];
 
+  isAdmin: boolean = false;
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
   
   ngOnInit(): void {
     this.loadServices()
+
+    this.isAdmin = this.userManagementService.isUserAdmin();
   }
 
   loadServices() {

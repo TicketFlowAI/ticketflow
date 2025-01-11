@@ -113,6 +113,7 @@
       "SEE-CONVERSATION": "Ver",
       "STATUS-OPEN": "Abierto",
       "STATUS-CLOSED": "Cerrado",
+      "STATUS-PROCESS": "En Proceso",
       "READ-TICKET-INFO": "Ver Detalles",
       "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
       "READ-TICKET-TECHNICIAN-HISTORY": "Ver Historial",
@@ -124,6 +125,7 @@
       "REASSIGN": "Reasignación",
       "CLOSE": "Cerrar",
       "DELETE": "Borrar",
+      "RE-OPEN": "Reabrir",
       "ADMIN": {
         "TICKETS": "Administrar Tickets",
         "CREATE-TICKET": "Nuevo Ticket",

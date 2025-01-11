@@ -7,7 +7,7 @@
                     <h2>{{t('ADMIN.USERS')}}</h2>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <div class="row justify-content-end">
                     @if(isAdmin) {
                         <div class="col-md-5 px-3 align-content-center">
@@ -72,15 +72,17 @@
                             </div>
                             <hr>
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="col-md-3">
-                                <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="deleteUsers(user.id)"> <fa-icon [icon]="faX"></fa-icon>
-                                        {{ t('DELETE')}}
-                                    </button>
+                        @if(isAdmin) {
+                            <div class="row justify-content-end">
+                                <div class="col-md-3">
+                                    <div class="row justify-content-end">
+                                        <button  type="button" class="btn btn-danger"(click)="deleteUsers(user.id)"> <fa-icon [icon]="faX"></fa-icon>
+                                            {{ t('DELETE')}}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }  
                     </div>
                 </mat-expansion-panel>
                 }

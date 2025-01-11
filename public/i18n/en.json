@@ -114,7 +114,7 @@
       "SEARCH": "Search...",
       "SEE-CONVERSATION": "Look",
       "STATUS-OPEN": "Open",
-      "STATUS-CLOSED": "Closed",
+      "STATUS-PROCESS": "In Process",
       "READ-TICKET-INFO": "View Details",
       "READ-TICKET-INFO-DESC": "Click here to view the ticket information",
       "READ-TICKET-TECHNICIAN-HISTORY": "View Historic",
@@ -125,6 +125,7 @@
       "CLOSE-TICKET-DESC": "Click here to close the ticket if the user's request was met",
       "REASSIGN": "Reassignment",
       "CLOSE": "Close",
+      "RE-OPEN": "Open",
       "DELETE": "Delete",
       "ADMIN": {
         "TICKETS": "Manage Tickets",
