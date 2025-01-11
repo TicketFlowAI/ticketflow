@@ -27,6 +27,11 @@ export class UserInfoComponent {
   public readonly dialogRef = inject(MatDialogRef<UserInfoComponent>);
   readonly user = inject<UserModel>(MAT_DIALOG_DATA);
 
+  roles: string[] | string = []
+
+  ngOnInit(): void {
+    this.roles = Array.isArray(this.user.role)? this.user.role : [this.user.role];
+  }
   onReturnClick(): void {
     this.dialogRef.close();
   }

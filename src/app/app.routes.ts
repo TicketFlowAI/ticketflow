@@ -19,6 +19,7 @@ import { EmailSettingsComponent } from './features/settings/email/email-settings
 import { GlobalReportComponent } from './features/reports/global-report/global-report.component';
 import { PerformanceReportComponent } from './features/reports/technician/performance-report/performance-report.component';
 import { AllUserRolesComponent } from './features/users/user-roles/all-user-roles/all-user-roles.component';
+import { AiSettingsComponent } from './features/settings/ai/ai-settings/ai-settings.component';
 
 export const routes: Routes = [
   {
@@ -29,7 +30,12 @@ export const routes: Routes = [
   {
     path: 'email-settings',
     component: EmailSettingsComponent,
-    canActivate: [teamRoleGuard],
+    canActivate: [adminRoleGuard],
+  },
+  {
+    path: 'ai-settings',
+    component: AiSettingsComponent,
+    canActivate: [adminRoleGuard],
   },
   {
     path: 'profile',

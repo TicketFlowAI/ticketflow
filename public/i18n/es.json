@@ -57,6 +57,10 @@
 
         "DELETE": "Eliminar",
         "SAVE": "Guardar"
+      },
+      "AI-SETTINGS": {
+        "AI-SETTINGS": "Configuración de IA",
+        "RETURN": "Regresar"
       }
     },
     "AUTH": {
@@ -320,7 +324,7 @@
         "USER-LASTNAME": "Apellido",
         "USER-EMAIL": "Correo electrónico",
         "USER-COMPANY": "Empresa",
-        "USER-ROLE": "Rol",
+        "USER-ROLE": "Roles",
         "SAVE": "Guardar"
       },
       "USER-INFO": {

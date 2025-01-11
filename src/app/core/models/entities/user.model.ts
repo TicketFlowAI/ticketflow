@@ -21,7 +21,7 @@ export interface IUserModel {
   lastname: string;
   email: string;
   company_id: number;
-  role: string
+  role: string[] | string
   company_name: string;
   password: string;
 }
@@ -33,7 +33,7 @@ export class UserModel implements IUserModel {
     public lastname: string = '',
     public email: string = '',
     public company_id: number = 0,
-    public role: string = '',
+    public role: string[] | string = [],
     public company_name: string = '',
     public password: string = ''
   ) {

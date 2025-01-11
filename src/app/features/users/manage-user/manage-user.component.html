@@ -33,12 +33,23 @@
                     <mat-label>{{t('USER-COMPANY')}}</mat-label>
                     <mat-select [formControl]="companyFormControl">
                         @for(company of companies; track company.id) {
-                            <mat-option [value]="company.id">{{company.name}}</mat-option>
+                        <mat-option [value]="company.id">{{company.name}}</mat-option>
                         }
                     </mat-select>
                     <mat-icon matSuffix>domain</mat-icon>
-                  </mat-form-field>
+                </mat-form-field>
             </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>{{t('USER-ROLE')}}</mat-label>
+                    <mat-select [formControl]="rolesFormControl" multiple>
+                        @for (role of roles; track role.name) {
+                            <mat-option [value]="role.name">{{role.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
         </form>
     </mat-dialog-content>
     <mat-dialog-actions class="row justify-content-center">

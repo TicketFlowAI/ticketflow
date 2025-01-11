@@ -16,6 +16,7 @@ import { UserModel } from '../../../core/models/entities/user.model';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
 import { CompanyModel } from '../../../core/models/entities/company.model';
 import { MatSelectModule } from '@angular/material/select';
+import { UserRoleModel } from '../../../core/models/entities/user-role.model';
 
 
 @Component({
@@ -42,30 +43,42 @@ export class ManageUserComponent {
   public readonly dialogRef = inject(MatDialogRef<UserManagementService>);
   public readonly userData = inject<UserModel | null>(MAT_DIALOG_DATA);
 
+  rolesInit: string[] | string = [];
+
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   lastnameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   emailFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] })
   companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  rolesFormControl = new FormControl(this.rolesInit, { nonNullable: true, validators: [Validators.required] })
 
   userForm = new FormGroup({
     name: this.nameFormControl,
     lastname: this.lastnameFormControl,
     email: this.emailFormControl,
     company: this.companyFormControl,
+    roles: this.rolesFormControl
   })
 
   companies: CompanyModel[] = []
+  roles: UserRoleModel[] = []
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(false);
     });
-    
+
     if (this.userData) {
       this.nameFormControl.setValue(this.userData.name)
       this.lastnameFormControl.setValue(this.userData.lastname)
       this.emailFormControl.setValue(this.userData.email)
       this.companyFormControl.setValue(this.userData.company_id)
+
+      if (this.userData.role) {
+        const roleNames = Array.isArray(this.userData.role)
+          ? this.userData.role // Si es un array de strings
+          : [this.userData.role]; // Si es un string único
+        this.rolesFormControl.setValue(roleNames);
+      }
     }
 
     this.companyManagementService.getAllCompanies().subscribe({
@@ -75,11 +88,18 @@ export class ManageUserComponent {
       }
     })
 
+    this.userManagementService.getAllUserRoles().subscribe({
+      next: (roles) => {
+        this.roles = roles
+        this.cdr.markForCheck()
+      }
+    })
+
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(false);
     });
   }
-
+  
   onSaveClick(): void {
     const formValue = this.userForm.value
     let user = new UserModel(
@@ -88,19 +108,21 @@ export class ManageUserComponent {
       formValue.lastname,
       formValue.email,
       formValue.company,
-      '',
+      formValue.roles,
       ''
     )
 
     if (this.userData) {
       user.id = this.userData.id
-      
+
       this.userManagementService.editUser(user)
-      .subscribe( () => { this.dialogRef.close(true) })
+        .subscribe(() => { this.dialogRef.close(true) })
     }
     else {
+      var datetime: Date = new Date()
+      user.password = 'Mindsoft' + datetime.getFullYear() + '#'
       this.userManagementService.addUser(user)
-      .subscribe( () => { this.dialogRef.close(true) })
+        .subscribe(() => { this.dialogRef.close(true) })
     }
   }
 }
