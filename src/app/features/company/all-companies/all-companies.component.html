@@ -2,17 +2,19 @@
     <app-global-spinner/>
     <div class="companies container py-4">
         <div class="row">
-            <div class="col-md-9 align-content-center">
+            <div [ngClass]="(isAdmin || isTech)? 'col-md-9' : 'col-md-12' " class="align-content-center">
                 <div class="row text-center text-md-start">
                     <h2>{{t('ADMIN.COMPANIES')}}</h2>
                 </div>
             </div>
-            <div class="col-md-3 align-content-center">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openCompanyManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
-                        {{t('ADMIN.NEW-COMPANY')}}</button>
+            @if(isAdmin || isTech) {
+                <div class="col-md-3 align-content-center">
+                    <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                        <button type="button" class="btn btn-primary" (click)="openCompanyManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
+                            {{t('ADMIN.NEW-COMPANY')}}</button>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div class="row mt-4">

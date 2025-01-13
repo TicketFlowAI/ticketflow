@@ -16,11 +16,52 @@
         </div>
 
         <div class="row mt-4">
-            <mat-form-field>
-                <mat-label>{{ t('SEARCH')}}</mat-label>
-                <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
+            <div [ngClass]="!showClientElement()? 'col-md-6' : 'col-md-12'" class="justify-content-center">
+                <mat-form-field class="w-100">
+                    <mat-label>{{ t('SEARCH')}}</mat-label>
+                    <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            @if(!showClientElement()) {
+            <div class="col-md-2 justify-content-center">
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>{{t('PRIORITY')}}</mat-label>
+                        <mat-select (selectionChange)="onPriorityOrder($event.value)">
+                            <mat-option value="asc">{{t('ASC')}}</mat-option>
+                            <mat-option value="desc">{{t('DESC')}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="col-md-2 justify-content-center">
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>{{t('COMPLEXITY')}}</mat-label>
+                        <mat-select (selectionChange)="onComplexityOrder($event.value)">
+                            <mat-option value="asc">{{t('ASC')}}</mat-option>
+                            <mat-option value="desc">{{t('DESC')}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="col-md-2 justify-content-center">
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>{{t('STATUS')}}</mat-label>
+                        <mat-select (selectionChange)="onStatusFilter($event.value)">
+                            <mat-option [value]="null">{{t('ALL')}}</mat-option>
+                            <mat-option [value]="0">{{t('STATUS-CLOSED')}}</mat-option>
+                            <mat-option [value]="1">{{t('STATUS-OPEN')}}</mat-option>
+                            <mat-option [value]="2">{{t('STATUS-PROCESS')}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            }
         </div>
 
         <div class="row my-2">
@@ -28,16 +69,22 @@
                 @for(ticket of pagedTickets; track ticket.id) {
                 <mat-expansion-panel class="mt-2">
                     <mat-expansion-panel-header>
-                        <mat-panel-title class="text-truncate">{{ticket.title}}</mat-panel-title>
+                        <mat-panel-title class="text-truncate">{{ticket.title}} </mat-panel-title>
+
                         <mat-panel-description class="row">
                             <div class="col-6 justify-content-center">
                                 <div class="row justify-content-center">
                                     <div class="col-6">
                                         <div class="row justify-content-center">
+                                            @if(showClientElement()){
                                             <button [routerLink]="['/ticket-message/', ticket.id]" type="button"
                                                 class="btn btn-secondary">
-                                                Ver
+                                                {{t("SEE-CONVERSATION")}}
                                             </button>
+                                            }
+                                            @else {
+                                            <p class="fw-medium mt-2">{{t('PRIORITY')}} ({{ticket.priority}})</p>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -46,13 +93,13 @@
                                 <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2, 'yellow': ticket.status === 3}"
                                     class="mt-3 fs-6 d-none d-md-flex">
                                     @if(ticket.status === 0) {
-                                        {{t('STATUS-CLOSED')}}
+                                    {{t('STATUS-CLOSED')}}
                                     }
                                     @if(ticket.status === 1) {
-                                        {{t('STATUS-OPEN')}}
+                                    {{t('STATUS-OPEN')}}
                                     }
                                     @if(ticket.status === 2) {
-                                        {{t('STATUS-PROCESS')}}
+                                    {{t('STATUS-PROCESS')}}
                                     }
                                 </p>
                                 <mat-icon
@@ -85,6 +132,19 @@
                             </div>
                             <hr>
                         </div>
+                        @if(!showClientElement()) {
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <a [routerLink]="['/ticket-message/', ticket.id]" href="javascript:void(0);">
+                                    <fa-icon class="pe-2" [icon]="faMessage"></fa-icon> {{t('OPEN-TICKET-CHAT')}}
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('OPEN-TICKET-CHAT-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        }
                         @if(showAdminElement()){
                         <div class="row ">
                             <div class="col-md-4">
@@ -99,6 +159,7 @@
                             <hr>
                         </div>
                         }
+                        @if(!showClientElement()){
                         <div class="row fs-6">
                             <div class="col-md-4">
                                 <a href="javascript:void(0);" (click)="openTicketManageDialog(ticket)">
@@ -110,22 +171,26 @@
                             </div>
                             <hr>
                         </div>
+                        }
+
                         @if(showTechnicianElement()){
                         <div class="row justify-content-end">
                             @if(ticket.status != 0) {
-                                <div class="col-md-3 mt-3 mt-md-0">
-                                    <div class="row justify-content-end px-md-2">
-                                        <button type="button" class="btn btn-secondary" (click)="askForReassign(ticket.id)">
-                                            <fa-icon [icon]="users"></fa-icon> {{t('REASSIGN')}}
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                            
                             <div class="col-md-3 mt-3 mt-md-0">
                                 <div class="row justify-content-end px-md-2">
-                                    <button type="button" class="btn" [ngClass]="ticket.status != 0? 'btn-danger': 'btn-secondary'" (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
-                                         {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
+                                    <button type="button" class="btn btn-secondary" (click)="askForReassign(ticket.id)">
+                                        <fa-icon [icon]="users"></fa-icon> {{t('REASSIGN')}}
+                                    </button>
+                                </div>
+                            </div>
+                            }
+
+                            <div class="col-md-3 mt-3 mt-md-0">
+                                <div class="row justify-content-end px-md-2">
+                                    <button type="button" class="btn"
+                                        [ngClass]="ticket.status != 0? 'btn-danger': 'btn-secondary'"
+                                        (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
+                                        {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>
                             </div>
@@ -135,9 +200,10 @@
                         <div class="row justify-content-end">
                             <div class="col-md-3 mt-3 mt-md-0">
                                 <div class="row justify-content-end px-md-2">
-                                    <button [ngClass]="ticket.status != 0? 'btn-warning': 'btn-primary'" type="button" class="btn"
-                                    (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
-                                         {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
+                                    <button [ngClass]="ticket.status != 0? 'btn-warning': 'btn-primary'" type="button"
+                                        class="btn"
+                                        (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
+                                        {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>
                             </div>

@@ -25,14 +25,12 @@
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Email Settings",
         "RETURN": "Return",
- 
         "EMAIL-PARAMETERS": "Email Parameters",
         "PARAMETER": "Parameter",
         "PARAMETER-DESC": "Description",
         "PARAMETER1": "This variable is used to be replaced with the Company name",
         "PARAMETER2": "This variable is used to be replaced with the Service name",
         "PARAMETER3": "This variable is used to be replaced with the End date",
-
         "EMAIL-TEMPLATES": "Email Templates Settings",
         "SEARCH-TEMPLATE": "Search Template",
         "EDIT-EMAIL-TEMPLATE": "Edit Template",
@@ -41,7 +39,6 @@
         "EDIT-TEMPLATE": "Edit Template",
         "TEMPLATE-NAME": "Template Name",
         "TEMPLATE-BODY": "Template Html",
-   
         "EMAIL-INTERVALS": "Email Intervals",
         "SEARCH-INTERVAL": "Search Interval",
         "EDIT-EMAIL-INTERVAL": "Edit Interval",
@@ -51,7 +48,6 @@
         "INTERVAL-DAYS": "Interval Days",
         "INTERVAL-TYPE": "Type",
         "INTERVAL-TEMPLATE": "Template Name",
-      
         "DELETE": "Delete",
         "SAVE": "Save"
       },
@@ -126,11 +122,20 @@
     },
     "TICKETS": {
       "SEARCH": "Search...",
+      "ASC": "Lower - Higher",
+      "DESC": "Higher - Lower",
+      "ALL": "Show All",
       "SEE-CONVERSATION": "Look",
+      "PRIORITY": "Priority",
+      "COMPLEXITY": "Complexity",
+      "STATUS": "Status",
       "STATUS-OPEN": "Open",
+      "STATUS-CLOSED": "Closed",
       "STATUS-PROCESS": "In Process",
       "READ-TICKET-INFO": "View Details",
       "READ-TICKET-INFO-DESC": "Click here to view the ticket information",
+      "OPEN-TICKET-CHAT": "Open Chat",
+      "OPEN-TICKET-CHAT-DESC": "Click here to open the ticket chat",
       "READ-TICKET-TECHNICIAN-HISTORY": "View Historic",
       "READ-TICKET-TECHNICIAN-HISTORY-DESC": "Click here to view the history of technicians for whom this ticket has passed.",
       "EDIT-TICKET-INFO": "Edit Ticket",
@@ -165,6 +170,8 @@
         "TICKET-TITLE": "Title",
         "TICKET-PRIORITY": "Priority",
         "TICKET-HUMAN-INTERACTION": "Needs Human Interaction",
+        "YES": "Yes",
+        "NO": "No",
         "TICKET-COMPLEXITY": "Complexity",
         "TICKET-USER": "User",
         "TICKET-COMPANY": "Company",
@@ -308,7 +315,7 @@
       "READ-USER-INFO-DESC": "Click here the see the user info",
       "EDIT-USER-INFO": "Edit User",
       "EDIT-USER-INFO-DESC": "Click here to edit the user info",
-      "DELETE": "Delete",
+      "DELETE": "Deactivate",
       "ADMIN": {
         "USERS": "Manage Users",
         "CREATE-USER": "Create User",
@@ -367,9 +374,28 @@
         "REPORTS": "Reports"
       },
       "GLOBAL-REPORT": {
-        "SEARCH": "Filter by Date",
+        "TITLE": "Global Report",
+        "RETURN": "Return",
+        "FITLER-DATE": "Filter by Date",
         "START-DATE": "Start Date",
-        "END-DATE": "End Date"
+        "END-DATE": "End Date",
+        "TOTAL-TICKETS": "Total Tickets",
+        "AVG-TICKET-CLOSE-TIME": "Average Ticket Close Time",
+        "ESCALATIONS": "Ticket Escalations",
+        "COMPLEXITY": "Tickets and Complexity",
+        "HUMAN-INTERACTION": "Non-AI Tickets",
+        "AVG-TECH-PER-TICKET": "Average Technicians per Ticket",
+        "AVG-TECH-PER-TICKET-DESC": "Shows the average number of technicians who have worked on tickets.",
+        "MOST-TECH-TICKET": "Ticket with Most Technicians",
+        "TECH-COUNT": "Technician Count",
+        "MOST-TECH-TICKET-DESC": "Shows the ticket that has been handled by the most technicians.",
+        "ESCALATIONS-DISTRIBUTION": "Escalations Distribution",
+        "ESCALATIONS-DISTRIBUTION-DESC": "Visualizes the number of tickets based on the number of technicians handling them.",
+        "TOTAL-TICKETS-DESC": "Shows the total number of resolved tickets",
+        "AVG-TICKET-CLOSE-TIME-DESC": "Displays the average time it takes to close a ticket",
+        "ESCALATIONS-DESC": "Displays the number of technicians involved in resolving a ticket",
+        "COMPLEXITY-DESC": "Shows the number of tickets by complexity",
+        "HUMAN-INTERACTION-DESC": "Displays the number of tickets that require human interaction to resolve"
       },
       "TECHNICIAN-REPORT": {
         "ADMIN": {
@@ -380,8 +406,22 @@
           "PERFORMANCE-REPORT-DESC": "Click here to se the technician performance report",
           "TITLE-REPORT": "Techinician Report"
         },
-        "TECHNICIAN": {
-          "TITLE": "My Report"
+        "PERFORMANCE-REPORT": {
+          "TITLE": "Performance Report",
+          "RETURN": "Return",
+          "FILTER-DATE": "Filter by Date",
+          "START-DATE": "Start Date",
+          "END-DATE": "End Date",
+          "TOTAL-TICKETS": "Resolved Tickets",
+          "AVG-TICKET-CLOSE-TIME": "Average Ticket Close Time",
+          "ASSIGN-REASSIGN": "Assignment and Reassignment",
+          "CURRENT-TICKETS": "Tickets in Progress",
+          "WEEKLY-COMPARISSON": "Weekly Comparison",
+          "TOTAL-TICKETS-DESC": "Shows the total number of tickets resolved to date",
+          "AVG-TICKET-CLOSE-TIME-DESC": "Displays the average time it has taken to close a ticket",
+          "ASSIGN-REASSIGN-DESC": "Shows the number of tickets this technician has reassigned and how many have been assigned to them",
+          "CURRENT-TICKETS-DESC": "Shows the number of tickets the technician is currently working on",
+          "WEEKLY-COMPARISSON-DESC": "Displays the comparison between the number of tickets closed by the technician in the last 7 days and the previous week"
         }
       }
     }
@@ -431,7 +471,7 @@
         "DELETE-SERVICE-TAX": "Are you sure you want to delete this tax?",
         "DELETE-SERVICE-CATEGORY": "Are you sure you want to delete this category?",
         "DELETE-TICKET": "Are you sure you want to delete this ticket?",
-        "DELETE-USER": "Are you sure you want to delete this user?",
+        "DELETE-USER": "Are you sure you want to deactivate this user?",
         "DELETE-ROLE": "Are you sure you want to delete this role?",
         "CLOSE-TICKET": "Are you sure you want to close this ticket?",
         "REASSIGN-TICKET": "Are you sure you want to request a ticket reassignment?",

@@ -1,1 +1,123 @@
-<p>global-report works!</p>
+<ng-container *transloco="let t; prefix: 'FEATURES.REPORTS.GLOBAL-REPORT'">
+    <app-global-spinner></app-global-spinner>
+    <div class="companies container py-4">
+        <div class="row">
+            <div class="col-md-10 text-center text-md-start align-content-center mt-2">
+                <h2>{{ t('TITLE') }}</h2>
+            </div>
+            <div class="col-md-2 align-content-center py-4 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button [routerLink]="['/reports']" type="button" class="btn btn-secondary">{{ t('RETURN') }}</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Metric Cards -->
+        <div class="row g-3">
+            <div class="col-md-4 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('TOTAL-TICKETS') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-5 card-content">
+                        <p class="fs-1 fw-bold">{{ globalReport.totalTicketsQty }}</p>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('TOTAL-TICKETS-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+            <div class="col-md-4 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('AVG-TICKET-CLOSE-TIME') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-5 card-content">
+                        <p class="fs-1 fw-bold">{{ globalReport.averageTicketCloseTime | number: '1.2-2' }}</p>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('AVG-TICKET-CLOSE-TIME-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+            <div class="col-md-4 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('HUMAN-INTERACTION') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-5 card-content">
+                        <p class="fs-1 fw-bold">{{ globalReport.humanInteraction }}</p>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('HUMAN-INTERACTION-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row g-3 mt-4">
+            <div class="col-md-6 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('COMPLEXITY') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-4 card-content">
+                        <canvas id="complexityChart"></canvas>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('COMPLEXITY-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+            <div class="col-md-6 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('ESCALATIONS') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-4 card-content">
+                        <canvas id="distributionChart"></canvas>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('ESCALATIONS-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-4 justify-content-center">
+            <div class="col-md-4 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('MOST-TECH-TICKET') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-5 card-content">
+                        <div>
+                            <p class="fs-1 fw-bold">{{ mostTechniciansTicket?.ticket_id || 'N/A' }}</p>
+                            <p class="fs-5">
+                                <span class="fw-medium">{{ t('TECH-COUNT') }}</span>: {{ mostTechniciansTicket?.technicians_count || 'N/A' }}
+                            </p>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('MOST-TECH-TICKET-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>            
+            <div class="col-md-4 d-flex">
+                <mat-card class="w-100">
+                    <mat-card-title class="text-center p-3">
+                        <p>{{ t('AVG-TECH-PER-TICKET') }}</p>
+                    </mat-card-title>
+                    <mat-card-content class="text-center py-5 card-content">
+                        <p class="fs-1 fw-bold">{{ averageTechnicians | number: '1.2-2' }}</p>
+                    </mat-card-content>
+                    <mat-card-footer class="text-center p-3 card-footer">
+                        <p>{{ t('AVG-TECH-PER-TICKET-DESC') }}</p>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</ng-container>

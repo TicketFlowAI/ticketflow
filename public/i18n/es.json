@@ -127,12 +127,21 @@
     },
     "TICKETS": {
       "SEARCH": "Buscar...",
+      "ASC": "Ascendiente",
+      "DESC": "Descendiente",
+      "ALL": "Todos",
+
       "SEE-CONVERSATION": "Ver",
+      "PRIORITY": "Prioridad",
+      "COMPLEXITY": "Complejidad",
+      "STATUS": "Estado",
       "STATUS-OPEN": "Abierto",
       "STATUS-CLOSED": "Cerrado",
       "STATUS-PROCESS": "En Proceso",
       "READ-TICKET-INFO": "Ver Detalles",
       "READ-TICKET-INFO-DESC": "De clic aquí para poder ver la información del ticket",
+      "OPEN-TICKET-CHAT": "Abrir Conversación",
+      "OPEN-TICKET-CHAT-DESC": "De clic aquí para poder ver la conversación",
       "READ-TICKET-TECHNICIAN-HISTORY": "Ver Historial",
       "READ-TICKET-TECHNICIAN-HISTORY-DESC": "De clic aquí para poder ver el historial de técnicos por los que ha pasado este ticket",
       "EDIT-TICKET-INFO": "Editar Ticket",
@@ -276,7 +285,7 @@
       "EDIT-SERVICE-TAX-INFO-DESC": "De clic aquí para editar el impuesto",
       "DELETE": "Borrar",
       "ADMIN": {
-        "SERVICE-TAXES": "Manage Taxes",
+        "SERVICE-TAXES": "Adminsitrar Impuestos",
         "RETURN-TO-SERVICES": "Regresar",
         "CREATE-SERVICE-TAX": "Create Tax"
       },
@@ -311,7 +320,7 @@
       "READ-USER-INFO-DESC": "De clic aquí para ver la información del usuario",
       "EDIT-USER-INFO": "Editar usuario",
       "EDIT-USER-INFO-DESC": "De clic aquí para editar la información del usuario",
-      "DELETE": "Eliminar",
+      "DELETE": "Desactivar",
       "ADMIN": {
         "USERS": "Administrar usuarios",
         "ROLES": "Ver Roles",
@@ -370,9 +379,31 @@
         "REPORTS": "Reportes"
       },
       "GLOBAL-REPORT": {
-        "SEARCH": "Filtrado por Fecha",
+        "TITLE": "Reporte Global",
+        "RETURN": "Regresar",
+        "FILTER-DATE": "Filtrado por Fecha",
         "START-DATE": "Fecha de Inicio",
-        "END-DATE": "Fecha de Fin"
+        "END-DATE": "Fecha de Fin",
+
+        "TOTAL-TICKETS": "Tickets Resueltos",
+        "AVG-TICKET-CLOSE-TIME": "Tiempo Promedio de Ticket",
+        "ESCALATIONS": "Escalamiento de Tickets",
+        "COMPLEXITY": "Tickets y Complejidad",
+        "HUMAN-INTERACTION": "Tickets no IA",
+
+        "AVG-TECH-PER-TICKET": "Promedio de Técnicos por Ticket",
+        "AVG-TECH-PER-TICKET-DESC": "Muestra el promedio de técnicos que han trabajado en los tickets.",
+        "MOST-TECH-TICKET": "Ticket con Más Técnicos",
+        "TECH-COUNT": "Cantidad de Técnicos",
+        "MOST-TECH-TICKET-DESC": "Muestra el ticket que ha pasado por más técnicos.",
+        "ESCALATIONS-DISTRIBUTION": "Distribución de Escalamientos",
+        "ESCALATIONS-DISTRIBUTION-DESC": "Visualiza la cantidad de tickets en relación al número de técnicos que los han gestionado.",
+
+        "TOTAL-TICKETS-DESC": "Aquí se muestra la cantidad de tickets resueltos hasta la fecha",
+        "AVG-TICKET-CLOSE-TIME-DESC": "Aquí se muestra el tiempo promedio que toma cerrar un ticket",
+        "ESCALATIONS-DESC": "Aquí se muestra el número de técnicos que estuvieron involucrado sen un ticket hasta resolverlo",
+        "COMPLEXITY-DESC": "Aqui se muestra el número de tickets por complejidad",
+        "HUMAN-INTERACTION-DESC": "Aquí se muenstra el número de tickets que necesitan resolverse con interacción humana"
       },
       "TECHNICIAN-REPORT": {
         "ADMIN": {
@@ -383,8 +414,26 @@
           "SEARCH": "Buscar técnico",
           "TITLE-REPORT": "Reporte del técnico"
         },
-        "TECHNICIAN": {
-          "TITLE": "Mi reporte"
+        "PERFORMANCE-REPORT": {
+          "TITLE": "Reporte de Desempeño",
+          "RETURN": "Regresar",
+          "FILTER-DATE": "Filtrado por Fecha",
+          "START-DATE": "Fecha de Inicio",
+          "END-DATE": "Fecha de Fin",
+
+          "TOTAL-TICKETS": "Tickets Resueltos",
+          "AVG-TICKET-CLOSE-TIME": "Tiempo Promedio de Ticket",
+          "ASSIGN-REASSIGN": "Asigancion y Reasignación",
+          "CURRENT-TICKETS": "Tickets en Progreso",
+          "WEEKLY-COMPARISSON": "Comparación semanal",
+
+        
+
+          "TOTAL-TICKETS-DESC": "Aquí se muestra la cantidad de tickets resueltos hasta la fecha",
+          "AVG-TICKET-CLOSE-TIME-DESC": "Aquí se muestra el tiempo promedio que le ha tomado cerrar un ticket",
+          "ASSIGN-REASSIGN-DESC": "Aquí se muestra el número de tickets que este técnico ha reasigando y a cuantos ha sido asignado",
+          "CURRENT-TICKETS-DESC": "Aqui se muestra el número de tickets en los que el técnico esta actualmente trabajando",
+          "WEEKLY-COMPARISSON-DESC": "Aquí se muenstra la comparación entre la cantidad de tickets que ha cerrado el técnico en los útimos 7 días, y los de la semana previa"
         }
       }
     }
@@ -434,13 +483,13 @@
         "DELETE-SERVICE-TAX": "¿Está seguro que desea eliminar este impuesto?",
         "DELETE-SERVICE-CATEGORY": "¿Está seguro que desea eliminar esta categoría?",
         "DELETE-TICKET": "¿Está seguro que desea eliminar este ticket?",
-        "DELETE-USER": "¿Está seguro que desea eliminar este usuario?",
+        "DELETE-USER": "¿Está seguro que desea desactivar este usuario?",
         "DELETE-ROLE": "¿Está seguro que desea eliminar este rol?",
         "CLOSE-TICKET": "¿Está seguro que desea cerrar este ticket?",
         "REASSIGN-TICKET": "¿Está seguro que desea solicitar una reasiganción?",
-        "TITLE": "Confirmation",
-        "CANCEL": "Cancel",
-        "OK": "Continue"
+        "TITLE": "Confirmar",
+        "CANCEL": "Cancelar",
+        "OK": "Continuar"
       }
     },
     "TOASTS": {

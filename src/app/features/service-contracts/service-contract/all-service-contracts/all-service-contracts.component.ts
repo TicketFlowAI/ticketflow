@@ -59,6 +59,7 @@ export class AllServiceContractsComponent {
 
   isAdmin: boolean = false;
   isTechnician: boolean = false;
+  isClient: boolean = false;
 
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual

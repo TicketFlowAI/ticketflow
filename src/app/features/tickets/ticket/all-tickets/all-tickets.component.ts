@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faPencil, faX, faPlus, faInfoCircle, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX, faPlus, faInfoCircle, faUsers, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
@@ -17,6 +17,7 @@ import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { UserManagementService } from '../../../../core/services/user-management.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-all-tickets',
@@ -33,7 +34,8 @@ import { UserManagementService } from '../../../../core/services/user-management
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-    GlobalSpinnerComponent
+    GlobalSpinnerComponent,
+    MatSelectModule
   ],
   templateUrl: './all-tickets.component.html',
   styleUrl: './all-tickets.component.scss',
@@ -45,6 +47,7 @@ export class AllTicketsComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
   protected readonly users = faUsers;
+  protected readonly faMessage =faMessage;
 
   private readonly userManagementService = inject(UserManagementService)
   private readonly ticketManagementService = inject(TicketManagementService)
@@ -88,6 +91,31 @@ export class AllTicketsComponent {
     return this.userManagementService.isUserClient()
   }
 
+  onPriorityOrder(order: 'asc' | 'desc'): void {
+    this.filteredTickets.sort((a, b) => 
+      order === 'asc' ? a.priority - b.priority : b.priority - a.priority
+    );
+    this.updatePageTickets();
+  }
+  
+  onComplexityOrder(order: 'asc' | 'desc'): void {
+    this.filteredTickets.sort((a, b) => 
+      order === 'asc' ? a.complexity - b.complexity : b.complexity - a.complexity
+    );
+    this.updatePageTickets();
+  }
+  
+  onStatusFilter(status: number | null): void {
+    if (status === null) {
+
+      this.filteredTickets = [...this.tickets];
+    } else {
+
+      this.filteredTickets = this.tickets.filter(ticket => ticket.status === status);
+    }
+    this.pageIndex = 0;
+    this.updatePageTickets();
+  }
   onFilterChange(): void {
     const filterText = this.filterText.toLowerCase();
 

@@ -15,11 +15,13 @@ import { CompanyManagementService } from '../../../core/services/company-managem
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from '../../../shared/components/global-spinner/global-spinner.component';
 import { UserManagementService } from '../../../core/services/user-management.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-companies',
   standalone: true,
   imports: [
+    CommonModule,
     TranslocoDirective,
     MatExpansionModule,
     MatPaginatorModule,
@@ -53,6 +55,7 @@ export class AllCompaniesComponent implements OnInit {
   pagedCompanies: CompanyModel[] = [];
 
   isAdmin: boolean = false;
+  isTech: boolean = false;
 
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
@@ -62,6 +65,7 @@ export class AllCompaniesComponent implements OnInit {
     this.loadCompanies();
 
     this.isAdmin = this.userManagementService.isUserAdmin()
+    this.isTech = this.userManagementService.isUserTechnician()
   }
 
   loadCompanies() {
