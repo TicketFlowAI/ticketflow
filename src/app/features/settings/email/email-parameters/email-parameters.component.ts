@@ -29,10 +29,14 @@ export class EmailParametersComponent {
     const emailParameter1: ParameterObject = new ParameterObject('$serviceData[\'company\']', this.translocoService.translateObject('FEATURES.SETTINGS.EMAIL-SETTINGS.PARAMETER1'))
     const emailParameter2: ParameterObject = new ParameterObject('$serviceData[\'serviceName\']', this.translocoService.translateObject('FEATURES.SETTINGS.EMAIL-SETTINGS.PARAMETER2'))
     const emailParameter3: ParameterObject = new ParameterObject('$serviceData[\'endDate\']', this.translocoService.translateObject('FEATURES.SETTINGS.EMAIL-SETTINGS.PARAMETER3'))
+    const emailParameter4: ParameterObject = new ParameterObject('{service}', this.translocoService.translateObject('FEATURES.SETTINGS.EMAIL-SETTINGS.PARAMETER4'))
+    const emailParameter5: ParameterObject = new ParameterObject('{days}', this.translocoService.translateObject('FEATURES.SETTINGS.EMAIL-SETTINGS.PARAMETER5'))
 
     this.parameterObjects.push(emailParameter1)
     this.parameterObjects.push(emailParameter2)
     this.parameterObjects.push(emailParameter3)
+    this.parameterObjects.push(emailParameter4)
+    this.parameterObjects.push(emailParameter5)
 
     this.cdr.markForCheck()
   }

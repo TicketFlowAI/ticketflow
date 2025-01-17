@@ -8,7 +8,7 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+import { faFileContract, faFilePen, faBuilding, faPlus, faX, faUsersLine } from "@fortawesome/free-solid-svg-icons";
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { CompanyManagementService } from '../../../core/services/company-management.service';
@@ -37,11 +37,13 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllCompaniesComponent implements OnInit {
+  
   protected readonly faFileContract = faFileContract;
   protected readonly faFilePen = faFilePen;
   protected readonly faBuilding = faBuilding;
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
+  protected readonly faUsersLine = faUsersLine;
 
   private readonly companyManagementService = inject(CompanyManagementService)
   private readonly userManagementService = inject(UserManagementService)

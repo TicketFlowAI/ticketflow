@@ -20,7 +20,8 @@
       "GENERAL-SETTINGS": {
         "GENERAL-SETTINGS": "Configuraciones Generales",
         "EMAIL-SETTINGS": "Configuración de Correos",
-        "IA-SETTINGS": "Configuración de IA"
+        "IA-SETTINGS": "Configuración de IA",
+        "BIN-SETTINGS": "Papelería de reciclaje"
       },
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Configuración de Correos",
@@ -33,6 +34,8 @@
         "PARAMETER1": "Esta variable se utiliza para ser reemplazada por el nombre de la Empresa",
         "PARAMETER2": "Esta variable se utiliza para ser reemplazada por el nombre del Servicio",
         "PARAMETER3": "Esta variable se utiliza para ser reemplazada por la fecha de finalización",
+        "PARAMETER4": "Esta variable se utiliza para ser reemplazada por el nombre del Servicio",
+        "PARAMETER5": "Esta variable se utiliza para ser reemplazada por al cantidad de dias faltantes para la expiración",
 
         "EMAIL-TEMPLATES": "Plantillas de Correo",
         "SEARCH-TEMPLATE": "Buscar plantilla",
@@ -42,6 +45,7 @@
         "CREATE-TEMPLATE": "Crear Plantilla",
         "EDIT-TEMPLATE": "Editar Plantilla",
         "TEMPLATE-NAME": "Nombre de la Plantilla",
+        "SUBJECT": "Asunto de la Plantilla",
         "TEMPLATE-BODY": "Html de la Plantilla",
 
         "EMAIL-INTERVALS": "Intervalos de Correo",
@@ -89,9 +93,12 @@
       "READ-COMPANY-INFO-DESC": "De clic aquí para poder ver la información de su empresa",
       "UPDATE-COMPANY-INFO": "Actualizar Información",
       "UPDATE-COMPANY-INFO-DESC": "De clic aquí para poder actulizar la información de su compañia",
+      "USERS-COMPANY-INFO": "Ver Usuarios",
+      "USERS-COMPANY-INFO-DESC": "De clic aquí para poder ver los usuarios de esta compañia",
       "ADMIN": {
         "COMPANIES": "Empresas",
-        "NEW-COMPANY": "Crear una empresa"
+        "NEW-COMPANY": "Crear una empresa",
+        "USERS-COMPANY": "Ver usuarios"
       },
       "TEAM": {
         "COMPANIES": "Empresas",
@@ -198,6 +205,8 @@
         "TICKET-MESSAGES": "Mensajes con Soporte"
       },
       "NEW-MESSAGE": "Nuevo Mensaje",
+      "NOT-AVAILABLE": "Este ticket ya se ha cerrado por lo que no se puede responder a al conversación. Si desea agregar un nuevo mensaje debe reabrirlo",
+      "REOPEN": "Reabrir",
       "RETURN": "Regresar"
     },
     "SERVICE-CONTRACTS": {
@@ -225,6 +234,8 @@
         "SERVICE-CONTRACT-COMPANY": "Empresa",
         "SERVICE-CONTRACT-SERVICE": "Servicio",
         "SERVICE-CONTRACT-TERM": "Periodo",
+        "SERVICE-CONTRACT-START-DATE" : "Fecha de Inicio",
+        "SERVICE-CONTRACT-END-DATE" : "Fecha de Fin",
         "RETURN": "Regresar"
       }
     },
@@ -324,7 +335,8 @@
       "ADMIN": {
         "USERS": "Administrar usuarios",
         "ROLES": "Ver Roles",
-        "CREATE-USER": "Crear usuario"
+        "CREATE-USER": "Crear usuario",
+        "RETURN-USER": "Regresar"
       },
       "USER-MANAGEMENT": {
         "CREATE-USER": "Crear usuario",
@@ -399,11 +411,11 @@
         "ESCALATIONS-DISTRIBUTION": "Distribución de Escalamientos",
         "ESCALATIONS-DISTRIBUTION-DESC": "Visualiza la cantidad de tickets en relación al número de técnicos que los han gestionado.",
 
-        "TOTAL-TICKETS-DESC": "Aquí se muestra la cantidad de tickets resueltos hasta la fecha",
-        "AVG-TICKET-CLOSE-TIME-DESC": "Aquí se muestra el tiempo promedio que toma cerrar un ticket",
-        "ESCALATIONS-DESC": "Aquí se muestra el número de técnicos que estuvieron involucrado sen un ticket hasta resolverlo",
-        "COMPLEXITY-DESC": "Aqui se muestra el número de tickets por complejidad",
-        "HUMAN-INTERACTION-DESC": "Aquí se muenstra el número de tickets que necesitan resolverse con interacción humana"
+        "TOTAL-TICKETS-DESC": "Cantidad de tickets resueltos hasta la fecha",
+        "AVG-TICKET-CLOSE-TIME-DESC": "Tiempo promedio que toma cerrar un ticket",
+        "ESCALATIONS-DESC": "Número de técnicos que estuvieron involucrado sen un ticket hasta resolverlo",
+        "COMPLEXITY-DESC": "Número de tickets por complejidad",
+        "HUMAN-INTERACTION-DESC": "Número de tickets que necesitan resolverse con interacción humana"
       },
       "TECHNICIAN-REPORT": {
         "ADMIN": {
@@ -425,15 +437,15 @@
           "AVG-TICKET-CLOSE-TIME": "Tiempo Promedio de Ticket",
           "ASSIGN-REASSIGN": "Asigancion y Reasignación",
           "CURRENT-TICKETS": "Tickets en Progreso",
-          "WEEKLY-COMPARISSON": "Comparación semanal",
+          "WEEKLY-COMPARISON": "Comparación semanal",
 
         
 
-          "TOTAL-TICKETS-DESC": "Aquí se muestra la cantidad de tickets resueltos hasta la fecha",
-          "AVG-TICKET-CLOSE-TIME-DESC": "Aquí se muestra el tiempo promedio que le ha tomado cerrar un ticket",
-          "ASSIGN-REASSIGN-DESC": "Aquí se muestra el número de tickets que este técnico ha reasigando y a cuantos ha sido asignado",
-          "CURRENT-TICKETS-DESC": "Aqui se muestra el número de tickets en los que el técnico esta actualmente trabajando",
-          "WEEKLY-COMPARISSON-DESC": "Aquí se muenstra la comparación entre la cantidad de tickets que ha cerrado el técnico en los útimos 7 días, y los de la semana previa"
+          "TOTAL-TICKETS-DESC": "Cantidad de tickets resueltos hasta la fecha",
+          "AVG-TICKET-CLOSE-TIME-DESC": "Tiempo promedio que le ha tomado cerrar un ticket",
+          "ASSIGN-REASSIGN-DESC": "Número de tickets que este técnico ha reasigando y a cuantos ha sido asignado",
+          "CURRENT-TICKETS-DESC": "Número de tickets en los que el técnico esta actualmente trabajando",
+          "WEEKLY-COMPARISON-DESC": "Comparación entre la cantidad de tickets que ha cerrado el técnico en los útimos 7 días, y los de la semana previa"
         }
       }
     }

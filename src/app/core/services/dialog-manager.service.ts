@@ -224,7 +224,7 @@ export class DialogManagerService {
 
     this.dialogService.open(ServiceContractInfoComponent, {
       width: '500px',
-      height: '325px',
+      height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceContract
@@ -336,7 +336,7 @@ export class DialogManagerService {
     const dialogRef = this.dialogService.open(ManageEmailTemplateComponent, {
       width: '600px',
       maxWidth: '100vw',
-      height: '350px',
+      height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: emailTemplate
@@ -354,7 +354,7 @@ export class DialogManagerService {
     this.dialogService.open(EmailParametersComponent, {
       width: '600px',
       maxWidth: '100vw',
-      height: '350px',
+      height: '400px',
       enterAnimationDuration,
       exitAnimationDuration
     });

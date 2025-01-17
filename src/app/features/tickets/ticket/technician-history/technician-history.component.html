@@ -3,10 +3,11 @@
     <mat-dialog-content>
         <hr>
         @for(item of ticketHistory; track item.id) {
-            <div class="row">
-                <p class="fs-6"><mat-icon class="me-2">chevron_right</mat-icon> {{item.action}}</p>
+            <div class="row ps-3">
+                 <p class="fs-6"> <mat-icon class="me-2 pt-1">chevron_right</mat-icon>{{item.created_at}} :  {{item.action}}</p>
+                <hr>
             </div>
-            <hr>
+           
         }
     </mat-dialog-content>
     <mat-dialog-actions class="row justify-content-center">

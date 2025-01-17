@@ -17,6 +17,8 @@ export interface IServiceContractModel {
     service: string;
     service_term: string;
     price: number;
+    expiration_date: Date;
+    created_at: string;
 }
 
 export class ServiceContractModel implements IServiceContractModel {
@@ -29,6 +31,8 @@ export class ServiceContractModel implements IServiceContractModel {
         public service: string = '',
         public service_term: string = '',
         public price: number = 0,
+        public expiration_date: Date = new Date(),
+        public created_at: string = ''
     ) {
     }
 }

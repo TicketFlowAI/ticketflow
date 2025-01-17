@@ -2,7 +2,7 @@
     <app-global-spinner/>
     <div class="companies container py-4">
         <div class="row">
-            <div [ngClass]="(isAdmin || isTech)? 'col-md-9' : 'col-md-12' " class="align-content-center">
+            <div class="col-md-9 align-content-center">
                 <div class="row text-center text-md-start">
                     <h2>{{t('ADMIN.COMPANIES')}}</h2>
                 </div>
@@ -67,7 +67,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <a href="javascript:void(0);" (click)="openCompanyManageDialog(company)">
-                                    <fa-icon [icon]="faFilePen"></fa-icon> {{t('UPDATE-COMPANY-INFO')}}
+                                    <fa-icon [icon]="faFilePen"></fa-icon> {{t('USERS-COMPANY-INFO')}}
                                 </a>
                             </div>
                             <div class="col-md-8">
@@ -75,6 +75,19 @@
                             </div>
                             <hr>
                         </div>
+                        @if(isAdmin || isTech) {
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a [routerLink]="['/users/', company.id]">
+                                        <fa-icon [icon]="faUsersLine"></fa-icon> {{t('USERS-COMPANY-INFO')}}
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{t('UPDATE-COMPANY-INFO-DESC')}}</p>
+                                </div>
+                                <hr>
+                            </div>
+                        }         
                         @if(isAdmin) {
                             <div class="row justify-content-end">
                                 <div class="col-md-3">
@@ -85,7 +98,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }                   
+                        }           
                     </div>
                 </mat-expansion-panel>
                 }

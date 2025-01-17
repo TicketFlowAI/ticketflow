@@ -83,6 +83,11 @@ export const routes: Routes = [
     canActivate: [teamRoleGuard]
   },
   {
+    path: 'users/:companyId',
+    component: AllUsersComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'roles',
     component: AllUserRolesComponent,
     canActivate: [adminRoleGuard]

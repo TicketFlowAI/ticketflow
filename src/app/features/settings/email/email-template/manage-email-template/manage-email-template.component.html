@@ -17,6 +17,15 @@
                 </mat-form-field>
             </div>
             <div class="row">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('SUBJECT')}}</mat-label>
+                    <input matInput [formControl]="subjectFormControl">
+                    @if (templateNameFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row">
                 <mat-form-field class="w-100" appearance="fill">
                     <mat-label>{{t('TEMPLATE-BODY')}}</mat-label>
                     <input matInput type="text" [formControl]="bodyFormControl">

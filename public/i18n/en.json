@@ -20,7 +20,8 @@
       "GENERAL-SETTINGS": {
         "GENERAL-SETTINGS": "General Settings",
         "EMAIL-SETTINGS": "Email Settings",
-        "IA-SETTINGS": "IA Settings"
+        "IA-SETTINGS": "IA Settings",
+        "BIN-SETTINGS": "Recycle Bin"
       },
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Email Settings",
@@ -31,6 +32,8 @@
         "PARAMETER1": "This variable is used to be replaced with the Company name",
         "PARAMETER2": "This variable is used to be replaced with the Service name",
         "PARAMETER3": "This variable is used to be replaced with the End date",
+        "PARAMETER4": "This variable is used to be replaced with the Service Name",
+        "PARAMETER5": "This variable is used to be replaced with the days before expiration",
         "EMAIL-TEMPLATES": "Email Templates Settings",
         "SEARCH-TEMPLATE": "Search Template",
         "EDIT-EMAIL-TEMPLATE": "Edit Template",
@@ -38,6 +41,7 @@
         "CREATE-TEMPLATE": "Create Template",
         "EDIT-TEMPLATE": "Edit Template",
         "TEMPLATE-NAME": "Template Name",
+        "SUBJECT": "Template Subject",
         "TEMPLATE-BODY": "Template Html",
         "EMAIL-INTERVALS": "Email Intervals",
         "SEARCH-INTERVAL": "Search Interval",
@@ -84,9 +88,12 @@
       "READ-COMPANY-INFO-DESC": "Click here to see all the informatión releated to this company",
       "UPDATE-COMPANY-INFO": "Update Company",
       "UPDATE-COMPANY-INFO-DESC": "Click here to update your company information",
+      "USERS-COMPANY-INFO": "View Users",
+      "USERS-COMPANY-INFO-DESC": "De clic aquí para poder ver los usuarios de esta compañia",
       "ADMIN": {
         "COMPANIES": "Companies",
-        "NEW-COMPANY": "Create a company"
+        "NEW-COMPANY": "Create a company",
+        "USERS-COMPANY": "Users"
       },
       "TEAM": {
         "COMPANIES": "Companies",
@@ -193,6 +200,8 @@
         "TICKET-MESSAGES": "Messages to Support"
       },
       "NEW-MESSAGE": "New Message",
+      "NOT-AVAILABLE": "This ticket has already been closed, so you cannot respond to the conversation. If you want to add a new message, you must reopen it.",
+      "REOPEN": "Reopen",
       "RETURN": "Return"
     },
     "SERVICE-CONTRACTS": {
@@ -220,6 +229,8 @@
         "SERVICE-CONTRACT-COMPANY": "Company",
         "SERVICE-CONTRACT-SERVICE": "Service",
         "SERVICE-CONTRACT-TERM": "Term",
+        "SERVICE-CONTRACT-START-DATE" : "Start Date",
+        "SERVICE-CONTRACT-END-DATE" : "End Date",
         "RETURN": "Return"
       }
     },
@@ -319,7 +330,8 @@
       "ADMIN": {
         "USERS": "Manage Users",
         "CREATE-USER": "Create User",
-        "ROLE": "Roles"
+        "RETURN-USER": "Return",
+        "ROLES": "Roles"
       },
       "USER-MANAGEMENT": {
         "CREATE-USER": "Create User",
@@ -416,12 +428,12 @@
           "AVG-TICKET-CLOSE-TIME": "Average Ticket Close Time",
           "ASSIGN-REASSIGN": "Assignment and Reassignment",
           "CURRENT-TICKETS": "Tickets in Progress",
-          "WEEKLY-COMPARISSON": "Weekly Comparison",
+          "WEEKLY-COMPARISON": "Weekly Comparison",
           "TOTAL-TICKETS-DESC": "Shows the total number of tickets resolved to date",
           "AVG-TICKET-CLOSE-TIME-DESC": "Displays the average time it has taken to close a ticket",
           "ASSIGN-REASSIGN-DESC": "Shows the number of tickets this technician has reassigned and how many have been assigned to them",
           "CURRENT-TICKETS-DESC": "Shows the number of tickets the technician is currently working on",
-          "WEEKLY-COMPARISSON-DESC": "Displays the comparison between the number of tickets closed by the technician in the last 7 days and the previous week"
+          "WEEKLY-COMPARISON-DESC": "Displays the comparison between the number of tickets closed by the technician in the last 7 days and the previous week"
         }
       }
     }

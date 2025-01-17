@@ -8,6 +8,7 @@ import {
 } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-service-contract-info',
@@ -17,6 +18,7 @@ import { ServiceContractModel } from '../../../../core/models/entities/service-c
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
+    CommonModule
   ],
   templateUrl: './service-contract-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -9,18 +9,28 @@
             </div>
             <div class="col-md-6 mt-2">
                 <div class="row justify-content-end">
+                    @if(companyId) {
+                        <div class="col-md-4 mt-2 px-3 align-content-center">
+                            <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                                <button [routerLink]="['/companies']" type="button" class="btn btn-secondary">
+                                    <fa-icon class="me-2" [icon]="faArrowLeft"></fa-icon>{{t('ADMIN.RETURN-USER')}}</button>
+                            </div>
+                        </div>
+                    }
+
                     @if(isAdmin) {
-                        <div class="col-md-5 mt-2 px-3 align-content-center">
+                        <div [ngClass]="companyId? 'col-md-4' : 'col-md-3'" class="mt-2 px-3 align-content-center">
                             <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                                 <button [routerLink]="['/roles']" type="button" class="btn btn-primary">
                                     {{t('ADMIN.ROLES')}}</button>
                             </div>
                         </div>
-                    }
-                    <div class="col-md-5 px-3 mt-2 align-content-center">
+                    }      
+
+                    <div [ngClass]="companyId? 'col-md-4' : 'col-md-4'" class="px-3 mt-2 align-content-center">
                         <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                            <button type="button" class="btn btn-primary" (click)="openUserManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
-                                {{t('ADMIN.CREATE-USER')}}</button>
+                            <button type="button" class="btn btn-primary" (click)="openUserManageDialog(null)">
+                                <fa-icon [icon]="faPlus"></fa-icon> {{t('ADMIN.CREATE-USER')}}</button>
                         </div>
                     </div>
                 </div>

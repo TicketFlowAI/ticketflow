@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 import { Observable } from 'rxjs';
 import { ICompaniesApiResponse, ICompanyApiResponse } from '../../models/entities/company.model';
+import { IUsersModelResponse } from '../../models/entities/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,14 @@ export class CompanyService {
   getCompanies(): Observable<ICompaniesApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders()
     return this.http.get<ICompaniesApiResponse>(`${this.apiCompany}`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
+  getCompanyUsers(id: number): Observable<IUsersModelResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    return this.http.get<IUsersModelResponse>(`${this.apiCompany}/${id}/users`, {
       headers: customHeaders,
       withCredentials: true,
     });

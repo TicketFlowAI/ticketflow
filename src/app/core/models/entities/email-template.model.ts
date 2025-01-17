@@ -11,6 +11,7 @@ export interface IEmailTemplatesApiResponse {
   export interface IEmailTemplateModel {
     id: number;
     template_name: string;
+    subject: string;
     body: string;
   }
   
@@ -18,6 +19,7 @@ export interface IEmailTemplatesApiResponse {
     constructor(
       public id: number = 0,
       public template_name: string = '',
+      public subject: string = '',
       public body: string = '',
     ) {
     }

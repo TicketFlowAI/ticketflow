@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faFileContract, faFilePen, faBuilding, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+import { faFileContract, faFilePen, faBuilding, faPlus, faX, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { MatIconModule } from '@angular/material/icon';
 import { DialogManagerService } from '../../../core/services/dialog-manager.service';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,8 @@ import { UserModel } from '../../../core/models/entities/user.model';
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../shared/components/global-spinner/global-spinner.component";
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CompanyManagementService } from '../../../core/services/company-management.service';
 
 @Component({
   selector: 'app-all-users',
@@ -28,25 +30,30 @@ import { RouterLink } from '@angular/router';
     FaIconComponent,
     FormsModule,
     GlobalSpinnerComponent,
-    RouterLink
+    RouterLink,
+    CommonModule
   ],
   templateUrl: './all-users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllUsersComponent {
+  @Input() companyId!: string;
   protected readonly faFileContract = faFileContract;
   protected readonly faFilePen = faFilePen;
   protected readonly faBuilding = faBuilding;
+  protected readonly faArrowLeft = faArrowLeft;
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
-
+  
   private readonly userManagementService = inject(UserManagementService)
+  private readonly companyManagementService = inject(CompanyManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
 
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly translocoService = inject(TranslocoService)
 
   public isAdmin = false
+  public isTechnician = false
 
   users: UserModel[] = []
   filteredUsers: UserModel[] = [];
@@ -60,10 +67,12 @@ export class AllUsersComponent {
     this.loadUsers();
 
     this.isAdmin = this.userManagementService.isUserAdmin()
+    this.isTechnician = this.userManagementService.isUserTechnician()
   }
 
   private loadUsers() {
-    this.userManagementService.getAllUsers().subscribe({
+    const serviceContracts$ = this.companyId ? this.companyManagementService.getCompanyUsers(parseInt(this.companyId)) : this.userManagementService.getAllUsers();
+    serviceContracts$.subscribe({
       next: (users) => {
         this.users = users;
         this.filteredUsers = this.users;

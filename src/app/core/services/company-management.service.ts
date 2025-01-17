@@ -5,6 +5,7 @@ import { CompanyModel } from '../models/entities/company.model';
 import { MessageService } from '../../shared/services/message.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { SpinnerService } from '../../shared/services/spinner.service';
+import { UserModel } from '../models/entities/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,19 @@ export class CompanyManagementService {
         this.spinnerService.hideGlobalSpinner();
       })
     );
+  }
+
+  getCompanyUsers(id: number): Observable<UserModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    return this.companyService.getCompanyUsers(id).pipe(
+      map((users) => users.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
   }
   
   getOneCompany(id: number): Observable<CompanyModel | null> {

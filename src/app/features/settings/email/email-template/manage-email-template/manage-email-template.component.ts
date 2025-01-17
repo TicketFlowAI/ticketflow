@@ -41,10 +41,12 @@ export class ManageEmailTemplateComponent {
   public readonly emailTemplateData = inject<EmailTemplateModel>(MAT_DIALOG_DATA);
 
   templateNameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  subjectFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   bodyFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
 
   emailTemplateForm = new FormGroup({
     templateName: this.templateNameFormControl,
+    subject: this.subjectFormControl,
     body: this.bodyFormControl
   })
 
@@ -59,6 +61,7 @@ export class ManageEmailTemplateComponent {
     if (this.emailTemplateData) {
       this.emailTemplate = this.emailTemplateData
       this.templateNameFormControl.setValue(this.emailTemplateData.template_name)
+      this.subjectFormControl.setValue(this.emailTemplateData.subject)
       this.bodyFormControl.setValue(this.emailTemplateData.body)
     }
   }
@@ -68,6 +71,7 @@ export class ManageEmailTemplateComponent {
     let emailTemplate = new EmailTemplateModel(
       0,
       formValue.templateName,
+      formValue.subject,
       formValue.body,
     )
 

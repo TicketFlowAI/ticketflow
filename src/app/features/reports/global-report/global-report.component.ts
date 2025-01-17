@@ -30,7 +30,7 @@ export class GlobalReportComponent {
   private readonly reportManagementService = inject(ReportManagementService);
   private readonly spinnerService = inject(SpinnerService);
   private readonly cdr = inject(ChangeDetectorRef);
-
+  
   globalReport: GlobalReportModel = new GlobalReportModel();
 
   public averageTechnicians = 0;
@@ -87,9 +87,10 @@ export class GlobalReportComponent {
       next: ([solvedQty, avgTime, escalations, complexityData, humanInteraction]) => {
         // Actualizar métricas globales
         this.globalReport.totalTicketsQty = solvedQty;
-        this.globalReport.averageTicketCloseTime = avgTime;
+        this.globalReport.averageTicketCloseTime = avgTime?? 0;
         this.globalReport.humanInteraction = humanInteraction;
 
+        console.log(this.globalReport)
         // Configurar datos de gráficos de complejidad
         this.complexityChartData.labels = complexityData.map(item => `Nivel ${item.complexity}`);
         this.complexityChartData.datasets[0].data = complexityData.map(item => item.count);

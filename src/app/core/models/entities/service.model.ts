@@ -16,6 +16,7 @@ export interface IServiceModel {
     price: number;
     category: string;
     tax_description: string;
+    details: string;
 }
 
 export class ServiceModel implements IServiceModel {
@@ -26,7 +27,8 @@ export class ServiceModel implements IServiceModel {
         public tax_id: number = 0,
         public price: number = 0,
         public category: string = '',
-        public tax_description: string = '', 
+        public tax_description: string = '',
+        public details: string = '', 
     ) {
     }
 }
