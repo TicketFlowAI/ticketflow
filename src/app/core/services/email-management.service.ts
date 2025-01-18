@@ -46,6 +46,20 @@ export class EmailManagementService {
     )
   }
 
+  getDeletedEmailtemplates(): Observable<EmailTemplateModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    
+    return this.emailService.getDeletedEmailTemplates().pipe(
+      map((emails) => emails.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+
   addEmailTemplate(newEmailTemplate: EmailTemplateModel): Observable<boolean> {
     this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
     return this.emailService.createEmailTemplate(newEmailTemplate).pipe(
@@ -101,6 +115,24 @@ export class EmailManagementService {
     )
   }
 
+  restoreEmailTemplate(id: number): Observable<boolean> {
+    return this.emailService.restoreEmailTemplate(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.EMAIL-TEMPLATE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
   getAllEmailIntervals(): Observable<EmailIntervalModel[] | []> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
     
@@ -126,6 +158,20 @@ export class EmailManagementService {
         this.spinnerService.hideGlobalSpinner();
       })
     )
+  }
+
+  getDeletedEmailIntervals(): Observable<EmailIntervalModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    
+    return this.emailIntervalService.getDeletedIntervals().pipe(
+      map((intervals) => intervals.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
   }
 
   addEmailInterval(newEmailInterval: EmailIntervalModel): Observable<boolean> {
@@ -174,6 +220,24 @@ export class EmailManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  restoreEmailInterval(id: number): Observable<boolean> {
+    return this.emailIntervalService.restoreEmailInterval(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.EMAIL-INTERVAL');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),

@@ -21,6 +21,7 @@
         "GENERAL-SETTINGS": "Configuraciones Generales",
         "EMAIL-SETTINGS": "Configuración de Correos",
         "IA-SETTINGS": "Configuración de IA",
+        "SURVEY-SETTINGS": "Configuración de Encuestas",
         "BIN-SETTINGS": "Papelería de reciclaje"
       },
       "EMAIL-SETTINGS": {
@@ -65,6 +66,28 @@
       "AI-SETTINGS": {
         "AI-SETTINGS": "Configuración de IA",
         "RETURN": "Regresar"
+      },
+      "SURVEY-SETTINGS": {
+        "SURVEY-SETTINGS": "Configuración de Encuestas",
+        "RETURN": "Return"
+      },
+      "RECYCLE-BIN": {
+        "RECYCLE-BIN": "Papelería de reciclaje",
+        "SEARCH": "Buscar...",
+        "RETURN": "Return",
+        "RESTORE": "Restaurar",
+        "USER-TABLE": "Tabla de Usuarios",
+        "COMPANY-TABLE": "Tabla de Empresas",
+        "SERVICE-CONTRACT-TABLE": "Tabla de Contratos de Servicio",
+        "SERVICE-CONTRACT-TERM-TABLE": "Tabla de Términos de Contrato de Servicio",
+        "SERVICE-TABLE": "Tabla de Servicios",
+        "SERVICE-CATEGORY-TABLE": "Tabla de Categorías de Servicio",
+        "SERVICE-TAX-TABLE": "Tabla de Impuestos de Servicio",
+        "TICKET-TABLE": "Tabla de Tickets",
+        "EMAIL-TEMPLATE-TABLE": "Tabla de Plantillas de Correo",
+        "EMAIL-INTERVAL-TABLE": "Tabla de Intervalos de Correo",
+        "OPEN-TABLE": "De click aquí para ver la tabla",
+        "NO-RECORDS": "No hay registros para esta tabla"
       }
     },
     "AUTH": {
@@ -547,6 +570,20 @@
           "USER": "Usuario eliminado exitosamente",
           "ROLE": "Rol eliminado exitosamente",
           "ERROR": "Ha ocurrido un error en la eliminación"
+        },
+        "RESTORE": {
+          "COMPANY": "Empresa restaurada exitosamente",
+          "EMAIL-TEMPLATE": "Plantilla de correo restaurada exitosamente",
+          "EMAIL-INTERVAL": "Intervalo de correo restaurado exitosamente",
+          "SERVICE-CONTRACT": "Contratación restaurada exitosamente",
+          "SERVICE-CONTRACT-TERM": "Periodo restaurado exitosamente",
+          "SERVICE": "Servicio restaurado exitosamente",
+          "SERVICE-TAX": "Impuesto restaurado exitosamente",
+          "SERVICE-CATEGORY": "Categoría restaurada exitosamente",
+          "TICKET": "Ticket restaurado exitosamente",
+          "USER": "Usuario restaurado exitosamente",
+          "ROLE": "Rol restaurado exitosamente",
+          "ERROR": "Ha ocurrido un error en la restauración"
         }
       },
       "CUSTOM": {

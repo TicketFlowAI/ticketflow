@@ -62,9 +62,9 @@ export class UserRoleService {
     });
   }
 
-  deleteUserRole(id: number): Observable<HttpResponse<any>> {
-    const customHeader = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.delete<any>(`${this.apiRole}/${id}`, {
+  deleteUserRole(name: string): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.delete<any>(`${this.apiRole}/${name}`, {
       headers: customHeader,
       withCredentials: true,
       observe: 'response'

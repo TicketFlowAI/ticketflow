@@ -51,6 +51,20 @@ export class ServiceManagementService {
     );
   }
 
+  getDeletedServices(): Observable<ServiceModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    
+    return this.serviceService.getDeletedServices().pipe(
+      map((services) => services.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+
   addService(serviceModelToAdd: ServiceModel){
     this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
@@ -111,6 +125,26 @@ export class ServiceManagementService {
     );
   }
 
+  restoreService(id: number) {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.serviceService.restoreService(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.SERVICE');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    );
+  }
+
   getAllServiceTaxes(): Observable<ServiceTaxModel[] | []> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
@@ -132,6 +166,20 @@ export class ServiceManagementService {
       map((serviceTax) => serviceTax.data),
       catchError(() => {
         return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+
+  getDeletedServiceTaxes(): Observable<ServiceTaxModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.serviceTaxService.getDeletedServiceTaxes().pipe(
+      map((serviceTaxes) => serviceTaxes.data),
+      catchError(() => {
+        return of([]);
       }),
       finalize(() => {
         this.spinnerService.hideGlobalSpinner();
@@ -199,6 +247,26 @@ export class ServiceManagementService {
     );
   }
 
+  restoreServiceTax(id: number) {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.serviceTaxService.restoreServiceTax(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.SERVICE-TAX');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    );
+  }
+
   getAllServiceCategories(): Observable<ServiceCategoryModel[] | []> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
@@ -220,6 +288,20 @@ export class ServiceManagementService {
       map((serviceCategory) => serviceCategory.data),
       catchError(() => {
         return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+
+  getDeletedServiceCategories(): Observable<ServiceCategoryModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.serviceCategoryService.getDeletedServiceCategories().pipe(
+      map((serviceCategories) => serviceCategories.data),
+      catchError(() => {
+        return of([]);
       }),
       finalize(() => {
         this.spinnerService.hideGlobalSpinner();
@@ -278,6 +360,26 @@ export class ServiceManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    );
+  }
+
+  restoreServiceCategory(id: number): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.serviceCategoryService.restoreServiceCategory(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.RESTORE-CATEGORY');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),

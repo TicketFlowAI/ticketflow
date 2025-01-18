@@ -57,6 +57,19 @@ export class CompanyManagementService {
     )
   }
 
+  getDeletedCompanies(): Observable<CompanyModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    return this.companyService.getDeletedCompanies().pipe(
+      map((company) => company.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
   addCompany(newCompany: CompanyModel): Observable<boolean> {
     this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
     return this.companyService.createCompany(newCompany).pipe(
@@ -103,6 +116,24 @@ export class CompanyManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  restoreDeletedCompany(id: number): Observable<boolean> {
+    return this.companyService.restoreCompany(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.COMPANY');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),

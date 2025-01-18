@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { IUserModelResponse, IUsersModelResponse } from '../../models/entities/user.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
+import { IUserRolesModelResponse } from '../../models/entities/user-role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,14 @@ export class UserService {
     });
   }
 
+  getDeletedUsers(): Observable<IUsersModelResponse> {
+      const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+      return this.http.get<IUsersModelResponse>(`${this.apiUsers}/deleted`, {
+        headers: customHeaders,
+        withCredentials: true,
+      });
+    }
+
   createUser(user: any): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<any>(`${this.apiUsers}`, user, {
@@ -62,11 +71,19 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<HttpResponse<any>> {
-    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiUsers}/${id}`, {
       headers: customHeader,
       withCredentials: true,
       observe: 'response'
+    });
+  }
+
+  restoreUser(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
+    return this.http.put<HttpResponse<any>>(`${this.apiUsers}/${id}/restore`, null, {
+      headers: customHeaders,
+      withCredentials: true,
     });
   }
 }

@@ -21,6 +21,7 @@
         "GENERAL-SETTINGS": "General Settings",
         "EMAIL-SETTINGS": "Email Settings",
         "IA-SETTINGS": "IA Settings",
+        "SURVEY-SETTINGS": "Survey Settings",
         "BIN-SETTINGS": "Recycle Bin"
       },
       "EMAIL-SETTINGS": {
@@ -58,6 +59,28 @@
       "AI-SETTINGS": {
         "AI-SETTINGS": "AI Configuration",
         "RETURN": "Return"
+      },
+      "SURVEY-SETTINGS": {
+        "SURVEY-SETTINGS": "Survey Configuration",
+        "RETURN": "Return"
+      },
+      "RECYCLE-BIN": {
+        "RECYCLE-BIN": "Recycle Bin",
+        "BUSCAR": "Search...",
+        "RETURN": "Return",
+        "RESTORE": "Restore",
+        "USER-TABLE": "Users Table",
+        "COMPANY-TABLE": "Companies Table",
+        "SERVICE-CONTRACT-TABLE": "Service Contracts Table",
+        "SERVICE-CONTRACT-TERM-TABLE": "Service Contract Terms Table",
+        "SERVICE-TABLE": "Services Table",
+        "SERVICE-CATEGORY-TABLE": "Service Categories Table",
+        "SERVICE-TAX-TABLE": "Service Tax Table",
+        "TICKET-TABLE": "Tickets Table",
+        "EMAIL-TEMPLATE-TABLE": "Email Templates Table",
+        "EMAIL-INTERVAL-TABLE": "Email Intervals Table",
+        "OPEN-TABLE": "Click here to open the table",
+        "NO-RECORDS": "No records found"
       }
     },
     "AUTH": {
@@ -535,6 +558,20 @@
           "USER": "User deleted successfully",
           "ROLE": "Role deleted successfully",
           "ERROR": "An error occurred during the deletion"
+        },
+        "RESTORE": {  
+            "COMPANY": "Company successfully restored",
+            "EMAIL-TEMPLATE": "Email template successfully restored",
+            "EMAIL-INTERVAL": "Email interval successfully restored",
+            "SERVICE-CONTRACT": "Service contract successfully restored",
+            "SERVICE-CONTRACT-TERM": "Service contract term successfully restored",
+            "SERVICE": "Service successfully restored",
+            "SERVICE-TAX": "Service tax successfully restored",
+            "SERVICE-CATEGORY": "Service category successfully restored",
+            "TICKET": "Ticket successfully restored",
+            "USER": "User successfully restored",
+            "ROLE": "Role successfully restored",
+            "ERROR": "An error occurred during restoration"
         }
       },
       "CUSTOM": {

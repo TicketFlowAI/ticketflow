@@ -42,6 +42,14 @@ export class ServiceContractService {
     });
   }
 
+  getDeletedServiceContracts(): Observable<IServiceContractsApiResponse> {
+    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.get<IServiceContractsApiResponse>(`${this.apiServiceContract}/deleted`, { 
+      headers: customHeader, 
+      withCredentials: true 
+    });
+  }
+
   createServiceContract(serviceContract: any): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<any>(`${this.apiServiceContract}`, serviceContract, {
@@ -61,8 +69,17 @@ export class ServiceContractService {
   }
 
   deleteServiceContract(id: number): Observable<HttpResponse<any>> {
-    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiServiceContract}/${id}`, {
+        headers: customHeader,
+        withCredentials: true,
+        observe: 'response'
+    });
+  }
+
+  restoreServiceContract(id: number): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<any>(`${this.apiServiceContract}/${id}/restore`, null, {
         headers: customHeader,
         withCredentials: true,
         observe: 'response'

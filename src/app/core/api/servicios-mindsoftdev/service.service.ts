@@ -34,6 +34,14 @@ export class ServiceService {
     });
   }
 
+  getDeletedServices(): Observable<IServicesApiResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    return this.http.get<IServicesApiResponse>(`${this.apiServices}/deleted`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
   createService(service: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<any>(`${this.apiServices}`, service, {
@@ -53,8 +61,17 @@ export class ServiceService {
   }
 
   deleteService(id: number): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiServices}/${id}`, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  restoreService(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<any>(`${this.apiServices}/${id}/restore`, null, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response'

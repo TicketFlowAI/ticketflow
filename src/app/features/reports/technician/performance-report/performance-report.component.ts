@@ -13,7 +13,7 @@ import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { forkJoin } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
-import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ChartConfiguration, PolarAreaController, RadialLinearScale, PieController } from 'chart.js';
+import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ChartConfiguration, PolarAreaController, RadialLinearScale } from 'chart.js';
 import { TechnicianPerformanceReportModel } from '../../../../core/models/reports/techinican-performance/technician-performanceReport.model';
 
 @Component({
@@ -78,7 +78,7 @@ export class PerformanceReportComponent {
 
   constructor() {
     // Registrar los controladores de Chart.js que son necesarios para los gráficos 'pie' y 'bar'
-    Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PolarAreaController, RadialLinearScale, PieController);
+    Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PolarAreaController, RadialLinearScale);
   }
 
   ngOnInit(): void {

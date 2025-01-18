@@ -43,6 +43,14 @@ export class CompanyService {
     });
   }
 
+  getDeletedCompanies(): Observable<ICompaniesApiResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    return this.http.get<ICompaniesApiResponse>(`${this.apiCompany}/deleted`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
   createCompany(company: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
     return this.http.post<HttpResponse<any>>(`${this.apiCompany}`, company, {
@@ -62,11 +70,19 @@ export class CompanyService {
   }
 
   deleteCompany(id: number): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
     return this.http.delete<any>(`${this.apiCompany}/${id}`, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response'
+    });
+  }
+
+  restoreCompany(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders()
+    return this.http.put<HttpResponse<any>>(`${this.apiCompany}/${id}/restore`, null, {
+      headers: customHeaders,
+      withCredentials: true,
     });
   }
 }

@@ -34,6 +34,14 @@ getEmailTemplate(id: number): Observable<IEmailTemplateApiResponse> {
   });
 }
 
+getDeletedEmailTemplates(): Observable<IEmailTemplatesApiResponse> {
+  const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+  return this.http.get<IEmailTemplatesApiResponse>(`${this.apiEmail}/deleted`, {
+    headers: customHeaders,
+    withCredentials: true,
+  });
+}
+
 createEmailTemplate(email: any): Observable<HttpResponse<any>> {
   const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
   return this.http.post<any>(`${this.apiEmail}`, email, {
@@ -53,8 +61,17 @@ updateEmailTemplate(email: any): Observable<HttpResponse<any>> {
 }
 
 deleteEmailTemplate(id: number): Observable<HttpResponse<any>> {
-  const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+  const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
   return this.http.delete<any>(`${this.apiEmail}/${id}`, {
+    headers: customHeaders,
+    withCredentials: true,
+    observe: 'response'
+  });
+}
+
+restoreEmailTemplate(id: number): Observable<HttpResponse<any>> {
+  const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+  return this.http.put<any>(`${this.apiEmail}/${id}/restore`, null, {
     headers: customHeaders,
     withCredentials: true,
     observe: 'response'

@@ -62,7 +62,7 @@
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="deleteUserRole(userRole.id)"> <fa-icon [icon]="faX"></fa-icon>
+                                    <button  type="button" class="btn btn-danger"(click)="deleteUserRole(userRole.name)"> <fa-icon [icon]="faX"></fa-icon>
                                         {{ t('DELETE')}}
                                     </button>
                                 </div>
@@ -72,7 +72,7 @@
                 </mat-expansion-panel>
                 }
             </mat-accordion>
-
+        
             <mat-paginator [length]="userRoles.length" [pageSize]="pageSize" [pageSizeOptions]="[7, 10, 20]"
                 (page)="onPageChange($event)" aria-label="Select page">
             </mat-paginator>

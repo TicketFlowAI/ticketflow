@@ -83,7 +83,7 @@ export class AllCompaniesComponent implements OnInit {
 
   onFilterChange(): void {
     const filterText = this.filterText.toLowerCase();
-
+    
     this.filteredCompanies = this.companies.filter(company =>
       company.name.toLowerCase().includes(filterText) ||
       company.address.toLowerCase().includes(filterText) ||

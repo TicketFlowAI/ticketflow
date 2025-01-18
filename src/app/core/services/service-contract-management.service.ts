@@ -48,6 +48,20 @@ export class ServiceContractManagementService {
     )
   }
 
+  getDeletedServiceContracts(): Observable<ServiceContractModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.serviceContractService.getDeletedServiceContracts().pipe(
+      map((serviceContracts) => serviceContracts.data),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
   getOneServiceContract(id: number): Observable<ServiceContractModel | null> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
@@ -122,6 +136,26 @@ export class ServiceContractManagementService {
     )
   }
 
+  restoreServiceContract(id: number): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.serviceContractService.restoreServiceContract(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.SERVICE-CONTRACT');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
   getAllServiceContractTerms(): Observable<ServiceContractTermModel[] | []> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
@@ -143,6 +177,20 @@ export class ServiceContractManagementService {
       map((serviceContract) => serviceContract.data),
       catchError(() => {
         return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
+  getDeletedServiceContractTerms(): Observable<ServiceContractTermModel[] | []> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+
+    return this.serviceContractTermService.getDeletedServiceContractTerms().pipe(
+      map((serviceContracts) => serviceContracts.data),
+      catchError(() => {
+        return of([]);
       }),
       finalize(() => {
         this.spinnerService.hideGlobalSpinner();
@@ -201,6 +249,26 @@ export class ServiceContractManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  restoreServiceContractTerm(id: number): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.serviceContractTermService.restoreServiceContractTerm(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.SERVICE-CONTRACT-TERM');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),

@@ -20,6 +20,8 @@ import { GlobalReportComponent } from './features/reports/global-report/global-r
 import { PerformanceReportComponent } from './features/reports/technician/performance-report/performance-report.component';
 import { AllUserRolesComponent } from './features/users/user-roles/all-user-roles/all-user-roles.component';
 import { AiSettingsComponent } from './features/settings/ai/ai-settings/ai-settings.component';
+import { AllSurveyQuestionsComponent } from './features/settings/survey/all-survey-questions/all-survey-questions.component';
+import { AllTablesComponent } from './features/settings/recycleBin/all-tables/all-tables.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +37,16 @@ export const routes: Routes = [
   {
     path: 'ai-settings',
     component: AiSettingsComponent,
+    canActivate: [adminRoleGuard],
+  },
+  {
+    path: 'recycle-bin',
+    component: AllTablesComponent,
+    canActivate: [adminRoleGuard],
+  },
+  {
+    path: 'survey-settings',
+    component: AllSurveyQuestionsComponent,
     canActivate: [adminRoleGuard],
   },
   {

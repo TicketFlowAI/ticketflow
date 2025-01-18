@@ -35,6 +35,14 @@ export class TicketService {
     });
   }
 
+  getDeletedTickets(): Observable<ITicketsApiResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+    return this.http.get<ITicketsApiResponse>(`${this.apiTickets}/deleted`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
   getTicketHistory(id: number): Observable<ITicketHistoryApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     console.log(customHeaders)
@@ -84,6 +92,15 @@ export class TicketService {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     console.log(customHeaders)
     return this.http.post<any>(`${this.apiTickets}/reassign/${id}`, null, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  restoreTicket(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<any>(`${this.apiTickets}/${id}/restore`, null, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response'

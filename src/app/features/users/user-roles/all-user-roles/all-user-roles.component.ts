@@ -92,18 +92,18 @@ export class AllUserRolesComponent {
     this.pagedUserRoles = this.filteredUserRoles.slice(startIndex, endIndex);
   }
 
-  deleteUserRole(userRoleId: number) {
+  deleteUserRole(name: string) {
     const deleteMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.DELETE-ROLE');
 
     this.dialogManagerService.openActionConfirmationDialog(deleteMessage).pipe(
       concatMap((result) =>
-        result ? this.handleDeleteUserRole(userRoleId) : this.handleCancelDelete()
+        result ? this.handleDeleteUserRole(name) : this.handleCancelDelete()
       )
     ).subscribe();
   }
 
-  private handleDeleteUserRole(userRoleId: number) {
-    return this.userManagementService.deleteUserRole(userRoleId).pipe(
+  private handleDeleteUserRole(roleName: string) {
+    return this.userManagementService.deleteUserRole(roleName).pipe(
       tap(() => this.loadUserRoles())
     );
   }

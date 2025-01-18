@@ -34,6 +34,14 @@ export class EmailIntervalService {
     });
   }
 
+  getDeletedIntervals(): Observable<IEmailIntervalsApiResponse> {
+      const customHeaders = this.customHeadersService.addAppJson().getHeaders()
+      return this.http.get<IEmailIntervalsApiResponse>(`${this.apiEmailInterval}/deleted`, {
+        headers: customHeaders,
+        withCredentials: true,
+      });
+    }
+
   createEmailInterval(interval: any): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post<any>(`${this.apiEmailInterval}`, interval, {
@@ -53,8 +61,17 @@ export class EmailIntervalService {
   }
 
   deleteEmailInterval(id: number): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiEmailInterval}/${id}`, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  restoreEmailInterval(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<any>(`${this.apiEmailInterval}/${id}/restore`, null, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response'

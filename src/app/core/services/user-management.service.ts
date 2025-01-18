@@ -92,6 +92,21 @@ export class UserManagementService {
     )
   }
 
+  getDeletedUsers(): Observable<UserModel[] | []> {
+    return this.userService.getDeletedUsers().pipe(
+      map((user) => {
+        console.log(user)
+        return user.data
+      }),
+      catchError(() => {
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
   addUser(newUser: UserModel): Observable<boolean> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
@@ -143,6 +158,24 @@ export class UserManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
+      })
+    )
+  }
+
+  restoreDeletedUser(id: number): Observable<boolean> {
+    return this.userService.restoreUser(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.USER');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),
@@ -232,10 +265,10 @@ export class UserManagementService {
     )
   }
 
-  deleteUserRole(id: number): Observable<boolean> {
+  deleteUserRole(roleName: string): Observable<boolean> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
-    return this.userRoleService.deleteUserRole(id).pipe(
+    return this.userRoleService.deleteUserRole(roleName).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ROLE');
         this.messageService.addSuccessMessage(transate)
