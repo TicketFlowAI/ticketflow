@@ -1,10 +1,5 @@
 <ng-container *transloco="let t; prefix: 'FEATURES.ROLES.ROLE-MANAGEMENT'">
-    @if(!userRoleData) {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-ROLE')}}</h2>
-    }
-    @else {
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-ROLE')}}</h2>
-    }
     <mat-dialog-content>
         <form [formGroup]="userRoleForm">
             <div class="row">

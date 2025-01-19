@@ -35,6 +35,10 @@ import { UserRoleInfoComponent } from '../../features/users/user-roles/user-role
 import { EmailParametersComponent } from '../../features/settings/email/email-parameters/email-parameters.component';
 import { EmailIntervalModel } from '../models/entities/email-interval.model';
 import { ManageEmailIntervalComponent } from '../../features/settings/email/email-interval/manage-email-interval/manage-email-interval.component';
+import { SurveyQuestionModel } from '../models/entities/survey-question.model';
+import { ManageSurveyQuestionComponent } from '../../features/settings/survey/manage-survey-question/manage-survey-question.component';
+import { ServiceRequestComponent } from '../../features/service-contracts/service-contract/service-request/service-request.component';
+import { SatisfactionSurveyComponent } from '../../features/tickets/survey/satisfaction-survey/satisfaction-survey.component';
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +164,7 @@ export class DialogManagerService {
 
     this.dialogService.open(ServiceInfoComponent, {
       width: '500px',
-      height: '325px',
+      height: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: service
@@ -173,7 +177,7 @@ export class DialogManagerService {
 
     const dialogRef = this.dialogService.open(ManageServiceComponent, {
       width: '500px',
-      height: '400px',
+      height: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: service
@@ -241,6 +245,23 @@ export class DialogManagerService {
       enterAnimationDuration,
       exitAnimationDuration,
       data: data
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
+  }
+
+  openServiceContractRequestDialog(serviceContractData: ServiceContractDialogData) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(ServiceRequestComponent, {
+      width: '500px',
+      height: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: serviceContractData
     });
 
     return dialogRef.afterClosed().pipe(
@@ -367,10 +388,46 @@ export class DialogManagerService {
     const dialogRef = this.dialogService.open(ManageEmailIntervalComponent, {
       width: '600px',
       maxWidth: '100vw',
-      height: '350px',
+      height: '425px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: emailInterval
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
+  }
+
+  openManageSurveyQuestionDialog(surveyQuestion: SurveyQuestionModel| null) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(ManageSurveyQuestionComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: surveyQuestion
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
+  }
+
+  openTicketSurveyDialog(ticket: TicketModel) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(SatisfactionSurveyComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: ticket
     });
 
     return dialogRef.afterClosed().pipe(

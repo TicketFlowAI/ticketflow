@@ -26,6 +26,8 @@ import { UserRoleModel } from '../../../../core/models/entities/user-role.model'
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { SurveyQuestionModel } from '../../../../core/models/entities/survey-question.model';
+import { SurveyManagementService } from '../../../../core/services/survey-management.service';
 
 
 @Component({
@@ -54,7 +56,8 @@ export class AllTablesComponent {
   private serviceContractManagementService = inject(ServiceContractManagementService)
   private serviceManagementService = inject(ServiceManagementService)
   private emailManagementService = inject(EmailManagementService)
-  private ticketmManagementService = inject(TicketManagementService)
+  private ticketManagementService = inject(TicketManagementService)
+  private surveyManagementService = inject(SurveyManagementService)
 
   private cdr = inject(ChangeDetectorRef)
 
@@ -68,6 +71,7 @@ export class AllTablesComponent {
   public tickets: TicketModel[] = []
   public emailTemplates: EmailTemplateModel[] = []
   public emailIntervals: EmailIntervalModel[] = []
+  public surveyQuestions: SurveyQuestionModel[] = []
 
   public usersFiltered: UserModel[] = []
 
@@ -80,6 +84,7 @@ export class AllTablesComponent {
   public ticketsFiltered: TicketModel[] = []
   public emailTemplatesFiltered: EmailTemplateModel[] = []
   public emailIntervalsFiltered: EmailIntervalModel[] = []
+  public surveyQuestionsFiltered: SurveyQuestionModel[] = []
 
   filterText: string = ''
 
@@ -94,11 +99,12 @@ export class AllTablesComponent {
     tickets: '',
     emailTemplates: '',
     emailIntervals: '',
+    surveyQuestions: '',
   };
-  
+
   onFilterChange(tableName: string): void {
     const filterText = this.filterTexts[tableName].toLowerCase();
-  
+
     switch (tableName) {
       case 'users':
         this.usersFiltered = this.users.filter(user =>
@@ -112,7 +118,7 @@ export class AllTablesComponent {
           company.name.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'serviceContracts':
         this.serviceContractsFiltered = this.serviceContracts.filter(serviceContract =>
           serviceContract.company.toLowerCase().includes(filterText) ||
@@ -120,52 +126,57 @@ export class AllTablesComponent {
           serviceContract.service.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'serviceContractTerms':
         this.serviceContractTermsFiltered = this.serviceContractTerms.filter(term =>
           term.term.toLowerCase().includes(filterText) ||
           term.months.toString().includes(filterText)
         );
         break;
-  
+
       case 'services':
         this.servicesFiltered = this.services.filter(service =>
           service.details.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'serviceCategories':
         this.serviceCategoriesFiltered = this.serviceCategories.filter(category =>
           category.category.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'servicetaxes':
         this.servicetaxesFiltered = this.servicetaxes.filter(tax =>
           tax.description.toLowerCase().includes(filterText) ||
           tax.value.toString().toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'tickets':
         this.ticketsFiltered = this.tickets.filter(ticket =>
           ticket.title.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'emailTemplates':
         this.emailTemplatesFiltered = this.emailTemplates.filter(template =>
           template.template_name.toLowerCase().includes(filterText)
         );
         break;
-  
+
       case 'emailIntervals':
         this.emailIntervalsFiltered = this.emailIntervals.filter(interval =>
           interval.type.toLowerCase().includes(filterText) ||
           interval.days.toString().includes(filterText)
         );
         break;
-  
+      case 'surveyQuestions':
+        this.surveyQuestionsFiltered = this.surveyQuestions.filter(question =>
+          question.question.toLowerCase().includes(filterText)
+        );
+        break;
+
       default:
         break;
     }
@@ -182,7 +193,7 @@ export class AllTablesComponent {
     });
   }
 
-  
+
   loadCompaniesTable() {
     this.companyManagementService.getDeletedCompanies().subscribe({
       next: (response) => {
@@ -244,7 +255,7 @@ export class AllTablesComponent {
   }
 
   loadTicketsTable() {
-    this.ticketmManagementService.getDeletedTickets().subscribe({
+    this.ticketManagementService.getDeletedTickets().subscribe({
       next: (response) => {
         this.tickets = response
         this.ticketsFiltered = this.tickets
@@ -273,74 +284,91 @@ export class AllTablesComponent {
     });
   }
 
+  loadSurveyQuestionsTable() {
+    this.surveyManagementService.getDeletedSurveyQuestions().subscribe({
+      next: (response) => {
+        this.surveyQuestions = response
+        this.surveyQuestionsFiltered = this.surveyQuestions
+        this.cdr.markForCheck()
+      },
+    });
+  }
+
   restore(id: number, table: string) {
-    if(table === 'users') {
+    if (table === 'users') {
       this.userManagementService.restoreDeletedUser(id).subscribe({
         next: () => {
           this.loadUsersTable()
         },
       });
     }
-    if(table === 'companies') {
+    if (table === 'companies') {
       this.companyManagementService.restoreDeletedCompany(id).subscribe({
         next: () => {
           this.loadCompaniesTable()
         },
       });
     }
-    if(table === 'serviceContracts') {
+    if (table === 'serviceContracts') {
       this.serviceContractManagementService.restoreServiceContract(id).subscribe({
         next: () => {
           this.loadServiceContractsTable()
         },
       });
     }
-    if(table === 'serviceContractTerms') {
+    if (table === 'serviceContractTerms') {
       this.serviceContractManagementService.restoreServiceContractTerm(id).subscribe({
         next: () => {
           this.loadServiceContractTermsTable()
         },
       });
     }
-    if(table === 'services') {
+    if (table === 'services') {
       this.serviceManagementService.restoreService(id).subscribe({
         next: () => {
           this.loadServicesTable()
         },
       });
     }
-    if(table === 'serviceCategories') {
+    if (table === 'serviceCategories') {
       this.serviceManagementService.restoreServiceCategory(id).subscribe({
         next: () => {
           this.loadServiceCategoriesTable()
         },
       });
     }
-    if(table === 'serviceTaxes') {
+    if (table === 'serviceTaxes') {
       this.serviceManagementService.restoreServiceTax(id).subscribe({
         next: () => {
           this.loadServiceTaxesTable()
         },
       });
     }
-    if(table === 'tickets') {
-      this.ticketmManagementService.restoreTicket(id).subscribe({
+    if (table === 'tickets') {
+      this.ticketManagementService.restoreTicket(id).subscribe({
         next: () => {
           this.loadTicketsTable()
         },
       });
     }
-    if(table === 'emailTemplates') {
+    if (table === 'emailTemplates') {
       this.emailManagementService.restoreEmailTemplate(id).subscribe({
         next: () => {
-          this.loadTicketsTable()
+          this.loadEmailTemplatesTable()
         },
       });
     }
-    if(table === 'emailIntervals') {
+    if (table === 'emailIntervals') {
       this.emailManagementService.restoreEmailInterval(id).subscribe({
         next: () => {
-          this.loadTicketsTable()
+          this.loadEmailIntervalsTable()
+        },
+      });
+    }
+    if (table === 'surveyQuestions') {
+      this.surveyManagementService.restoreSurveyQuestion(id).subscribe({
+        next: () => {
+          this.loadSurveyQuestionsTable()
         },
       });
     }

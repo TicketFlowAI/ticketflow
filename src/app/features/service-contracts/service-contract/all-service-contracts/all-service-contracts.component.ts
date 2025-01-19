@@ -17,6 +17,7 @@ import { concatMap, of, tap } from 'rxjs';
 import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { UserManagementService } from '../../../../core/services/user-management.service';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -33,7 +34,8 @@ import { UserManagementService } from '../../../../core/services/user-management
     MatInputModule,
     MatIconModule,
     FaIconComponent,
-    GlobalSpinnerComponent
+    GlobalSpinnerComponent,
+    MatSelectModule
 ],
   templateUrl: './all-service-contracts.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -61,6 +63,8 @@ export class AllServiceContractsComponent {
   isTechnician: boolean = false;
   isClient: boolean = false;
 
+  expirationFilter: 'ASC' | 'DESC' = 'ASC'; 
+
   pageSize = 6; // Tamaño de página por defecto
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
@@ -69,6 +73,7 @@ export class AllServiceContractsComponent {
     this.loadServiceContracts()
     this.isAdmin = this.userManagementService.isUserAdmin();
     this.isTechnician = this.userManagementService.isUserTechnician();
+    this.isClient = this.userManagementService.isUserClient();
   }
 
   loadServiceContracts() {
@@ -87,15 +92,31 @@ export class AllServiceContractsComponent {
   }
 
   onFilterChange(): void {
-    const filterText = this.filterText.toLowerCase();
+    this.applyFilters();
+  }
 
-    this.filteredServiceContracts = this.serviceContracts.filter(service =>
-      service.company.toLowerCase().includes(filterText) ||
-      service.service.toLowerCase().includes(filterText) ||
-      service.service_term.toLowerCase().includes(filterText) ||
-      service.price.toString().toLowerCase().includes(filterText)
+  onExpirationFilterChange(): void {
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    // Filtrar por texto
+    const filterText = this.filterText.toLowerCase();
+    let filtered = this.serviceContracts.filter(
+      (service) =>
+        service.company.toLowerCase().includes(filterText) ||
+        service.service.toLowerCase().includes(filterText) ||
+        service.service_term.toLowerCase().includes(filterText) ||
+        service.price.toString().toLowerCase().includes(filterText)
     );
-    this.pageIndex = 0;
+
+    filtered = filtered.sort((a, b) => {
+      const dateA = new Date(a.expiration_date).getTime();
+      const dateB = new Date(b.expiration_date).getTime();
+      return this.expirationFilter === 'ASC' ? dateA - dateB : dateB - dateA;
+    });
+
+    this.filteredServiceContracts = filtered;
     this.updatePagedServiceContracts();
   }
 
@@ -154,5 +175,13 @@ export class AllServiceContractsComponent {
          if(response) this.loadServiceContracts() 
       }
     })
+  }
+
+  openServiceRequest(serviceContract: ServiceContractModel | null) {
+    let data: ServiceContractDialogData = {
+      serviceContract,
+      companyId: this.companyId ? parseInt(this.companyId) : null
+    }
+    this.dialogManagerService.openServiceContractRequestDialog(data).subscribe()
   }
 }

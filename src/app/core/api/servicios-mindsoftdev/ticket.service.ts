@@ -88,9 +88,17 @@ export class TicketService {
     });
   }
 
+  reopenTicket(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post<any>(`${this.apiTickets}/open/${id}`, null, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
   reassignTicket(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    console.log(customHeaders)
     return this.http.post<any>(`${this.apiTickets}/reassign/${id}`, null, {
       headers: customHeaders,
       withCredentials: true,
@@ -101,6 +109,15 @@ export class TicketService {
   restoreTicket(id: number): Observable<HttpResponse<any>> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.put<any>(`${this.apiTickets}/${id}/restore`, null, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  needHumanInteraction(id: number): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post<any>(`${this.apiTickets}/${id}/needs-human-interaction`, null, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response'

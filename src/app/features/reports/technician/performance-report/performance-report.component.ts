@@ -2,19 +2,20 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } 
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { TranslocoDirective } from '@jsverse/transloco';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { ReportManagementService } from '../../../../core/services/report-management.service';
 import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { forkJoin } from 'rxjs';
-
 import { MatCardModule } from '@angular/material/card';
 import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ChartConfiguration, PolarAreaController, RadialLinearScale } from 'chart.js';
 import { TechnicianPerformanceReportModel } from '../../../../core/models/reports/techinican-performance/technician-performanceReport.model';
+import { materialDateInvalidValidator } from '../../../../shared/validators/custom-validators';
+import { CustomDateAdapter, CUSTOM_DATE_FORMATS } from '../../../../core/utils/custom-date-format';
 
 @Component({
   selector: 'app-performance-report',
@@ -33,16 +34,31 @@ import { TechnicianPerformanceReportModel } from '../../../../core/models/report
   ],
   templateUrl: './performance-report.component.html',
   styleUrls: ['./performance-report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+      { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, // Idioma español
+      { provide: DateAdapter, useClass: CustomDateAdapter }, // Adaptador de fecha personalizado
+      { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }, // Formato de fecha personalizado
+    ]
 })
 export class PerformanceReportComponent {
-  @Input() technicianId!: string;
+  @Input() technicianId: string = '';
 
   private readonly reportManagementService = inject(ReportManagementService);
   private readonly userManagementService = inject(UserManagementService);
   private readonly spinnerService = inject(SpinnerService);
   private readonly cdr = inject(ChangeDetectorRef);
 
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  startFormControl = new FormControl(this.startDate, { validators: [Validators.required, materialDateInvalidValidator()] })
+  endFormControl = new FormControl(this.endDate, { validators: [Validators.required, materialDateInvalidValidator()] })
+
+  dateRange = new FormGroup({
+    start: this.startFormControl,
+    end: this.endFormControl,
+  })
+  
   performanceReport: TechnicianPerformanceReportModel = new TechnicianPerformanceReportModel();
 
   public reassignmentChartData: ChartConfiguration['data'] = {
@@ -82,12 +98,14 @@ export class PerformanceReportComponent {
   }
 
   ngOnInit(): void {
+    this.isAdmin = this.userManagementService.isUserAdmin();
+  }
+
+  showReport() {
     const idNumber = Number.parseInt(this.technicianId);
     if (idNumber) {
-      this.loadReportItems(idNumber);
+      this.loadReportItems(idNumber)
     }
-
-    this.isAdmin = this.userManagementService.isUserAdmin();
   }
 
   loadReportItems(technicianId: number) {

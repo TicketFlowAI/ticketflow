@@ -44,27 +44,9 @@ export class UserRoleService {
     });
   }
 
-  createUserRole(user: any): Observable<HttpResponse<any>> {
-    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<any>(`${this.apiRole}`, user, {
-      headers: customHeader,
-      withCredentials: true,
-      observe: 'response'
-    });
-  }
-
   updateUserRole(user: any): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.put<any>(`${this.apiRole}/${user.id}`, user, {
-      headers: customHeader,
-      withCredentials: true,
-      observe: 'response'
-    });
-  }
-
-  deleteUserRole(name: string): Observable<HttpResponse<any>> {
-    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.delete<any>(`${this.apiRole}/${name}`, {
       headers: customHeader,
       withCredentials: true,
       observe: 'response'

@@ -71,6 +71,7 @@ export class ManageUserRoleComponent {
     this.userManagementService.getAllPermissions().subscribe({
       next: (permissions) => {
         this.permissions = permissions
+        this.cdr.markForCheck()
       }
     })
   }
@@ -78,10 +79,7 @@ export class ManageUserRoleComponent {
   selectedPermissions(permissionName: string): boolean {
     if(this.userRoleData == null) return false;
 
-    console.log(permissionName)
-    console.log(this.userRoleData.permissions)
     var foundItems = this.userRoleData.permissions.filter(p => p.name == permissionName)
-    console.log(foundItems)
     if(foundItems.length > 0)
       return true;
     else
@@ -90,6 +88,7 @@ export class ManageUserRoleComponent {
 
   onSaveClick(): void {
     const formValue = this.userRoleForm.value
+    console.log(formValue)
     let userRole = new UserRoleModel(
       0,
       formValue.name,
@@ -98,13 +97,8 @@ export class ManageUserRoleComponent {
 
     if (this.userRoleData) {
       userRole.id = this.userRoleData.id
-      userRole.permissions = this.userRoleData.permissions
 
       this.userManagementService.editUserRole(userRole)
-        .subscribe(() => { this.dialogRef.close(true) })
-    }
-    else {
-      this.userManagementService.addUserRole(userRole)
         .subscribe(() => { this.dialogRef.close(true) })
     }
   }

@@ -94,11 +94,14 @@ $btn-primary-color: white;
 
 html {
   height: 100%;
+  scrollbar-width: none; /* Oculta la barra en Firefox */
+  -ms-overflow-style: none; /* Oculta la barra en IE/Edge */
 }
 
 body {
   height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: auto; 
 
   #page-container {
     position: relative;
@@ -123,6 +126,10 @@ body {
       width: 100%;
     }
   }
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Oculta la barra en Chrome, Safari y Edge */
 }
 
 .btn-primary {

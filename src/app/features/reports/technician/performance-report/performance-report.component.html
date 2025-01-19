@@ -16,6 +16,39 @@
       </div>
       <hr>
   
+      <div class="row my-2">
+        <div class="col-md-8">
+            <mat-form-field class="w-100">
+                <mat-label>{{t('FILTER-DATE')}}</mat-label>
+                <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="DD/MM/YYYY">
+                    <input matEndDate formControlName="end" placeholder="DD/MM/YYYY">
+                </mat-date-range-input>
+                <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                @if (startFormControl.hasError('required')) {
+                <mat-error>{{t('REQUIRED')}}</mat-error>
+                }
+                @if (startFormControl.hasError('matStartDateInvalid')) {
+                <mat-error>{{t('INVALID-START-DATE')}}</mat-error>
+                }
+                @if (endFormControl.hasError('required')) {
+                <mat-error>{{t('REQUIRED')}}</mat-error>
+                }
+                @if (endFormControl.hasError('matStartDateInvalid')) {
+                <mat-error>{{t('INVALID-END-DATE')}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 mt-2">
+            <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                <button (click)="showReport()" type="button" [disabled]="dateRange.invalid"
+                    class="btn btn-primary">{{t('SEE-REPORT')}}</button>
+            </div>
+        </div>
+    </div>
+    
       <!-- Métricas principales -->
       <div class="row g-3">
         <div class="col-md-4">

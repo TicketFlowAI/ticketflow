@@ -93,6 +93,8 @@ export class UserManagementService {
   }
 
   getDeletedUsers(): Observable<UserModel[] | []> {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+
     return this.userService.getDeletedUsers().pipe(
       map((user) => {
         console.log(user)
@@ -102,13 +104,13 @@ export class UserManagementService {
         return of([]);
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
 
   addUser(newUser: UserModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userService.createUser(newUser).pipe(
       map(() => {
@@ -128,7 +130,7 @@ export class UserManagementService {
   }
 
   editUser(editUser: UserModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userService.updateUser(editUser).pipe(
       map(() => {
@@ -168,6 +170,8 @@ export class UserManagementService {
   }
 
   restoreDeletedUser(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+
     return this.userService.restoreUser(id).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.USER');
@@ -180,7 +184,7 @@ export class UserManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -225,28 +229,8 @@ export class UserManagementService {
     )
   }
 
-  addUserRole(newUserRole: UserRoleModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
-
-    return this.userRoleService.createUserRole(newUserRole).pipe(
-      map(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ROLE');
-        this.messageService.addSuccessMessage(transate)
-        return true
-      }),
-      catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
-      }),
-      finalize(() => {
-        this.spinnerService.hideDialogSpinner();
-      })
-    )
-  }
-
   editUserRole(editUserRole: UserRoleModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.userRoleService.updateUserRole(editUserRole).pipe(
       map(() => {
@@ -256,26 +240,6 @@ export class UserManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
-      }),
-      finalize(() => {
-        this.spinnerService.hideDialogSpinner();
-      })
-    )
-  }
-
-  deleteUserRole(roleName: string): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
-
-    return this.userRoleService.deleteUserRole(roleName).pipe(
-      map(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ROLE');
-        this.messageService.addSuccessMessage(transate)
-        return true
-      }),
-      catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),

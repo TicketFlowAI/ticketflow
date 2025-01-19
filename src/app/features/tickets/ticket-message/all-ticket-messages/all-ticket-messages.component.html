@@ -83,16 +83,20 @@
         </div>
         }
         @else {
-        <div class="row">
-            <div class="col-md-8 text-center">
-                <p>{{t('NOT-AVAILABLE')}}</p>
-            </div>
-            <div class="col-md-4">
-                <div class="row">
-                    <button type="button" class="btn btn-primary">{{t('REOPEN')}}</button>
+            @if(this.ticket?.status == 0) {
+            <div class="row">
+                <div [ngClass]="userManagementService.isUserClient()? 'col-md-12' : 'col-md-8'" class="text-center">
+                    <p>{{t('NOT-AVAILABLE')}}</p>
                 </div>
+                @if(!userManagementService.isUserClient()) {
+                    <div class="col-md-4">
+                        <div class="row">
+                            <button (click)="reOpenTicket()" type="button" class="btn btn-primary">{{t('REOPEN')}}</button>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+            }
         }
     </div>
 </ng-container>

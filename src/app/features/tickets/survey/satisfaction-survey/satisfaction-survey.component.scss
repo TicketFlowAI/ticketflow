@@ -1,0 +1,20 @@
+.icon :hover {
+    background-color: red;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.selected { 
+    background-color: red;
+    border-radius: 25px;
+}
+
+mat-icon {
+    align-content: center;
+    font-size: 2.5rem;
+    width: 75px;
+    height: 75px;
+    border-radius: 25px;
+    transition: 500ms;
+}

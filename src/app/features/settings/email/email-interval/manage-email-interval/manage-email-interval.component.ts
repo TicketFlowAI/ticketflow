@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { EmailTemplateModel } from '../../../../../core/models/entities/email-template.model';
 import { EmailManagementService } from '../../../../../core/services/email-management.service';
 import { FieldErrorRequiredComponent } from '../../../../../shared/components/form-validation/field-error-required/field-error-required.component';
 import { ManageEmailTemplateComponent } from '../../email-template/manage-email-template/manage-email-template.component';
@@ -36,49 +35,52 @@ import { EmailIntervalModel } from '../../../../../core/models/entities/email-in
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageEmailIntervalComponent {
-    private readonly emailManagementService = inject(EmailManagementService);
-    private readonly cdr = inject(ChangeDetectorRef);
-  
-    public readonly dialogRef = inject(MatDialogRef<ManageEmailTemplateComponent>);
-    public readonly emailIntervalData = inject<EmailIntervalModel>(MAT_DIALOG_DATA);
-  
-    daysFormControl = new FormControl(1, { nonNullable: true, validators: [Validators.required] })
-    typeFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  
-    emailIntervalForm = new FormGroup({
-      days: this.daysFormControl,
-      type: this.typeFormControl
-    })
-  
-    ngOnInit(): void {
-      this.dialogRef.backdropClick().subscribe(() => {
-        this.dialogRef.close(false);
-      });
-      
-      if (this.emailIntervalData) {
-        this.daysFormControl.setValue(this.emailIntervalData.days)
-        this.typeFormControl.setValue(this.emailIntervalData.type)
-      }
+  private readonly emailManagementService = inject(EmailManagementService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  public readonly dialogRef = inject(MatDialogRef<ManageEmailTemplateComponent>);
+  public readonly emailIntervalData = inject<EmailIntervalModel>(MAT_DIALOG_DATA);
+
+  daysFormControl = new FormControl(1, { nonNullable: true, validators: [Validators.required] })
+  typeFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  templateFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+
+  emailIntervalForm = new FormGroup({
+    days: this.daysFormControl,
+    type: this.typeFormControl,
+    template_name: this.templateFormControl
+  })
+
+  ngOnInit(): void {
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(false);
+    });
+
+    if (this.emailIntervalData) {
+      this.daysFormControl.setValue(this.emailIntervalData.days)
+      this.typeFormControl.setValue(this.emailIntervalData.type)
+      this.templateFormControl.setValue(this.emailIntervalData.template_name)
     }
-  
-    onSaveClick(): void {
-      const formValue = this.emailIntervalForm.value;
-      let emailInterval = new EmailIntervalModel(
-        0,
-        formValue.days,
-        formValue.type,
-      )
-  
-      if (this.emailIntervalData) 
-        {
-        emailInterval.id = this.emailIntervalData.id
-  
-        this.emailManagementService.editEmailInterval(emailInterval)
-        .subscribe( () => { this.dialogRef.close(true) })
-      }
-      else {
-        this.emailManagementService.addEmailInterval(emailInterval)
-        .subscribe( () => { this.dialogRef.close(true) })
-      }
+  }
+
+  onSaveClick(): void {
+    const formValue = this.emailIntervalForm.value;
+    let emailInterval = new EmailIntervalModel(
+      0,
+      formValue.days,
+      formValue.type,
+      formValue.template_name
+    )
+
+    if (this.emailIntervalData) {
+      emailInterval.id = this.emailIntervalData.id
+
+      this.emailManagementService.editEmailInterval(emailInterval)
+        .subscribe(() => { this.dialogRef.close(true) })
     }
+    else {
+      this.emailManagementService.addEmailInterval(emailInterval)
+        .subscribe(() => { this.dialogRef.close(true) })
+    }
+  }
 }

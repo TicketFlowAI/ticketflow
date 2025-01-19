@@ -1,0 +1,57 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.HOME'">
+    <div class="home align-items-center">
+      <div class="container-fluid">
+        <!-- Fila de los textos -->
+        <div class="row g-0">
+          <!-- Columna del texto "¡Bienvenido!" -->
+          <div class="col-md-4">
+            <h1 class="text-dark ps-5">{{ t('WELCOME-MESSAGE') }}</h1>
+          </div>
+          <!-- Columna del texto "TicketFlow" -->
+          <div class="col-md-8 text-end justify-content-end">
+            <h1 class="text-light pe-5">{{ t('APP-NAME') }}</h1>
+          </div>
+        </div>
+        <!-- Fila de los botones -->
+        <div class="row mt-3">
+          <div class="ps-5">
+            @if(user != null) {
+            <div class="d-none d-md-block">
+              <button [routerLink]="['/companies']" class="btn btn-primary me-2">
+                {{ t('GO-TO-COMPANIES') }}
+              </button>
+              <button [routerLink]="['/tickets']" class="btn btn-secondary me-2">
+                {{ t('GO-TO-TICKETS') }}
+              </button>
+            </div>
+            <div class="d-md-none">
+              <button [routerLink]="['/companies']" class="btn btn-secondary me-2">
+                {{ t('GO-TO-COMPANIES') }}
+              </button>
+              <button [routerLink]="['/tickets']" class="btn btn-secondary me-2">
+                {{ t('GO-TO-TICKETS') }}
+              </button>
+            </div>
+            }
+            @else {
+            <button OpenLogin class="btn btn-primary me-2">
+              {{ t('LOGIN') }}
+            </button>
+            <a href="https://wa.me/593984258842" target="_blank" type="btn" class="btn btn-secondary">
+              <i class="fa fa-whatsapp"></i> {{ t('CONTACT-US') }}
+            </a>
+            }
+          </div>
+        </div>
+        <!-- Fila del texto descriptivo -->
+        <div class="row mt-4 ps-5">
+          <div class="col-md-4 ps-5">
+            <p class="text-dark p-3">
+              {{ t('DESCRIPTION') }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  

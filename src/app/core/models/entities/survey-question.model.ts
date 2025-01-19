@@ -1,22 +1,24 @@
 export interface ISurveyQuestionsApiResponse {
     success: boolean;
-    data: ISurveryQuestionModel[];
+    data: ISurveyQuestionModel[];
 }
 
 export interface ISurveyQuestionApiResponse {
     success: boolean;
-    data: ISurveryQuestionModel;
+    data: ISurveyQuestionModel;
 }
 
-export interface ISurveryQuestionModel {
+export interface ISurveyQuestionModel {
     id: number;
     question: string;
+    active: number
 }
 
-export class SurveryQuestionModel implements ISurveryQuestionModel {
+export class SurveyQuestionModel implements ISurveyQuestionModel {
     constructor(
         public id: number = 0,
         public question: string = '',
+        public active: number = 0,
     ) { }
 }
 

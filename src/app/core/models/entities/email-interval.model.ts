@@ -12,6 +12,8 @@ export interface IEmailIntervalsApiResponse {
     id: number;
     days: number;
     type: string;
+    template_name: string;
+    
   }
   
   export class EmailIntervalModel implements IEmailIntervalModel {
@@ -19,6 +21,7 @@ export interface IEmailIntervalsApiResponse {
       public id: number = 0,
       public days: number = 0,
       public type: string = '',
+      public template_name: string = '' 
     ) {
     }
   }

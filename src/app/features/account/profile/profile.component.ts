@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserModel } from '../../../core/models/entities/user.model';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { TranslocoDirective } from '@jsverse/transloco';

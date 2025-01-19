@@ -22,8 +22,25 @@ import { AllUserRolesComponent } from './features/users/user-roles/all-user-role
 import { AiSettingsComponent } from './features/settings/ai/ai-settings/ai-settings.component';
 import { AllSurveyQuestionsComponent } from './features/settings/survey/all-survey-questions/all-survey-questions.component';
 import { AllTablesComponent } from './features/settings/recycleBin/all-tables/all-tables.component';
+import { HomeComponent } from './features/home/home/home.component';
+import { ChangePasswordRequestComponent } from './features/auth/change-password-request/change-password-request.component';
+import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
+import { noAuthGuard } from './core/guards/no-auth.guard';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'change-password-request',
+    component: ChangePasswordRequestComponent,
+  },
+  {
+    path: 'change-password/:token',
+    component: ChangePasswordComponent,
+  },
   {
     path: 'settings',
     component: GeneralSettingsComponent,

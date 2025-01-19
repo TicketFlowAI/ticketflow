@@ -52,12 +52,14 @@ export class ManageServiceComponent {
   public readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
 
   descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  detailsFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   priceFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required, decimalWithDotValidator] })
   categoryFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
   taxFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
 
   serviceForm = new FormGroup({
     description: this.descriptionFormControl,
+    details: this.detailsFormControl,
     price: this.priceFormControl,
     category: this.categoryFormControl,
     tax: this.taxFormControl
@@ -75,6 +77,7 @@ export class ManageServiceComponent {
     if (this.serviceData) {
       this.service = this.serviceData
       this.descriptionFormControl.setValue(this.service.description)
+      this.detailsFormControl.setValue(this.service.details)
       this.priceFormControl.setValue(this.service.price)
       this.categoryFormControl.setValue(this.service.category_id);
       this.taxFormControl.setValue(this.service.tax_id);
@@ -102,6 +105,7 @@ export class ManageServiceComponent {
     let service = new ServiceModel(
       0,
       formValue.description,
+      formValue.details,
       formValue.category,
       formValue.tax,
       formValue.price,

@@ -13,11 +13,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-2">
             <hr>
         </div>
         <div class="row my-3">
-            <!-- Users Table -->
             <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadUsersTable()" class="mt-2">
                     <mat-expansion-panel-header>
@@ -52,10 +51,6 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
-
-            <!-- Companies Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadCompaniesTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('COMPANY-TABLE') }}</mat-panel-title>
@@ -89,10 +84,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
 
-            <!-- Service Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadServicesTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('SERVICE-TABLE') }}</mat-panel-title>
@@ -126,10 +118,6 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
-
-            <!-- Service Category Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadServiceCategoriesTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('SERVICE-CATEGORY-TABLE') }}</mat-panel-title>
@@ -163,10 +151,6 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
-
-            <!-- Service Tax Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadServiceTaxesTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('SERVICE-TAX-TABLE') }}</mat-panel-title>
@@ -200,10 +184,6 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
-
-            <!-- Service Contracts Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadServiceContractsTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('SERVICE-CONTRACT-TABLE') }}</mat-panel-title>
@@ -237,10 +217,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
 
-            <!-- Service Contract Terms Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadServiceContractTermsTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('SERVICE-CONTRACT-TERM-TABLE') }}</mat-panel-title>
@@ -274,10 +251,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
 
-            <!-- Tickets Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadTicketsTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('TICKET-TABLE') }}</mat-panel-title>
@@ -311,10 +285,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
 
-            <!-- Email Templates Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadEmailTemplatesTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('EMAIL-TEMPLATE-TABLE') }}</mat-panel-title>
@@ -348,10 +319,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-            </mat-accordion>
 
-            <!-- Email Intervals Table -->
-            <mat-accordion class="my-2" [multi]="false">
                 <mat-expansion-panel (opened)="loadEmailIntervalsTable()" class="mt-2">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="text-truncate"> {{ t('EMAIL-INTERVAL-TABLE') }}</mat-panel-title>
@@ -379,6 +347,40 @@
                             </div>
                         </div>
                         <div *ngIf="emailIntervalsFiltered.length === 0" class="row">
+                            <div class="col-md-6">
+                                <p>{{ t('NO-RECORDS') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="loadSurveyQuestionsTable()" class="mt-2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-truncate"> {{ t('SURVEY-QUESTIONS-TABLE') }}</mat-panel-title>
+                        <mat-panel-description class="row">
+                            <div class="col-6 text-center">
+                                {{ t('OPEN-TABLE') }}
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row mt-4">
+                        <mat-form-field>
+                            <mat-label>{{ t('SEARCH') }}</mat-label>
+                            <input matInput type="text" [(ngModel)]="filterTexts['surveyQuestions']" (input)="onFilterChange('surveyQuestions')">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <hr>
+                    <div class="ps-md-4 mt-2">
+                        <div *ngFor="let question of surveyQuestionsFiltered" class="row">
+                            <div class="col-md-6">
+                                <p>{{ question.question }}</p>
+                            </div>
+                            <div class="col-md-6 justify-content-end">
+                                <button class="btn btn-secondary" (click)="restore(question.id, 'surveyQuestions')">{{ t('RESTORE') }}</button>
+                            </div>
+                        </div>
+                        <div *ngIf="surveyQuestionsFiltered.length === 0" class="row">
                             <div class="col-md-6">
                                 <p>{{ t('NO-RECORDS') }}</p>
                             </div>

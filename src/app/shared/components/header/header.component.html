@@ -11,7 +11,6 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center justify-content-md-end" id="collapsableNav">
-
           @if(currentUser) {
             @if(this.userManagementService.isUserAdmin()) {
             <ng-container [ngTemplateOutlet]="adminTemplate" />
@@ -34,19 +33,19 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                  <a class="dropdown-item" (click)="switchLanguage('es')">{{ t('ES') }}</a>
+                  <a class="dropdown-item" (click)="switchLanguage('es'); closeMenu()">{{ t('ES') }}</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
                 <li>
-                  <a class="dropdown-item" (click)="switchLanguage('en')">{{ t('EN') }}</a>
+                  <a class="dropdown-item" (click)="switchLanguage('en'); closeMenu()">{{ t('EN') }}</a>
                 </li>
               </ul>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link text-light" aria-current="page" (click)="toggleTheme()">
+              <a class="nav-link text-light" aria-current="page" (click)="toggleTheme(); closeMenu()">
                 @if ((this.themeService.currentTheme$ | async) === 'light') {
                 <fa-icon [icon]="faMoon"></fa-icon>
                 } @else {
@@ -62,7 +61,7 @@
   <ng-template #noAuthTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item px-2">
-        <a [routerLink]="" ScrollToTop class="nav-link active link-underline text-light fs-6" aria-current="page">{{
+        <a [routerLink]="['']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap" aria-current="page" (click)="closeMenu()">{{
           t('CLIENT.HOME') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
@@ -72,7 +71,7 @@
           {{ t('ACCOUNT') }}
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a OpenLogin class="dropdown-item">
+          <li><a OpenLogin class="dropdown-item text-nowrap" (click)="closeMenu()">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('LOGIN') }}</a></li>
         </ul>
@@ -82,12 +81,12 @@
   <ng-template #clientTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item px-2">
-        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('CLIENT.TICKETS') }}</a>
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('CLIENT.TICKETS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('CLIENT.COMPANY') }}</a>
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('CLIENT.COMPANY') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
         <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
@@ -98,10 +97,10 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a [routerLink]="['/profile']" class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item text-nowrap" (click)="closeMenu()">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a></li>
-          <li><a (click)="logout()" class="dropdown-item">
+          <li><a (click)="logout(); closeMenu()" class="dropdown-item text-nowrap">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('LOGOUT') }}</a></li>
         </ul>
@@ -111,28 +110,28 @@
   <ng-template #technicianTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item px-2">
-        <a [routerLink]="['/performance-report/1']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.REPORTS') }}</a>
+        <a [routerLink]="['/performance-report/1']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.REPORTS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.TICKETS') }}</a>
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.TICKETS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.USERS') }}</a>
+        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.USERS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.SERVICES') }}</a>
+        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.SERVICES') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.SERVICE-CONTRACTS') }}</a>
+        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.SERVICE-CONTRACTS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('TEAM.COMPANY') }}</a>
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('TEAM.COMPANY') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
         <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
@@ -143,10 +142,10 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a [routerLink]="['/profile']" class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item text-nowrap" (click)="closeMenu()">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a></li>
-          <li><a (click)="logout()" class="dropdown-item">
+          <li><a (click)="logout(); closeMenu()" class="dropdown-item text-nowrap">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('LOGOUT') }}</a></li>
         </ul>
@@ -156,28 +155,28 @@
   <ng-template #adminTemplate>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item px-2">
-        <a [routerLink]="['/reports']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.REPORTS') }}</a>
+        <a [routerLink]="['/reports']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.REPORTS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.TICKETS') }}</a>
+        <a [routerLink]="['/tickets']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.TICKETS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.USERS') }}</a>
+        <a [routerLink]="['/users']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.USERS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.SERVICES') }}</a>
+        <a [routerLink]="['/services']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.SERVICES') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.SERVICE-CONTRACTS') }}</a>
+        <a [routerLink]="['/service-contract']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.SERVICE-CONTRACTS') }}</a>
       </li>
       <li class="nav-item px-2">
-        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6"
-          aria-current="page">{{ t('ADMIN.COMPANY') }}</a>
+        <a [routerLink]="['/companies']" ScrollToTop class="nav-link active link-underline text-light fs-6 text-nowrap"
+          aria-current="page" (click)="closeMenu()">{{ t('ADMIN.COMPANY') }}</a>
       </li>
       <li class="nav-item px-2 dropdown">
         <a class="nav-link dropdown-toggle account text-dark text-uppercase" data-bs-toggle="dropdown"
@@ -188,15 +187,15 @@
           }
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a [routerLink]="['/profile']" class="dropdown-item">
+          <li><a [routerLink]="['/profile']" class="dropdown-item text-nowrap" (click)="closeMenu()">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('PROFILE') }}</a>
           </li>
-          <li><a (click)="logout()" class="dropdown-item">
+          <li><a (click)="logout(); closeMenu()" class="dropdown-item text-nowrap">
               <fa-icon [icon]="faSignInAlt"></fa-icon>
               {{ t('LOGOUT') }}</a>
           </li>
-          <li><a [routerLink]="['/settings']" class="dropdown-item">
+          <li><a [routerLink]="['/settings']" class="dropdown-item text-nowrap" (click)="closeMenu()">
             <fa-icon [icon]="faGear"></fa-icon>
             {{ t('ADMIN.SETTINGS') }}</a>
         </li>

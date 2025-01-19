@@ -53,10 +53,15 @@ export class TicketManagementService {
   }
 
   getDeletedTickets(): Observable<TicketModel[] | []> {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+    
     return this.ticketService.getDeletedTickets().pipe(
       map((ticket) => ticket.data),
       catchError(() => {
         return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -76,7 +81,7 @@ export class TicketManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -116,10 +121,11 @@ export class TicketManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
+
 
   closeTicket(id: number): Observable<boolean> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
@@ -136,11 +142,52 @@ export class TicketManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+  
+  setPendingSurveyTicket(ticket: TicketModel): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    //Estado de pendiente Encuesta
+    ticket.status = 3;
+
+    return this.ticketService.updateTicket(ticket).pipe(
+      map(() => {
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT-ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
 
+  openTicket(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+
+    return this.ticketService.reopenTicket(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.OPEN-TICKET-SUCCESS');
+        this.messageService.addSuccessMessage(transate);
+        return true;
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.OPEN-TICKET-ERROR');
+        this.messageService.addErrorMessage(transate);
+        return of(false);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+  
   restoreTicket(id: number): Observable<boolean> {
     this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
@@ -156,7 +203,7 @@ export class TicketManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -176,7 +223,27 @@ export class TicketManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
+  ticketNeedHumanInteraction(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.ticketService.needHumanInteraction(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NO-AI-SUCCESS');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NO-AI-ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }

@@ -52,7 +52,7 @@ export class ServiceManagementService {
   }
 
   getDeletedServices(): Observable<ServiceModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     
     return this.serviceService.getDeletedServices().pipe(
       map((services) => services.data),
@@ -126,7 +126,7 @@ export class ServiceManagementService {
   }
 
   restoreService(id: number) {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceService.restoreService(id).pipe(
       map(() => {
@@ -140,7 +140,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }
@@ -174,7 +174,7 @@ export class ServiceManagementService {
   }
 
   getDeletedServiceTaxes(): Observable<ServiceTaxModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceTaxService.getDeletedServiceTaxes().pipe(
       map((serviceTaxes) => serviceTaxes.data),
@@ -248,7 +248,7 @@ export class ServiceManagementService {
   }
 
   restoreServiceTax(id: number) {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceTaxService.restoreServiceTax(id).pipe(
       map(() => {
@@ -262,7 +262,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }
@@ -296,7 +296,7 @@ export class ServiceManagementService {
   }
 
   getDeletedServiceCategories(): Observable<ServiceCategoryModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceCategoryService.getDeletedServiceCategories().pipe(
       map((serviceCategories) => serviceCategories.data),
@@ -370,7 +370,7 @@ export class ServiceManagementService {
   }
 
   restoreServiceCategory(id: number): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceCategoryService.restoreServiceCategory(id).pipe(
       map(() => {
@@ -384,7 +384,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }

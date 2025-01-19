@@ -47,7 +47,7 @@ export class EmailManagementService {
   }
 
   getDeletedEmailtemplates(): Observable<EmailTemplateModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     
     return this.emailService.getDeletedEmailTemplates().pipe(
       map((emails) => emails.data),
@@ -116,6 +116,8 @@ export class EmailManagementService {
   }
 
   restoreEmailTemplate(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    
     return this.emailService.restoreEmailTemplate(id).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.EMAIL-TEMPLATE');
@@ -128,7 +130,7 @@ export class EmailManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -161,7 +163,7 @@ export class EmailManagementService {
   }
 
   getDeletedEmailIntervals(): Observable<EmailIntervalModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     
     return this.emailIntervalService.getDeletedIntervals().pipe(
       map((intervals) => intervals.data),
@@ -230,6 +232,8 @@ export class EmailManagementService {
   }
 
   restoreEmailInterval(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
     return this.emailIntervalService.restoreEmailInterval(id).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.RESTORE.EMAIL-INTERVAL');
@@ -242,7 +246,7 @@ export class EmailManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }

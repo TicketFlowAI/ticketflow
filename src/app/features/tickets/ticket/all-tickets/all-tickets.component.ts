@@ -18,6 +18,7 @@ import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-all-tickets',
@@ -35,7 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     FaIconComponent,
     GlobalSpinnerComponent,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   templateUrl: './all-tickets.component.html',
   styleUrl: './all-tickets.component.scss',
@@ -47,7 +49,7 @@ export class AllTicketsComponent {
   protected readonly faPlus = faPlus;
   protected readonly faX = faX;
   protected readonly users = faUsers;
-  protected readonly faMessage =faMessage;
+  protected readonly faMessage = faMessage;
 
   private readonly userManagementService = inject(UserManagementService)
   private readonly ticketManagementService = inject(TicketManagementService)
@@ -92,19 +94,19 @@ export class AllTicketsComponent {
   }
 
   onPriorityOrder(order: 'asc' | 'desc'): void {
-    this.filteredTickets.sort((a, b) => 
+    this.filteredTickets.sort((a, b) =>
       order === 'asc' ? a.priority - b.priority : b.priority - a.priority
     );
     this.updatePageTickets();
   }
-  
+
   onComplexityOrder(order: 'asc' | 'desc'): void {
-    this.filteredTickets.sort((a, b) => 
+    this.filteredTickets.sort((a, b) =>
       order === 'asc' ? a.complexity - b.complexity : b.complexity - a.complexity
     );
     this.updatePageTickets();
   }
-  
+
   onStatusFilter(status: number | null): void {
     if (status === null) {
 
@@ -159,18 +161,28 @@ export class AllTicketsComponent {
     ).subscribe();
   }
 
-  closeTicket(ticketId: number) {
+  closeTicket(ticket: TicketModel) {
     const closeMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.CLOSE-TICKET');
 
     this.dialogManagerService.openActionConfirmationDialog(closeMessage).pipe(
       concatMap((result) =>
-        result ? this.handleCloseTicket(ticketId) : this.handleCancelDelete()
+        result ? this.handleCloseTicket(ticket) : this.handleCancelDelete()
       )
     ).subscribe();
   }
 
   reOpenTicket(ticketId: number) {
-    this.handleOpenTicket(ticketId)
+    this.handleOpenTicket(ticketId).subscribe()
+  }
+
+  needHumanInteraction(ticketId: number) {
+    const needHumanMessage = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.NO-AI');
+
+    this.dialogManagerService.openActionConfirmationDialog(needHumanMessage).pipe(
+      concatMap((result) =>
+        result ? this.handleNeedHumanTicket(ticketId) : this.handleCancelDelete()
+      )
+    ).subscribe();
   }
 
   deleteTicket(ticketId: number) {
@@ -183,8 +195,9 @@ export class AllTicketsComponent {
     ).subscribe();
   }
 
-  private handleCloseTicket(ticketId: number) {
-    return this.ticketManagementService.closeTicket(ticketId).pipe(
+  private handleCloseTicket(ticket: TicketModel) {
+    const observable = ticket.status == 3? this.ticketManagementService.closeTicket(ticket.id) : this.ticketManagementService.setPendingSurveyTicket(ticket)
+    return observable.pipe(
       tap(() => this.loadTickets())
     );
   }
@@ -196,7 +209,13 @@ export class AllTicketsComponent {
   }
 
   private handleOpenTicket(ticketId: number) {
-    return this.ticketManagementService.reassignTicket(ticketId).pipe(
+    return this.ticketManagementService.openTicket(ticketId).pipe(
+      tap(() => this.loadTickets())
+    );
+  }
+
+  private handleNeedHumanTicket(ticketId: number) {
+    return this.ticketManagementService.ticketNeedHumanInteraction(ticketId).pipe(
       tap(() => this.loadTickets())
     );
   }
@@ -209,6 +228,14 @@ export class AllTicketsComponent {
 
   private handleCancelDelete() {
     return of(null);
+  }
+
+  openSatisfactionSurvey(ticket: TicketModel) { 
+    this.dialogManagerService.openTicketSurveyDialog(ticket).subscribe({
+      next: (response) => {
+        if (response) this.loadTickets()
+      }
+    })
   }
 
   openTicketManageDialog(ticket: TicketModel | null) {

@@ -1,3 +1,18 @@
+.navbar-nav {
+  text-align: center;
+
+  .nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; // Los elementos ocuparán todo el ancho en dispositivos pequeños
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%; // Asegura que el enlace esté centrado
+  }
+}
 
 .account {
   background-color: #FFFFFF !important;

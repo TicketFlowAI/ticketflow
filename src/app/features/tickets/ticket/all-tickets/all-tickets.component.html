@@ -82,6 +82,10 @@
                                                 class="btn btn-secondary">
                                                 {{t("SEE-CONVERSATION")}}
                                             </button>
+                                            <button (click)="openSatisfactionSurvey(ticket)" type="button"
+                                                class="btn btn-secondary">
+                                                {{t("OPEN-SURVEY")}}
+                                            </button>
                                             }
                                             @else {
                                             <p class="fw-medium mt-2">{{t('PRIORITY')}} ({{ticket.priority}})</p>
@@ -174,6 +178,25 @@
                         </div>
                         }
 
+                        @if(showClientElement() && ticket.status != 0){
+                            <div class="row justify-content-end">
+                                <div class="col-md-3 mt-3 mt-md-0 ">
+                                    <div class="row px-md-2">
+                                        <button (click)="needHumanInteraction(ticket.id)" type="button" class="btn btn-secondary" [matTooltip]="t('NO-AI-TOOLTIP')">
+                                            {{t('NO-AI')}}
+                                          </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3 mt-md-0 ">
+                                    <div class="row px-md-2">
+                                        <button type="button" class="btn btn-primary" (click)="closeTicket(ticket)">
+                                            {{t('CLOSE')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                         @if(showTechnicianElement()){
                         <div class="row justify-content-end">
                             @if(ticket.status != 0) {
@@ -190,7 +213,7 @@
                                 <div class="row justify-content-end px-md-2">
                                     <button type="button" class="btn"
                                         [ngClass]="ticket.status != 0? 'btn-danger': 'btn-secondary'"
-                                        (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
+                                        (click)="ticket.status != 0? closeTicket(ticket) : reOpenTicket(ticket.id)">
                                         {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>
@@ -203,7 +226,7 @@
                                 <div class="row justify-content-end px-md-2">
                                     <button [ngClass]="ticket.status != 0? 'btn-warning': 'btn-primary'" type="button"
                                         class="btn"
-                                        (click)="ticket.status != 0? closeTicket(ticket.id) : reOpenTicket(ticket.id)">
+                                        (click)="ticket.status != 0? closeTicket(ticket) : reOpenTicket(ticket.id)">
                                         {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>

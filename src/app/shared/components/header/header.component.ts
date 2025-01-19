@@ -73,4 +73,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/')
     this.cdr.detectChanges()
   }
+
+  closeMenu() {
+    const navBar = document.getElementById('collapsableNav');
+    if (navBar) {
+      navBar.classList.remove('show');
+    }
+  }
+  
 }

@@ -9,7 +9,14 @@ import { SpinnerService } from '../../../shared/services/spinner.service';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { CUSTOM_DATE_FORMATS, CustomDateAdapter } from '../../../core/utils/custom-date-format';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { materialDateInvalidValidator } from '../../../shared/validators/custom-validators';
 
 @Component({
   selector: 'global-report',
@@ -20,21 +27,42 @@ import { BaseChartDirective } from 'ng2-charts';
     TranslocoDirective,
     MatCardModule,
     RouterLink,
-    BaseChartDirective
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FaIconComponent
   ],
   templateUrl: './global-report.component.html',
   styleUrls: ['./global-report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, // Idioma español
+    { provide: DateAdapter, useClass: CustomDateAdapter }, // Adaptador de fecha personalizado
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }, // Formato de fecha personalizado
+  ]
 })
 export class GlobalReportComponent {
+  protected readonly faArrowLeft = faArrowLeft;
   private readonly reportManagementService = inject(ReportManagementService);
   private readonly spinnerService = inject(SpinnerService);
   private readonly cdr = inject(ChangeDetectorRef);
-  
+
   globalReport: GlobalReportModel = new GlobalReportModel();
 
   public averageTechnicians = 0;
   public mostTechniciansTicket: { ticket_id: number; technicians_count: number } | null = null;
+
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  startFormControl = new FormControl(this.startDate, { validators: [Validators.required, materialDateInvalidValidator()] })
+  endFormControl  = new FormControl(this.endDate, { validators: [Validators.required, materialDateInvalidValidator()] })
+  
+  dateRange = new FormGroup({
+    start: this.startFormControl,
+    end: this.endFormControl,
+  })
 
   public complexityChartData: ChartConfiguration['data'] = {
     labels: [] as string[],
@@ -71,7 +99,12 @@ export class GlobalReportComponent {
   }
 
   ngOnInit(): void {
-    this.loadReportItems();
+    
+  }
+
+  showReport() {
+
+    this.loadReportItems()
   }
 
   loadReportItems() {
@@ -87,10 +120,9 @@ export class GlobalReportComponent {
       next: ([solvedQty, avgTime, escalations, complexityData, humanInteraction]) => {
         // Actualizar métricas globales
         this.globalReport.totalTicketsQty = solvedQty;
-        this.globalReport.averageTicketCloseTime = avgTime?? 0;
+        this.globalReport.averageTicketCloseTime = avgTime ?? 0;
         this.globalReport.humanInteraction = humanInteraction;
 
-        console.log(this.globalReport)
         // Configurar datos de gráficos de complejidad
         this.complexityChartData.labels = complexityData.map(item => `Nivel ${item.complexity}`);
         this.complexityChartData.datasets[0].data = complexityData.map(item => item.count);
@@ -105,7 +137,9 @@ export class GlobalReportComponent {
         this.distributionChartData.datasets[0].data = Object.values(groupedData);
 
         this.spinnerService.hideGlobalSpinner();
+        
         this.createCharts();
+        
         this.cdr.markForCheck();
       },
       error: () => {

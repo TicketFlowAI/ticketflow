@@ -9,7 +9,8 @@ import { CustomToastComponent } from "./shared/components/custom-toast/custom-to
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent, CustomToastComponent],
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   private readonly authManagementService = inject(AuthManagementService)

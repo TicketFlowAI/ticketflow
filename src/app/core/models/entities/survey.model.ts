@@ -1,29 +1,41 @@
 export interface ISurveysApiResponse {
     success: boolean;
-    data: ISurvey[];
+    data: ISurveyModel[];
 }
 
 export interface ISurveyApiResponse {
     success: boolean;
-    data: ISurvey;
+    data: ISurveyModel;
 }
 
-export interface ISurvey {
-    ISurveyAnswers: ISurveyAnswer[];
+export interface ISurveyModel {
+    SurveyAnswers: ISurveyAnswerModel[];
 }
 
-export class Survey implements ISurvey {
+export class SurveyModel implements ISurveyModel {
     constructor(
-        public id: number = 0,
-        public question: string = '',
-        public ISurveyAnswers: ISurveyAnswer[] = []
+        public SurveyAnswers: SurveyAnswerModel[] = []
     ) { }
 }
 
-interface ISurveyAnswer {
+export class SurveyAnswerModel implements ISurveyAnswerModel {
+    constructor(
+        public ticket_id: number = 0,
+        public user_id: number = 0,
+        public user_name: string = "",
+        public user_lastname: string = "",
+        public question_id: number = 0,
+        public question: string = "",
+        public score: number = 0,
+    ) { }
+}
+
+export interface ISurveyAnswerModel {
     ticket_id: number;
+    user_id: number;
     user_name: string;
     user_lastname: string;
+    question_id: number;
     question: string;
     score: number;
 }

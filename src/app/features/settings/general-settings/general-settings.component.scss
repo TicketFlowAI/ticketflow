@@ -2,15 +2,45 @@ mat-icon {
     font-size: 8rem;
     height: 150px;
     width: 150px;
-}
-
-.report-card {
+  }
+  
+  .report-card {
     scale: 1;
     transition: 500ms;
+  
     &:hover {
-        transition: 500ms;
-        scale: 1.02;
-        cursor: pointer;
-        box-shadow: 1px 1px 10px var(--bs-body-color);
+      transition: 500ms;
+      scale: 1.02;
+      cursor: pointer;
+      box-shadow: 1px 1px 10px var(--bs-body-color);
     }
-}
+  
+    // Asegura que todas las tarjetas tengan la misma altura
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px; // Altura fija para todas las tarjetas
+  }
+  
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; // Asegura que los íconos estén centrados y con tamaño uniforme
+  }
+  
+  mat-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1; // Permite que el footer se expanda proporcionalmente si es necesario
+  }
+  
+  mat-card-footer h4 {
+    font-size: 2rem;
+    word-wrap: break-word; // Permite que las palabras largas se dividan
+    text-align: center;
+    margin: 0; // Elimina márgenes que puedan afectar la alineación
+  }
+  

@@ -14,22 +14,33 @@
                 </div>
             </div>
             }
-
             <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <button type="button" class="btn btn-primary"
-                        (click)="openServiceContractManageDialog(null)"><fa-icon [icon]="faPlus"></fa-icon>
+                        (click)="(isAdmin || isTechnician)? openServiceContractManageDialog(null) : openServiceRequest(null)"><fa-icon [icon]="faPlus"></fa-icon>
                         {{t('ADMIN.CREATE-SERVICE-CONTRACT')}}</button>
                 </div>
             </div>
         </div>
 
         <div class="row mt-4">
-            <mat-form-field>
-                <mat-label>{{ t('SEARCH')}}</mat-label>
-                <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
+            <div class="col-md-8">
+                <mat-form-field class="w-100">
+                    <mat-label>{{ t('SEARCH')}}</mat-label>
+                    <input matInput type="text" [(ngModel)]="filterText" (input)="onFilterChange()">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>{{ t('EXPIRATION-DATE-FILTER') }}</mat-label>
+                    <mat-select [(ngModel)]="expirationFilter" (selectionChange)="onExpirationFilterChange()">
+                      <mat-option [value]="'ASC'">{{ t('EXPIRATION-DATE-NEAREST') }}</mat-option>
+                      <mat-option [value]="'DESC'">{{t('EXPIRATION-DATE-FURTHEST') }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        
         </div>
         
         <div class="row my-2">
@@ -40,10 +51,13 @@
                         <mat-panel-title class="text-truncate">{{serviceContract.company}}</mat-panel-title>
                         <mat-panel-description class="row">
                             <div class="col-6 text-center">
-                                {{serviceContract.service}}
+                                {{serviceContract.service}} {{serviceContract.price | currency: 'USD'}}
                             </div>
-                            <div class="col-6 text-center">
-                                {{serviceContract.price | currency: 'USD'}}
+                            <div class="col-6 text-center justify-content-end">
+                                @if(isClient){
+                                <button type="button" class="btn btn-warning"
+                                    (click)="openServiceRequest(serviceContract)">{{t('CANCEL-REQUEST')}}</button>
+                                }
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>

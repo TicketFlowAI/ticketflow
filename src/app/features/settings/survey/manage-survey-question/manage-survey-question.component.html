@@ -1,0 +1,37 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.SETTINGS.SURVEY-SETTINGS'">
+    @if(!surveyQuestion) {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE')}}</h2>
+    }
+    @else {
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-QUESTION')}}</h2>
+    }
+    <mat-dialog-content>
+        <form [formGroup]="surveyQuestionForm">
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>{{t('QUESTION')}}</mat-label>
+                        <input matInput [formControl]="questionFormControl">
+                        @if (questionFormControl.hasError('required')) {
+                            <field-error-required></field-error-required>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-slide-toggle class="mt-2" [checked]="active">
+                        <p class="fs-6 text-light ms-2 mt-2">{{t('ACTIVE')}}</p>
+                    </mat-slide-toggle>
+                </div>  
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" [disabled]="surveyQuestionForm.invalid" (click)="onSaveClick()"
+                    cdkFocusInitial>{{t('SAVE')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+
+</ng-container>

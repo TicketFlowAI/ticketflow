@@ -18,6 +18,15 @@
             </div>
             <div class="row">
                 <mat-form-field class="" appearance="fill">
+                    <mat-label>{{t('SERVICE-DETAILS')}}</mat-label>
+                    <input matInput [formControl]="detailsFormControl">
+                    @if (detailsFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('SERVICE-PRICE')}}</mat-label>
                     <input matInput type="text" class="text-end" [formControl]="priceFormControl">
                     <span matTextPrefix>$&nbsp;</span>

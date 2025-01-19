@@ -16,8 +16,64 @@
             </div>
             <hr>
         </div>
-        <div class="row">
-
+        <div class="row my-2">
+            <mat-accordion class="my-2" [multi]="false">
+                @for(classifier of classifiers; track classifier.VersionName) {
+                <mat-expansion-panel class="mt-2" (opened)="getClassifierPerformance(classifier.VersionArn)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-truncate">
+                            <div class="col-6">
+                                {{classifier.VersionName}} {{classifier.VersionArn}}
+                            </div>
+                            <div class="col-6">
+                                {{classifier.Status}}
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    @if(classifierPerformance != null) {
+                        <hr>
+                    <div class="ps-md-4 mt-2">
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                               <p>Accuracy</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{classifierPerformance.Accuracy}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                               <p>F1 Score</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{classifierPerformance.F1Score}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                               <p>Presition</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{classifierPerformance.Precision}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row fs-6">
+                            <div class="col-md-4">
+                               <p>Recall</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{classifierPerformance.Recall}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    }  
+                </mat-expansion-panel>
+                }
+            </mat-accordion>
         </div>
     </div>
 </ng-container>

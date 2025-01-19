@@ -108,6 +108,16 @@ export class AllTicketMessagesComponent {
     }
   }
 
+  reOpenTicket() {
+    if (this.ticket) {
+      this.ticketManagementService.openTicket(this.ticket.id).subscribe({
+        next: () => {
+          this.loadTicket(this.ticketId)
+        }
+      })
+    }
+  }	
+
   send() {
     if (this.message == '') return
 

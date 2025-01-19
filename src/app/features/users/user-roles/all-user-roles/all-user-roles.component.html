@@ -2,7 +2,7 @@
     <app-global-spinner></app-global-spinner>
     <div class="roles container py-4">
         <div class="row">
-            <div class="col-md-7 align-content-center">
+            <div class="col-md-10 align-content-center">
                 <div class="row text-center text-md-start">
                     <h2>{{t('ADMIN.ROLES')}}</h2>
                 </div>
@@ -10,12 +10,6 @@
             <div class="col-md-2 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <button [routerLink]="['/users']" routerLinkActive="router-link-active" type="button" class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon> {{t('ADMIN.RETURN-TO-USERS')}}</button>
-                </div>
-            </div>
-            <div class="col-md-3 align-content-center">
-                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <button type="button" class="btn btn-primary" (click)="openUserRoleManageDialog(null)"> <fa-icon [icon]="faPlus"></fa-icon>
-                        {{t('ADMIN.CREATE-ROLE')}}</button>
                 </div>
             </div>
         </div>
@@ -58,15 +52,6 @@
                                 <p>{{t('EDIT-ROLE-INFO-DESC')}}</p>
                             </div>
                             <hr>
-                        </div>
-                        <div class="row justify-content-end">
-                            <div class="col-md-3">
-                                <div class="row justify-content-end">
-                                    <button  type="button" class="btn btn-danger"(click)="deleteUserRole(userRole.name)"> <fa-icon [icon]="faX"></fa-icon>
-                                        {{ t('DELETE')}}
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </mat-expansion-panel>

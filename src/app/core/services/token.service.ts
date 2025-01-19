@@ -26,7 +26,13 @@ export class TokenService {
   }
 
   clearAll() {
-    this.cookieService.delete(this.TOKEN_KEY);
-    this.cookieService.delete(this.SESSION_KEY);
+    const cookies = document.cookie.split(';');
+    cookies.forEach(cookie => {
+      const cookieName = cookie.split('=')[0].trim();
+      if (cookieName && cookieName !== 'theme') { // Excluir cookies específicas si es necesario
+        console.log('borro')
+        this.cookieService.delete(cookieName, '/'); // Asegúrate de que el path coincida
+      }
+    });
   }
 }

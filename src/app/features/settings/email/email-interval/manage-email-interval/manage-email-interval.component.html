@@ -25,6 +25,15 @@
                     }
                 </mat-form-field>
             </div>
+            <div class="row">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>{{t('INTERVAL-TEMPLATE')}}</mat-label>
+                    <input matInput type="text" [formControl]="templateFormControl">
+                    @if (templateFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
+                </mat-form-field>
+            </div>
         </form>
     </mat-dialog-content>
     <mat-dialog-actions class="row justify-content-center">

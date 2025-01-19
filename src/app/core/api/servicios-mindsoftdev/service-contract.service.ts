@@ -85,4 +85,22 @@ export class ServiceContractService {
         observe: 'response'
     });
   }
+
+  newServiceContractRequest(request: any): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post<any>(`${this.apiServiceContract}/new-request`, null, {
+        headers: customHeader,
+        withCredentials: true,
+        observe: 'response'
+    });
+  }
+
+  cancelServiceContractRequest(request: any): Observable<HttpResponse<any>> {
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post<any>(`${this.apiServiceContract}/cancel-request`, null, {
+        headers: customHeader,
+        withCredentials: true,
+        observe: 'response'
+    });
+  }
 }
