@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, numberAttribute } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -9,7 +9,7 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { catchError, forkJoin, of } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,6 +21,11 @@ import { ServiceContractManagementService } from '../../../../core/services/serv
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { UserModel } from '../../../../core/models/entities/user.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
+import { DialogSpinnerComponent } from "../../../../shared/components/dialog-spinner/dialog-spinner.component";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { notZeroValidator } from '../../../../shared/validators/custom-validators';
+import { FieldErrorRequiredComponent } from '../../../../shared/components/form-validation/field-error-required/field-error-required.component';
+import { FieldErrorRequiredSelectComponent } from '../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component';
 
 @Component({
   selector: 'app-manage-ticket',
@@ -28,6 +33,7 @@ import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-
   imports: [
     CommonModule,
     TranslocoDirective,
+    FormsModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -35,8 +41,12 @@ import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule
-  ],
+    MatSelectModule,
+    DialogSpinnerComponent,
+    MatSlideToggleModule,
+    FieldErrorRequiredComponent,
+    FieldErrorRequiredSelectComponent
+],
   templateUrl: './manage-ticket.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -50,12 +60,12 @@ export class ManageTicketComponent {
   readonly data = inject<TicketDialogData>(MAT_DIALOG_DATA);
 
   titleFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
-  priorityFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  humanInteractionFormControl = new FormControl(false, { nonNullable: true, validators: [Validators.required] })
-  complexityFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  priorityFormControl = new FormControl(0, { nonNullable: true})
+  humanInteractionFormControl = new FormControl(false, { nonNullable: true})
+  complexityFormControl = new FormControl(0, { nonNullable: true})
   userFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  serviceContractFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-  messageFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  serviceContractFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
+  messageFormControl = new FormControl('', { nonNullable: true })
 
   ticketForm = new FormGroup({
     title: this.titleFormControl,
@@ -70,16 +80,49 @@ export class ManageTicketComponent {
   serviceContracts: ServiceContractModel[] = [];
   user: UserModel | null = null;
 
+  isClient = this.userManagemenstService.isUserClient()
+  editAiSettings: boolean = false
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(false);
     });
 
+    this.ticketForm.statusChanges.subscribe(() => {
+      console.log('Errores del formulario:', this.ticketForm.errors);
+      console.log('Errores por campo:');
+      Object.keys(this.ticketForm.controls).forEach((key) => {
+        console.log(`${key}:`, this.ticketForm.get(key)?.errors);
+      });
+    });
+
     if (this.data.ticket) {
       this.titleFormControl.setValue(this.data.ticket.title)
-      this.priorityFormControl.setValue(this.data.ticket.priority)
-      this.humanInteractionFormControl.setValue(this.data.ticket.needsHumanInteraction);
-      this.complexityFormControl.setValue(this.data.ticket.complexity);
+
+      if(Number.isInteger(this.data.ticket.priority)) {
+        this.priorityFormControl.setValue(parseInt(this.data.ticket.priority.toString()))
+      }
+      else {
+        this.priorityFormControl.setValue(0)
+      }
+
+      if(Number.isInteger(this.data.ticket.complexity)) {
+        this.complexityFormControl.setValue(parseInt(this.data.ticket.complexity.toString()))
+      }
+      else {
+        this.complexityFormControl.setValue(0)
+      }
+      
+      if(Number.isInteger(this.data.ticket.needsHumanInteraction)) {
+        this.humanInteractionFormControl.setValue(this.data.ticket.needsHumanInteraction? true : false);
+      }
+      else{
+        this.humanInteractionFormControl.setValue(false)
+      }
+
+      if(this.isClient) {
+        this.messageFormControl.setValidators(Validators.required)
+      }
+      
       this.userFormControl.setValue(this.data.ticket.user_id);
       this.serviceContractFormControl.setValue(this.data.ticket.service_contract_id);
     }
@@ -99,6 +142,7 @@ export class ManageTicketComponent {
       next: ({ serviceContracts, user }) => {
         this.serviceContracts = serviceContracts
         this.user = user
+        this.userFormControl.setValue(this.user?.id?? 0);
         this.cdr.detectChanges();
       }
     })
@@ -106,17 +150,21 @@ export class ManageTicketComponent {
 
   onSaveClick(): void {
     const formValue = this.ticketForm.value
+
+    const priority = this.editAiSettings? (this.data.ticket? formValue.priority : '') : '';
+    const humanInteraction = this.editAiSettings? (this.data.ticket? (formValue.humanInteraction? 1 : 0) : '') : '';
+    const complexity = this.editAiSettings? (this.data.ticket? formValue.complexity : '') : '';
     let ticket = new TicketModel(
       0,
       formValue.title,
-      formValue.priority,
-      formValue.humanInteraction,
-      formValue.complexity,
+      priority,
+      humanInteraction,
+      complexity,
       formValue.serviceContract,
       formValue.user,
       1,
-      false,
-      true,//As is a new ticket and has a message from the client side, the notification to the techinician will be auto setted to true
+      0,
+      1,
       '',
       '',
       0,
@@ -131,7 +179,7 @@ export class ManageTicketComponent {
       .subscribe( () => { this.dialogRef.close(true) })
     }
     else {
-      this.ticketManagementService.addTicket(ticket)
+      this.ticketManagementService.addTicket(ticket, formValue.message?? '')
       .subscribe( () => { this.dialogRef.close(true) })
     }
   }

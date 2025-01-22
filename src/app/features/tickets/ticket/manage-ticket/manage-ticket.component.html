@@ -1,16 +1,36 @@
+<app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.TICKETS.TICKET-MANAGEMENT'">
-    @if(!data.ticket) {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-TICKET')}}</h2>
+    @if(!isClient){
+    <div class="row">
+        <div class="col-md-9">
+            @if(!data.ticket) {
+            <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-TICKET')}}</h2>
+            }
+            @else {
+            <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-TICKET')}}</h2>
+            }
+        </div>
+        <div class="col-md-3 mt-2">
+            <mat-slide-toggle [(ngModel)]="editAiSettings" class="mt-2">
+                <p class="fs-6 text-light ms-2 mt-2">{{t('ENABLE-AI-CONFIG')}}</p>
+            </mat-slide-toggle>
+        </div>
+    </div>
     }
     @else {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-TICKET')}}</h2>
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-TICKET')}}</h2>
     }
+
+
     <mat-dialog-content>
         <form [formGroup]="ticketForm">
             <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>{{t('TICKET-TITLE')}}</mat-label>
                     <input matInput [formControl]="titleFormControl">
+                    @if (titleFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -21,13 +41,42 @@
                         <mat-option [value]="serviceContact.id">{{serviceContact.service}}</mat-option>
                         }
                     </mat-select>
+                    @if (serviceContractFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                 </mat-form-field>
             </div>
+            @if(!isClient) {
+            @if(editAiSettings){
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field class="" appearance="fill">
+                        <mat-label>{{t('TICKET-PRIORITY')}}</mat-label>
+                        <input type="number" matInput [formControl]="priorityFormControl">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="" appearance="fill">
+                        <mat-label>{{t('TICKET-COMPLEXITY')}}</mat-label>
+                        <input type="number" matInput [formControl]="complexityFormControl">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-slide-toggle [formControl]="humanInteractionFormControl" class="mt-2">
+                        <p class="fs-6 text-light ms-2 mt-2">{{t('TICKET-HUMAN-INTERACTION')}}</p>
+                    </mat-slide-toggle>
+                </div>
+            </div>
+            }
+            }
             @if(!data.ticket) {
             <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>{{t('TICKET-MESSAGE')}}</mat-label>
                     <textarea matInput [formControl]="messageFormControl"></textarea>
+                    @if (messageFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
             }
@@ -36,7 +85,7 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]="ticketForm.invalid" (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

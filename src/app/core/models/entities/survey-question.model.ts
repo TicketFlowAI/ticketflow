@@ -11,14 +11,14 @@ export interface ISurveyQuestionApiResponse {
 export interface ISurveyQuestionModel {
     id: number;
     question: string;
-    active: number
+    status: number
 }
 
 export class SurveyQuestionModel implements ISurveyQuestionModel {
     constructor(
         public id: number = 0,
         public question: string = '',
-        public active: number = 0,
+        public status: number = 0,
     ) { }
 }
 

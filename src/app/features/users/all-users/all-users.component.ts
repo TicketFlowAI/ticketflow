@@ -120,6 +120,10 @@ export class AllUsersComponent {
     ).subscribe();
   }
 
+  restore2FA(userId: number) {
+    return this.userManagementService.reset2FA(userId).subscribe()
+  }
+
   private handleDeleteUser(userId: number) {
     return this.userManagementService.deleteUser(userId).pipe(
       tap(() => this.loadUsers())

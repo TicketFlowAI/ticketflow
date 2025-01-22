@@ -10,11 +10,14 @@ import { UserManagementService } from './user-management.service';
 import { MessageService } from '../../shared/services/message.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ResetPasswordRequestModel } from '../models/requests/password.request';
+import { Router } from '@angular/router';
+import { UserRoles } from '../models/entities/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthManagementService {
+  
   // Services
   private readonly userManagementService = inject(UserManagementService);
   private readonly sanctumService = inject(SanctumService);
@@ -23,6 +26,7 @@ export class AuthManagementService {
   private readonly spinnerService = inject(SpinnerService);
   private readonly messageService = inject(MessageService);
   private readonly translocoService = inject(TranslocoService);
+  private readonly router = inject(Router);
 
   // Methods
   authenticate() {
@@ -43,38 +47,34 @@ export class AuthManagementService {
 
   login(loginRequest: LoginRequest) {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.sanctumService.getCsrfCookie().pipe(
+  
+    return this.sanctumService.getCsrfCookie().pipe(
       concatMap(() => this.authService.loginWithCredentials(loginRequest)),
+      map((response) => {
+        this.spinnerService.hideDialogSpinner();
+        return response;
+      }),
       catchError((error) => {
         if (error.status === HttpStatusCode.UnprocessableEntity) {
-          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.AUTHENTICATION-FAILED-CREDENTIALS');
-          this.messageService.addWarningMessage(transate);
+          const translate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.AUTHENTICATION-FAILED-CREDENTIALS');
+          this.messageService.addWarningMessage(translate);
         }
         if (error.status === HttpStatusCode.InternalServerError) {
-          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.AUTHENTICATION-FAILED-SERVER-ERROR');
-          this.messageService.addErrorMessage(transate);
+          const translate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.AUTHENTICATION-FAILED-SERVER-ERROR');
+          this.messageService.addErrorMessage(translate);
         }
         this.spinnerService.hideDialogSpinner();
         return of(null);
       })
-    ).subscribe({
-      next: (response) => {
-        if (response) {
-          if(response.two_factor) {
-
-          } else {
-
-          }
-        }
-      }
-    });
+    );
   }
+  
 
   logout() {
+    this.userManagementService.currentUser.set(null);
     this.authService.logout().subscribe({
       next: (response) => {
         if (response.status === HttpStatusCode.NoContent) {
-          this.userManagementService.currentUser.set(null);
           this.tokenService.clearAll();
         }
       }
@@ -83,9 +83,9 @@ export class AuthManagementService {
 
   requestPasswordReset(email: string) {
     this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-  
+
     return this.sanctumService.getCsrfCookie().pipe(
-      concatMap(() => 
+      concatMap(() =>
         this.authService.requestPasswordReset(email).pipe(
           map(() => true),
           catchError(() => {
@@ -100,28 +100,30 @@ export class AuthManagementService {
       })
     );
   }
-  
 
   resetPassword(request: ResetPasswordRequestModel) {
     this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    return this.authService.resetPassword(request).pipe(
+  
+    return this.sanctumService.getCsrfCookie().pipe(
+      concatMap(() => this.authService.resetPassword(request)),
       map(() => {
-        return true
+        return true; // Retorna true si el proceso fue exitoso
       }),
       catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.PASSWORD-RESET-ERROR');
-        this.messageService.addErrorMessage(transate);
-        return of(false);
+        const translate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.PASSWORD-RESET-ERROR');
+        this.messageService.addErrorMessage(translate);
+        return of(false); // Retorna false en caso de error
       }),
       finalize(() => {
         this.spinnerService.hideGlobalSpinner();
       })
     );
   }
+  
 
   enableTwoFactorAuth() {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.authService.enableTwoFactorAuth().pipe(
+    return this.authService.enableTwoFactorAuth().pipe(
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.TWO-FACTOR-ENABLE.ERROR');
         this.messageService.addErrorMessage(transate);
@@ -130,12 +132,12 @@ export class AuthManagementService {
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
       })
-    ).subscribe();
+    );
   }
 
   disableTwoFactorAuth() {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.authService.disableTwoFactorAuth().pipe(
+    return this.authService.disableTwoFactorAuth().pipe(
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.TWO-FACTOR-DISABLE.ERROR');
         this.messageService.addErrorMessage(transate);
@@ -144,32 +146,33 @@ export class AuthManagementService {
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
       })
-    ).subscribe();
+    );
   }
 
   getTwoFactorQrCode() {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.authService.getTwoFactorQrCode().pipe(
+    return this.authService.getTwoFactorQrCode().pipe(
       catchError(() => of(null)),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
       })
-    ).subscribe();
+    );
   }
 
   getRecoveryCodes() {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.authService.getRecoveryCodes().pipe(
+    return this.authService.getRecoveryCodes().pipe(
+      map((response) => response),
       catchError(() => of([])),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
       })
-    ).subscribe();
+    );
   }
 
   generateRecoveryCodes() {
     this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    this.authService.generateRecoveryCodes().pipe(
+    return this.authService.generateRecoveryCodes().pipe(
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.RECOVERY-CODES-GENERATE.ERROR');
         this.messageService.addErrorMessage(transate);
@@ -177,6 +180,92 @@ export class AuthManagementService {
       }),
       finalize(() => {
         this.spinnerService.hideDialogSpinner();
+      })
+    );
+  }
+
+  confirmPassword(password: string) {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
+
+    return this.authService.confirmPassword({ password }).pipe(
+      concatMap(() =>
+        this.authService.enableTwoFactorAuth().pipe(
+          map(() => {
+            const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM-PASSWORD.SUCCESS');
+            this.messageService.addSuccessMessage(successMessage);
+            return true;
+          }),
+          catchError(() => {
+            const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM-PASSWORD.ERROR');
+            this.messageService.addWarningMessage(errorMessage);
+            return of(false);
+          })
+        )
+      ),
+      catchError((error) => {
+        if (error.status === HttpStatusCode.UnprocessableEntity) {
+          const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM-PASSWORD.INVALID');
+          this.messageService.addWarningMessage(errorMessage);
+        } else {
+          const generalError = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM-PASSWORD.ERROR');
+          this.messageService.addErrorMessage(generalError);
+        }
+        return of(false);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    );
+  }
+
+  confirmTwoFactorAuth(code: string) {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
+
+    this.authService.confirmTwoFactorAuth(code).pipe(
+      map(() => {
+        const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.SUCCESS');
+        this.messageService.addSuccessMessage(successMessage);
+        this.authenticate();
+        this.router.navigateByUrl('/')
+      }),
+      catchError((error) => {
+        if (error.status === HttpStatusCode.UnprocessableEntity) {
+          const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.INVALID-CODE');
+          this.messageService.addWarningMessage(errorMessage);
+        } else {
+          const generalError = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.ERROR');
+          this.messageService.addErrorMessage(generalError);
+        }
+        return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
+      })
+    ).subscribe();
+  }
+
+  twoFactorChallenge(code: string) {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
+
+    this.authService.challengeTwoFactor(code).pipe(
+      map(() => {
+        const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.SUCCESS');
+        this.messageService.addSuccessMessage(successMessage);
+        this.authenticate();
+        this.router.navigateByUrl('/')
+      }),
+      catchError((error) => {
+        if (error.status === HttpStatusCode.UnprocessableEntity) {
+          const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.INVALID');
+          this.messageService.addWarningMessage(errorMessage);
+        } else {
+          const generalError = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.ERROR');
+          this.messageService.addErrorMessage(generalError);
+        }
+        return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     ).subscribe();
   }

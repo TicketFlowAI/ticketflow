@@ -117,7 +117,7 @@ export class ServiceContractManagementService {
   }
 
   deleteServiceContract(id: number): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
 
     return this.serviceContractService.deleteServiceContract(id).pipe(
       map(() => {
@@ -131,7 +131,7 @@ export class ServiceContractManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -239,7 +239,7 @@ export class ServiceContractManagementService {
   }
 
   deleteServiceContractTerm(id: number): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceContractTermService.deleteServiceContractTerm(id).pipe(
       map(() => {
@@ -253,7 +253,7 @@ export class ServiceContractManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -281,6 +281,7 @@ export class ServiceContractManagementService {
   newServiceContract(request: ServiceRequest): Observable<boolean> {
     this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
+    console.log(request)
     return this.serviceContractService.newServiceContractRequest(request).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NEW-SERVICE-REQUEST-SUCCESS');
@@ -288,7 +289,7 @@ export class ServiceContractManagementService {
         return true
       }),
       catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NEW-SERVICE-REQUEST-CANCEL');
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NEW-SERVICE-REQUEST-ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),
@@ -299,10 +300,10 @@ export class ServiceContractManagementService {
   }
 
 
-  cancelServiceContract(request: ServiceRequest): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+  cancelServiceContract(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
-    return this.serviceContractService.cancelServiceContractRequest(request).pipe(
+    return this.serviceContractService.cancelServiceContractRequest(id).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.CANCEL-SERVICE-REQUEST-SUCCESS');
         this.messageService.addSuccessMessage(transate)
@@ -314,7 +315,7 @@ export class ServiceContractManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }

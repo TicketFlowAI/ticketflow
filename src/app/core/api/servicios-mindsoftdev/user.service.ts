@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getMyUser(): Observable<IUserModelResponse> {
-    const customHeader = this.customHeadersService.addAppJson().getHeaders();
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.get<IUserModelResponse>(`${this.apiUser}`, {
       headers: customHeader,
       withCredentials: true
@@ -73,6 +73,16 @@ export class UserService {
   deleteUser(id: number): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiUsers}/${id}`, {
+      headers: customHeader,
+      withCredentials: true,
+      observe: 'response'
+    });
+  }
+
+  disableToFactor(id: number): Observable<HttpResponse<any>> {
+    console.log('rrr')
+    const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.put<any>(`${this.apiUsers}/${id}/disable-two-factor`, {}, {
       headers: customHeader,
       withCredentials: true,
       observe: 'response'

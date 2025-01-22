@@ -1,3 +1,4 @@
+import { IReportTechnicianScorePerQuestion, ReportTechnicianScorePerQuestion } from "../techinican-performance/fields/report-score-per-question.model";
 import { IReportTicketComplexityModel, ReportTicketComplexityModel } from "./fields/report-ticket-complexity.model";
 import { IReportTicketEscalationsModel, ReportTicketEscalationsModel } from "./fields/report-ticket-escalations.model";
 
@@ -7,6 +8,7 @@ export interface IGlobalReportModel {
     complexity: IReportTicketComplexityModel[];
     escalations: IReportTicketEscalationsModel[];
     humanInteraction: number;
+    averageScorePerQuestion: IReportTechnicianScorePerQuestion[];
 }
 
 export class GlobalReportModel implements IGlobalReportModel {
@@ -16,6 +18,7 @@ export class GlobalReportModel implements IGlobalReportModel {
         public complexity: ReportTicketComplexityModel[] = [],
         public escalations: ReportTicketEscalationsModel[] = [],
         public humanInteraction: number = 0,
+        public averageScorePerQuestion: ReportTechnicianScorePerQuestion[] = []
     ) {
     }
 }

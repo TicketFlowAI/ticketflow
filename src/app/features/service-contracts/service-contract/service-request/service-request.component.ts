@@ -16,6 +16,9 @@ import { notZeroValidator } from '../../../../shared/validators/custom-validator
 import { ServiceRequest } from '../../../../core/models/requests/service.request';
 import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 import { MatInputModule } from '@angular/material/input';
+import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
+import { ServiceContractRequest } from '../../../../core/models/dialogs/service-contract-request-model';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-service-request',
@@ -32,8 +35,9 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatSelectModule,
     FieldErrorRequiredSelectComponent,
-    FieldErrorRequiredComponent
-],
+    FieldErrorRequiredComponent,
+    DialogSpinnerComponent
+  ],
   templateUrl: './service-request.component.html',
   styleUrl: './service-request.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,36 +48,35 @@ export class ServiceRequestComponent {
   private readonly cdr = inject(ChangeDetectorRef);
 
   readonly dialogRef = inject(MatDialogRef<ServiceRequestComponent>);
-  readonly data = inject<ServiceContractDialogData>(MAT_DIALOG_DATA);
+  readonly data = inject<ServiceContractRequest>(MAT_DIALOG_DATA);
 
   serviceFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
-  messageFormControl = new FormControl('', { nonNullable: true, validators: [notZeroValidator] })
+  serviceTermFormControl = new FormControl(0, { nonNullable: true, validators: [notZeroValidator] })
 
   requestForm = new FormGroup({
     service: this.serviceFormControl,
-    message: this.messageFormControl
+    term: this.serviceTermFormControl
   })
 
   services: ServiceModel[] = [];
+  terms: ServiceContractTermModel[] = [];
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(false);
     });
 
-    if (this.data.serviceContract) {
-      this.serviceFormControl.setValue(this.data.serviceContract.service_id)
-    }
-
     forkJoin({
       services: this.serviceManagementService.getAllServices(),
+      contractTerms: this.serviceContractManagementService.getAllServiceContractTerms(),
     }).pipe(
       catchError(() => {
-        return of({ services: [] });
+        return of({ services: [], contractTerms: [] });
       })
     ).subscribe({
-      next: ({ services }) => {
+      next: ({ services, contractTerms }) => {
         this.services = services;
+        this.terms = contractTerms;
         this.cdr.detectChanges();
       }
     })
@@ -82,25 +85,16 @@ export class ServiceRequestComponent {
   onSaveClick(): void {
     const formValue = this.requestForm.value
     let serviceContract = new ServiceRequest(
+      this.data.companyId,
       formValue.service,
-      formValue.message
+      formValue.term
     )
 
-    if (this.data.serviceContract) {
-      this.serviceContractManagementService.newServiceContract(serviceContract).subscribe({
-        next: () => {
-          this.dialogRef.close(true)
-        }
+    this.serviceContractManagementService.newServiceContract(serviceContract).subscribe({
+      next: () => {
+        this.dialogRef.close(true)
       }
-      )
     }
-    else {
-      this.serviceContractManagementService.cancelServiceContract(serviceContract).subscribe({
-        next: () => {
-          this.dialogRef.close(true)
-        }
-      }
-      )
-    }
+    )
   }
 }

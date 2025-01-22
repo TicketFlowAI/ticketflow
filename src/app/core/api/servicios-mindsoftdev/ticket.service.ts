@@ -52,12 +52,11 @@ export class TicketService {
     });
   }
 
-  createTicket(ticket: any): Observable<HttpResponse<any>> {
+  createTicket(ticket: any): Observable<ITicketApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<any>(`${this.apiTickets}`, ticket, {
+    return this.http.post<ITicketApiResponse>(`${this.apiTickets}`, ticket, {
       headers: customHeaders,
       withCredentials: true,
-      observe: 'response'
     });
   }
 
@@ -71,7 +70,7 @@ export class TicketService {
   }
 
   deleteTicket(id: number): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete<any>(`${this.apiTickets}/${id}`, {
       headers: customHeaders,
       withCredentials: true,

@@ -10,9 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { FieldErrorRequiredComponent } from '../../../../shared/components/form-validation/field-error-required/field-error-required.component';
-import { ManageEmailTemplateComponent } from '../../email/email-template/manage-email-template/manage-email-template.component';
 import { SurveyQuestionModel } from '../../../../core/models/entities/survey-question.model';
 import { SurveyManagementService } from '../../../../core/services/survey-management.service';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-survey-question',
@@ -30,7 +30,8 @@ import { SurveyManagementService } from '../../../../core/services/survey-manage
     MatSelectModule,
     MatButtonModule,
     FieldErrorRequiredComponent,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    DialogSpinnerComponent
   ],
   templateUrl: './manage-survey-question.component.html',
   styleUrl: './manage-survey-question.component.scss',
@@ -44,12 +45,12 @@ export class ManageSurveyQuestionComponent {
   public readonly questionData = inject<SurveyQuestionModel>(MAT_DIALOG_DATA);
 
   questionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  activeFormControl = new FormControl(false, { nonNullable: true })
   
   surveyQuestionForm = new FormGroup({
-    question: this.questionFormControl
-  })
-
-  active: boolean = false;
+    question: this.questionFormControl,
+    active: this.activeFormControl
+  });
 
   surveyQuestion: SurveyQuestionModel | null = null;
 
@@ -60,17 +61,20 @@ export class ManageSurveyQuestionComponent {
 
     if (this.questionData) {
       this.surveyQuestion = this.questionData
-      this.questionFormControl.setValue(this.questionData.question)
-      this.active = this.questionData.active == 1? true : false
+      this.surveyQuestionForm.patchValue({
+        question: this.questionData.question,
+        active: this.questionData.status === 1
+      });
     }
   }
 
   onSaveClick(): void {
     const formValue = this.surveyQuestionForm.value;
+    console.log(formValue.active)
     let surveyQuestion = new SurveyQuestionModel(
       0,
       formValue.question,
-      this.active? 1 : 0
+      formValue.active ? 1 : 0
     )
 
     if (this.surveyQuestion) {

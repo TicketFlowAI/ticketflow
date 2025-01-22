@@ -2,77 +2,125 @@
     <app-global-spinner></app-global-spinner>
     <div class="container py-4">
         <div class="row">
-            <div class="col-md-10 align-content-center py-3 py-md-0 px-3 mt-2">
+            <div class="col-md-7 align-content-center py-3 py-md-0 px-3 mt-2">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                    <h2>{{t('AI-SETTINGS')}}</h2>
+                    <h2>{{ t('AI-SETTINGS') }}</h2>
                 </div>
             </div>
-            
+
             <div class="col-md-2 align-content-center py-3 py-md-0 px-3">
                 <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
                     <button [routerLink]="['/settings']" routerLinkActive="router-link-active" type="button"
-                        class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon> {{t('RETURN')}}</button>
+                        class="btn btn-secondary">
+                        <fa-icon [icon]="faArrowLeft"></fa-icon> {{ t('RETURN') }}
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-3 align-content-center py-3 py-md-0 px-3">
+                <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                    <button (click)="openSlelectClassiDialog()" type="button"
+                        class="btn btn-primary">
+                     {{ t('SELECT-CLASSI') }}
+                    </button>
                 </div>
             </div>
             <hr>
         </div>
         <div class="row my-2">
             <mat-accordion class="my-2" [multi]="false">
-                @for(classifier of classifiers; track classifier.VersionName) {
-                <mat-expansion-panel class="mt-2" (opened)="getClassifierPerformance(classifier.VersionArn)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="text-truncate">
-                            <div class="col-6">
-                                {{classifier.VersionName}} {{classifier.VersionArn}}
-                            </div>
-                            <div class="col-6">
-                                {{classifier.Status}}
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    @if(classifierPerformance != null) {
-                        <hr>
-                    <div class="ps-md-4 mt-2">
-                        <div class="row fs-6">
-                            <div class="col-md-4">
-                               <p>Accuracy</p>
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{classifierPerformance.Accuracy}}</p>
-                            </div>
+                <!-- Iteración sobre los clasificadores -->
+                <ng-container *ngFor="let classifier of classifiers">
+                    <mat-expansion-panel class="mt-2">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="text-truncate">
+                                <div class="col-6">
+                                    {{ t('VERSION_NAME') }}: {{ classifier.ClassifierName }}
+                                </div>
+                                <div class="col-6 text-end">
+                                    {{ t('VERSION_ARN') }}: {{ classifier.VersionName }}
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row px-3">
                             <hr>
                         </div>
-                        <div class="row fs-6">
-                            <div class="col-md-4">
-                               <p>F1 Score</p>
+                        <div class="ps-md-4 mt-2">
+                            <!-- Mostrar todos los datos del clasificador -->
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('STATUS') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.Status }}</p>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <p>{{classifierPerformance.F1Score}}</p>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('LANGUAGE_CODE') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.LanguageCode }}</p>
+                                </div>
                             </div>
-                            <hr>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('SUBMIT_TIME') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.SubmitTime }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('END_TIME') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.EndTime }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('NUMBER_OF_LABELS') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.NumberOfLabels }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('ACCURACY') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.Accuracy }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('F1_SCORE') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.F1Score }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('PRECISION') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.Precision }}</p>
+                                </div>
+                            </div>
+                            <div class="row fs-6">
+                                <div class="col-md-4">
+                                    <p>{{ t('RECALL') }}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ classifier.Recall }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row fs-6">
-                            <div class="col-md-4">
-                               <p>Presition</p>
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{classifierPerformance.Precision}}</p>
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="row fs-6">
-                            <div class="col-md-4">
-                               <p>Recall</p>
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{classifierPerformance.Recall}}</p>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-                    }  
-                </mat-expansion-panel>
-                }
+                    </mat-expansion-panel>
+                </ng-container>
             </mat-accordion>
         </div>
     </div>

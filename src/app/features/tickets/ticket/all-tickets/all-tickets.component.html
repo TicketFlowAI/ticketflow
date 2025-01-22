@@ -82,10 +82,6 @@
                                                 class="btn btn-secondary">
                                                 {{t("SEE-CONVERSATION")}}
                                             </button>
-                                            <button (click)="openSatisfactionSurvey(ticket)" type="button"
-                                                class="btn btn-secondary">
-                                                {{t("OPEN-SURVEY")}}
-                                            </button>
                                             }
                                             @else {
                                             <p class="fw-medium mt-2">{{t('PRIORITY')}} ({{ticket.priority}})</p>
@@ -95,7 +91,15 @@
                                 </div>
                             </div>
                             <div class="col-6 d-flex align-content-center justify-content-end text-end">
-                                <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 2, 'yellow': ticket.status === 3}"
+                                @if(showClientElement() && ticket.status === 3){
+                                <div class="row">
+                                    <button (click)="openSatisfactionSurvey(ticket)" type="button"
+                                                class="btn btn-warning">
+                                                {{t("OPEN-SURVEY")}}
+                                            </button>
+                                </div>
+                                }
+                                <p [ngClass]="{'green': ticket.status === 1, 'red': ticket.status === 0, 'yellow': ticket.status === 2, 'd-none': ticket.status === 3}"
                                     class="mt-3 fs-6 d-none d-md-flex">
                                     @if(ticket.status === 0) {
                                     {{t('STATUS-CLOSED')}}
@@ -108,18 +112,18 @@
                                     }
                                 </p>
                                 <mat-icon
-                                    [ngClass]="{'red': ticket.status === 0, 'green': ticket.status === 1, 'yellow': ticket.status === 2}"
+                                    [ngClass]="{'red': ticket.status === 0, 'green': ticket.status === 1, 'yellow': ticket.status === 2, 'd-none': ticket.status === 3}"
                                     class="mt-3 fs-6">brightness_1</mat-icon>
 
                                 @if(showClientElement()) {
-                                @if(ticket.newTechnicianMessage) {
-                                <mat-icon class="mt-3 bell">notifications_active</mat-icon>
-                                }
+                                    @if(ticket.newTechnicianMessage) {
+                                        <mat-icon class="mt-3 bell">notifications_active</mat-icon>
+                                    }
                                 }
                                 @else {
-                                @if(ticket.newClientMessage) {
-                                <mat-icon class="mt-3 bell">notifications_active</mat-icon>
-                                }
+                                    @if(ticket.newClientMessage) {
+                                        <mat-icon class="mt-3 bell">notifications_active</mat-icon>
+                                    }
                                 }
                             </div>
                         </mat-panel-description>
@@ -149,8 +153,20 @@
                             </div>
                             <hr>
                         </div>
+
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <a (click)="openTicketSurveyInfo(ticket)" href="javascript:void(0);">
+                                    <fa-icon class="pe-2" [icon]="faClipboardList"></fa-icon>
+                                    {{t('SURVEY-TICKET-INFO')}}
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{t('SURVEY-TICKET-INFO-DESC')}}</p>
+                            </div>
+                            <hr>
+                        </div>
                         }
-                        @if(showAdminElement()){
                         <div class="row ">
                             <div class="col-md-4">
                                 <a href="javascript:void(0);" (click)="openTicketTechnicianHistory(ticket)">
@@ -163,7 +179,7 @@
                             </div>
                             <hr>
                         </div>
-                        }
+
                         @if(!showClientElement()){
                         <div class="row fs-6">
                             <div class="col-md-4">
@@ -178,15 +194,17 @@
                         </div>
                         }
 
-                        @if(showClientElement() && ticket.status != 0){
-                            <div class="row justify-content-end">
-                                <div class="col-md-3 mt-3 mt-md-0 ">
-                                    <div class="row px-md-2">
-                                        <button (click)="needHumanInteraction(ticket.id)" type="button" class="btn btn-secondary" [matTooltip]="t('NO-AI-TOOLTIP')">
-                                            {{t('NO-AI')}}
-                                          </button>
-                                    </div>
+                        @if(showClientElement() && ticket.status != 0 && ticket.needsHumanInteraction != 1){
+                        <div class="row justify-content-end">
+                            <div class="col-md-3 mt-3 mt-md-0 ">
+                                <div class="row px-md-2">
+                                    <button (click)="needHumanInteraction(ticket.id)" type="button"
+                                        class="btn btn-secondary" [matTooltip]="t('NO-AI-TOOLTIP')">
+                                        {{t('NO-AI')}}
+                                    </button>
                                 </div>
+                            </div>
+                            @if(ticket.status == 1) {
                                 <div class="col-md-3 mt-3 mt-md-0 ">
                                     <div class="row px-md-2">
                                         <button type="button" class="btn btn-primary" (click)="closeTicket(ticket)">
@@ -194,7 +212,8 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                        </div>
                         }
 
                         @if(showTechnicianElement()){
@@ -213,8 +232,8 @@
                                 <div class="row justify-content-end px-md-2">
                                     <button type="button" class="btn"
                                         [ngClass]="ticket.status != 0? 'btn-danger': 'btn-secondary'"
-                                        (click)="ticket.status != 0? closeTicket(ticket) : reOpenTicket(ticket.id)">
-                                        {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
+                                        (click)="ticket.status == 1? closeTicket(ticket) : reOpenTicket(ticket.id)">
+                                        {{t(ticket.status == 1 ? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>
                             </div>
@@ -226,8 +245,8 @@
                                 <div class="row justify-content-end px-md-2">
                                     <button [ngClass]="ticket.status != 0? 'btn-warning': 'btn-primary'" type="button"
                                         class="btn"
-                                        (click)="ticket.status != 0? closeTicket(ticket) : reOpenTicket(ticket.id)">
-                                        {{t(ticket.status != 0? 'CLOSE' : 'RE-OPEN')}}
+                                        (click)="ticket.status == 1? closeTicket(ticket) : reOpenTicket(ticket.id)">
+                                        {{t(ticket.status == 1 ? 'CLOSE' : 'RE-OPEN')}}
                                     </button>
                                 </div>
                             </div>

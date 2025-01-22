@@ -5,6 +5,7 @@ import { ReportTicketComplexityModel } from '../models/reports/global/fields/rep
 import { ReportTechnicianReassignsModel } from '../models/reports/techinican-performance/fields/report-technician-reassigns.model';
 import { ReportTechnicianWeeklyComparisonModel } from '../models/reports/techinican-performance/fields/report-technician-weekly-comparison.model';
 import { ReportTicketEscalationsModel } from '../models/reports/global/fields/report-ticket-escalations.model';
+import { IReportTechnicianScorePerQuestionResponse, ReportTechnicianScorePerQuestion } from '../models/reports/techinican-performance/fields/report-score-per-question.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,8 +58,17 @@ export class ReportManagementService {
     )
   }
 
-  getTechnicianTicketsSolvedByTechnicianId(id: number): Observable<number> {
-    return this.reportService.getTicketsSolvedByTechnicianId(id).pipe(
+  getGlobalAverageScore(): Observable<ReportTechnicianScorePerQuestion[]> {
+    return this.reportService.getGlobalAverageScorePerQuestion().pipe(
+      map((response) => response.data),
+      catchError(() => {
+        return of([]);
+      })
+    )
+  }
+
+  getTechnicianTicketsSolvedByTechnicianId(id: number, startDate: string, endDate: string): Observable<number> {
+    return this.reportService.getTicketsSolvedByTechnicianId(id, startDate, endDate).pipe(
       map((response) => response.data),
       catchError(() => {
         return of(0);
@@ -66,8 +76,8 @@ export class ReportManagementService {
     );
   }
 
-  getTechnicianAverageTimeToSolveById(id: number): Observable<number> {
-    return this.reportService.getAverageTimeToSolvedByTechnicianId(id).pipe(
+  getTechnicianAverageTimeToSolveById(id: number, startDate: string, endDate: string): Observable<number> {
+    return this.reportService.getAverageTimeToSolvedByTechnicianId(id, startDate, endDate).pipe(
       map((response) => response.data),
       catchError(() => {
         return of(0);
@@ -75,8 +85,8 @@ export class ReportManagementService {
     );
   }
 
-  getTechnicianTicketsAssignedReassignedById(id: number): Observable<ReportTechnicianReassignsModel> {
-    return this.reportService.getTTicketsAssignedReassignedByTechnicianId(id).pipe(
+  getTechnicianTicketsAssignedReassignedById(id: number, startDate: string, endDate: string): Observable<ReportTechnicianReassignsModel> {
+    return this.reportService.getTTicketsAssignedReassignedByTechnicianId(id, startDate, endDate).pipe(
       map((response) => response.data),
       catchError(() => {
         return of(new ReportTechnicianReassignsModel())
@@ -98,6 +108,24 @@ export class ReportManagementService {
       map((response) => response.data),
       catchError(() => {
         return of(new ReportTechnicianWeeklyComparisonModel());
+      })
+    );
+  }
+
+  getTechnicianSurveysAverageScore(id: number): Observable<number> {
+    return this.reportService.getAverageScoreSurvey(id).pipe(
+      map((response) => response),
+      catchError(() => {
+        return of(0);
+      })
+    );
+  }
+
+  getTechnicianSurveryAverageScorePerQuestion(id: number): Observable<ReportTechnicianScorePerQuestion[]> {
+    return this.reportService.getAverageScorePerQuestion(id).pipe(
+      map((response) => response.data),
+      catchError(() => {
+        return of([]);
       })
     );
   }

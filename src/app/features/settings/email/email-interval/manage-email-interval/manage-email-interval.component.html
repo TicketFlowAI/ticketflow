@@ -28,9 +28,14 @@
             <div class="row">
                 <mat-form-field class="w-100" appearance="fill">
                     <mat-label>{{t('INTERVAL-TEMPLATE')}}</mat-label>
-                    <input matInput type="text" [formControl]="templateFormControl">
-                    @if (templateFormControl.hasError('required')) {
-                        <field-error-required></field-error-required>
+                    <mat-select [formControl]="templateFormControl">
+                        @for(template of emailTemplates; track template.id) {
+                            <mat-option [value]="template.id">{{template.template_name}}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (templateFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
                     }
                 </mat-form-field>
             </div>

@@ -10,6 +10,7 @@ import { ServiceManagementService } from '../../../../core/services/service-mana
 import { decimalWithDotValidator } from '../../../../shared/validators/custom-validators';
 import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 import { FieldErrorDecimalNumbersComponent } from "../../../../shared/components/form-validation/field-error-decimal-numbers/field-error-decimal-numbers.component";
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-service-tax',
@@ -24,7 +25,8 @@ import { FieldErrorDecimalNumbersComponent } from "../../../../shared/components
     MatIconModule,
     ReactiveFormsModule,
     FieldErrorRequiredComponent,
-    FieldErrorDecimalNumbersComponent
+    FieldErrorDecimalNumbersComponent,
+    DialogSpinnerComponent
 ],
   templateUrl: './manage-service-tax.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

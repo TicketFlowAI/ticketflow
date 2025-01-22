@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -12,7 +12,7 @@ import { ReportManagementService } from '../../../../core/services/report-manage
 import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { forkJoin } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ChartConfiguration, PolarAreaController, RadialLinearScale } from 'chart.js';
+import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ChartConfiguration, PolarAreaController, RadialLinearScale, PieController, BarController } from 'chart.js';
 import { TechnicianPerformanceReportModel } from '../../../../core/models/reports/techinican-performance/technician-performanceReport.model';
 import { materialDateInvalidValidator } from '../../../../shared/validators/custom-validators';
 import { CustomDateAdapter, CUSTOM_DATE_FORMATS } from '../../../../core/utils/custom-date-format';
@@ -36,10 +36,10 @@ import { CustomDateAdapter, CUSTOM_DATE_FORMATS } from '../../../../core/utils/c
   styleUrls: ['./performance-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-      { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, // Idioma español
-      { provide: DateAdapter, useClass: CustomDateAdapter }, // Adaptador de fecha personalizado
-      { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }, // Formato de fecha personalizado
-    ]
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, // Idioma español
+    { provide: DateAdapter, useClass: CustomDateAdapter }, // Adaptador de fecha personalizado
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }, // Formato de fecha personalizado
+  ]
 })
 export class PerformanceReportComponent {
   @Input() technicianId: string = '';
@@ -58,7 +58,7 @@ export class PerformanceReportComponent {
     start: this.startFormControl,
     end: this.endFormControl,
   })
-  
+
   performanceReport: TechnicianPerformanceReportModel = new TechnicianPerformanceReportModel();
 
   public reassignmentChartData: ChartConfiguration['data'] = {
@@ -87,14 +87,29 @@ export class PerformanceReportComponent {
     ],
   };
 
+  public scorePerQuestionChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [] as string[],
+    datasets: [
+      {
+        label: 'Average Score Per Question',
+        data: [] as number[], // Los datos deben ser números
+        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1
+      }
+    ]
+  };
+
+
   private reassignmentChartInstance: Chart | null = null;
   private weeklyComparisonChartInstance: Chart | null = null;
+  private avgScorePerQuestionChartInstance: Chart | null = null;
 
   isAdmin: boolean = false;
 
   constructor() {
     // Registrar los controladores de Chart.js que son necesarios para los gráficos 'pie' y 'bar'
-    Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PolarAreaController, RadialLinearScale);
+    Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PolarAreaController, BarController, RadialLinearScale, PieController);
   }
 
   ngOnInit(): void {
@@ -111,20 +126,32 @@ export class PerformanceReportComponent {
   loadReportItems(technicianId: number) {
     this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
 
-    const ticketsSolved = this.reportManagementService.getTechnicianTicketsSolvedByTechnicianId(technicianId);
-    const currentTickets = this.reportManagementService.getTechnicianCurrentTicketsById(technicianId);
-    const avgTime = this.reportManagementService.getTechnicianAverageTimeToSolveById(technicianId);
-    const assignedReassigned = this.reportManagementService.getTechnicianTicketsAssignedReassignedById(technicianId);
-    const weeklyComparison = this.reportManagementService.getTechnicianWeeklyComparisonById(technicianId);
+    const startDate = this.dateRange.value.start
+      ? formatDate(this.dateRange.value.start, 'dd/MM/yyyy', 'en-US')
+      : '';
+    const endDate = this.dateRange.value.end
+      ? formatDate(this.dateRange.value.end, 'dd/MM/yyyy', 'en-US')
+      : '';
 
-    forkJoin([ticketsSolved, currentTickets, avgTime, assignedReassigned, weeklyComparison]).subscribe({
-      next: ([solvedQty, currentQty, avgTimeRes, assignedRes, weeklyComp]) => {
+    const ticketsSolved = this.reportManagementService.getTechnicianTicketsSolvedByTechnicianId(technicianId, startDate, endDate);
+    const currentTickets = this.reportManagementService.getTechnicianCurrentTicketsById(technicianId);
+    const avgTime = this.reportManagementService.getTechnicianAverageTimeToSolveById(technicianId, startDate, endDate);
+    const assignedReassigned = this.reportManagementService.getTechnicianTicketsAssignedReassignedById(technicianId, startDate, endDate);
+    const weeklyComparison = this.reportManagementService.getTechnicianWeeklyComparisonById(technicianId);
+    const avgScoreSurvey = this.reportManagementService.getTechnicianSurveysAverageScore(technicianId);
+    const avgScoreSurveyPerQuestion = this.reportManagementService.getTechnicianSurveryAverageScorePerQuestion(technicianId);
+
+    forkJoin([ticketsSolved, currentTickets, avgTime, assignedReassigned, weeklyComparison, avgScoreSurvey, avgScoreSurveyPerQuestion]).subscribe({
+      next: ([solvedQty, currentQty, avgTimeRes, assignedRes, weeklyComp, avgSurvey, avgScoreSurveyPerQuestion]) => {
         // Actualizar datos en el modelo del reporte
         this.performanceReport.totalTicketsSolved = solvedQty;
         this.performanceReport.currentTickets = currentQty;
-        this.performanceReport.averageTicketSolveTime = avgTimeRes ?? 0;
         this.performanceReport.assignedReassigned = assignedRes;
         this.performanceReport.weeklyComparison = weeklyComp;
+        this.performanceReport.averageScoreQuestions = typeof avgSurvey === 'number' ? avgSurvey : 0;
+        this.performanceReport.averageTicketSolveTime = typeof avgTimeRes === 'number' ? avgTimeRes : 0;
+
+        this.performanceReport.averageScorePerQuestion = avgScoreSurveyPerQuestion
 
         // Configurar datos de gráficos a partir del reporte
         this.reassignmentChartData.datasets[0].data = [
@@ -136,6 +163,10 @@ export class PerformanceReportComponent {
           this.performanceReport.weeklyComparison.previous_week,
           this.performanceReport.weeklyComparison.current_week,
         ];
+
+        this.scorePerQuestionChartData.labels = avgScoreSurveyPerQuestion.map((q) => q.question); // Etiquetas
+        this.scorePerQuestionChartData.datasets[0].data = avgScoreSurveyPerQuestion.map((q) => q.average_score); // Datos numéricos
+
 
         this.spinnerService.hideGlobalSpinner();
         this.createCharts();
@@ -151,6 +182,7 @@ export class PerformanceReportComponent {
   private createCharts() {
     this.createReassignmentChart();
     this.createWeeklyComparisonChart();
+    this.createScorePerQuestionChart();
   }
 
   private createReassignmentChart() {
@@ -184,6 +216,30 @@ export class PerformanceReportComponent {
           plugins: { legend: { display: true }, tooltip: { enabled: true } },
           scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
         },
+      });
+    }
+  }
+
+  private createScorePerQuestionChart(): void {
+    if (this.avgScorePerQuestionChartInstance) {
+      this.avgScorePerQuestionChartInstance.destroy(); // Limpia el gráfico anterior si existe
+    }
+
+    const canvas = document.getElementById('scorePerQuestionChart') as HTMLCanvasElement;
+    if (canvas) {
+      this.avgScorePerQuestionChartInstance = new Chart(canvas, {
+        type: 'bar',
+        data: this.scorePerQuestionChartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            y: { beginAtZero: true } // Configuración del eje Y
+          }
+        }
       });
     }
   }

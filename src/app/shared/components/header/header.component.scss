@@ -53,6 +53,24 @@
     background-size: 100% 2px;
   }
 }
+.dropdown-menu {
+  position: absolute; /* Por defecto */
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+
+  @media (max-width: 300px) {
+    position: static;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+}
+
+.dropdown.show .dropdown-menu {
+  display: block !important; /* Solo muestra cuando Bootstrap añade la clase `show` */
+}
+
 
 @media(max-width: 768px) {
   .nav-item {

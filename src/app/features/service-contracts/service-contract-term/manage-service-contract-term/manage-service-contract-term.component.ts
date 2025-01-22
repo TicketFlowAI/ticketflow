@@ -15,6 +15,7 @@ import { ServiceContractManagementService } from '../../../../core/services/serv
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 import { FieldErrorIntegerNumbersComponent } from "../../../../shared/components/form-validation/field-error-integer-numbers/field-error-integer-numbers.component";
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-service-contract-term',
@@ -29,7 +30,8 @@ import { FieldErrorIntegerNumbersComponent } from "../../../../shared/components
     MatInputModule,
     ReactiveFormsModule,
     FieldErrorRequiredComponent,
-    FieldErrorIntegerNumbersComponent
+    FieldErrorIntegerNumbersComponent,
+    DialogSpinnerComponent
 ],
   templateUrl: './manage-service-contract-term.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

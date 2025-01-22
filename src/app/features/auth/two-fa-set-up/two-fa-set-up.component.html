@@ -1,0 +1,114 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.2FA'">
+    <app-global-spinner></app-global-spinner>
+    <div class="container-fluid my-5">
+        <h2 class="fw-semibold text-center">{{ t('ENABLE-2FA') }}</h2>
+        <div class="row justify-content-center mt-5">
+            <!-- Paso de Confirmación de Contraseña -->
+            @if (isPasswordStep) {
+            <div class="col-md-6">
+                <p>{{ t('CONFIRM-PASSWORD') }}</p>
+                <form [formGroup]="passwordForm">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>{{ t('ENTER-PASSWORD') }}</mat-label>
+                        <input matInput type="password" [formControl]="getPasswordFormControl()" />
+                        @if (getPasswordFormControl().hasError('required')) {
+                        <field-error-required></field-error-required>
+                        }
+                    </mat-form-field>
+                </form>
+                <div class="row">
+                    <div class="text-center mt-5">
+                        <button type="button" class="btn btn-primary" [disabled]="passwordForm.invalid" (keypress.enter)="confirmPassword()"
+                            (click)="confirmPassword()">
+                            {{ t('CONTINUE') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            }
+            <!-- Paso del QR -->
+            @else if (!isCodeStep) {
+            <div class="row">
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 text-center">
+                            <p>{{ t('SCAN-QR-DESCRIPTION') }}</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 justify-content-center text-center">
+                            <div class="bg-light p-3 rounded-3 my-5" [innerHTML]="qrCodeSvg"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 text-center">
+                            <p>{{ t('RECOVERY-CODES') }}</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="bg-light rounded-3 text-center p-3">
+                            @for(code of recoveryCodes; track code) {
+                                <p class="text-dark fs-6">{{code}}</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary mt-3" (click)="goToCodeStep()">
+                            {{ t('CONTINUE') }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            }
+            <!-- Paso de Verificación -->
+            @else {
+            <div class="col-md-6">
+                <h3 class="text-center">{{ t('VERIFY-2FA') }}</h3>
+                <form [formGroup]="verificationForm">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>{{ t('ENTER-CODE') }}</mat-label>
+                        <input matInput type="text" [formControl]="getCodeFormControl()" />
+                        @if (getCodeFormControl().hasError('required')) {
+                        <field-error-required></field-error-required>
+                        }
+                    </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row px-3">
+                                <button type="button" class="btn btn-secondary" (click)="goToQrStep()">
+                                    {{ t('BACK-TO-QR') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row px-3">
+                                <button type="button" class="btn btn-primary" [disabled]="verificationForm.invalid"
+                                    (click)="verifyCode()">
+                                    {{ t('VERIFY') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            }
+        </div>
+    </div>
+</ng-container>

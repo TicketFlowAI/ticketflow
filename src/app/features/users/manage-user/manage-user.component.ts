@@ -6,7 +6,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,6 +17,13 @@ import { CompanyManagementService } from '../../../core/services/company-managem
 import { CompanyModel } from '../../../core/models/entities/company.model';
 import { MatSelectModule } from '@angular/material/select';
 import { UserRoleModel } from '../../../core/models/entities/user-role.model';
+import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinner/dialog-spinner.component';
+import { MessageService } from '../../../shared/services/message.service';
+import { FieldErrorRequiredComponent } from '../../../shared/components/form-validation/field-error-required/field-error-required.component';
+import { FieldErrorEmailComponent } from '../../../shared/components/form-validation/field-error-email/field-error-email.component';
+import { FieldErrorRequiredSelectComponent } from '../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component';
+import { MatButtonModule } from '@angular/material/button';
+import { notZeroValidator } from '../../../shared/validators/custom-validators';
 
 
 @Component({
@@ -31,7 +38,12 @@ import { UserRoleModel } from '../../../core/models/entities/user-role.model';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DialogSpinnerComponent,
+    FieldErrorRequiredComponent,
+    FieldErrorEmailComponent,
+    FieldErrorRequiredSelectComponent,
+    MatButtonModule
   ],
   templateUrl: './manage-user.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,6 +52,10 @@ export class ManageUserComponent {
   private readonly userManagementService = inject(UserManagementService);
   private readonly companyManagementService = inject(CompanyManagementService);
   private readonly cdr = inject(ChangeDetectorRef);
+
+  private translocoService = inject(TranslocoService)
+  private messageService = inject(MessageService)
+
   public readonly dialogRef = inject(MatDialogRef<UserManagementService>);
   public readonly userData = inject<UserModel | null>(MAT_DIALOG_DATA);
 
@@ -48,7 +64,9 @@ export class ManageUserComponent {
   nameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   lastnameFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   emailFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] })
-  companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+  passwordFormControl = new FormControl('', { nonNullable: true})
+  confirmPasswordFormControl = new FormControl('', { nonNullable: true})
+  companyFormControl = new FormControl(0, { nonNullable: true, validators: [Validators.required, notZeroValidator] })
   rolesFormControl = new FormControl(this.rolesInit, { nonNullable: true, validators: [Validators.required] })
 
   userForm = new FormGroup({
@@ -56,11 +74,15 @@ export class ManageUserComponent {
     lastname: this.lastnameFormControl,
     email: this.emailFormControl,
     company: this.companyFormControl,
-    roles: this.rolesFormControl
+    roles: this.rolesFormControl,
+    password: this.passwordFormControl,
+    confirmedPassword: this.confirmPasswordFormControl
   })
 
   companies: CompanyModel[] = []
   roles: UserRoleModel[] = []
+
+  hide = true;
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
@@ -102,6 +124,12 @@ export class ManageUserComponent {
   
   onSaveClick(): void {
     const formValue = this.userForm.value
+
+    if(formValue.password !== formValue.confirmedPassword) {
+      const translation = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.PASSWORD-MISMATCH');
+      this.messageService.addWarningMessage(translation)
+      return
+    }
     let user = new UserModel(
       0,
       formValue.name,
@@ -109,7 +137,7 @@ export class ManageUserComponent {
       formValue.email,
       formValue.company,
       formValue.roles,
-      ''
+      formValue.password
     )
 
     if (this.userData) {
@@ -119,8 +147,6 @@ export class ManageUserComponent {
         .subscribe(() => { this.dialogRef.close(true) })
     }
     else {
-      var datetime: Date = new Date()
-      user.password = 'Mindsoft' + datetime.getFullYear() + '#'
       this.userManagementService.addUser(user)
         .subscribe(() => { this.dialogRef.close(true) })
     }

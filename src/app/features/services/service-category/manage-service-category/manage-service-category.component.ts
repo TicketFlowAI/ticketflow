@@ -8,6 +8,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { ServiceCategoryModel } from '../../../../core/models/entities/service-category.model';
 import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-service-category',
@@ -21,7 +22,8 @@ import { FieldErrorRequiredComponent } from "../../../../shared/components/form-
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    FieldErrorRequiredComponent
+    FieldErrorRequiredComponent,
+    DialogSpinnerComponent
 ],
   templateUrl: './manage-service-category.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

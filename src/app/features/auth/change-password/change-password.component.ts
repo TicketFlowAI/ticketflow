@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,13 +30,14 @@ import { OpenLoginDirective } from '../../../shared/directives/open-login.direct
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangePasswordComponent {
-  token: string = '';
-  email: string = '';
+  token: string | null = null;
+  email: string | null = null;
 
   private readonly authManagementService = inject(AuthManagementService)
   private readonly messageService = inject(MessageService)
   private readonly fb = inject(FormBuilder)
   private readonly route = inject(ActivatedRoute)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   showSuccess: boolean = false
   passwordFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required]})
@@ -49,12 +50,11 @@ export class ChangePasswordComponent {
   )
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.token = params['token'];
-    });
-
-    this.route.queryParams.subscribe((queryParams) => {
-      this.email = queryParams['email'];
+    this.route.queryParamMap.subscribe((queryParams) => {
+      this.token = queryParams.get('token');
+      this.email = queryParams.get('email');
+      console.log('Token:', this.token);
+      console.log('Email:', this.email);
     });
   }
 
@@ -78,6 +78,15 @@ export class ChangePasswordComponent {
     resetRequest.token = this.token
       
 
-    this.authManagementService.resetPassword(resetRequest).subscribe()
+    this.authManagementService.resetPassword(resetRequest).subscribe({
+      next: (response) => {
+        this.showSuccess = response; // Manejo del resultado (true o false)
+        this.cdr.markForCheck(); // Asegura que el cambio se refleje en la vista
+      },
+      error: (err) => {
+        console.error('Error resetting password:', err);
+      }
+    });
+    
   }
 }

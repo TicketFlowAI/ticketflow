@@ -1,0 +1,32 @@
+<ng-container *transloco="let t; prefix: 'FEATURES.2FA'">
+  <div class="container-fluid my-5">
+    <h2 class="fw-semibold text-center">{{t('2FA-ENABLED')}}</h2>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-8 text-center">
+        <p>{{t('2FA-ENABLED-DESCRIPTION')}}</p>
+      </div>
+    </div>
+    <div class="row justify-content-center my-4">
+      <div class="col-md-8">
+        <form [formGroup]="factorForm">
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>{{ t('ENTER-CODE') }}</mat-label>
+            <input matInput type="password" [formControl]="codeFormControl" />
+            @if (codeFormControl.hasError('required')) {
+            <field-error-required></field-error-required>
+            }
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-4 justify-content-center">
+        <div class="row">
+          <button type="button" class="btn btn-primary me-3" [disabled]="factorForm.invalid" (click)="validate()">
+            {{t('CONTINUE')}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

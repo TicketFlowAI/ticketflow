@@ -22,6 +22,7 @@ import { FieldErrorRequiredComponent } from "../../../../shared/components/form-
 import { decimalWithDotValidator, notZeroValidator } from '../../../../shared/validators/custom-validators';
 import { FieldErrorDecimalNumbersComponent } from "../../../../shared/components/form-validation/field-error-decimal-numbers/field-error-decimal-numbers.component";
 import { FieldErrorRequiredSelectComponent } from "../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component";
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-service',
@@ -39,7 +40,8 @@ import { FieldErrorRequiredSelectComponent } from "../../../../shared/components
     MatSelectModule,
     FieldErrorRequiredComponent,
     FieldErrorDecimalNumbersComponent,
-    FieldErrorRequiredSelectComponent
+    FieldErrorRequiredSelectComponent,
+    DialogSpinnerComponent
 ],
   templateUrl: './manage-service.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   resetPassword(request: ResetPasswordRequestModel): Observable<HttpResponse<any>> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post(`${this.apiAuthentication}/reset-password`, request, {
       headers: customHeaders,
       withCredentials: true,
@@ -57,8 +57,8 @@ export class AuthService {
     });
   }
 
-  enableTwoFactorAuth(): Observable<any> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+  enableTwoFactorAuth(): Observable<HttpResponse<any>> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post(`${this.apiAuthentication}/user/two-factor-authentication`, {}, {
       headers: customHeaders,
       withCredentials: true,
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   confirmTwoFactorAuth(code: string): Observable<any> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.post(`${this.apiAuthentication}/user/confirmed-two-factor-authentication`, { code }, {
       headers: customHeaders,
       withCredentials: true,
@@ -75,8 +75,18 @@ export class AuthService {
     });
   }
 
+  challengeTwoFactor(code: string): Observable<any> {
+    const json = code.length > 6? { recovery_code: code} : { code: code}
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post(`${this.apiAuthentication}/user/two-factor-challenge`, json, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response',
+    });
+  }
+
   disableTwoFactorAuth(): Observable<any> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
     return this.http.delete(`${this.apiAuthentication}/user/two-factor-authentication`, {
       headers: customHeaders,
       withCredentials: true,
@@ -85,7 +95,7 @@ export class AuthService {
   }
 
   getTwoFactorQrCode(): Observable<{ svg: string }> {
-    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().addCustomHeader('X-Requested-With', 'XMLHttpRequest').getHeaders();
     return this.http.get<{ svg: string }>(`${this.apiAuthentication}/user/two-factor-qr-code`, {
       headers: customHeaders,
       withCredentials: true,
@@ -105,6 +115,15 @@ export class AuthService {
     return this.http.post<string[]>(`${this.apiAuthentication}/user/two-factor-recovery-codes`, {}, {
       headers: customHeaders,
       withCredentials: true,
+    });
+  }
+
+  confirmPassword(payload: { password: string }): Observable<any> {
+    const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
+    return this.http.post(`${this.apiAuthentication}/user/confirm-password`, payload, {
+      headers: customHeaders,
+      withCredentials: true,
+      observe: 'response',
     });
   }
 }

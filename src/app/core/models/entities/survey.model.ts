@@ -8,6 +8,11 @@ export interface ISurveyApiResponse {
     data: ISurveyModel;
 }
 
+export interface ISurveyAnswersApiResponse {
+    success: boolean;
+    data: ISurveyAnswerModel[];
+}
+
 export interface ISurveyModel {
     SurveyAnswers: ISurveyAnswerModel[];
 }

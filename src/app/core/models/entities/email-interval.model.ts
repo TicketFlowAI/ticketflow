@@ -12,6 +12,7 @@ export interface IEmailIntervalsApiResponse {
     id: number;
     days: number;
     type: string;
+    email_id: number;
     template_name: string;
     
   }
@@ -21,6 +22,7 @@ export interface IEmailIntervalsApiResponse {
       public id: number = 0,
       public days: number = 0,
       public type: string = '',
+      public email_id: number = 0,
       public template_name: string = '' 
     ) {
     }

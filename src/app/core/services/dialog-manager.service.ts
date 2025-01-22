@@ -39,6 +39,10 @@ import { SurveyQuestionModel } from '../models/entities/survey-question.model';
 import { ManageSurveyQuestionComponent } from '../../features/settings/survey/manage-survey-question/manage-survey-question.component';
 import { ServiceRequestComponent } from '../../features/service-contracts/service-contract/service-request/service-request.component';
 import { SatisfactionSurveyComponent } from '../../features/tickets/survey/satisfaction-survey/satisfaction-survey.component';
+import { SatisfactionSurveyInfoComponent } from '../../features/tickets/survey/satisfaction-survey-info/satisfaction-survey-info.component';
+import { AiClassifierModel } from '../models/entities/ai-classifier.model';
+import { AiManageClassifiersComponent } from '../../features/settings/ai/ai-manage-classifiers/ai-manage-classifiers.component';
+import { ServiceContractRequest } from '../models/dialogs/service-contract-request-model';
 
 @Injectable({
   providedIn: 'root'
@@ -252,13 +256,13 @@ export class DialogManagerService {
     )
   }
 
-  openServiceContractRequestDialog(serviceContractData: ServiceContractDialogData) {
+  openServiceContractRequestDialog(serviceContractData: ServiceContractRequest) {
     const enterAnimationDuration = '100ms'
     const exitAnimationDuration = '100ms'
 
     const dialogRef = this.dialogService.open(ServiceRequestComponent, {
       width: '500px',
-      height: '400px',
+      height: '350px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: serviceContractData
@@ -433,5 +437,37 @@ export class DialogManagerService {
     return dialogRef.afterClosed().pipe(
       map((result) => {return result})
     )
+  }
+
+  openTicketSurveyInfoDialog(ticket: TicketModel) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    const dialogRef = this.dialogService.open(SatisfactionSurveyInfoComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: ticket
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {return result})
+    )
+  }
+
+  openAiClaassifierSelection(classifiers: AiClassifierModel[]) {
+    const enterAnimationDuration = '100ms'
+    const exitAnimationDuration = '100ms'
+
+    this.dialogService.open(AiManageClassifiersComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '325px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: classifiers
+    });
   }
 }

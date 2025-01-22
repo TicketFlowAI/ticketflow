@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ISurveyApiResponse } from '../../models/entities/survey.model';
+import { ISurveyAnswersApiResponse, ISurveyApiResponse } from '../../models/entities/survey.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
 @Injectable({
@@ -11,16 +11,16 @@ import { CustomHeadersService } from '../../utils/custom-headers.service';
 export class SurveyService {
  //Variables
     private readonly BASE_URL = environment.apiEndpoint
-    private readonly apiSurveys = this.BASE_URL + '/api/survey'
+    private readonly apiSurveys = this.BASE_URL + '/api/surveys'
   
     //Surveys
     http = inject(HttpClient)
     customHeadersSurvey = inject(CustomHeadersService)
   
     //Methods
-    getSurvey(id: number): Observable<ISurveyApiResponse> {
+    getSurvey(id: number): Observable<ISurveyAnswersApiResponse> {
       const customHeaders = this.customHeadersSurvey.addAppJson().getHeaders()
-      return this.http.get<ISurveyApiResponse>(`${this.apiSurveys}/${id}`, {
+      return this.http.get<ISurveyAnswersApiResponse>(`${this.apiSurveys}/${id}`, {
         headers: customHeaders,
         withCredentials: true,
       });

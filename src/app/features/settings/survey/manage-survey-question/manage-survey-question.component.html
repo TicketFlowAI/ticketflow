@@ -1,3 +1,4 @@
+<app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.SETTINGS.SURVEY-SETTINGS'">
     @if(!surveyQuestion) {
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE')}}</h2>
@@ -18,7 +19,7 @@
                     </mat-form-field>
                 </div>
                 <div class="col-3">
-                    <mat-slide-toggle class="mt-2" [checked]="active">
+                    <mat-slide-toggle [formControl]="activeFormControl" class="mt-2">
                         <p class="fs-6 text-light ms-2 mt-2">{{t('ACTIVE')}}</p>
                     </mat-slide-toggle>
                 </div>  

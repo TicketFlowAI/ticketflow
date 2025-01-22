@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, finalize, map, Observable, of } from 'rxjs';
+import { catchError, finalize, map, Observable, of, switchMap } from 'rxjs';
 import { TicketService } from '../api/servicios-mindsoftdev/ticket.service';
 import { TicketMessageService } from '../api/servicios-mindsoftdev/ticket-message.service';
 import { TicketModel } from '../models/entities/ticket.model';
@@ -21,7 +21,7 @@ export class TicketManagementService {
   private readonly translocoService = inject(TranslocoService)
 
   getAllTickets(): Observable<TicketModel[] | []> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
 
     return this.ticketService.getTickets().pipe(
       map((tickets) => tickets.data),
@@ -44,17 +44,28 @@ export class TicketManagementService {
   }
 
   getTicketHistory(id: number): Observable<TicketHistoryModel[] | []> {
+    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
     return this.ticketService.getTicketHistory(id).pipe(
-      map((ticket) => ticket.data),
+      map((ticketHistorial) => {
+        if (ticketHistorial.data.length == 0) {
+          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TICKET-HISTORY-NO-HISTORY');
+          this.messageService.addInfoMessage(transate)
+        }
+
+        return ticketHistorial.data
+      }),
       catchError(() => {
         return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
 
   getDeletedTickets(): Observable<TicketModel[] | []> {
     this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
-    
+
     return this.ticketService.getDeletedTickets().pipe(
       map((ticket) => ticket.data),
       catchError(() => {
@@ -66,28 +77,39 @@ export class TicketManagementService {
     )
   }
 
-  addTicket(newTicket: TicketModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
-
+  addTicket(newTicket: TicketModel, message: string): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+  
     return this.ticketService.createTicket(newTicket).pipe(
-      map(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.TICKET');
-        this.messageService.addSuccessMessage(transate)
-        return true
+      switchMap((createdTicket) => {
+        // Asume que `createdTicket` tiene un campo `id` que asigna al mensaje
+        let ticketMessage = new TicketMessageModel()
+        ticketMessage.ticket_id = createdTicket.data.id;
+        ticketMessage.content = message
+        ticketMessage.user_id = newTicket.user_id
+  
+        // Agrega el mensaje al ticket recién creado
+        return this.ticketMessageService.createTicketMessage(ticketMessage).pipe(
+          map(() => {
+            const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.TICKET');
+            this.messageService.addSuccessMessage(transate);
+            return true;
+          })
+        );
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
+        this.messageService.addErrorMessage(transate);
+        return of(false);
       }),
       finalize(() => {
-        this.spinnerService.hideGlobalSpinner();
+        this.spinnerService.hideDialogSpinner();
       })
-    )
+    );
   }
-
+  
   editTicket(editTicket: TicketModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.updateTicket(editTicket).pipe(
       map(() => {
@@ -107,7 +129,7 @@ export class TicketManagementService {
   }
 
   deleteTicket(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.deleteTicket(id).pipe(
       map(() => {
@@ -128,7 +150,7 @@ export class TicketManagementService {
 
 
   closeTicket(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.closeTicket(id).pipe(
       map(() => {
@@ -138,27 +160,6 @@ export class TicketManagementService {
       }),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.CLOSE-TICKET-ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
-      }),
-      finalize(() => {
-        this.spinnerService.hideGlobalSpinner();
-      })
-    )
-  }
-  
-  setPendingSurveyTicket(ticket: TicketModel): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
-
-    //Estado de pendiente Encuesta
-    ticket.status = 3;
-
-    return this.ticketService.updateTicket(ticket).pipe(
-      map(() => {
-        return true
-      }),
-      catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT-ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       }),
@@ -187,9 +188,9 @@ export class TicketManagementService {
       })
     );
   }
-  
+
   restoreTicket(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.restoreTicket(id).pipe(
       map(() => {
@@ -209,7 +210,7 @@ export class TicketManagementService {
   }
 
   reassignTicket(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.reassignTicket(id).pipe(
       map(() => {
@@ -229,7 +230,7 @@ export class TicketManagementService {
   }
 
   ticketNeedHumanInteraction(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.ticketService.needHumanInteraction(id).pipe(
       map(() => {
@@ -249,19 +250,14 @@ export class TicketManagementService {
   }
 
   getAllMessagesFromTicket(ticketId: string): Observable<TicketMessageModel[] | []> {
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
     return this.ticketMessageService.getTicketMessages(ticketId).pipe(
       map((ticketMessages) => ticketMessages.data),
       catchError(() => {
         return of([]);
-      })
-    )
-  }
-  
-  getOneTicketMessage(id: number): Observable<TicketMessageModel | null> {
-    return this.ticketMessageService.getTicketMessage(id).pipe(
-      map((ticketMessage) => ticketMessage.data),
-      catchError(() => {
-        return of(null);
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
@@ -271,28 +267,6 @@ export class TicketManagementService {
       map(() => true),
       catchError(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
-      })
-    )
-  }
-
-  editTicketMessage(editTicketMessage: TicketMessageModel): Observable<boolean> {
-    return this.ticketMessageService.updateTicketMessage(editTicketMessage).pipe(
-      map(() => true),
-      catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.ERROR');
-        this.messageService.addErrorMessage(transate)
-        return of(false)
-      })
-    )
-  }
-
-  deleteTicketMessage(id: number): Observable<boolean> {
-    return this.ticketMessageService.deleteTicketMessage(id).pipe(
-      map(() => true),
-      catchError(() => {
-        const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.ERROR');
         this.messageService.addErrorMessage(transate)
         return of(false)
       })

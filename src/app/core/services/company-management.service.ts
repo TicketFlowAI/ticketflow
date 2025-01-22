@@ -72,7 +72,7 @@ export class CompanyManagementService {
   }
 
   addCompany(newCompany: CompanyModel): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     return this.companyService.createCompany(newCompany).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.CREATE.COMPANY');
@@ -91,6 +91,7 @@ export class CompanyManagementService {
   }
 
   editCompany(editCompany: CompanyModel): Observable<boolean> {
+    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     return this.companyService.updateCompany(editCompany).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.EDIT.COMPANY');
@@ -109,6 +110,7 @@ export class CompanyManagementService {
   }
 
   deleteCompany(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
     return this.companyService.deleteCompany(id).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CRUD.DELETE.COMPANY');
@@ -121,7 +123,7 @@ export class CompanyManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }

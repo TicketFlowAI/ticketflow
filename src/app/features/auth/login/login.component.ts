@@ -6,13 +6,14 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angu
 import { MatInput } from "@angular/material/input";
 import { MatIcon } from "@angular/material/icon";
 import { MatIconButton } from "@angular/material/button";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { AuthManagementService } from '../../../core/services/auth-management.service';
 import { LoginRequest } from '../../../core/models/requests/login.request';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinner/dialog-spinner.component';
 import { FieldErrorEmailComponent } from '../../../shared/components/form-validation/field-error-email/field-error-email.component';
 import { FieldErrorRequiredComponent } from '../../../shared/components/form-validation/field-error-required/field-error-required.component';
+import { UserRoles } from '../../../core/models/entities/user.model';
 
 @Component({
   selector: 'app-login',
@@ -31,13 +32,14 @@ import { FieldErrorRequiredComponent } from '../../../shared/components/form-val
     DialogSpinnerComponent,
     FieldErrorEmailComponent,
     FieldErrorRequiredComponent
-],
+  ],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
   //SERVICES
   public readonly dialogRef = inject(MatDialogRef<LoginComponent>);
+  public readonly router = inject(Router);
   private readonly authManagementService = inject(AuthManagementService);
   private readonly userManagementService = inject(UserManagementService);
   private readonly fb = inject(FormBuilder)
@@ -70,11 +72,44 @@ export class LoginComponent {
   }
 
   submitLoginForm() {
-    const loginFormValue = this.loginFrom.value;
-    const loginRequest = new LoginRequest();
-    loginRequest.email = loginFormValue.email ?? ''
-    loginRequest.password = loginFormValue.password ?? ''
-
-    this.authManagementService.login(loginRequest)
-  }
+    if (this.loginFrom.valid) {
+      const loginFormValue = this.loginFrom.value;
+      const loginRequest = new LoginRequest();
+      loginRequest.email = loginFormValue.email ?? '';
+      loginRequest.password = loginFormValue.password ?? '';
+  
+      this.authManagementService.login(loginRequest).subscribe({
+        next: (response) => {
+          if (response) {
+            if (response.two_factor) {
+              this.router.navigateByUrl('/2fa-authenticate');
+            } else {
+              this.userManagementService.getMyUser().subscribe({
+                next: (user) => {
+                  if (user) {
+                    if (user.role === UserRoles.Client) {
+                      this.userManagementService.currentUser.set(user);
+                      this.router.navigateByUrl('/');
+                    }
+                  }
+                },
+                error: () => {
+                  console.error('Error al obtener el usuario');
+                }
+              });
+            }
+            this.dialogRef.close();
+          } else {
+            // Maneja errores en el login
+            console.log('Login failed');
+          }
+        },
+        error: (err) => {
+          console.error('Error during login:', err);
+        }
+      });
+    } else {
+      console.log('Form is invalid');
+    }
+  }  
 }

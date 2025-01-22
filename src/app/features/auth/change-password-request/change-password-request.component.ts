@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,7 @@ import { AuthManagementService } from '../../../core/services/auth-management.se
 })
 export class ChangePasswordRequestComponent {
   private authManagementService = inject(AuthManagementService)
+  private cdr = inject(ChangeDetectorRef)
   private readonly fb = inject(FormBuilder)
 
   emailFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] })
@@ -42,6 +43,7 @@ export class ChangePasswordRequestComponent {
     this.authManagementService.requestPasswordReset(form.email?? '').subscribe({
       next: (response) => {
         this.showSuccess = response
+        this.cdr.markForCheck()
       }
     })
   }

@@ -1,3 +1,4 @@
+<app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.SERVICE-CONTRACT-TERMS.SERVICE-CONTRACT-TERM-MANAGEMENT'">
     @if(!serviceContractTermData) {
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-SERVICE-CONTRACT-TERM')}}</h2>
@@ -20,7 +21,7 @@
             <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>{{t('SERVICE-CONTRACT-TERM-MONTHS')}}</mat-label>
-                    <input type="number" matInput [formControl]="monthsFormControl">
+                    <input type="number"  matInput [formControl]="monthsFormControl">
                     <mat-icon matSuffix>date_range</mat-icon>
                     @if (monthsFormControl.hasError('pattern')) {
                         <field-error-integer-numbers></field-error-integer-numbers>

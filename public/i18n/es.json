@@ -42,13 +42,28 @@
       "SUCCESS-MESSAGE": "La contraseña se ha restablecido exitosamente.",
       "LOGIN": "Iniciar Sesión"
     },
+    "2FA": {
+      "CONFIRM-PASSWORD": "Confirma tu contraseña",
+      "ENTER-PASSWORD": "Ingresa tu contraseña",
+      "INVALID-PASSWORD": "Contraseña inválida",
+      "ENABLE-2FA": "Habilitar Autenticación 2FA",
+      "SCAN-QR-DESCRIPTION": "Escanea este código QR con tu aplicación autenticadora para configurar la autenticación de dos factores.",
+      "RECOVERY-CODES": "Recuerde estos códigos de recuperación en caso de perder o no tener acceso a su aplicación autenticadora.",
+      "CONTINUE": "Continuar",
+      "VERIFY-2FA": "Verificar Autenticación de Dos Factores",
+      "ENTER-CODE": "Ingresa el código",
+      "VERIFY": "Verificar",
+      "BACK-TO-QR": "Regresar al QR",
+      "2FA-ENABLED": "Autenticación 2FA",
+      "2FA-ENABLED-DESCRIPTION": "A continuación ingrese su codigo de verificación dado por la aplicación o ingrese uno de sus códigos de recuperación"
+    },
     "SETTINGS": {
       "GENERAL-SETTINGS": {
         "GENERAL-SETTINGS": "Configuraciones Generales",
         "EMAIL-SETTINGS": "Configuración de Correos",
         "IA-SETTINGS": "Configuración de IA",
         "SURVEY-SETTINGS": "Configuración de Encuestas",
-        "BIN-SETTINGS": "Papelería de reciclaje"
+        "BIN-SETTINGS": "Papelera de reciclaje"
       },
       "EMAIL-SETTINGS": {
         "EMAIL-SETTINGS": "Configuración de Correos",
@@ -89,9 +104,28 @@
         "DELETE": "Eliminar",
         "SAVE": "Guardar"
       },
-      "AI-SETTINGS": {
+     "AI-SETTINGS": {
         "AI-SETTINGS": "Configuración de IA",
-        "RETURN": "Regresar"
+        "RETURN": "Regresar",
+        "SELECT-CLASSI": "Seleccionar Clasificador",
+        "SELECT-CLASSI-PRIORITY": "Clasificador de Prioridad",
+        "SELECT-CLASSI-HUMAN": "Clsaificador de Human Interaction",
+        "VERSION_NAME": "Nombre de la versión",
+        "VERSION_ARN": "ARN de la versión",
+        "STATUS": "Estado",
+        "LANGUAGE_CODE": "Código de idioma",
+        "SUBMIT_TIME": "Hora de envío",
+        "END_TIME": "Hora de finalización",
+        "NUMBER_OF_LABELS": "Número de etiquetas",
+        "ACCURACY": "Precisión",
+        "F1_SCORE": "Puntaje F1",
+        "PRECISION": "Exactitud",
+        "RECALL": "Sensibilidad",
+        "CLASSIFIER_NAME": "Nombre del clasificador",
+        "CLASSIFIER_PERFORMANCE": "Desempeño del clasificador",
+        "NO_DATA_AVAILABLE": "No hay datos disponibles",
+        "CHANGE-CLASSIFICATORS": "Cambiar Versiones",
+        "SAVE": "Guardar"
       },
       "SURVEY-SETTINGS": {
         "SURVEY-SETTINGS": "Configuración de Encuestas",
@@ -210,8 +244,8 @@
       "READ-TICKET-TECHNICIAN-HISTORY-DESC": "De clic aquí para poder ver el historial de técnicos por los que ha pasado este ticket",
       "EDIT-TICKET-INFO": "Editar Ticket",
       "EDIT-TICKET-INFO-DESC": "De clic aquí para poder editar el ticket",
-      "CLOSE-TICKET": "Cerrar Ticket",
-      "CLOSE-TICKET-DESC": "De clic aquí para cerrar el ticket si ya se completo la atención al usuario",
+      "SURVEY-TICKET-INFO": "Ver Encuesta",
+      "SURVEY-TICKET-INFO-DESC": "De click aquí para ver la encuesta de satisfacción",
       "REASSIGN": "Reasignación",
       "CLOSE": "Cerrar",
       "DELETE": "Borrar",
@@ -227,9 +261,10 @@
       "TICKET-MANAGEMENT": {
         "CREATE-TICKET": "Crear Ticket",
         "EDIT-TICKET": "Editar Ticket",
+        "ENABLE-AI-CONFIG": "Configurar IA",
         "TICKET-TITLE": "Título",
         "TICKET-PRIORITY": "Prioridad",
-        "TICKET-HUMAN-INTERACTION": "Necesita Interacción Humana",
+        "TICKET-HUMAN-INTERACTION": "Interacción Humana",
         "TICKET-COMPLEXITY": "Complejidad",
         "TICKET-USER": "Usuario",
         "TICKET-COMPANY": "Empresa",
@@ -245,7 +280,7 @@
         "YES": "Si",
         "NO": "No",
         "TICKET-COMPLEXITY": "Complejidad",
-        "TICKET-USER": "Usuario",
+        "TICKET-USER": "Técnico",
         "TICKET-COMPANY": "Empresa",
         "TICKET-SERVICE": "Servicio",
         "RETURN": "Regresar"
@@ -285,7 +320,7 @@
       "EDIT-SERVICE-CONTRACT-INFO": "Editar Servicio Contratado",
       "EDIT-SERVICE-CONTRACT-INFO-DESC": "De clic aquí para poder editar el servicio contratado",
       "CANCEL-REQUEST": "Cancelar",
-      "NEW-REQUEST": "Solicitar Servicio",
+      "NEW-TICKET": "Ticket",
       "DELETE": "Borrar",
       "ADMIN": {
         "SERVICE-CONTRACTS": "Administrar Contrataciones",
@@ -310,10 +345,9 @@
         "RETURN": "Regresar"
       },
       "SERVICE-CONTRACT-REQUEST": { 
-        "TITLE-CANCEL": "Cancelación",
         "TITLE-NEW": "Solicitud de nuevo servicio",
-        "SERVICE-CONTRACT-SERVICE": "Service",
-        "SERVICE-CONTRACT-MESSAGE": "Message",
+        "SERVICE-CONTRACT-SERVICE": "Servicio",
+        "SERVICE-CONTRACT-TERM": "Periodo a solicitar",
         "SEND": "Send"
       }
     },
@@ -412,6 +446,7 @@
       "EDIT-USER-INFO": "Editar usuario",
       "EDIT-USER-INFO-DESC": "De clic aquí para editar la información del usuario",
       "DELETE": "Desactivar",
+      "DISABLE-2FA": "Restaurar 2FA",
       "ADMIN": {
         "USERS": "Administrar usuarios",
         "ROLES": "Ver Roles",
@@ -426,6 +461,8 @@
         "USER-EMAIL": "Correo electrónico",
         "USER-COMPANY": "Empresa",
         "USER-ROLE": "Roles",
+        "USER-PASSWORD": "Contraseña",
+        "USER-CONFIRM-PASSWORD": "Confirmar Contraseña",
         "SAVE": "Guardar"
       },
       "USER-INFO": {
@@ -496,7 +533,9 @@
         "AVG-TICKET-CLOSE-TIME-DESC": "Tiempo promedio que toma cerrar un ticket",
         "ESCALATIONS-DESC": "Número de técnicos que estuvieron involucrado sen un ticket hasta resolverlo",
         "COMPLEXITY-DESC": "Número de tickets por complejidad",
-        "HUMAN-INTERACTION-DESC": "Número de tickets que necesitan resolverse con interacción humana"
+        "HUMAN-INTERACTION-DESC": "Número de tickets que necesitan resolverse con interacción humana",
+        "AVG-SCORE-PER-QUESTION": "Puntaje Promedio por Pregunta",
+        "AVG-SCORE-PER-QUESTION-DESC": "Promedio de puntajes basado en las respuestas por cada pregunta."
       },
       "TECHNICIAN-REPORT": {
         "ADMIN": {
@@ -529,7 +568,11 @@
           "AVG-TICKET-CLOSE-TIME-DESC": "Tiempo promedio que le ha tomado cerrar un ticket",
           "ASSIGN-REASSIGN-DESC": "Número de tickets que este técnico ha reasigando y a cuantos ha sido asignado",
           "CURRENT-TICKETS-DESC": "Número de tickets en los que el técnico esta actualmente trabajando",
-          "WEEKLY-COMPARISON-DESC": "Comparación entre la cantidad de tickets que ha cerrado el técnico en los útimos 7 días, y los de la semana previa"
+          "WEEKLY-COMPARISON-DESC": "Comparación entre la cantidad de tickets que ha cerrado el técnico en los útimos 7 días, y los de la semana previa",
+          "AVG-SCORE": "Puntaje Promedio",
+          "AVG-SCORE-DESC": "Este es el puntaje promedio obtenido en las evaluaciones.",
+          "AVG-SCORE-PER-QUESTION": "Puntaje Promedio por Pregunta",
+          "AVG-SCORE-PER-QUESTION-DESC": "Promedio de puntajes basado en las respuestas por cada pregunta."
         }
       }
     }
@@ -575,6 +618,7 @@
         "DELETE-EMAIL-INTERVAL": "¿Está seguro que desea eliminar este intervalo?",
         "DELETE-SERVICE-CONTRACT": "¿Está seguro que desea eliminar esta contratación?",
         "DELETE-SERVICE-CONTRACT-TERM": "¿Está seguro que desea eliminar este periodo?",
+        "CANCEL-SERVICE-CONTRACT": "¿Está seguro que desea cancelar este servicio?",
         "DELETE-SERVICE": "¿Está seguro que desea eliminar este servicio?",
         "DELETE-SERVICE-TAX": "¿Está seguro que desea eliminar este impuesto?",
         "DELETE-SERVICE-CATEGORY": "¿Está seguro que desea eliminar esta categoría?",
@@ -585,6 +629,7 @@
         "CLOSE-TICKET": "¿Está seguro que desea cerrar este ticket?",
         "REASSIGN-TICKET": "¿Está seguro que desea solicitar una reasiganción?",
         "NO-AI": "¿Está seguro que desea que lo atienda un técnico humano?",
+        "CLASSIFIER": "¿Está seguro que desea que cambiar la versión de los clasificadores?",
         "TITLE": "Confirmar",
         "CANCEL": "Cancelar",
         "OK": "Continuar"
@@ -633,7 +678,7 @@
           "SERVICE-TAX": "Impuesto eliminado exitosamente",
           "SERVICE-CATEGORY": "Categoría eliminada exitosamente",
           "TICKET": "Ticket eliminado exitosamente",
-          "USER": "Usuario eliminado exitosamente",
+          "USER": "Usuario desactivado exitosamente",
           "ROLE": "Rol eliminado exitosamente",
           "SURVEY-QUESTION": "Pregunta eliminada exitosamente",
           "ERROR": "Ha ocurrido un error en la eliminación"
@@ -672,7 +717,20 @@
         "CANCEL-SERVICE-REQUEST-ERROR": "Ha ocurrido un error en la solicitud de cancelación",
         "CLASSIFIER-ERROR": "Error al obtener el rendimiento",
         "PASSWORD-RESET-REQUEST-ERROR": "Ha ocurrido un error al enviar la solicitud",
-        "PASSWORD-RESET-ERROR": "Ha ocurrido un error al reestablecer la contraseña"
+        "PASSWORD-RESET-ERROR": "Ha ocurrido un error al reestablecer la contraseña",
+        "SELECT-CLASSI-SUCCESS": "Se ha seleccionado el clasificador correctamente",
+        "SELECT-CLASSI-UNSUCCESS": "Ha ocurrido un error al seleccionar",
+        "TWO-FACTOR-CONFIRM-PASSWORD.SUCCESS": "QR generado exitosamente",
+        "TWO-FACTOR-CONFIRM-PASSWORD.ERROR": "Ha ocurrido un error al confirmar al contraseña",
+        "TWO-FACTOR-CONFIRM-PASSWORD.INVALID": "La contraseña es inválida",
+        "USER-2FA-RESET-SUCCESS": "Se ha deshabilitado 2FA para ese usuario",
+        "USER-2FA-RESET-ERROR": "Ha ocurrido un error al deshabilitar",
+        "TICKET-SURVEY-NO-SURVEY": "Esta encuesta no ha sido respondida todavía",
+        "TICKET-HISTORY-NO-HISTORY": "No existe un historial todavía",
+        "PASSWORD-MISMATCH": "Las constraseñas no coinciden",
+        "TWO-FACTOR-AUTH.SUCCESS": "Autenticación existosa",
+        "TWO-FACTOR-AUTH.INVALID": "El código no es correcto",
+        "TWO-FACTOR-AUTH.ERROR": "Autenticación fallida"
       }
     },
     "VALIDATIONS": {

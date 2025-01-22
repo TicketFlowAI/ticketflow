@@ -106,7 +106,7 @@ export class ServiceManagementService {
   }
 
   deleteService(id: number) {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceService.deleteService(id).pipe(
       map(() => {
@@ -120,7 +120,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }
@@ -228,7 +228,7 @@ export class ServiceManagementService {
   } 
 
   deleteServiceTax(id: number) {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceTaxService.deleteServiceTax(id).pipe(
       map(() => {
@@ -242,7 +242,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }
@@ -350,7 +350,7 @@ export class ServiceManagementService {
   }
 
   deleteServiceCategory(id: number): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
     return this.serviceCategoryService.deleteServiceCategory(id).pipe(
       map(() => {
@@ -364,7 +364,7 @@ export class ServiceManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     );
   }

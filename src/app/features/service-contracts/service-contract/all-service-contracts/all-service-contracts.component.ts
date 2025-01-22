@@ -18,6 +18,8 @@ import { ServiceContractDialogData } from '../../../../core/models/dialogs/servi
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { MatSelectModule } from '@angular/material/select';
+import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
+import { ServiceContractRequest } from '../../../../core/models/dialogs/service-contract-request-model';
 
 
 @Component({
@@ -177,11 +179,31 @@ export class AllServiceContractsComponent {
     })
   }
 
-  openServiceRequest(serviceContract: ServiceContractModel | null) {
-    let data: ServiceContractDialogData = {
-      serviceContract,
-      companyId: this.companyId ? parseInt(this.companyId) : null
+  openServiceRequest() {
+    let data: ServiceContractRequest = {
+      companyId: this.companyId ? parseInt(this.companyId) : 0
     }
     this.dialogManagerService.openServiceContractRequestDialog(data).subscribe()
+  }
+
+  cancelServiceContract(serviceContractId: number) {
+    const translation = this.translocoService.translateObject('SHARED.DIALOGS.CONFIRMATION.CANCEL-SERVICE-CONTRACT');
+    
+    this.dialogManagerService.openActionConfirmationDialog(translation).subscribe({
+      next: (response) => {
+        if(response) {
+          this.serviceContractManagementService.cancelServiceContract(serviceContractId).subscribe()
+        }
+      }
+    })
+  }
+
+  openTicketRequest(serviceContract: ServiceContractModel | null) {
+    let data: TicketDialogData = {
+      ticket: null,
+      serviceContract: serviceContract
+    }
+
+    this.dialogManagerService.openManageTicketDialog(data).subscribe()
   }
 }

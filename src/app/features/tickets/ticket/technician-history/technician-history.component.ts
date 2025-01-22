@@ -13,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
 import { TicketHistoryModel } from '../../../../core/models/entities/ticket-history.model';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-technician-history',
@@ -23,7 +24,8 @@ import { TicketHistoryModel } from '../../../../core/models/entities/ticket-hist
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatIcon
+    MatIcon,
+    DialogSpinnerComponent
   ],
   templateUrl: './technician-history.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -46,6 +48,10 @@ export class TechnicianHistoryComponent {
   loadTechnicianHistory(ticketId: number) {
     this.ticketMangementService.getTicketHistory(ticketId).subscribe({
       next: (history) => {
+        if(history.length == 0){
+          this.dialogRef.close()
+          return
+        } 
         this.ticketHistory = history
         this.cdr.markForCheck()
       }

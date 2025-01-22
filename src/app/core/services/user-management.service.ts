@@ -164,7 +164,27 @@ export class UserManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
+      })
+    )
+  }
+
+  reset2FA(id: number): Observable<boolean> {
+    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+
+    return this.userService.disableToFactor(id).pipe(
+      map(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.USER-2FA-RESET-SUCCESS');
+        this.messageService.addSuccessMessage(transate)
+        return true
+      }),
+      catchError(() => {
+        const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.USER-2FA-RESET-ERROR');
+        this.messageService.addErrorMessage(transate)
+        return of(false)
+      }),
+      finalize(() => {
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }

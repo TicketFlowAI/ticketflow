@@ -22,6 +22,7 @@ import { ServiceContractTermModel } from '../../../../core/models/entities/servi
 import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
 import { FieldErrorRequiredSelectComponent } from "../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component";
 import { notZeroValidator } from '../../../../shared/validators/custom-validators';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-manage-service-contract',
@@ -35,7 +36,8 @@ import { notZeroValidator } from '../../../../shared/validators/custom-validator
     MatIconModule,
     ReactiveFormsModule,
     MatSelectModule,
-    FieldErrorRequiredSelectComponent
+    FieldErrorRequiredSelectComponent,
+    DialogSpinnerComponent
 ],
   templateUrl: './manage-service-contract.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

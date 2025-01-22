@@ -88,16 +88,16 @@ export class ServiceContractService {
 
   newServiceContractRequest(request: any): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<any>(`${this.apiServiceContract}/new-request`, null, {
+    return this.http.post<any>(`${this.apiServiceContract}/request`, request, {
         headers: customHeader,
         withCredentials: true,
         observe: 'response'
     });
   }
 
-  cancelServiceContractRequest(request: any): Observable<HttpResponse<any>> {
+  cancelServiceContractRequest(serviceContractId: number): Observable<HttpResponse<any>> {
     const customHeader = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post<any>(`${this.apiServiceContract}/cancel-request`, null, {
+    return this.http.post<any>(`${this.apiServiceContract}/cancel`, {contract_id : serviceContractId}, {
         headers: customHeader,
         withCredentials: true,
         observe: 'response'

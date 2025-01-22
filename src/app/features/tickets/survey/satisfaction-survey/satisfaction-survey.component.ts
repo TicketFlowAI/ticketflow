@@ -16,6 +16,7 @@ import { finalize, switchMap } from 'rxjs';
 import { UserManagementService } from '../../../../core/services/user-management.service';
 import { UserModel } from '../../../../core/models/entities/user.model';
 import { MessageService } from '../../../../shared/services/message.service';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-satisfaction-survey',
@@ -30,7 +31,8 @@ import { MessageService } from '../../../../shared/services/message.service';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    DialogSpinnerComponent
   ],
   templateUrl: './satisfaction-survey.component.html',
   styleUrl: './satisfaction-survey.component.scss',

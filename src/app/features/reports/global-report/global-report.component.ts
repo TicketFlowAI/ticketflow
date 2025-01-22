@@ -90,8 +90,22 @@ export class GlobalReportComponent {
     ],
   };
 
+  public scorePerQuestionChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [] as string[],
+    datasets: [
+      {
+        label: 'Average Score Per Question',
+        data: [] as number[], // Los datos deben ser números
+        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1
+      }
+    ]
+  };
+
   private complexityChartInstance: Chart | null = null;
   private distributionChartInstance: Chart | null = null;
+  private avgScorePerQuestionChartInstance: Chart | null = null;
 
   constructor() {
     // Registrar todos los componentes necesarios de Chart.js
@@ -115,13 +129,18 @@ export class GlobalReportComponent {
     const escalations = this.reportManagementService.getGlobalTicketsEscalations();
     const complexity = this.reportManagementService.getGlobalTicketsPerComplexity();
     const humanInteraction = this.reportManagementService.getGlobalTicketsHumanInteraction();
+    const globalAverageScore = this.reportManagementService.getGlobalAverageScore();
+    const avgScoreSurveyPerQuestion = this.reportManagementService.getGlobalAverageScore();
 
-    forkJoin([ticketsSolvedQty, ticketsAvgTime, escalations, complexity, humanInteraction]).subscribe({
-      next: ([solvedQty, avgTime, escalations, complexityData, humanInteraction]) => {
+    forkJoin([ticketsSolvedQty, ticketsAvgTime, escalations, complexity, humanInteraction, globalAverageScore, avgScoreSurveyPerQuestion]).subscribe({
+      next: ([solvedQty, avgTime, escalations, complexityData, humanInteraction, avgScore, avgScoreSurveyPerQuestion]) => {
         // Actualizar métricas globales
         this.globalReport.totalTicketsQty = solvedQty;
         this.globalReport.averageTicketCloseTime = avgTime ?? 0;
         this.globalReport.humanInteraction = humanInteraction;
+        this.globalReport.averageScorePerQuestion = avgScore ?? 0;
+
+        this.globalReport.averageScorePerQuestion = avgScoreSurveyPerQuestion
 
         // Configurar datos de gráficos de complejidad
         this.complexityChartData.labels = complexityData.map(item => `Nivel ${item.complexity}`);
@@ -135,6 +154,9 @@ export class GlobalReportComponent {
         const groupedData = this.groupTicketsByTechnicians(escalations);
         this.distributionChartData.labels = Object.keys(groupedData).map(count => `${count} Técnicos`);
         this.distributionChartData.datasets[0].data = Object.values(groupedData);
+
+        this.scorePerQuestionChartData.labels = avgScoreSurveyPerQuestion.map((q) => q.question); // Etiquetas
+        this.scorePerQuestionChartData.datasets[0].data = avgScoreSurveyPerQuestion.map((q) => q.average_score); // Datos numéricos
 
         this.spinnerService.hideGlobalSpinner();
         
@@ -152,6 +174,7 @@ export class GlobalReportComponent {
   private createCharts() {
     this.createComplexityChart();
     this.createDistributionChart();
+    this.createScorePerQuestionChart();
   }
 
   private createComplexityChart() {
@@ -206,5 +229,29 @@ export class GlobalReportComponent {
       acc[curr.technicians_count] = (acc[curr.technicians_count] || 0) + 1;
       return acc;
     }, {} as Record<number, number>);
+  }
+
+  private createScorePerQuestionChart(): void {
+    if (this.avgScorePerQuestionChartInstance) {
+      this.avgScorePerQuestionChartInstance.destroy(); // Limpia el gráfico anterior si existe
+    }
+
+    const canvas = document.getElementById('scorePerQuestionChart') as HTMLCanvasElement;
+    if (canvas) {
+      this.avgScorePerQuestionChartInstance = new Chart(canvas, {
+        type: 'bar',
+        data: this.scorePerQuestionChartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            y: { beginAtZero: true } // Configuración del eje Y
+          }
+        }
+      });
+    }
   }
 }

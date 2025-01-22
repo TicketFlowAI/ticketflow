@@ -11,14 +11,14 @@ export interface ITicketApiResponse {
 export interface ITicketModel {
   id: number;
   title: string;
-  priority: number;
-  needsHumanInteraction: boolean;
-  complexity: number;
+  priority: number | string;
+  needsHumanInteraction: number | string;
+  complexity: number | string;
   service_contract_id: number;
   user_id: number;
   status: number;
-  newClientMessage: boolean;
-  newTechnicianMessage: boolean;
+  newClientMessage: number;
+  newTechnicianMessage: number;
   user_name: string;
   user_lastname: string;
   company_id: number;
@@ -31,14 +31,14 @@ export class TicketModel implements ITicketModel {
   constructor(
     public id: number = 0,
     public title: string = '',
-    public priority: number = 0,
-    public needsHumanInteraction: boolean = false,
-    public complexity: number = 0,
+    public priority: number | string = '',
+    public needsHumanInteraction: number | string = '',
+    public complexity: number | string = '',
     public service_contract_id: number = 0,
     public user_id: number = 0,
     public status: number = 1,
-    public newClientMessage: boolean = false,
-    public newTechnicianMessage: boolean = false,
+    public newClientMessage: number = 0,
+    public newTechnicianMessage: number = 0,
     public user_name: string = '',
     public user_lastname: string = '',
     public company_id: number = 0,

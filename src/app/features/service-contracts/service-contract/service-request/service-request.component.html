@@ -1,10 +1,6 @@
+<app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.SERVICE-CONTRACTS.SERVICE-CONTRACT-REQUEST'">
-    @if(!data.serviceContract) {
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('TITLE-NEW')}}</h2>
-    }
-    @else {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('TITLE-CANCEL')}}</h2>
-    }
     <mat-dialog-content>
         <form [formGroup]="requestForm">
             <div class="row">
@@ -20,15 +16,18 @@
                     <field-error-required-select></field-error-required-select>
                     }
                 </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="" appearance="fill">
-                    <mat-label>{{t('SERVICE-CONTRACT-MESSAGE')}}</mat-label>
-                    <textarea matInput [formControl]="messageFormControl"></textarea>
-                    @if (messageFormControl.hasError('required')) {
-                    <field-error-required></field-error-required>
+
+                <mat-form-field>
+                    <mat-label>{{t('SERVICE-CONTRACT-TERM')}}</mat-label>
+                    <mat-select [formControl]="serviceTermFormControl">
+                        @for(term of terms; track term.id) {
+                        <mat-option [value]="term.id">{{term.term}}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matSuffix>add_circle</mat-icon>
+                    @if (serviceFormControl.hasError('notZero')) {
+                    <field-error-required-select></field-error-required-select>
                     }
-                    <mat-icon matSuffix>mail</mat-icon>
                 </mat-form-field>
             </div>
         </form>

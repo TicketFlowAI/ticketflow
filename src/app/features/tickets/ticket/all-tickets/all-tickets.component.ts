@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faPencil, faX, faPlus, faInfoCircle, faUsers, faMessage } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX, faPlus, faInfoCircle, faUsers, faMessage, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
@@ -50,6 +50,7 @@ export class AllTicketsComponent {
   protected readonly faX = faX;
   protected readonly users = faUsers;
   protected readonly faMessage = faMessage;
+  protected readonly faClipboardList = faClipboardList;
 
   private readonly userManagementService = inject(UserManagementService)
   private readonly ticketManagementService = inject(TicketManagementService)
@@ -94,18 +95,31 @@ export class AllTicketsComponent {
   }
 
   onPriorityOrder(order: 'asc' | 'desc'): void {
-    this.filteredTickets.sort((a, b) =>
-      order === 'asc' ? a.priority - b.priority : b.priority - a.priority
-    );
+    this.filteredTickets.sort((a, b) => {
+      const aPriority = typeof a.priority === 'number' ? a.priority : Infinity;
+      const bPriority = typeof b.priority === 'number' ? b.priority : Infinity;
+  
+      if (aPriority === bPriority) {
+        return 0;
+      }
+      return order === 'asc' ? aPriority - bPriority : bPriority - aPriority;
+    });
     this.updatePageTickets();
   }
-
+  
   onComplexityOrder(order: 'asc' | 'desc'): void {
-    this.filteredTickets.sort((a, b) =>
-      order === 'asc' ? a.complexity - b.complexity : b.complexity - a.complexity
-    );
+    this.filteredTickets.sort((a, b) => {
+      const aComplexity = typeof a.complexity === 'number' ? a.complexity : Infinity;
+      const bComplexity = typeof b.complexity === 'number' ? b.complexity : Infinity;
+  
+      if (aComplexity === bComplexity) {
+        return 0;
+      }
+      return order === 'asc' ? aComplexity - bComplexity : bComplexity - aComplexity;
+    });
     this.updatePageTickets();
   }
+  
 
   onStatusFilter(status: number | null): void {
     if (status === null) {
@@ -147,8 +161,33 @@ export class AllTicketsComponent {
     this.dialogManagerService.openTicketInfoDialog(ticket)
   }
 
+  openTicketSurveyInfo(ticket: TicketModel) {
+    this.dialogManagerService.openTicketSurveyInfoDialog(ticket)
+  }
+
   openTicketTechnicianHistory(ticket: TicketModel) {
     this.dialogManagerService.openTicketTechnicianHistory(ticket)
+  }
+
+  openSatisfactionSurvey(ticket: TicketModel) { 
+    this.dialogManagerService.openTicketSurveyDialog(ticket).subscribe({
+      next: (response) => {
+        if (response) this.loadTickets()
+      }
+    })
+  }
+
+  openTicketManageDialog(ticket: TicketModel | null) {
+    let data: TicketDialogData = { ticket, serviceContract: null }
+    this.dialogManagerService.openManageTicketDialog(data).subscribe({
+      next: (response) => {
+        if (response) this.loadTickets()
+      }
+    })
+  }
+
+  reOpenTicket(ticketId: number) {
+    this.handleOpenTicket(ticketId).subscribe()
   }
 
   askForReassign(ticketId: number) {
@@ -169,10 +208,6 @@ export class AllTicketsComponent {
         result ? this.handleCloseTicket(ticket) : this.handleCancelDelete()
       )
     ).subscribe();
-  }
-
-  reOpenTicket(ticketId: number) {
-    this.handleOpenTicket(ticketId).subscribe()
   }
 
   needHumanInteraction(ticketId: number) {
@@ -196,8 +231,7 @@ export class AllTicketsComponent {
   }
 
   private handleCloseTicket(ticket: TicketModel) {
-    const observable = ticket.status == 3? this.ticketManagementService.closeTicket(ticket.id) : this.ticketManagementService.setPendingSurveyTicket(ticket)
-    return observable.pipe(
+    return this.ticketManagementService.closeTicket(ticket.id).pipe(
       tap(() => this.loadTickets())
     );
   }
@@ -230,20 +264,5 @@ export class AllTicketsComponent {
     return of(null);
   }
 
-  openSatisfactionSurvey(ticket: TicketModel) { 
-    this.dialogManagerService.openTicketSurveyDialog(ticket).subscribe({
-      next: (response) => {
-        if (response) this.loadTickets()
-      }
-    })
-  }
-
-  openTicketManageDialog(ticket: TicketModel | null) {
-    let data: TicketDialogData = { ticket, serviceContract: null }
-    this.dialogManagerService.openManageTicketDialog(data).subscribe({
-      next: (response) => {
-        if (response) this.loadTickets()
-      }
-    })
-  }
+  
 }

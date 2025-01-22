@@ -10,22 +10,22 @@
             <div class="col-md-6 mt-2">
                 <div class="row justify-content-end">
                     @if(companyId) {
-                        <div class="col-md-4 mt-2 px-3 align-content-center">
-                            <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                                <button [routerLink]="['/companies']" type="button" class="btn btn-secondary">
-                                    <fa-icon class="me-2" [icon]="faArrowLeft"></fa-icon>{{t('ADMIN.RETURN-USER')}}</button>
-                            </div>
+                    <div class="col-md-4 mt-2 px-3 align-content-center">
+                        <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                            <button [routerLink]="['/companies']" type="button" class="btn btn-secondary">
+                                <fa-icon class="me-2" [icon]="faArrowLeft"></fa-icon>{{t('ADMIN.RETURN-USER')}}</button>
                         </div>
+                    </div>
                     }
 
                     @if(isAdmin) {
-                        <div [ngClass]="companyId? 'col-md-4' : 'col-md-3'" class="mt-2 px-3 align-content-center">
-                            <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
-                                <button [routerLink]="['/roles']" type="button" class="btn btn-primary">
-                                    {{t('ADMIN.ROLES')}}</button>
-                            </div>
+                    <div [ngClass]="companyId? 'col-md-4' : 'col-md-3'" class="mt-2 px-3 align-content-center">
+                        <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
+                            <button [routerLink]="['/roles']" type="button" class="btn btn-primary">
+                                {{t('ADMIN.ROLES')}}</button>
                         </div>
-                    }      
+                    </div>
+                    }
 
                     <div [ngClass]="companyId? 'col-md-4' : 'col-md-4'" class="px-3 mt-2 align-content-center">
                         <div class="row justify-content-sm-center justify-content-end px-3 px-md-0">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-4">
             <mat-form-field>
                 <mat-label>{{ t('SEARCH')}}</mat-label>
@@ -55,6 +55,13 @@
                             <div class="col-6 text-center">
                                 {{user.email}}
                             </div>
+                            @if(isAdmin && user.role != 'client') {
+                            <div class="col-6 text-center">
+                                <button type="button" class="btn btn-secondary" (click)="restore2FA(user.id)">
+                                    {{ t('DISABLE-2FA')}}
+                                </button>
+                            </div>
+                            }
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <hr>
@@ -82,16 +89,17 @@
                             <hr>
                         </div>
                         @if(isAdmin) {
-                            <div class="row justify-content-end">
-                                <div class="col-md-3">
-                                    <div class="row justify-content-end">
-                                        <button  type="button" class="btn btn-danger"(click)="deleteUsers(user.id)"> <fa-icon [icon]="faX"></fa-icon>
-                                            {{ t('DELETE')}}
-                                        </button>
-                                    </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-3">
+                                <div class="row justify-content-end">
+                                    <button type="button" class="btn btn-danger" (click)="deleteUsers(user.id)">
+                                        <fa-icon [icon]="faX"></fa-icon>
+                                        {{ t('DELETE')}}
+                                    </button>
                                 </div>
                             </div>
-                        }  
+                        </div>
+                        }
                     </div>
                 </mat-expansion-panel>
                 }

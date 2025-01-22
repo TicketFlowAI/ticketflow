@@ -1,3 +1,4 @@
+<app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.USERS.USER-MANAGEMENT'">
     @if(!userData) {
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-USER')}}</h2>
@@ -6,26 +7,38 @@
     <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-USER')}}</h2>
     }
     <mat-dialog-content>
-        <form [formGroup]="userForm">
+        <form [formGroup]="userForm" autocomplete="off">
             <div class="row">
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('USER-NAME')}}</mat-label>
-                    <input matInput [formControl]="nameFormControl">
+                    <input type="text" autocomplete="off" matInput [formControl]="nameFormControl">
                     <mat-icon matSuffix>person</mat-icon>
+                    @if (nameFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                        }
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('USER-LASTNAME')}}</mat-label>
-                    <input matInput [formControl]="lastnameFormControl">
+                    <input autocomplete="off" matInput [formControl]="lastnameFormControl">
                     <mat-icon matSuffix>person</mat-icon>
+                    @if (lastnameFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                        }
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="" appearance="fill">
                     <mat-label>{{t('USER-EMAIL')}}</mat-label>
-                    <input matInput [formControl]="emailFormControl">
+                    <input autocomplete="off" matInput [formControl]="emailFormControl">
                     <mat-icon matSuffix>mail_outline</mat-icon>
+                    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                        <field-error-email></field-error-email>
+                    }
+                    @if (nameFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                        }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -37,6 +50,9 @@
                         }
                     </mat-select>
                     <mat-icon matSuffix>domain</mat-icon>
+                    @if (companyFormControl.hasError('notZero')) {
+                        <field-error-required-select></field-error-required-select>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -47,15 +63,35 @@
                             <mat-option [value]="role.name">{{role.name}}</mat-option>
                         }
                     </mat-select>
+                    @if (rolesFormControl.hasError('required')) {
+                        <field-error-required></field-error-required>
+                    }
                 </mat-form-field>
             </div>
-            
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>{{t('USER-PASSWORD')}}</mat-label>
+                    <input [formControl]="passwordFormControl" autocomplete="new-password"  matInput [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>{{t('USER-CONFIRM-PASSWORD')}}</mat-label>
+                    <input [formControl]="confirmPasswordFormControl" autocomplete="new-password"  matInput [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+            </div>
         </form>
     </mat-dialog-content>
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" (click)="onSaveClick()"
+                <button type="button" class="btn btn-secondary" [disabled]='userForm.invalid' (click)="onSaveClick()"
                     cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>

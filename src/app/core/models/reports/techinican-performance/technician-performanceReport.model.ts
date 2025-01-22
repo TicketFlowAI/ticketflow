@@ -1,3 +1,4 @@
+import { IReportTechnicianScorePerQuestion, ReportTechnicianScorePerQuestion } from "./fields/report-score-per-question.model";
 import { IReportTechnicianReassignsModel, ReportTechnicianReassignsModel } from "./fields/report-technician-reassigns.model";
 import { IReportTechnicianWeeklyComparisonModel, ReportTechnicianWeeklyComparisonModel } from "./fields/report-technician-weekly-comparison.model";
 
@@ -7,6 +8,8 @@ export interface ITechnicianPerformanceReportModel {
     assignedReassigned: IReportTechnicianReassignsModel;
     currentTickets: number;
     weeklyComparison: IReportTechnicianWeeklyComparisonModel;
+    averageScoreQuestions: number;
+    averageScorePerQuestion: IReportTechnicianScorePerQuestion[];
 }
 
 export class TechnicianPerformanceReportModel implements ITechnicianPerformanceReportModel {
@@ -15,7 +18,9 @@ export class TechnicianPerformanceReportModel implements ITechnicianPerformanceR
         public averageTicketSolveTime: number = 0,
         public assignedReassigned: ReportTechnicianReassignsModel = new ReportTechnicianReassignsModel(),
         public currentTickets: number = 0,
-        public weeklyComparison: ReportTechnicianWeeklyComparisonModel = new ReportTechnicianWeeklyComparisonModel()
+        public weeklyComparison: ReportTechnicianWeeklyComparisonModel = new ReportTechnicianWeeklyComparisonModel(),
+        public averageScoreQuestions: number = 0,
+        public averageScorePerQuestion: ReportTechnicianScorePerQuestion[] = []
     ) {
     }
 }

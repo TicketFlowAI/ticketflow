@@ -25,7 +25,8 @@ import { AllTablesComponent } from './features/settings/recycleBin/all-tables/al
 import { HomeComponent } from './features/home/home/home.component';
 import { ChangePasswordRequestComponent } from './features/auth/change-password-request/change-password-request.component';
 import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
-import { noAuthGuard } from './core/guards/no-auth.guard';
+import { TwoFaSetUpComponent } from './features/auth/two-fa-set-up/two-fa-set-up.component';
+import { TwoFaAuthenticationComponent } from './features/auth/two-fa-authentication/two-fa-authentication.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,15 @@ export const routes: Routes = [
     component: ChangePasswordRequestComponent,
   },
   {
-    path: 'change-password/:token',
+    path: '2fa-setup',
+    component: TwoFaSetUpComponent,
+  },
+  {
+    path: '2fa-authenticate',
+    component: TwoFaAuthenticationComponent,
+  },
+  {
+    path: 'change-password',
     component: ChangePasswordComponent,
   },
   {

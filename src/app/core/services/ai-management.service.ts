@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AiService } from '../api/servicios-mindsoftdev/ai.service';
-import { AiClassifierModel, AiClassifierPerformanceModel, IAiClassifiersApiResponse } from '../models/entities/ai-classifier.model';
+import { AiClassifierModel } from '../models/entities/ai-classifier.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { Observable, map, catchError, of, finalize } from 'rxjs';
 import { MessageService } from '../../shared/services/message.service';
@@ -30,17 +30,19 @@ export class AiManagementService {
       );
     }
 
-    getClassifierPerformance(classfierName: string): Observable<AiClassifierPerformanceModel | null> {
-      this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: false});
+    selectClassifiers(classi1: string, classi2: string): Observable<boolean> {
+      this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
       
-      return this.aiService.getClassifierPerformance(classfierName).pipe(
-        map((response) => {
-          return response.data
+      return this.aiService.selectClassifiers(classi1, classi2).pipe(
+        map(() => {
+          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.SELECT-CLASSI-SUCCESS');
+          this.messageService.addSuccessMessage(transate)
+          return true
         }),
         catchError(() => {
-          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.CLASSIFIER-ERROR');
+          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.SELECT-CLASSI-UNSUCCESS');
           this.messageService.addErrorMessage(transate)
-          return of(null)
+          return of(false)
         }),
         finalize(() => {
           this.spinnerService.hideDialogSpinner();

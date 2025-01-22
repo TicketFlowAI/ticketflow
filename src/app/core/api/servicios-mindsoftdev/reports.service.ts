@@ -8,6 +8,7 @@ import { IReportTechnicianReassingsModelResponse } from '../../models/reports/te
 import { IReportTechnicianWeeklyComparisonModelResponse } from '../../models/reports/techinican-performance/fields/report-technician-weekly-comparison.model';
 import { IReportTicketEscalationsModelResponse } from '../../models/reports/global/fields/report-ticket-escalations.model';
 import { IReportNumberResponse } from '../../models/reports/common-fields/report-number-response.model';
+import { IReportTechnicianScorePerQuestionResponse } from '../../models/reports/techinican-performance/fields/report-score-per-question.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,25 +62,33 @@ export class ReportsService {
     });
   }
 
-  getTicketsSolvedByTechnicianId(userId: number): Observable<IReportNumberResponse> {
+  getGlobalAverageScorePerQuestion(): Observable<IReportTechnicianScorePerQuestionResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<IReportNumberResponse>(`${this.apiReports}/technician/${userId}/tickets-solved`, {
+    return this.http.get<IReportTechnicianScorePerQuestionResponse>(`${this.apiReports}/average-score-per-question`, {
       headers: customHeaders,
       withCredentials: true,
     });
   }
 
-  getAverageTimeToSolvedByTechnicianId(userId: number): Observable<IReportNumberResponse> {
+  getTicketsSolvedByTechnicianId(userId: number, startDate: string, endDate: string): Observable<IReportNumberResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<IReportNumberResponse>(`${this.apiReports}/technician/${userId}/average-time-to-solve`, {
+    return this.http.get<IReportNumberResponse>(`${this.apiReports}/technician/${userId}/tickets-solved?start_date=${startDate}&end_date=${endDate}`, {
       headers: customHeaders,
       withCredentials: true,
     });
   }
 
-  getTTicketsAssignedReassignedByTechnicianId(userId: number): Observable<IReportTechnicianReassingsModelResponse> {
+  getAverageTimeToSolvedByTechnicianId(userId: number, startDate: string, endDate: string): Observable<IReportNumberResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<IReportTechnicianReassingsModelResponse>(`${this.apiReports}/technician/${userId}/tickets-assigned-reassigned`, {
+    return this.http.get<IReportNumberResponse>(`${this.apiReports}/technician/${userId}/average-time-to-solve?start_date=${startDate}&end_date=${endDate}`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
+  getTTicketsAssignedReassignedByTechnicianId(userId: number, startDate: string, endDate: string): Observable<IReportTechnicianReassingsModelResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.get<IReportTechnicianReassingsModelResponse>(`${this.apiReports}/technician/${userId}/tickets-assigned-reassigned?start_date=${startDate}&end_date=${endDate}`, {
       headers: customHeaders,
       withCredentials: true,
     });
@@ -96,6 +105,22 @@ export class ReportsService {
   getWeeklyComparisonByTechnicianId(userId: number): Observable<IReportTechnicianWeeklyComparisonModelResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
     return this.http.get<IReportTechnicianWeeklyComparisonModelResponse>(`${this.apiReports}/technician/${userId}/weekly-comparison`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
+  getAverageScoreSurvey(userId: number): Observable<number> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.get<number>(`${this.apiReports}/technician/${userId}/average-score-per-question`, {
+      headers: customHeaders,
+      withCredentials: true,
+    });
+  }
+
+  getAverageScorePerQuestion(userId: number): Observable<IReportTechnicianScorePerQuestionResponse> {
+    const customHeaders = this.customHeadersService.addAppJson().getHeaders();
+    return this.http.get<IReportTechnicianScorePerQuestionResponse>(`${this.apiReports}/technician/${userId}/average-score`, {
       headers: customHeaders,
       withCredentials: true,
     });

@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { PermissionModel } from '../../../../core/models/entities/permission.model';
+import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spinner/dialog-spinner.component';
+import { FieldErrorRequiredComponent } from '../../../../shared/components/form-validation/field-error-required/field-error-required.component';
 
 @Component({
   selector: 'app-manage-user-role',
@@ -22,7 +24,9 @@ import { PermissionModel } from '../../../../core/models/entities/permission.mod
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DialogSpinnerComponent,
+    FieldErrorRequiredComponent
   ],
   templateUrl: './manage-user-role.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

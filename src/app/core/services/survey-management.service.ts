@@ -5,7 +5,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Observable, map, catchError, of, finalize } from 'rxjs';
 import { MessageService } from '../../shared/services/message.service';
 import { SpinnerService } from '../../shared/services/spinner.service';
-import { SurveyModel } from '../models/entities/survey.model';
+import { SurveyAnswerModel, SurveyModel } from '../models/entities/survey.model';
 import { SurveyQuestionModel } from '../models/entities/survey-question.model';
 
 @Injectable({
@@ -19,11 +19,23 @@ export class SurveyManagementService {
   private readonly spinnerService = inject(SpinnerService)
   private readonly translocoService = inject(TranslocoService)
 
-  getSurveyByTicketId(id: number): Observable<SurveyModel | null> {
+  getSurveyByTicketId(id: number): Observable<SurveyAnswerModel[] | []> {
+    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+
     return this.surveyService.getSurvey(id).pipe(
-      map((survey) => survey.data),
+      map((survey) => {
+        if(survey.data.length == 0) {
+          const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TICKET-SURVEY-NO-SURVEY');
+        this.messageService.addInfoMessage(transate)
+        }
+
+        return survey.data
+      }),
       catchError(() => {
-        return of(null);
+        return of([]);
+      }),
+      finalize(() => {
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
@@ -103,13 +115,15 @@ export class SurveyManagementService {
   }
 
   getActiveSurveyQuestions(): Observable<SurveyQuestionModel[] | []> {
+    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
+
     return this.surveyQuestionService.getSurveyQuestions().pipe(
       map((surveyQuestions) => surveyQuestions.data),
       catchError(() => {
         return of([]);
       }),
       finalize(() => {
-        this.spinnerService.hideGlobalSpinner();
+        this.spinnerService.hideDialogSpinner();
       })
     )
   }
@@ -183,7 +197,7 @@ export class SurveyManagementService {
   }
 
   deleteSurveyQuestion(id: number): Observable<boolean> {
-    this.spinnerService.showDialogSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.surveyQuestionService.deleteSurveyQuestion(id).pipe(
       map(() => {
@@ -197,13 +211,13 @@ export class SurveyManagementService {
         return of(false)
       }),
       finalize(() => {
-        this.spinnerService.hideDialogSpinner();
+        this.spinnerService.hideGlobalSpinner();
       })
     )
   }
 
   restoreSurveyQuestion(id: number): Observable<boolean> {
-    this.spinnerService.showGlobalSpinner({fullscreen: false, size: 100, hasBackdrop: true});
+    this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: true });
 
     return this.surveyQuestionService.restoreSurveyQuestion(id).pipe(
       map(() => {

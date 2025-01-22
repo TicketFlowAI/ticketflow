@@ -1,0 +1,38 @@
+<app-dialog-spinner></app-dialog-spinner>
+<ng-container *transloco="let t; prefix: 'FEATURES.TICKETS.TICKET-SURVEY'">
+    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('TITLE')}}</h2>
+    <mat-dialog-content>
+        @for(answer of surveyAnswers; track answer.question_id) {
+        <div class="bg-dark my-1 p-3 rounded-3">
+            <div class="row text-center justify-content-center">
+                <h3 class="fs-6"> {{answer.question}}</h3>
+            </div>
+            <div class="row text-center justify-content-center">
+                <div [ngClass]="checkSelected(answer.question_id, 1)? 'selected' : ''" class="col-2 fs-4 icon">
+                    <mat-icon >sentiment_very_dissatisfied</mat-icon>
+                </div>
+                <div [ngClass]="checkSelected(answer.question_id, 2)? 'selected' : ''"  class="col-2 fs-4 icon">
+                    <mat-icon>sentiment_dissatisfied</mat-icon>
+                </div>
+                <div [ngClass]="checkSelected(answer.question_id, 3)? 'selected' : ''"  class="col-2 fs-4 icon">
+                    <mat-icon>sentiment_neutral</mat-icon>
+                </div>
+                <div [ngClass]="checkSelected(answer.question_id, 4)? 'selected' : ''" class="col-2 fs-4 icon">
+                    <mat-icon>sentiment_satisfied</mat-icon>
+                </div>
+                <div [ngClass]="checkSelected(answer.question_id, 5)? 'selected' : ''" class="col-2 fs-4 icon">
+                    <mat-icon>sentiment_very_satisfied</mat-icon>
+                </div>
+            </div>
+        </div>
+        }
+    </mat-dialog-content>
+    <mat-dialog-actions class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="onReturnClick()"
+                    cdkFocusInitial>{{t('RETURN')}}</button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</ng-container>
