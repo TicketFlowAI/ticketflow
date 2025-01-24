@@ -52,8 +52,8 @@ To deploy the project, follow these steps:
 
 1. Clone the project:
    ```bash
-   git clone https://github.com/TicketFlowAI/ticketflow-frontend.git
-   cd ticketflow-frontend
+   git clone https://github.com/TicketFlowAI/ticketflow.git
+   cd ticketflow
    ```
 
 2. Install dependencies:
