@@ -45,3 +45,42 @@ The TicketFlowAI framework is open-sourced software licensed under the MIT licen
 ## ⚙️ Node.js Version
 
 We recommend using Node.js version 20 or greater to run this project.
+
+## 📦 Deployment
+
+To deploy the project, follow these steps:
+
+1. Clone the project:
+   ```bash
+   git clone https://github.com/TicketFlowAI/ticketflow-frontend.git
+   cd ticketflow-frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. If you have any outdated packages, we recommend using:
+   ```bash
+   npm audit fix
+   ```
+   **Note:** Do not use `--force` as it may break your installation.
+
+4. For development mode, run:
+   ```bash
+   ng serve
+   ```
+   This will start a dev server and update your changes in real time.
+
+5. For production, build the project:
+   ```bash
+   ng build
+   ```
+   This will create all necessary production-ready files in the `dist/` directory.
+
+6. If running in production, point your server to the `dist/` directory.
+
+## 🔧 Configuring Back-End URL
+
+To set up the route to the back-end deployment, navigate to `/src/environments` and configure the URL in both `environment.ts` and `environment.development.ts` files so that it points to your installation of the back end.
