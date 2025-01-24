@@ -1,4 +1,4 @@
-# 🎟️ Ticketflow
+# 🎟️ TicketflowAI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
 
@@ -40,7 +40,7 @@ If you discover a security vulnerability within TicketFlowAI, please send an e-m
 
 ## 📄 License
 
-The TicketFlowAI framework is open-sourced software licensed under the MIT license. We provide a free license in good faith, but for teams larger than 7 people, we recommend contacting us to set up a demo as a SAAS solution.
+The TicketFlowAI framework is open-sourced software licensed under the MIT license. We provide a free license in good faith, but for teams larger than 7 people, we recommend contacting us at info@ticketflowai.com to set up a demo as a SAAS solution.
 
 ## ⚙️ Node.js Version
 
