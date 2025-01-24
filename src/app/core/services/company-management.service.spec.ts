@@ -197,6 +197,7 @@ describe('CompanyManagementService', () => {
           role: ['Admin'],
           company_name: 'Company A',
           password: 'password123',
+          twoFactorEnabled: 1
         },
         {
           id: 2,
@@ -207,6 +208,7 @@ describe('CompanyManagementService', () => {
           role: ['Technician'],
           company_name: 'Company A',
           password: 'password123',
+          twoFactorEnabled: 1
         },
       ],
     };

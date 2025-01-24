@@ -99,6 +99,7 @@ describe('AuthManagementService', () => {
       company_id: 1,
       company_name: 'Mindsoft',
       password: 'password123',
+      twoFactorEnabled: 1
     };
 
     userManagementServiceSpy.getMyUser.and.returnValue(of(mockUser));
