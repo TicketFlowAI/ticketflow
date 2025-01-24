@@ -2,6 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { DialogManagerService } from './dialog-manager.service';
+import { ManageServiceContractTermComponent } from '../../features/service-contracts/service-contract-term/manage-service-contract-term/manage-service-contract-term.component';
+import { ServiceRequestComponent } from '../../features/service-contracts/service-contract/service-request/service-request.component';
+import { AiManageClassifiersComponent } from '../../features/settings/ai/ai-manage-classifiers/ai-manage-classifiers.component';
+import { EmailParametersComponent } from '../../features/settings/email/email-parameters/email-parameters.component';
+import { SatisfactionSurveyInfoComponent } from '../../features/tickets/survey/satisfaction-survey-info/satisfaction-survey-info.component';
+import { SatisfactionSurveyComponent } from '../../features/tickets/survey/satisfaction-survey/satisfaction-survey.component';
+import { TechnicianHistoryComponent } from '../../features/tickets/ticket/technician-history/technician-history.component';
 
 describe('DialogManagerService', () => {
   let service: DialogManagerService;
@@ -324,4 +331,127 @@ describe('DialogManagerService', () => {
       data: null,
     });
   });
+
+  it('should open the TechnicianHistoryComponent dialog', () => {
+    const mockTicket = { id: 1, title: 'Ticket A' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openTicketTechnicianHistory(mockTicket as any);
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(TechnicianHistoryComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '450px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockTicket,
+    });
+  });
+
+  it('should open the ServiceRequestComponent dialog and return true after closing', (done) => {
+    const mockServiceContractData = { id: 1 };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openServiceContractRequestDialog(mockServiceContractData as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(ServiceRequestComponent, {
+      width: '500px',
+      height: '350px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockServiceContractData,
+    });
+  });
+
+  it('should open the EmailParametersComponent dialog', () => {
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openEmailParametersInfoDialog();
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(EmailParametersComponent, {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '400px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+    });
+  });
+
+  
+  it('should open the AiManageClassifiersComponent dialog', () => {
+    const mockClassifiers = [{ id: 1, name: 'Classifier A' }];
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openAiClaassifierSelection(mockClassifiers as any);
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(AiManageClassifiersComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '325px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockClassifiers,
+    });
+  });
+
+  it('should open the ManageServiceContractTermComponent dialog and return true after closing', (done) => {
+    const mockServiceContractTerm = { id: 1, term: 'Monthly', months: 12 };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openManageServiceContractTermDialog(mockServiceContractTerm as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(ManageServiceContractTermComponent, {
+      width: '500px',
+      height: '310px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockServiceContractTerm,
+    });
+  });
+
+  it('should open the SatisfactionSurveyComponent dialog and return true after closing', (done) => {
+    const mockTicket = { id: 1, title: 'Ticket A' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openTicketSurveyDialog(mockTicket as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(SatisfactionSurveyComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '600px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockTicket,
+    });
+  });
+
+  it('should open the SatisfactionSurveyInfoComponent dialog and return true after closing', (done) => {
+    const mockTicket = { id: 1, title: 'Ticket A' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openTicketSurveyInfoDialog(mockTicket as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(SatisfactionSurveyInfoComponent, {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '600px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockTicket,
+    });
+  });
+  
+  
 });

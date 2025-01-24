@@ -112,10 +112,6 @@ export class GlobalReportComponent {
     Chart.register(...registerables);
   }
 
-  ngOnInit(): void {
-    
-  }
-
   showReport() {
 
     this.loadReportItems()

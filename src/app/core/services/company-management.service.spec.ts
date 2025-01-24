@@ -11,6 +11,7 @@ import { provideTransloco } from '@jsverse/transloco';
 import { isDevMode } from '@angular/core';
 import { TranslocoHttpLoader } from '../../transloco-loader';
 import { HttpResponse } from '@angular/common/http';
+import { IUsersModelResponse } from '../models/entities/user.model';
 
 describe('CompanyManagementService', () => {
   let service: CompanyManagementService;
@@ -22,7 +23,17 @@ describe('CompanyManagementService', () => {
   const mockCompanies = [mockCompany];
 
   beforeEach(() => {
-    const companySpy = jasmine.createSpyObj('CompanyService', ['getCompanies', 'getCompany', 'createCompany', 'updateCompany', 'deleteCompany']);
+    const companySpy = jasmine.createSpyObj('CompanyService', [
+      'getCompanies',
+      'getCompany',
+      'createCompany',
+      'updateCompany',
+      'deleteCompany',
+      'getCompanyUsers',
+      'getDeletedCompanies', // Agregar este método
+      'restoreCompany' // Agregar este método
+    ]);
+    
     const messageSpy = jasmine.createSpyObj('MessageService', ['addSuccessMessage', 'addErrorMessage']);
     const translocoSpy = jasmine.createSpyObj('TranslocoService', ['translateObject']);
 
@@ -172,4 +183,108 @@ describe('CompanyManagementService', () => {
       done();
     });
   });
+
+  it('should get company users successfully', (done) => {
+    const mockUsersResponse: IUsersModelResponse = {
+      success: true,
+      data: [
+        {
+          id: 1,
+          name: 'John Doe',
+          lastname: 'Doe',
+          email: 'john.doe@example.com',
+          company_id: 1,
+          role: ['Admin'],
+          company_name: 'Company A',
+          password: 'password123',
+        },
+        {
+          id: 2,
+          name: 'Jane Smith',
+          lastname: 'Smith',
+          email: 'jane.smith@example.com',
+          company_id: 1,
+          role: ['Technician'],
+          company_name: 'Company A',
+          password: 'password123',
+        },
+      ],
+    };
+  
+    companyServiceMock.getCompanyUsers.and.returnValue(of(mockUsersResponse));
+  
+    service.getCompanyUsers(1).subscribe((users) => {
+      expect(users).toEqual(mockUsersResponse.data);
+      expect(companyServiceMock.getCompanyUsers).toHaveBeenCalledWith(1);
+      done();
+    });
+  });
+  
+  it('should handle error while getting company users', (done) => {
+    companyServiceMock.getCompanyUsers.and.returnValue(throwError(() => new Error('Error fetching company users')));
+  
+    service.getCompanyUsers(1).subscribe((users) => {
+      expect(users).toEqual([]);
+      expect(companyServiceMock.getCompanyUsers).toHaveBeenCalledWith(1);
+      done();
+    });
+  });
+  
+
+  it('should handle error while getting company users', (done) => {
+    companyServiceMock.getCompanyUsers.and.returnValue(throwError(() => new Error('Error fetching company users')));
+
+    service.getCompanyUsers(1).subscribe((users) => {
+      expect(users).toEqual([]);
+      expect(companyServiceMock.getCompanyUsers).toHaveBeenCalledWith(1);
+      done();
+    });
+  });
+
+  it('should get deleted companies successfully', (done) => {
+    companyServiceMock.getDeletedCompanies.and.returnValue(of({ success: true, data: mockCompanies }));
+
+    service.getDeletedCompanies().subscribe((companies) => {
+      expect(companies).toEqual(mockCompanies);
+      expect(companyServiceMock.getDeletedCompanies).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while getting deleted companies', (done) => {
+    companyServiceMock.getDeletedCompanies.and.returnValue(throwError(() => new Error('Error fetching deleted companies')));
+
+    service.getDeletedCompanies().subscribe((companies) => {
+      expect(companies).toEqual([]);
+      expect(companyServiceMock.getDeletedCompanies).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should restore a deleted company successfully', (done) => {
+    companyServiceMock.restoreCompany.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreDeletedCompany(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(companyServiceMock.restoreCompany).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while restoring a deleted company', (done) => {
+    companyServiceMock.restoreCompany.and.returnValue(throwError(() => new Error('Error restoring company')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreDeletedCompany(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(companyServiceMock.restoreCompany).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
 });

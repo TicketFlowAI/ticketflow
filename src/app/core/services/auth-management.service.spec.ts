@@ -203,4 +203,132 @@ describe('AuthManagementService', () => {
 
     expect(authServiceSpy.resetPassword).toHaveBeenCalledWith(resetRequest);
   });
+
+  it('should enable two-factor authentication successfully', () => {
+    authServiceSpy.enableTwoFactorAuth.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+    service.enableTwoFactorAuth().subscribe((response) => {
+      expect(response).toBeTruthy();
+    });
+
+    expect(authServiceSpy.enableTwoFactorAuth).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle error when enabling two-factor authentication', () => {
+    authServiceSpy.enableTwoFactorAuth.and.returnValue(throwError(() => new Error('Error')));
+
+    service.enableTwoFactorAuth().subscribe((response) => {
+      expect(response).toBeNull();
+    });
+
+    expect(authServiceSpy.enableTwoFactorAuth).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should disable two-factor authentication successfully', () => {
+    authServiceSpy.disableTwoFactorAuth.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+    service.disableTwoFactorAuth().subscribe((response) => {
+      expect(response).toBeTruthy();
+    });
+
+    expect(authServiceSpy.disableTwoFactorAuth).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle error when disabling two-factor authentication', () => {
+    authServiceSpy.disableTwoFactorAuth.and.returnValue(throwError(() => new Error('Error')));
+
+    service.disableTwoFactorAuth().subscribe((response) => {
+      expect(response).toBeNull();
+    });
+
+    expect(authServiceSpy.disableTwoFactorAuth).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should get two-factor QR code successfully', () => {
+    const mockQrCode = { svg: 'mock-qr-code' }; 
+    authServiceSpy.getTwoFactorQrCode.and.returnValue(of(mockQrCode));
+  
+    service.getTwoFactorQrCode().subscribe((response) => {
+      expect(response).toBe(mockQrCode);
+    });
+  
+    expect(authServiceSpy.getTwoFactorQrCode).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+  
+
+  it('should handle error when getting two-factor QR code', () => {
+    authServiceSpy.getTwoFactorQrCode.and.returnValue(throwError(() => new Error('Error')));
+
+    service.getTwoFactorQrCode().subscribe((response) => {
+      expect(response).toBeNull();
+    });
+
+    expect(authServiceSpy.getTwoFactorQrCode).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should get recovery codes successfully', () => {
+    const mockRecoveryCodes = ['code1', 'code2'];
+    authServiceSpy.getRecoveryCodes.and.returnValue(of(mockRecoveryCodes));
+
+    service.getRecoveryCodes().subscribe((response) => {
+      expect(response).toEqual(mockRecoveryCodes);
+    });
+
+    expect(authServiceSpy.getRecoveryCodes).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle error when getting recovery codes', () => {
+    authServiceSpy.getRecoveryCodes.and.returnValue(throwError(() => new Error('Error')));
+
+    service.getRecoveryCodes().subscribe((response) => {
+      expect(response).toEqual([]);
+    });
+
+    expect(authServiceSpy.getRecoveryCodes).toHaveBeenCalled();
+    expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
+  });
+
+  it('should confirm two-factor authentication successfully', () => {
+    authServiceSpy.confirmTwoFactorAuth.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+    service.confirmTwoFactorAuth('123456');
+
+    expect(authServiceSpy.confirmTwoFactorAuth).toHaveBeenCalledWith('123456');
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle error when confirming two-factor authentication', () => {
+    authServiceSpy.confirmTwoFactorAuth.and.returnValue(throwError(() => new Error('Error')));
+
+    service.confirmTwoFactorAuth('123456');
+
+    expect(authServiceSpy.confirmTwoFactorAuth).toHaveBeenCalledWith('123456');
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle two-factor challenge successfully', () => {
+    authServiceSpy.challengeTwoFactor.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+    service.twoFactorChallenge('123456');
+
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith('123456');
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+  });
+
+  it('should handle error when two-factor challenge fails', () => {
+    authServiceSpy.challengeTwoFactor.and.returnValue(throwError(() => new Error('Error')));
+
+    service.twoFactorChallenge('123456');
+
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith('123456');
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+  });
+
 });

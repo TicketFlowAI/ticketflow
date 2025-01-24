@@ -28,7 +28,14 @@ describe('UserManagementService', () => {
       'createUser',
       'updateUser',
       'deleteUser',
+      'disableToFactor', // Para reset2FA
+      'restoreUser', // Para restoreDeletedUser
+      'getUserRoles', // Para getAllUserRoles
+      'getPermissions', // Para getAllPermissions
+      'getUserRole', // Para getOneUserRole
+      'updateUserRole', // Para editUserRole
     ]);
+    
     const messageSpy = jasmine.createSpyObj('MessageService', ['addSuccessMessage', 'addErrorMessage']);
     const translocoSpy = jasmine.createSpyObj('TranslocoService', ['translateObject']);
 
@@ -220,4 +227,174 @@ describe('UserManagementService', () => {
       done();
     });
   });
+
+    // reset2FA
+    it('should reset 2FA successfully', (done) => {
+      userServiceMock.disableToFactor.and.returnValue(of(new HttpResponse({ status: 200 })));
+  
+      service.reset2FA(1).subscribe((result) => {
+        expect(result).toBeTrue();
+        expect(userServiceMock.disableToFactor).toHaveBeenCalledWith(1);
+        done();
+      });
+    });
+  
+    it('should handle error while resetting 2FA', (done) => {
+      userServiceMock.disableToFactor.and.returnValue(throwError(() => new Error('Error resetting 2FA')));
+  
+      service.reset2FA(1).subscribe((result) => {
+        expect(result).toBeFalse();
+        expect(userServiceMock.disableToFactor).toHaveBeenCalledWith(1);
+        done();
+      });
+    });
+  
+    // restoreDeletedUser
+    it('should restore a deleted user successfully', (done) => {
+      userServiceMock.restoreUser.and.returnValue(of(new HttpResponse({ status: 200 })));
+  
+      service.restoreDeletedUser(1).subscribe((result) => {
+        expect(result).toBeTrue();
+        expect(userServiceMock.restoreUser).toHaveBeenCalledWith(1);
+        done();
+      });
+    });
+  
+    it('should handle error while restoring a deleted user', (done) => {
+      userServiceMock.restoreUser.and.returnValue(throwError(() => new Error('Error restoring user')));
+  
+      service.restoreDeletedUser(1).subscribe((result) => {
+        expect(result).toBeFalse();
+        expect(userServiceMock.restoreUser).toHaveBeenCalledWith(1);
+        done();
+      });
+    });
+  
+    // Pruebas faltantes utilizando los mocks existentes
+
+it('should reset 2FA successfully', (done) => {
+  userServiceMock.disableToFactor.and.returnValue(of(new HttpResponse({ status: 204 })));
+
+  service.reset2FA(1).subscribe((result) => {
+    expect(result).toBeTrue();
+    expect(userServiceMock.disableToFactor).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should handle error while resetting 2FA', (done) => {
+  userServiceMock.disableToFactor.and.returnValue(throwError(() => new Error('Error resetting 2FA')));
+
+  service.reset2FA(1).subscribe((result) => {
+    expect(result).toBeFalse();
+    expect(userServiceMock.disableToFactor).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should restore a deleted user successfully', (done) => {
+  userServiceMock.restoreUser.and.returnValue(of(new HttpResponse({ status: 204 })));
+
+  service.restoreDeletedUser(1).subscribe((result) => {
+    expect(result).toBeTrue();
+    expect(userServiceMock.restoreUser).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should handle error while restoring a deleted user', (done) => {
+  userServiceMock.restoreUser.and.returnValue(throwError(() => new Error('Error restoring user')));
+
+  service.restoreDeletedUser(1).subscribe((result) => {
+    expect(result).toBeFalse();
+    expect(userServiceMock.restoreUser).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should get all user roles successfully', (done) => {
+  const mockRoles = [{ id: 1, name: 'Admin' }];
+  userServiceMock.getUserRoles.and.returnValue(of({ success: true, data: mockRoles }));
+
+  service.getAllUserRoles().subscribe((roles) => {
+    expect(roles).toEqual(mockRoles);
+    expect(userServiceMock.getUserRoles).toHaveBeenCalled();
+    done();
+  });
+});
+
+it('should handle error while getting all user roles', (done) => {
+  userServiceMock.getUserRoles.and.returnValue(throwError(() => new Error('Error fetching user roles')));
+
+  service.getAllUserRoles().subscribe((roles) => {
+    expect(roles).toEqual([]);
+    expect(userServiceMock.getUserRoles).toHaveBeenCalled();
+    done();
+  });
+});
+
+it('should get all permissions successfully', (done) => {
+  const mockPermissions = [{ id: 1, name: 'Read' }];
+  userServiceMock.getPermissions.and.returnValue(of({ success: true, data: mockPermissions }));
+
+  service.getAllPermissions().subscribe((permissions) => {
+    expect(permissions).toEqual(mockPermissions);
+    expect(userServiceMock.getPermissions).toHaveBeenCalled();
+    done();
+  });
+});
+
+it('should handle error while getting all permissions', (done) => {
+  userServiceMock.getPermissions.and.returnValue(throwError(() => new Error('Error fetching permissions')));
+
+  service.getAllPermissions().subscribe((permissions) => {
+    expect(permissions).toEqual([]);
+    expect(userServiceMock.getPermissions).toHaveBeenCalled();
+    done();
+  });
+});
+
+it('should get one user role successfully', (done) => {
+  const mockRole = { id: 1, name: 'Admin' };
+  userServiceMock.getUserRole.and.returnValue(of({ success: true, data: mockRole }));
+
+  service.getOneUserRole(1).subscribe((role) => {
+    expect(role).toEqual(mockRole);
+    expect(userServiceMock.getUserRole).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should handle error while getting one user role', (done) => {
+  userServiceMock.getUserRole.and.returnValue(throwError(() => new Error('Error fetching user role')));
+
+  service.getOneUserRole(1).subscribe((role) => {
+    expect(role).toBeNull();
+    expect(userServiceMock.getUserRole).toHaveBeenCalledWith(1);
+    done();
+  });
+});
+
+it('should edit a user role successfully', (done) => {
+  const mockRole = { id: 1, name: 'Admin' };
+  userServiceMock.updateUserRole.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+  service.editUserRole(mockRole).subscribe((result) => {
+    expect(result).toBeTrue();
+    expect(userServiceMock.updateUserRole).toHaveBeenCalledWith(mockRole);
+    done();
+  });
+});
+
+it('should handle error while editing a user role', (done) => {
+  const mockRole = { id: 1, name: 'Admin' };
+  userServiceMock.updateUserRole.and.returnValue(throwError(() => new Error('Error editing user role')));
+
+  service.editUserRole(mockRole).subscribe((result) => {
+    expect(result).toBeFalse();
+    expect(userServiceMock.updateUserRole).toHaveBeenCalledWith(mockRole);
+    done();
+  });
+});
+
 });

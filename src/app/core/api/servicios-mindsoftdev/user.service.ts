@@ -94,6 +94,7 @@ export class UserService {
     return this.http.put<HttpResponse<any>>(`${this.apiUsers}/${id}/restore`, null, {
       headers: customHeaders,
       withCredentials: true,
+      observe: 'response'
     });
   }
 }
