@@ -87,11 +87,12 @@ describe('AiService', () => {
   it('should select classifiers', () => {
     const mockClassiPrio = 'arn:aws:mock:priority';
     const mockClassiPrioHuma = 'arn:aws:mock:human';
-
+  
     service.selectClassifiers(mockClassiPrio, mockClassiPrioHuma).subscribe((response) => {
+      // Verifica que el `status` sea 200
       expect(response.status).toBe(200);
     });
-
+  
     const req = httpTestingController.expectOne(
       `${environment.apiEndpoint}/api/classifiers/update-classifiers`
     );
@@ -101,7 +102,9 @@ describe('AiService', () => {
       priority_classifier_arn: mockClassiPrio,
       human_intervention_classifier_arn: mockClassiPrioHuma,
     });
-
+  
+    // Simula la respuesta de `HttpResponse` con `status: 200`
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+  
 });

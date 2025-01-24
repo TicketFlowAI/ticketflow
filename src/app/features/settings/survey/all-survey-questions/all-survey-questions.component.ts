@@ -25,7 +25,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatExpansionModule
   ],
   templateUrl: './all-survey-questions.component.html',
-  styleUrl: './all-survey-questions.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllSurveyQuestionsComponent {

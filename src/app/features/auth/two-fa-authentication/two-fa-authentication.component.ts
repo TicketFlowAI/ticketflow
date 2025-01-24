@@ -23,7 +23,6 @@ import { AuthManagementService } from '../../../core/services/auth-management.se
     FieldErrorRequiredComponent,
   ],
   templateUrl: './two-fa-authentication.component.html',
-  styleUrl: './two-fa-authentication.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TwoFaAuthenticationComponent {

@@ -7,14 +7,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { FieldErrorRequiredSelectComponent } from '../../../../shared/components/form-validation/field-error-required-select/field-error-required-select.component';
 import { forkJoin, catchError, of } from 'rxjs';
-import { ServiceContractDialogData } from '../../../../core/models/dialogs/service-contact-dialog-data.model';
-import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
 import { ServiceModel } from '../../../../core/models/entities/service.model';
 import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
 import { ServiceManagementService } from '../../../../core/services/service-management.service';
 import { notZeroValidator } from '../../../../shared/validators/custom-validators';
 import { ServiceRequest } from '../../../../core/models/requests/service.request';
-import { FieldErrorRequiredComponent } from "../../../../shared/components/form-validation/field-error-required/field-error-required.component";
 import { MatInputModule } from '@angular/material/input';
 import { ServiceContractTermModel } from '../../../../core/models/entities/service-contract-term.model';
 import { ServiceContractRequest } from '../../../../core/models/dialogs/service-contract-request-model';
@@ -35,11 +32,9 @@ import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spi
     ReactiveFormsModule,
     MatSelectModule,
     FieldErrorRequiredSelectComponent,
-    FieldErrorRequiredComponent,
     DialogSpinnerComponent
   ],
   templateUrl: './service-request.component.html',
-  styleUrl: './service-request.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServiceRequestComponent {

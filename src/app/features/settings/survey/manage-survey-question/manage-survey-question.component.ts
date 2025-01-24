@@ -34,7 +34,6 @@ import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spi
     DialogSpinnerComponent
   ],
   templateUrl: './manage-survey-question.component.html',
-  styleUrl: './manage-survey-question.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageSurveyQuestionComponent {

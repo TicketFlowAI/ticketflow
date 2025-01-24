@@ -26,7 +26,6 @@ import { GlobalSpinnerComponent } from '../../../shared/components/global-spinne
     GlobalSpinnerComponent
   ],
   templateUrl: './two-fa-set-up.component.html',
-  styleUrl: './two-fa-set-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TwoFaSetUpComponent {

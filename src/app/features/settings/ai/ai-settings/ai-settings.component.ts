@@ -22,7 +22,6 @@ import { DialogManagerService } from '../../../../core/services/dialog-manager.s
     MatExpansionModule
   ],
   templateUrl: './ai-settings.component.html',
-  styleUrl: './ai-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AiSettingsComponent {

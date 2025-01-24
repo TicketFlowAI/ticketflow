@@ -110,9 +110,9 @@ export class ReportsService {
     });
   }
 
-  getAverageScoreSurvey(userId: number): Observable<number> {
+  getAverageScoreSurvey(userId: number): Observable<IReportNumberResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    return this.http.get<number>(`${this.apiReports}/technician/${userId}/average-score-per-question`, {
+    return this.http.get<IReportNumberResponse>(`${this.apiReports}/technician/${userId}/average-score-per-question`, {
       headers: customHeaders,
       withCredentials: true,
     });

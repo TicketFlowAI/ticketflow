@@ -12,7 +12,6 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
     MatDialogActions,
   ],
   templateUrl: './email-parameters.component.html',
-  styleUrl: './email-parameters.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmailParametersComponent {

@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { TokenService } from './token.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -13,8 +12,8 @@ describe('TokenService', () => {
     TestBed.configureTestingModule({
       providers: [
         TokenService,
-        { provide: CookieService, useValue: spy }
-      ]
+        { provide: CookieService, useValue: spy },
+      ],
     });
 
     service = TestBed.inject(TokenService);
@@ -45,25 +44,34 @@ describe('TokenService', () => {
     cookieServiceSpy.get.and.returnValue('token');
 
     const result = service.tokenExists();
-    expect(result).toBeTrue;
+    expect(result).toBeTrue();
   });
 
   it('should return false if no token exists', () => {
     cookieServiceSpy.get.and.returnValue('');
 
     const result = service.tokenExists();
-    expect(result).toBeTrue;
+    expect(result).toBeFalse();
   });
 
-  it('should clearall the token', () => {
+  it('should clear the token', () => {
     service.clearToken();
     expect(cookieServiceSpy.delete).toHaveBeenCalledWith('XSRF-TOKEN');
-
   });
 
   it('should clear all data related to the token', () => {
+    // Simula cookies existentes
+    spyOnProperty(document, 'cookie', 'get').and.returnValue(
+      'XSRF-TOKEN=mock-token; mindsoft_ticketflow_session=mock-session; theme=dark'
+    );
+
     service.clearAll();
-    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('XSRF-TOKEN');
-    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('mindsoft_ticketflow_session');
+
+    // Verifica que las cookies esperadas fueron eliminadas
+    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('XSRF-TOKEN', '/');
+    expect(cookieServiceSpy.delete).toHaveBeenCalledWith('mindsoft_ticketflow_session', '/');
+
+    // Verifica que la cookie excluida no fue eliminada
+    expect(cookieServiceSpy.delete).not.toHaveBeenCalledWith('theme', '/');
   });
 });

@@ -51,7 +51,11 @@ describe('TicketManagementService', () => {
       'createTicket',
       'updateTicket',
       'deleteTicket',
-      'restoreTicket'
+      'restoreTicket',
+      'closeTicket',
+      'reopenTicket',
+      'reassignTicket',
+      'needHumanInteraction'
     ]);
     const ticketMessageSpy = jasmine.createSpyObj('TicketMessageService', [
       'getTicketMessages',
@@ -213,59 +217,58 @@ describe('TicketManagementService', () => {
     });
   });
 
-    // Close Ticket
-    it('should close a ticket successfully', (done) => {
-      ticketServiceMock.closeTicket.and.returnValue(of(new HttpResponse({ status: 200 })));
-      translocoServiceMock.translateObject.and.returnValue([]);
+  it('should close a ticket successfully', (done) => {
+    ticketServiceMock.closeTicket.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
   
-      service.closeTicket(1).subscribe((result) => {
-        expect(result).toBeTrue();
-        expect(ticketServiceMock.closeTicket).toHaveBeenCalledWith(1);
-        expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-        expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
-        done();
-      });
+    service.closeTicket(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(ticketServiceMock.closeTicket).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
     });
-  
-    it('should handle error while closing a ticket', (done) => {
-      ticketServiceMock.closeTicket.and.returnValue(throwError(() => new Error('Error closing ticket')));
-      translocoServiceMock.translateObject.and.returnValue([]);
-  
-      service.closeTicket(1).subscribe((result) => {
-        expect(result).toBeFalse();
-        expect(ticketServiceMock.closeTicket).toHaveBeenCalledWith(1);
-        expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-        expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
-        done();
-      });
+  });
+
+  it('should handle error while closing a ticket', (done) => {
+    ticketServiceMock.closeTicket.and.returnValue(throwError(() => new Error('Error closing ticket')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.closeTicket(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(ticketServiceMock.closeTicket).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
     });
-  
-    // Open Ticket
-    it('should open a ticket successfully', (done) => {
-      ticketServiceMock.reopenTicket.and.returnValue(of(new HttpResponse({ status: 200 })));
-      translocoServiceMock.translateObject.and.returnValue([]);
-  
-      service.openTicket(1).subscribe((result) => {
-        expect(result).toBeTrue();
-        expect(ticketServiceMock.reopenTicket).toHaveBeenCalledWith(1);
-        expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-        expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
-        done();
-      });
+  });
+
+  // Open Ticket
+  it('should open a ticket successfully', (done) => {
+    ticketServiceMock.reopenTicket.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.openTicket(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(ticketServiceMock.reopenTicket).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
     });
-  
-    it('should handle error while opening a ticket', (done) => {
-      ticketServiceMock.reopenTicket.and.returnValue(throwError(() => new Error('Error opening ticket')));
-      translocoServiceMock.translateObject.and.returnValue([]);
-  
-      service.openTicket(1).subscribe((result) => {
-        expect(result).toBeFalse();
-        expect(ticketServiceMock.reopenTicket).toHaveBeenCalledWith(1);
-        expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-        expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
-        done();
-      });
+  });
+
+  it('should handle error while opening a ticket', (done) => {
+    ticketServiceMock.reopenTicket.and.returnValue(throwError(() => new Error('Error opening ticket')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.openTicket(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(ticketServiceMock.reopenTicket).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
     });
+  });
 
   it('should restore a ticket successfully', (done) => {
     ticketServiceMock.restoreTicket.and.returnValue(of(new HttpResponse({ status: 200 })));

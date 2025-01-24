@@ -35,7 +35,8 @@ export class AiService {
         human_intervention_classifier_arn: classiPrioHuma
       }, {
       headers: customHeaders,
-      withCredentials: true
+      withCredentials: true,
+      observe: 'response',
     });
   }
 }

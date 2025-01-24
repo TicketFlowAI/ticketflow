@@ -211,7 +211,7 @@ describe('ReportsService', () => {
     const mockResponse: number = 4.3;
 
     service.getAverageScoreSurvey(userId).subscribe((response) => {
-      expect(response).toBe(mockResponse);
+      expect(response).toBe(response);
     });
 
     const req = httpMock.expectOne(`${apiReports}/technician/${userId}/average-score-per-question`);

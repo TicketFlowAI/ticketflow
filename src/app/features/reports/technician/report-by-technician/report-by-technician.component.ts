@@ -30,7 +30,6 @@ import { RouterLink } from '@angular/router';
     GlobalSpinnerComponent
   ],
   templateUrl: './report-by-technician.component.html',
-  styleUrl: './report-by-technician.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportByTechnicianComponent {

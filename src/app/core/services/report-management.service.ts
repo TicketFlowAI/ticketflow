@@ -114,7 +114,7 @@ export class ReportManagementService {
 
   getTechnicianSurveysAverageScore(id: number): Observable<number> {
     return this.reportService.getAverageScoreSurvey(id).pipe(
-      map((response) => response),
+      map((response) => response.data),
       catchError(() => {
         return of(0);
       })

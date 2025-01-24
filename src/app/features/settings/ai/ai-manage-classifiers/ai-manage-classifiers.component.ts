@@ -34,7 +34,6 @@ import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spi
     DialogSpinnerComponent
   ],
   templateUrl: './ai-manage-classifiers.component.html',
-  styleUrl: './ai-manage-classifiers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AiManageClassifiersComponent {

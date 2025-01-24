@@ -45,7 +45,6 @@ import { SurveyManagementService } from '../../../../core/services/survey-manage
     MatIconModule
   ],
   templateUrl: './all-tables.component.html',
-  styleUrl: './all-tables.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllTablesComponent {

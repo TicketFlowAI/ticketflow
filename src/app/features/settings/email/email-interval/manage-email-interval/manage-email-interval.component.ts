@@ -35,7 +35,6 @@ import { FieldErrorRequiredSelectComponent } from "../../../../../shared/compone
     FieldErrorRequiredSelectComponent
 ],
   templateUrl: './manage-email-interval.component.html',
-  styleUrl: './manage-email-interval.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageEmailIntervalComponent {
