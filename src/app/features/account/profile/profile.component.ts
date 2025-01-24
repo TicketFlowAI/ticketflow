@@ -71,6 +71,7 @@ export class ProfileComponent {
       return
     }
 
+    const twoFactor = this.currentUser?.twoFactorEnabled
     const userEdit : UserModel = {
       id: this.currentUser.id,
       name: formValues.username?? '',
@@ -80,6 +81,7 @@ export class ProfileComponent {
       company_name: this.currentUser.company_name,
       role: this.currentUser.role,
       password: formValues.password?? '',
+      twoFactorEnabled: twoFactor
     }
 
     this.userManagementService.editUser(userEdit).subscribe({

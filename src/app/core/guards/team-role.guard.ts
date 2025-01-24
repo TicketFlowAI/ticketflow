@@ -33,6 +33,7 @@ export const teamRoleGuard: CanActivateFn = () => {
         
         if (!hasAccess) router.navigate(['/']);
 
+
         resolve(hasAccess);
       }
     }, intervalSeconds * 1000);

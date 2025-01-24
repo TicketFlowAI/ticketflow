@@ -151,9 +151,9 @@ export class ManageTicketComponent {
   onSaveClick(): void {
     const formValue = this.ticketForm.value
 
-    const priority = this.editAiSettings? (this.data.ticket? formValue.priority : '') : '';
-    const humanInteraction = this.editAiSettings? (this.data.ticket? (formValue.humanInteraction? 1 : 0) : '') : '';
-    const complexity = this.editAiSettings? (this.data.ticket? formValue.complexity : '') : '';
+    const priority = this.editAiSettings? (this.data.ticket? formValue.priority : '') : (this.data.ticket?.priority?? '');
+    const humanInteraction = this.editAiSettings? (this.data.ticket? (formValue.humanInteraction? 1 : 0) : '') : (this.data.ticket?.needsHumanInteraction?? '');
+    const complexity = this.editAiSettings? (this.data.ticket? formValue.complexity : '') : (this.data.ticket?.complexity?? '');
     let ticket = new TicketModel(
       0,
       formValue.title,

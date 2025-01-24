@@ -11,7 +11,6 @@ import { MarkdownModule } from 'ngx-markdown';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent, CustomToastComponent, MarkdownModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   private readonly authManagementService = inject(AuthManagementService)

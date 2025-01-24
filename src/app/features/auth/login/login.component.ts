@@ -81,16 +81,18 @@ export class LoginComponent {
       this.authManagementService.login(loginRequest).subscribe({
         next: (response) => {
           if (response) {
-            //Comentar esto para quitar el 2FA
+            //Comentar esto para quitar el 2F
+            /*
             this.userManagementService.getMyUser().subscribe({
               next: (user) => {
                 this.userManagementService.currentUser.set(user);
                 this.router.navigateByUrl('/');
               }
             });
+            */
 
             //Descomentar Todo esto
-            /*
+            
             if (response.two_factor) {
               this.router.navigateByUrl('/2fa-authenticate');
             } else {
@@ -108,7 +110,7 @@ export class LoginComponent {
                 }
               });
             }
-            */
+            
             this.dialogRef.close();
 
           }

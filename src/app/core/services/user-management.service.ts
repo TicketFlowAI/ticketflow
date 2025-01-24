@@ -33,7 +33,7 @@ export class UserManagementService {
 
   isUserTechnician() {
     if(this.currentUser() != null)
-      return this.currentUser()?.role === UserRoles.Technician;
+      return this.currentUser()?.role === UserRoles.Technician || this.currentUser()?.role === UserRoles.Three || this.currentUser()?.role === UserRoles.Two || this.currentUser()?.role === UserRoles.One;
     else
       return false;
   }

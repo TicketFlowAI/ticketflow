@@ -33,13 +33,22 @@ export class AuthManagementService {
     if (this.tokenService.tokenExists()) {
       this.userManagementService.getMyUser().subscribe({
         next: (user) => {
-          if (user) {
+          const currentRoute = this.router.url;
+          const twoFaRoutes = ['/2fa-setup', '/2fa-authenticate'];
+  
+          if (twoFaRoutes.includes(currentRoute)) {
+            // Si estamos en las rutas de 2FA, setear currentUser a null
+            this.userManagementService.currentUser.set(null);
+            console.log(`Usuario seteado a null en la ruta: ${currentRoute}`);
+          } else if (user) {
+            // Si no estamos en rutas de 2FA y el usuario existe, setearlo normalmente
             this.userManagementService.currentUser.set(user);
-            this.spinnerService.hideDialogSpinner();
           } else {
             console.log('No user found');
             this.tokenService.clearAll();
           }
+  
+          this.spinnerService.hideDialogSpinner();
         },
       });
     }

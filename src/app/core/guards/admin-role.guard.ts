@@ -30,7 +30,7 @@ export const adminRoleGuard: CanActivateFn = () => {
       if (currentUser || (intervalAttempts >= intervalMaxAttempts)) {
         clearInterval(interval);
         hasAccess = userManagementService.isUserAdmin();
-        
+      
         if (!hasAccess) router.navigate(['/']);
 
         resolve(hasAccess);
