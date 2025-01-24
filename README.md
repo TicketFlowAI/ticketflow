@@ -29,3 +29,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## 📚 Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## 🗂️ Back End
+
+The back-end for this implementation is available in a different repository: [TicketFlowAI Back End](https://github.com/TicketFlowAI/serviciosTicketFlow). We recommend using both of them together but if you wish to build your own front end you may do so. We provide Swagger documentation at the route `/api/documentation` of your installation.
+
+## 🔒 Security Vulnerabilities
+
+If you discover a security vulnerability within TicketFlowAI, please send an e-mail to the team via vulnerabilities@ticketflowai.com. All security vulnerabilities will be promptly addressed.
+
+## 📄 License
+
+The TicketFlowAI framework is open-sourced software licensed under the MIT license. We provide a free license in good faith, but for teams larger than 7 people, we recommend contacting us to set up a demo as a SAAS solution.
+
+## ⚙️ Node.js Version
+
+We recommend using Node.js version 20 or greater to run this project.
