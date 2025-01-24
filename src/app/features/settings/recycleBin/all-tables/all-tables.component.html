@@ -108,7 +108,7 @@
                                 <p>{{ service.description }}</p>
                             </div>
                             <div class="col-md-6 justify-content-end">
-                                <button class="btn btn-secondary" (click)="restore(service.id, 'service')">{{ t('RESTORE') }}</button>
+                                <button class="btn btn-secondary" (click)="restore(service.id, 'services')">{{ t('RESTORE') }}</button>
                             </div>
                         </div>
                         <div *ngIf="servicesFiltered.length === 0" class="row">
@@ -174,7 +174,7 @@
                                 <p>{{ tax.description }} ({{tax.value}})</p>
                             </div>
                             <div class="col-md-6 justify-content-end">
-                                <button class="btn btn-secondary" (click)="restore(tax.id, 'serviceTax')">{{ t('RESTORE') }}</button>
+                                <button class="btn btn-secondary" (click)="restore(tax.id, 'serviceTaxes')">{{ t('RESTORE') }}</button>
                             </div>
                         </div>
                         <div *ngIf="servicetaxesFiltered.length === 0" class="row">

@@ -86,10 +86,12 @@ export class AllCompaniesComponent implements OnInit {
     
     this.filteredCompanies = this.companies.filter(company =>
       company.name.toLowerCase().includes(filterText) ||
+      company.contactEmail.toLowerCase().includes(filterText) ||
       company.address.toLowerCase().includes(filterText) ||
       company.idNumber.toLowerCase().includes(filterText) ||
       company.phone.toLowerCase().includes(filterText)
     );
+    
     this.pageIndex = 0;
     this.updatePagedCompanies();
   }

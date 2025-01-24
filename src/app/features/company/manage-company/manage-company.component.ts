@@ -79,7 +79,7 @@ export class ManageCompanyComponent {
       this.cityFormControl.setValue(this.company.city)
     }
 
-    if(!this.userManagementService.isUserAdmin())
+    if(!this.userManagementService.isUserAdmin() && this.companyData)
     {
       this.nameFormControl.disable()
       this.dniFormControl.disable()
@@ -98,10 +98,12 @@ export class ManageCompanyComponent {
       formValue.state,
       formValue.city
     )
-
+ console.log(company)
     if (this.companyData) {
       company.id = this.companyData.id
-      
+      company.name = this.companyData.name
+      company.idNumber = this.companyData.idNumber
+
       this.companyManagementService.editCompany(company)
       .subscribe( () => { this.dialogRef.close(true) })
     }

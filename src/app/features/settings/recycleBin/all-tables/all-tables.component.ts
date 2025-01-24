@@ -146,7 +146,7 @@ export class AllTablesComponent {
         );
         break;
 
-      case 'servicetaxes':
+      case 'serviceTaxes':
         this.servicetaxesFiltered = this.servicetaxes.filter(tax =>
           tax.description.toLowerCase().includes(filterText) ||
           tax.value.toString().toLowerCase().includes(filterText)
