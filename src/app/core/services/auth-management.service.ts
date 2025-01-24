@@ -223,17 +223,17 @@ export class AuthManagementService {
 
     this.authService.confirmTwoFactorAuth(code).pipe(
       map(() => {
-        const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.SUCCESS');
+        const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.SUCCESS');
         this.messageService.addSuccessMessage(successMessage);
         this.authenticate();
         this.router.navigateByUrl('/')
       }),
       catchError((error) => {
         if (error.status === HttpStatusCode.UnprocessableEntity) {
-          const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.INVALID-CODE');
+          const errorMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.INVALID-CODE');
           this.messageService.addWarningMessage(errorMessage);
         } else {
-          const generalError = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-CONFIRM.ERROR');
+          const generalError = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.ERROR');
           this.messageService.addErrorMessage(generalError);
         }
         return of(null);

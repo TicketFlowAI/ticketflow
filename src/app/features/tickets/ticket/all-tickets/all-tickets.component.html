@@ -194,16 +194,19 @@
                         </div>
                         }
 
-                        @if(showClientElement() && ticket.status != 0 && ticket.needsHumanInteraction != 1){
+                        @if(showClientElement() && ticket.status != 0){
                         <div class="row justify-content-end">
-                            <div class="col-md-3 mt-3 mt-md-0 ">
-                                <div class="row px-md-2">
-                                    <button (click)="needHumanInteraction(ticket.id)" type="button"
-                                        class="btn btn-secondary" [matTooltip]="t('NO-AI-TOOLTIP')">
-                                        {{t('NO-AI')}}
-                                    </button>
+                            @if(ticket.needsHumanInteraction != 1) {
+                                <div class="col-md-3 mt-3 mt-md-0 ">
+                                    <div class="row px-md-2">
+                                        <button (click)="needHumanInteraction(ticket.id)" type="button"
+                                            class="btn btn-secondary" [matTooltip]="t('NO-AI-TOOLTIP')">
+                                            {{t('NO-AI')}}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            
                             @if(ticket.status == 1) {
                                 <div class="col-md-3 mt-3 mt-md-0 ">
                                     <div class="row px-md-2">

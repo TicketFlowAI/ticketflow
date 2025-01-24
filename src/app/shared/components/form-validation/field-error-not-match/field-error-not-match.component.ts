@@ -6,7 +6,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
   selector: 'field-error-not-match',
   standalone: true,
   imports: [
-    TranslocoDirective
+    TranslocoDirective,
     MatError
   ],
   templateUrl: './field-error-not-match.component.html',

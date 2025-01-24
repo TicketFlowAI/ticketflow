@@ -16,7 +16,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
     MatDialogActions,
   ],
   templateUrl: './user-role-info.component.html',
-  styleUrl: './user-role-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserRoleInfoComponent {

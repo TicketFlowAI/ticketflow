@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { of } from 'rxjs';
 
 describe('ManageServiceContractComponent', () => {
   let component: ManageServiceContractComponent;
@@ -35,7 +36,13 @@ describe('ManageServiceContractComponent', () => {
           },
           loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock de MatDialogRef
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: jasmine.createSpy('close'),
+            backdropClick: jasmine.createSpy('backdropClick').and.returnValue(of()), // Mock de backdropClick
+          },
+        },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
@@ -45,7 +52,7 @@ describe('ManageServiceContractComponent', () => {
         }, // Mock de MAT_DIALOG_DATA
       ],
     }).compileComponents();
-  
+
     fixture = TestBed.createComponent(ManageServiceContractComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

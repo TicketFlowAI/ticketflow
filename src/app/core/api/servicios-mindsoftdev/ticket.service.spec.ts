@@ -15,13 +15,13 @@ describe('TicketService', () => {
         1,
         'Ticket A',
         1,
-        true,
+        1, // true -> 1
         3,
         1,
         1,
         1,
-        true,
-        false,
+        1, // true -> 1
+        0, // false -> 0
         'John',
         'Doe',
         1,
@@ -33,13 +33,13 @@ describe('TicketService', () => {
         2,
         'Ticket B',
         2,
-        false,
+        0, // false -> 0
         2,
         2,
         2,
         2,
-        false,
-        true,
+        0, // false -> 0
+        1, // true -> 1
         'Jane',
         'Smith',
         2,
@@ -56,13 +56,13 @@ describe('TicketService', () => {
       1,
       'Ticket A',
       1,
-      true,
+      1, // true -> 1
       3,
       1,
       1,
       1,
-      true,
-      false,
+      1, // true -> 1
+      0, // false -> 0
       'John',
       'Doe',
       1,
@@ -82,7 +82,7 @@ describe('TicketService', () => {
   });
 
   afterEach(() => {
-    httpTestingController.verify(); // Verifica que no haya solicitudes pendientes
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -116,13 +116,13 @@ describe('TicketService', () => {
       0,
       'New Ticket',
       3,
-      true,
+      1, // true -> 1
       2,
       1,
       1,
       1,
-      false,
-      false,
+      0, // false -> 0
+      0, // false -> 0
       'Alice',
       'Johnson',
       1,
@@ -132,14 +132,14 @@ describe('TicketService', () => {
     );
 
     service.createTicket(newTicket).subscribe((response) => {
-      expect(response.status).toBe(201);
+      expect(response.success).toBe(true);
     });
 
     const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(newTicket);
 
-    req.flush({}, { status: 201, statusText: 'Created' });
+    req.flush({ success: true });
   });
 
   it('should update a ticket', () => {
@@ -147,13 +147,13 @@ describe('TicketService', () => {
       1,
       'Updated Ticket',
       2,
-      false,
+      0, // false -> 0
       4,
       1,
       1,
       1,
-      false,
-      true,
+      0, // false -> 0
+      1, // true -> 1
       'John',
       'Doe',
       1,

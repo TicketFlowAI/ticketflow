@@ -85,11 +85,12 @@ export class AllUsersComponent {
   onFilterChange(): void {
     const filterText = this.filterText.toLowerCase();
 
-    this.filteredUsers = this.filteredUsers.filter(user =>
+    this.filteredUsers = this.users.filter(user =>
       user.name.toLowerCase().includes(filterText) ||
       user.lastname.toLowerCase().includes(filterText) ||
       user.email.toLowerCase().includes(filterText)
     );
+
     this.pageIndex = 0;
     this.updatePagedUsers();
   }

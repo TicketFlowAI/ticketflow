@@ -30,7 +30,7 @@ describe('DialogManagerService', () => {
     service.openLoginDialog();
     expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '500px',
-      height: '400px',
+      height: '450px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
     });
@@ -168,7 +168,7 @@ describe('DialogManagerService', () => {
     });
     expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '500px',
-      height: '400px',
+      height: '450px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
       data: null,
@@ -182,7 +182,7 @@ describe('DialogManagerService', () => {
     service.openServiceInfoDialog(mockService as any);
     expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '500px',
-      height: '325px',
+      height: '400px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
       data: mockService,
@@ -239,7 +239,7 @@ describe('DialogManagerService', () => {
     service.openServiceContractInfoDialog(mockServiceContract as any);
     expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '500px',
-      height: '325px',
+      height: '400px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
       data: mockServiceContract,
@@ -318,7 +318,7 @@ describe('DialogManagerService', () => {
     expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '600px',
       maxWidth: '100vw',
-      height: '350px',
+      height: '400px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
       data: null,

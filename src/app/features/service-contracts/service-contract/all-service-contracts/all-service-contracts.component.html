@@ -60,7 +60,7 @@
                                             <button type="button" class="btn btn-warning"
                                             (click)="cancelServiceContract(serviceContract.id)">{{t('CANCEL-REQUEST')}}</button>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" [hidden]="isExpired(serviceContract.expiration_date)" >
                                             <button type="button" class="btn btn-secondary"
                                     (click)="openTicketRequest(serviceContract)">{{t('NEW-TICKET')}}</button>
                                         </div>

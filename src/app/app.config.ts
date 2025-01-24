@@ -7,12 +7,14 @@ import {provideHttpClient} from "@angular/common/http";
 import {TranslocoHttpLoader} from './transloco-loader';
 import {provideTransloco} from '@jsverse/transloco';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideMarkdown } from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideMarkdown(),
     provideCharts(withDefaultRegisterables()),
     provideExperimentalZonelessChangeDetection(),
     provideTransloco({

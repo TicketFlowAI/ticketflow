@@ -7,6 +7,7 @@ import { isDevMode } from '@angular/core';
 import { TranslocoHttpLoader } from '../../../transloco-loader';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserModel } from '../../../core/models/entities/user.model';
+import { of } from 'rxjs';
 
 describe('ManageUserComponent', () => {
   let component: ManageUserComponent;
@@ -27,10 +28,16 @@ describe('ManageUserComponent', () => {
           },
           loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock de MatDialogRef
-        { 
-          provide: MAT_DIALOG_DATA, 
-          useValue: new UserModel(1, 'John', 'Doe', 'johndoe@example.com', 2, 'technician', 'Example Company') 
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: jasmine.createSpy('close'),
+            backdropClick: jasmine.createSpy('backdropClick').and.returnValue(of()), // Mock añadido
+          },
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: new UserModel(1, 'John', 'Doe', 'johndoe@example.com', 2, 'technician', 'Example Company')
         }, // Mock de MAT_DIALOG_DATA
       ],
     }).compileComponents();

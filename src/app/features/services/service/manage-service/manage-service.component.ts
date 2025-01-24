@@ -47,11 +47,11 @@ import { DialogSpinnerComponent } from '../../../../shared/components/dialog-spi
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageServiceComponent {
-  private readonly serviceManagementService = inject(ServiceManagementService);
-  private readonly cdr = inject(ChangeDetectorRef);
+  public serviceManagementService = inject(ServiceManagementService);
+  public cdr = inject(ChangeDetectorRef);
 
-  public readonly dialogRef = inject(MatDialogRef<ManageServiceComponent>);
-  public readonly serviceData = inject<ServiceModel>(MAT_DIALOG_DATA);
+  public dialogRef = inject(MatDialogRef<ManageServiceComponent>);
+  public serviceData = inject<ServiceModel | null>(MAT_DIALOG_DATA);
 
   descriptionFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })
   detailsFormControl = new FormControl('', { nonNullable: true, validators: [Validators.required] })

@@ -15,14 +15,14 @@ describe('ServiceService', () => {
   const mockServicesResponse: IServicesApiResponse = {
     success: true,
     data: [
-      new ServiceModel(1, 'Service A', 1, 1, 100, 'Category A', 'Tax A'),
-      new ServiceModel(2, 'Service B', 2, 2, 200, 'Category B', 'Tax B'),
+      new ServiceModel(1, 'Service A', 'Details A', 1, 1, 100, 'Category A', 'Tax A'),
+      new ServiceModel(2, 'Service B', 'Details B', 2, 2, 200, 'Category B', 'Tax B'),
     ],
   };
 
   const mockServiceResponse: IServiceApiResponse = {
     success: true,
-    data: new ServiceModel(1, 'Service A', 1, 1, 100, 'Category A', 'Tax A'),
+    data: new ServiceModel(1, 'Service A', 'Details A', 1, 1, 100, 'Category A', 'Tax A'),
   };
 
   beforeEach(() => {
@@ -65,7 +65,7 @@ describe('ServiceService', () => {
   });
 
   it('should create a service', () => {
-    const newService = new ServiceModel(0, 'Service C', 3, 3, 150, 'Category C', 'Tax C');
+    const newService = new ServiceModel(0, 'Service C', 'Details C', 3, 3, 150, 'Category C', 'Tax C');
 
     service.createService(newService).subscribe((response) => {
       expect(response.status).toBe(201);
@@ -79,7 +79,7 @@ describe('ServiceService', () => {
   });
 
   it('should update a service', () => {
-    const updatedService = new ServiceModel(1, 'Updated Service', 1, 1, 120, 'Category A', 'Tax A');
+    const updatedService = new ServiceModel(1, 'Updated Service', 'Updated Details', 1, 1, 120, 'Category A', 'Tax A');
 
     service.updateService(updatedService).subscribe((response) => {
       expect(response.status).toBe(200);
@@ -101,6 +101,29 @@ describe('ServiceService', () => {
 
     const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/services/${serviceId}`);
     expect(req.request.method).toBe('DELETE');
+
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+
+  it('should get deleted services', () => {
+    service.getDeletedServices().subscribe((response) => {
+      expect(response).toEqual(mockServicesResponse);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/services/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockServicesResponse);
+  });
+
+  it('should restore a deleted service', () => {
+    const serviceId = 1;
+
+    service.restoreService(serviceId).subscribe((response) => {
+      expect(response.status).toBe(200);
+    });
+
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/services/${serviceId}/restore`);
+    expect(req.request.method).toBe('PUT');
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });

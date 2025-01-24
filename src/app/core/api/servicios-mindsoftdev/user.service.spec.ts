@@ -1,36 +1,36 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { UserService } from './user.service';
+import { UserRoleService } from './user-role.service';
 import { environment } from '../../../../environments/environment';
 import {
-  IUsersModelResponse,
-  IUserModelResponse,
-  UserModel,
-} from '../../models/entities/user.model';
+  IUserRolesModelResponse,
+  IUserRoleModelResponse,
+  UserRoleModel,
+} from '../../models/entities/user-role.model';
 
-describe('UserService', () => {
-  let service: UserService;
+describe('UserRoleService', () => {
+  let service: UserRoleService;
   let httpTestingController: HttpTestingController;
 
-  const mockUsersResponse: IUsersModelResponse = {
+  const mockUserRolesResponse: IUserRolesModelResponse = {
     success: true,
     data: [
-      new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A'),
-      new UserModel(2, 'Jane', 'Smith', 'jane.smith@example.com', 2, 'Technician', 'Company B'),
+      new UserRoleModel(1, 'Admin', []),
+      new UserRoleModel(2, 'Technician', []),
     ],
   };
 
-  const mockUserResponse: IUserModelResponse = {
+  const mockUserRoleResponse: IUserRoleModelResponse = {
     success: true,
-    data: new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A'),
+    data: new UserRoleModel(1, 'Admin', []),
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [UserService],
+      providers: [UserRoleService],
     });
-    service = TestBed.inject(UserService);
+    service = TestBed.inject(UserRoleService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -42,75 +42,49 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get users', () => {
-    service.getUsers().subscribe((response) => {
-      expect(response).toEqual(mockUsersResponse);
+  it('should get all user roles', () => {
+    service.getUserRoles().subscribe((response) => {
+      expect(response).toEqual(mockUserRolesResponse);
     });
 
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users`);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/roles`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockUsersResponse);
+    req.flush(mockUserRolesResponse);
   });
 
-  it('should get my user', () => {
-    service.getMyUser().subscribe((response) => {
-      expect(response).toEqual(mockUserResponse);
+  it('should get permissions', () => {
+    const mockPermissionsResponse = { success: true, data: [] };
+    service.getPermissions().subscribe((response) => {
+      expect(response).toEqual(mockPermissionsResponse);
     });
 
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/user`);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/permissions`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockUserResponse);
+    req.flush(mockPermissionsResponse);
   });
 
-  it('should get a user by ID', () => {
-    const userId = 1;
+  it('should get a user role by ID', () => {
+    const roleId = 1;
 
-    service.getUser(userId).subscribe((response) => {
-      expect(response).toEqual(mockUserResponse);
+    service.getUserRole(roleId).subscribe((response) => {
+      expect(response).toEqual(mockUserRoleResponse);
     });
 
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${userId}`);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/roles/${roleId}`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockUserResponse);
+    req.flush(mockUserRoleResponse);
   });
 
-  it('should create a user', () => {
-    const newUser = new UserModel(0, 'Alice', 'Johnson', 'alice.johnson@example.com', 3, 'Client', 'Company C');
+  it('should update a user role', () => {
+    const updatedUserRole = new UserRoleModel(1, 'Updated Admin', []);
 
-    service.createUser(newUser).subscribe((response) => {
-      expect(response.status).toBe(201);
-    });
-
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users`);
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(newUser);
-
-    req.flush({}, { status: 201, statusText: 'Created' });
-  });
-
-  it('should update a user', () => {
-    const updatedUser = new UserModel(1, 'John Updated', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Company A');
-
-    service.updateUser(updatedUser).subscribe((response) => {
+    service.updateUserRole(updatedUserRole).subscribe((response) => {
       expect(response.status).toBe(200);
     });
 
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${updatedUser.id}`);
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/roles/${updatedUserRole.id}`);
     expect(req.request.method).toBe('PUT');
-    expect(req.request.body).toEqual(updatedUser);
-
-    req.flush({}, { status: 200, statusText: 'OK' });
-  });
-
-  it('should delete a user by ID', () => {
-    const userId = 1;
-
-    service.deleteUser(userId).subscribe((response) => {
-      expect(response.status).toBe(200);
-    });
-
-    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/users/${userId}`);
-    expect(req.request.method).toBe('DELETE');
+    expect(req.request.body).toEqual(updatedUserRole);
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });

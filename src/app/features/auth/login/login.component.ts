@@ -77,10 +77,20 @@ export class LoginComponent {
       const loginRequest = new LoginRequest();
       loginRequest.email = loginFormValue.email ?? '';
       loginRequest.password = loginFormValue.password ?? '';
-  
+
       this.authManagementService.login(loginRequest).subscribe({
         next: (response) => {
           if (response) {
+            //Comentar esto para quitar el 2FA
+            this.userManagementService.getMyUser().subscribe({
+              next: (user) => {
+                this.userManagementService.currentUser.set(user);
+                this.router.navigateByUrl('/');
+              }
+            });
+
+            //Descomentar Todo esto
+            /*
             if (response.two_factor) {
               this.router.navigateByUrl('/2fa-authenticate');
             } else {
@@ -91,25 +101,21 @@ export class LoginComponent {
                       this.userManagementService.currentUser.set(user);
                       this.router.navigateByUrl('/');
                     }
+                    else {
+                      this.router.navigateByUrl('/2fa-setup');
+                    }
                   }
-                },
-                error: () => {
-                  console.error('Error al obtener el usuario');
                 }
               });
             }
+            */
             this.dialogRef.close();
-          } else {
-            // Maneja errores en el login
-            console.log('Login failed');
+
           }
-        },
-        error: (err) => {
-          console.error('Error during login:', err);
         }
       });
     } else {
       console.log('Form is invalid');
     }
-  }  
+  }
 }

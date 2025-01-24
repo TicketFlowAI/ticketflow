@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserModel } from '../../../core/models/entities/user.model';
 import { UserManagementService } from '../../../core/services/user-management.service';
@@ -30,6 +30,8 @@ export class ProfileComponent {
   //SERVICES
   private readonly userManagementService = inject(UserManagementService)
   private readonly messageService = inject(MessageService)
+
+  private cdr = inject(ChangeDetectorRef)
   private readonly fb = inject(FormBuilder)
 
   //PROPS N VARIABLES
@@ -80,6 +82,17 @@ export class ProfileComponent {
       password: formValues.password?? '',
     }
 
-    this.userManagementService.editUser(userEdit).subscribe()
+    this.userManagementService.editUser(userEdit).subscribe({
+      next: () => {
+        this.userManagementService.getMyUser(). subscribe({
+          next: (user) => {
+            if(user) {
+              this.userManagementService.currentUser.set(user)
+              this.cdr.markForCheck()
+            }
+          }
+        })
+      }
+    })
   }
 }

@@ -25,12 +25,24 @@ describe('ServiceInfoComponent', () => {
             reRenderOnLangChange: true,
             prodMode: !isDevMode(),
           },
-          loader: TranslocoHttpLoader
+          loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock para MatDialogRef
-        { 
-          provide: MAT_DIALOG_DATA, 
-          useValue: new ServiceModel(1, 'Test Service', 2, 3, 100, 'Test Category', 'Test Tax') 
+        {
+          provide: MatDialogRef,
+          useValue: { close: jasmine.createSpy('close') },
+        }, // Mock para MatDialogRef
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: new ServiceModel(
+            1, // id
+            'Test Service', // description
+            'Test Details', // details <-- Agregado aquí
+            2, // category_id
+            3, // tax_id
+            100, // price
+            'Test Category', // category
+            'Test Tax', // tax_description
+          ),
         }, // Mock completo para MAT_DIALOG_DATA
       ],
     }).compileComponents();
@@ -52,6 +64,7 @@ describe('ServiceInfoComponent', () => {
   it('should initialize service data from MAT_DIALOG_DATA', () => {
     expect(component.service.id).toBe(1);
     expect(component.service.description).toBe('Test Service');
+    expect(component.service.details).toBe('Test Details'); // Verifica el nuevo campo
     expect(component.service.category_id).toBe(2);
     expect(component.service.tax_id).toBe(3);
     expect(component.service.price).toBe(100);

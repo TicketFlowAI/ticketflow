@@ -198,6 +198,28 @@ export class AllServiceContractsComponent {
     })
   }
 
+  isExpired(expirationDate: string | Date): boolean {
+    const currentDate = new Date();
+    const expDate = new Date(expirationDate);
+  
+    // Normalizar ambas fechas a día, mes y año (ignorar horas, minutos, segundos)
+    const normalizedCurrentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+  
+    const normalizedExpDate = new Date(
+      expDate.getFullYear(),
+      expDate.getMonth(),
+      expDate.getDate()
+    );
+  
+    // Comparar fechas normalizadas
+    return normalizedExpDate <= normalizedCurrentDate;
+  }
+  
+ 
   openTicketRequest(serviceContract: ServiceContractModel | null) {
     let data: TicketDialogData = {
       ticket: null,

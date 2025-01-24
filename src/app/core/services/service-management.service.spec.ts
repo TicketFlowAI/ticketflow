@@ -24,7 +24,7 @@ describe('ServiceManagementService', () => {
   let messageServiceMock: jasmine.SpyObj<MessageService>;
   let translocoServiceMock: jasmine.SpyObj<TranslocoService>;
 
-  const mockService = new ServiceModel(1, 'Service A', 1, 1, 100, 'Category A', 'Tax Description A');
+  const mockService = new ServiceModel(1, 'Service A', 'Details A', 1, 1, 100, 'Category A', 'Tax Description A');
   const mockServices = [mockService];
 
   const mockServiceTax = new ServiceTaxModel(1, 'Tax A', 10);
@@ -39,7 +39,8 @@ describe('ServiceManagementService', () => {
       'getService',
       'createService',
       'updateService',
-      'deleteService'
+      'deleteService',
+      'restoreService'
     ]);
 
     const taxSpy = jasmine.createSpyObj('ServiceTaxService', [
@@ -47,7 +48,8 @@ describe('ServiceManagementService', () => {
       'getServiceTax',
       'createServiceTax',
       'updateServiceTax',
-      'deleteServiceTax'
+      'deleteServiceTax',
+      'restoreServiceTax'
     ]);
 
     const categorySpy = jasmine.createSpyObj('ServiceCategoryService', [
@@ -55,7 +57,8 @@ describe('ServiceManagementService', () => {
       'getServiceCategory',
       'createServiceCategory',
       'updateServiceCategory',
-      'deleteServiceCategory'
+      'deleteServiceCategory',
+      'restoreServiceCategory'
     ]);
 
     const messageSpy = jasmine.createSpyObj('MessageService', ['addSuccessMessage', 'addErrorMessage']);
@@ -115,26 +118,6 @@ describe('ServiceManagementService', () => {
     });
   });
 
-  it('should get one service successfully', (done) => {
-    serviceServiceMock.getService.and.returnValue(of({ success: true, data: mockService }));
-
-    service.getOneService(1).subscribe((service) => {
-      expect(service).toEqual(mockService);
-      expect(serviceServiceMock.getService).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should handle error while getting one service', (done) => {
-    serviceServiceMock.getService.and.returnValue(throwError(() => new Error('Error fetching one service')));
-
-    service.getOneService(1).subscribe((service) => {
-      expect(service).toBeNull();
-      expect(serviceServiceMock.getService).toHaveBeenCalled();
-      done();
-    });
-  });
-
   it('should add a service successfully', (done) => {
     serviceServiceMock.createService.and.returnValue(of(new HttpResponse({ status: 201 })));
     translocoServiceMock.translateObject.and.returnValue([]);
@@ -161,32 +144,6 @@ describe('ServiceManagementService', () => {
     });
   });
 
-  it('should edit a service successfully', (done) => {
-    serviceServiceMock.updateService.and.returnValue(of(new HttpResponse({ status: 200 })));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.editService(mockService).subscribe((result) => {
-      expect(result).toBeTrue();
-      expect(serviceServiceMock.updateService).toHaveBeenCalledWith(mockService);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should handle error while editing a service', (done) => {
-    serviceServiceMock.updateService.and.returnValue(throwError(() => new Error('Error updating service')));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.editService(mockService).subscribe((result) => {
-      expect(result).toBeFalse();
-      expect(serviceServiceMock.updateService).toHaveBeenCalledWith(mockService);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
-      done();
-    });
-  });
-
   it('should delete a service successfully', (done) => {
     serviceServiceMock.deleteService.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
@@ -199,6 +156,33 @@ describe('ServiceManagementService', () => {
       done();
     });
   });
+
+  it('should update a service category successfully', (done) => {
+    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while updating a service category', (done) => {
+    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(throwError(() => new Error('Error updating service category')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
 
   it('should handle error while deleting a service', (done) => {
     serviceServiceMock.deleteService.and.returnValue(throwError(() => new Error('Error deleting service')));
@@ -213,6 +197,160 @@ describe('ServiceManagementService', () => {
     });
   });
 
+  it('should restore a service successfully', (done) => {
+    serviceServiceMock.restoreService.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreService(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceServiceMock.restoreService).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while restoring a service', (done) => {
+    serviceServiceMock.restoreService.and.returnValue(throwError(() => new Error('Error restoring service')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreService(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceServiceMock.restoreService).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  /* Service Categories Tests */
+  it('should get all service categories successfully', (done) => {
+    serviceCategoryServiceMock.getServiceCategories.and.returnValue(of({ success: true, data: mockServiceCategories }));
+
+    service.getAllServiceCategories().subscribe((categories) => {
+      expect(categories).toEqual(mockServiceCategories);
+      expect(serviceCategoryServiceMock.getServiceCategories).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while getting all service categories', (done) => {
+    serviceCategoryServiceMock.getServiceCategories.and.returnValue(throwError(() => new Error('Error fetching service categories')));
+
+    service.getAllServiceCategories().subscribe((categories) => {
+      expect(categories).toEqual([]);
+      expect(serviceCategoryServiceMock.getServiceCategories).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should add a service category successfully', (done) => {
+    serviceCategoryServiceMock.createServiceCategory.and.returnValue(of(new HttpResponse({ status: 201 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.addServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceCategoryServiceMock.createServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while adding a service category', (done) => {
+    serviceCategoryServiceMock.createServiceCategory.and.returnValue(throwError(() => new Error('Error creating service category')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.addServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceCategoryServiceMock.createServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should update a service category successfully', (done) => {
+    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while updating a service category', (done) => {
+    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(throwError(() => new Error('Error updating service category')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+
+  it('should delete a service category successfully', (done) => {
+    serviceCategoryServiceMock.deleteServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.deleteServiceCategory(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceCategoryServiceMock.deleteServiceCategory).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while deleting a service category', (done) => {
+    serviceCategoryServiceMock.deleteServiceCategory.and.returnValue(throwError(() => new Error('Error deleting service category')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.deleteServiceCategory(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceCategoryServiceMock.deleteServiceCategory).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should restore a service category successfully', (done) => {
+    serviceCategoryServiceMock.restoreServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreServiceCategory(1).subscribe((result) => {
+      expect(result).toBeTrue();
+      expect(serviceCategoryServiceMock.restoreServiceCategory).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should handle error while restoring a service category', (done) => {
+    serviceCategoryServiceMock.restoreServiceCategory.and.returnValue(throwError(() => new Error('Error restoring service category')));
+    translocoServiceMock.translateObject.and.returnValue([]);
+
+    service.restoreServiceCategory(1).subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(serviceCategoryServiceMock.restoreServiceCategory).toHaveBeenCalledWith(1);
+      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
+      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  /* Service Tax Tests */
+  /** Service Tax Tests **/
   it('should get all service taxes successfully', (done) => {
     serviceTaxServiceMock.getServiceTaxes.and.returnValue(of({ success: true, data: mockServiceTaxes }));
 
@@ -253,6 +391,7 @@ describe('ServiceManagementService', () => {
     });
   });
 
+  /** Service Tax Tests **/
   it('should add a service tax successfully', (done) => {
     serviceTaxServiceMock.createServiceTax.and.returnValue(of(new HttpResponse({ status: 201 })));
     translocoServiceMock.translateObject.and.returnValue([]);
@@ -279,7 +418,8 @@ describe('ServiceManagementService', () => {
     });
   });
 
-  it('should edit a service tax successfully', (done) => {
+
+  it('should update a service tax successfully', (done) => {
     serviceTaxServiceMock.updateServiceTax.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
 
@@ -292,7 +432,7 @@ describe('ServiceManagementService', () => {
     });
   });
 
-  it('should handle error while editing a service tax', (done) => {
+  it('should handle error while updating a service tax', (done) => {
     serviceTaxServiceMock.updateServiceTax.and.returnValue(throwError(() => new Error('Error updating service tax')));
     translocoServiceMock.translateObject.and.returnValue([]);
 
@@ -331,121 +471,30 @@ describe('ServiceManagementService', () => {
     });
   });
 
-  it('should get all service categories successfully', (done) => {
-    serviceCategoryServiceMock.getServiceCategories.and.returnValue(of({ success: true, data: mockServiceCategories }));
-
-    service.getAllServiceCategories().subscribe((categories) => {
-      expect(categories).toEqual(mockServiceCategories);
-      expect(serviceCategoryServiceMock.getServiceCategories).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should handle error while getting all service categories', (done) => {
-    serviceCategoryServiceMock.getServiceCategories.and.returnValue(throwError(() => new Error('Error fetching service categories')));
-
-    service.getAllServiceCategories().subscribe((categories) => {
-      expect(categories).toEqual([]);
-      expect(serviceCategoryServiceMock.getServiceCategories).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should get one service category successfully', (done) => {
-    serviceCategoryServiceMock.getServiceCategory.and.returnValue(of({ success: true, data: mockServiceCategory }));
-
-    service.getOneServiceCategory(1).subscribe((category) => {
-      expect(category).toEqual(mockServiceCategory);
-      expect(serviceCategoryServiceMock.getServiceCategory).toHaveBeenCalledWith(1);
-      done();
-    });
-  });
-
-  it('should handle error while getting one service category', (done) => {
-    serviceCategoryServiceMock.getServiceCategory.and.returnValue(throwError(() => new Error('Error fetching service category')));
-
-    service.getOneServiceCategory(1).subscribe((category) => {
-      expect(category).toBeNull();
-      expect(serviceCategoryServiceMock.getServiceCategory).toHaveBeenCalledWith(1);
-      done();
-    });
-  });
-
-  it('should add a service category successfully', (done) => {
-    serviceCategoryServiceMock.createServiceCategory.and.returnValue(of(new HttpResponse({ status: 201 })));
+  it('should restore a service tax successfully', (done) => {
+    serviceTaxServiceMock.restoreServiceTax.and.returnValue(of(new HttpResponse({ status: 200 })));
     translocoServiceMock.translateObject.and.returnValue([]);
 
-    service.addServiceCategory(mockServiceCategory).subscribe((result) => {
+    service.restoreServiceTax(1).subscribe((result) => {
       expect(result).toBeTrue();
-      expect(serviceCategoryServiceMock.createServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(serviceTaxServiceMock.restoreServiceTax).toHaveBeenCalledWith(1);
       expect(translocoServiceMock.translateObject).toHaveBeenCalled();
       expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
       done();
     });
   });
 
-  it('should handle error while adding a service category', (done) => {
-    serviceCategoryServiceMock.createServiceCategory.and.returnValue(throwError(() => new Error('Error creating service category')));
+  it('should handle error while restoring a service tax', (done) => {
+    serviceTaxServiceMock.restoreServiceTax.and.returnValue(throwError(() => new Error('Error restoring service tax')));
     translocoServiceMock.translateObject.and.returnValue([]);
 
-    service.addServiceCategory(mockServiceCategory).subscribe((result) => {
+    service.restoreServiceTax(1).subscribe((result) => {
       expect(result).toBeFalse();
-      expect(serviceCategoryServiceMock.createServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
+      expect(serviceTaxServiceMock.restoreServiceTax).toHaveBeenCalledWith(1);
       expect(translocoServiceMock.translateObject).toHaveBeenCalled();
       expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
       done();
     });
   });
 
-  it('should edit a service category successfully', (done) => {
-    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
-      expect(result).toBeTrue();
-      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should handle error while editing a service category', (done) => {
-    serviceCategoryServiceMock.updateServiceCategory.and.returnValue(throwError(() => new Error('Error updating service category')));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.editServiceCategory(mockServiceCategory).subscribe((result) => {
-      expect(result).toBeFalse();
-      expect(serviceCategoryServiceMock.updateServiceCategory).toHaveBeenCalledWith(mockServiceCategory);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should delete a service category successfully', (done) => {
-    serviceCategoryServiceMock.deleteServiceCategory.and.returnValue(of(new HttpResponse({ status: 200 })));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.deleteServiceCategory(1).subscribe((result) => {
-      expect(result).toBeTrue();
-      expect(serviceCategoryServiceMock.deleteServiceCategory).toHaveBeenCalledWith(1);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addSuccessMessage).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('should handle error while deleting a service category', (done) => {
-    serviceCategoryServiceMock.deleteServiceCategory.and.returnValue(throwError(() => new Error('Error deleting service category')));
-    translocoServiceMock.translateObject.and.returnValue([]);
-
-    service.deleteServiceCategory(1).subscribe((result) => {
-      expect(result).toBeFalse();
-      expect(serviceCategoryServiceMock.deleteServiceCategory).toHaveBeenCalledWith(1);
-      expect(translocoServiceMock.translateObject).toHaveBeenCalled();
-      expect(messageServiceMock.addErrorMessage).toHaveBeenCalled();
-      done();
-    });
-  });
 });

@@ -38,7 +38,13 @@ describe('ManageServiceTaxComponent', () => {
           },
           loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock de MatDialogRef
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: jasmine.createSpy('close'),
+            backdropClick: jasmine.createSpy('backdropClick').and.returnValue(of()), // Mock añadido
+          },
+        },
         {
           provide: MAT_DIALOG_DATA,
           useValue: new ServiceTaxModel(1, 'Test Tax', 15), // Mock de MAT_DIALOG_DATA

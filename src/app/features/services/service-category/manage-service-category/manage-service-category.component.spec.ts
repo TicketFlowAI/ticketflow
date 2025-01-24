@@ -38,7 +38,13 @@ describe('ManageServiceCategoryComponent', () => {
           },
           loader: TranslocoHttpLoader,
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } }, // Mock para MatDialogRef
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: jasmine.createSpy('close'),
+            backdropClick: jasmine.createSpy('backdropClick').and.returnValue(of()), // Mock añadido
+          },
+        },
         {
           provide: MAT_DIALOG_DATA,
           useValue: new ServiceCategoryModel(1, 'Test Category'), // Mock de MAT_DIALOG_DATA

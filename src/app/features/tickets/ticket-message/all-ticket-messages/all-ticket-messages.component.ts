@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoles } from '../../../../core/models/entities/user.model';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-all-ticket-messages',
@@ -29,7 +30,8 @@ import { TicketModel } from '../../../../core/models/entities/ticket.model';
     MatIconModule,
     FaIconComponent,
     TranslocoDirective,
-    GlobalSpinnerComponent
+    GlobalSpinnerComponent,
+    MarkdownModule
   ],
   templateUrl: './all-ticket-messages.component.html',
   styleUrl: './all-ticket-messages.component.scss',

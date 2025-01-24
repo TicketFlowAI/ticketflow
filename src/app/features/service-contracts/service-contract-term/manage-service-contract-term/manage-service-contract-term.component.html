@@ -1,10 +1,10 @@
 <app-dialog-spinner></app-dialog-spinner>
 <ng-container *transloco="let t; prefix: 'FEATURES.SERVICE-CONTRACT-TERMS.SERVICE-CONTRACT-TERM-MANAGEMENT'">
     @if(!serviceContractTermData) {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-SERVICE-CONTRACT-TERM')}}</h2>
+        <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('CREATE-SERVICE-CONTRACT-TERM')}}</h2>
     }
     @else {
-    <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-SERVICE-CONTRACT-TERM')}}</h2>
+        <h2 class="fw-semibold text-center" mat-dialog-title>{{t ('EDIT-SERVICE-CONTRACT-TERM')}}</h2>
     }
     <mat-dialog-content>
         <form [formGroup]="serviceContractTermForm">
@@ -14,20 +14,20 @@
                     <input matInput [formControl]="termFormControl">
                     <mat-icon matSuffix>description</mat-icon>
                     @if (termFormControl.hasError('required')) {
-                        <field-error-required></field-error-required>
+                    <field-error-required></field-error-required>
                     }
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>{{t('SERVICE-CONTRACT-TERM-MONTHS')}}</mat-label>
-                    <input type="number"  matInput [formControl]="monthsFormControl">
+                    <input type="number" matInput [formControl]="monthsFormControl">
                     <mat-icon matSuffix>date_range</mat-icon>
                     @if (monthsFormControl.hasError('pattern')) {
-                        <field-error-integer-numbers></field-error-integer-numbers>
+                    <field-error-integer-numbers></field-error-integer-numbers>
                     }
                     @if (monthsFormControl.hasError('required')) {
-                        <field-error-required></field-error-required>
+                    <field-error-required></field-error-required>
                     }
                 </mat-form-field>
             </div>
@@ -36,8 +36,8 @@
     <mat-dialog-actions class="row justify-content-center">
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-secondary" [disabled]="serviceContractTermForm.invalid" (click)="onSaveClick()"
-                    cdkFocusInitial>{{t('SAVE')}}</button>
+                <button type="button" class="btn btn-secondary" [disabled]="serviceContractTermForm.invalid"
+                    (click)="onSaveClick()" cdkFocusInitial>{{t('SAVE')}}</button>
             </div>
         </div>
     </mat-dialog-actions>

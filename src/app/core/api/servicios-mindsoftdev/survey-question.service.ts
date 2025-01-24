@@ -25,7 +25,7 @@ export class SurveyQuestionService {
         withCredentials: true,
       });
     }
-    
+  
     getSurveyQuestions(): Observable<ISurveyQuestionsApiResponse> {
       const customHeaders = this.customHeadersSurveyQuestion.addAppJson().getHeaders()
       return this.http.get<ISurveyQuestionsApiResponse>(`${this.apiSurveyQuestions}`, {

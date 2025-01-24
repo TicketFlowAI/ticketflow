@@ -1,40 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ManageTicketComponent } from './manage-ticket.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideTransloco } from '@jsverse/transloco';
 import { isDevMode } from '@angular/core';
-import { TranslocoHttpLoader } from '../../../../transloco-loader';
-import { TicketManagementService } from '../../../../core/services/ticket-management.service';
-import { ServiceContractManagementService } from '../../../../core/services/service-contract-management.service';
-import { UserManagementService } from '../../../../core/services/user-management.service';
+import { provideTransloco } from '@jsverse/transloco';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { TicketModel } from '../../../../core/models/entities/ticket.model';
-import { ServiceContractModel } from '../../../../core/models/entities/service-contract.model';
-import { UserModel } from '../../../../core/models/entities/user.model';
+import { EmailTemplateModel } from '../../../../core/models/entities/email-template.model';
+import { TranslocoHttpLoader } from '../../../../transloco-loader';
+import { ManageEmailTemplateComponent } from '../../../settings/email/email-template/manage-email-template/manage-email-template.component';
 
-describe('ManageTicketComponent', () => {
-  let component: ManageTicketComponent;
-  let fixture: ComponentFixture<ManageTicketComponent>;
-  let ticketManagementServiceSpy: jasmine.SpyObj<TicketManagementService>;
-  let serviceContractManagementServiceSpy: jasmine.SpyObj<ServiceContractManagementService>;
-  let userManagementServiceSpy: jasmine.SpyObj<UserManagementService>;
+describe('ManageEmailTemplateComponent', () => {
+  let component: ManageEmailTemplateComponent;
+  let fixture: ComponentFixture<ManageEmailTemplateComponent>;
 
   beforeEach(async () => {
-    const mockTicketManagementService = jasmine.createSpyObj('TicketManagementService', ['editTicket', 'addTicket']);
-    const mockServiceContractManagementService = jasmine.createSpyObj('ServiceContractManagementService', [
-      'getAllServiceContracts',
-    ]);
-    const mockUserManagementService = jasmine.createSpyObj('UserManagementService', ['getMyUser']);
-
-    mockTicketManagementService.editTicket.and.returnValue(of(null));
-    mockTicketManagementService.addTicket.and.returnValue(of(null));
-    mockServiceContractManagementService.getAllServiceContracts.and.returnValue(of([new ServiceContractModel(1, 2, 3, 4, 'Company', 'Service', 'Term', 1000)]));
-    mockUserManagementService.getMyUser.and.returnValue(of(new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, 'Admin', 'Test Company')));
-
     await TestBed.configureTestingModule({
-      imports: [ManageTicketComponent],
+      imports: [ManageEmailTemplateComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -45,26 +26,24 @@ describe('ManageTicketComponent', () => {
             reRenderOnLangChange: true,
             prodMode: !isDevMode(),
           },
-          loader: TranslocoHttpLoader,
+          loader: TranslocoHttpLoader
         }),
-        { provide: MatDialogRef, useValue: { close: jasmine.createSpy('close') } },
         {
-          provide: MAT_DIALOG_DATA,
+          provide: MatDialogRef,
           useValue: {
-            ticket: new TicketModel(1, 'Test Ticket', 2, true, 3, 1, 1, 1, true, false, '', '', 1, 'Test Company', 1, 'Test Service'),
+            close: jasmine.createSpy('close'), // Mock del método close
+            backdropClick: jasmine.createSpy('backdropClick').and.returnValue(of(new MouseEvent('click'))), // Mock del método backdropClick
           },
         },
-        { provide: TicketManagementService, useValue: mockTicketManagementService },
-        { provide: ServiceContractManagementService, useValue: mockServiceContractManagementService },
-        { provide: UserManagementService, useValue: mockUserManagementService },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: new EmailTemplateModel(1, 'Template Example', 'Subject Example', '<html><body></body></html>'),
+        },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ManageTicketComponent);
+    fixture = TestBed.createComponent(ManageEmailTemplateComponent);
     component = fixture.componentInstance;
-    ticketManagementServiceSpy = TestBed.inject(TicketManagementService) as jasmine.SpyObj<TicketManagementService>;
-    serviceContractManagementServiceSpy = TestBed.inject(ServiceContractManagementService) as jasmine.SpyObj<ServiceContractManagementService>;
-    userManagementServiceSpy = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
     fixture.detectChanges();
   });
 
@@ -72,31 +51,42 @@ describe('ManageTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize ticket data from MAT_DIALOG_DATA', () => {
-    const ticket = component.data.ticket;
-    expect(ticket).toBeTruthy();
-    expect(ticket?.title).toBe('Test Ticket');
-    expect(ticket?.priority).toBe(2);
-    expect(ticket?.needsHumanInteraction).toBeTrue();
+  it('should initialize form with data from MAT_DIALOG_DATA', () => {
+    expect(component.emailTemplateForm.value).toEqual({
+      templateName: 'Template Example',
+      subject: 'Subject Example',
+      body: '<html><body></body></html>',
+    });
   });
 
-  it('should fetch service contracts and user data on initialization', () => {
-    expect(serviceContractManagementServiceSpy.getAllServiceContracts).toHaveBeenCalled();
-    expect(userManagementServiceSpy.getMyUser).toHaveBeenCalled();
-    expect(component.serviceContracts.length).toBeGreaterThan(0);
-    expect(component.user).toBeTruthy();
+  it('should call dialogRef.close with false on backdrop click', () => {
+    component.dialogRef.backdropClick().subscribe(() => {
+      expect(component.dialogRef.close).toHaveBeenCalledWith(false);
+    });
+
+    component.ngOnInit();
   });
 
-  it('should call editTicket and close dialog on save for existing ticket', () => {
+  it('should save a new email template and close dialog', () => {
+    const emailManagementServiceSpy = jasmine.createSpyObj('EmailManagementService', ['addEmailTemplate']);
+    emailManagementServiceSpy.addEmailTemplate.and.returnValue(of({}));
+    (component as any).emailManagementService = emailManagementServiceSpy;
+
+    component.emailTemplate = null; // Simula un nuevo email template
     component.onSaveClick();
-    expect(ticketManagementServiceSpy.editTicket).toHaveBeenCalled();
-    expect(component.dialogRef.close).toHaveBeenCalled();
+
+    expect(emailManagementServiceSpy.addEmailTemplate).toHaveBeenCalled();
+    expect(component.dialogRef.close).toHaveBeenCalledWith(true);
   });
 
-  it('should call addTicket and close dialog on save for new ticket', () => {
-    component.data.ticket = null;
+  it('should edit an existing email template and close dialog', () => {
+    const emailManagementServiceSpy = jasmine.createSpyObj('EmailManagementService', ['editEmailTemplate']);
+    emailManagementServiceSpy.editEmailTemplate.and.returnValue(of({}));
+    (component as any).emailManagementService = emailManagementServiceSpy;
+
     component.onSaveClick();
-    expect(ticketManagementServiceSpy.addTicket).toHaveBeenCalled();
-    expect(component.dialogRef.close).toHaveBeenCalled();
+
+    expect(emailManagementServiceSpy.editEmailTemplate).toHaveBeenCalled();
+    expect(component.dialogRef.close).toHaveBeenCalledWith(true);
   });
 });
