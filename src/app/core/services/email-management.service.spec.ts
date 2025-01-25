@@ -270,6 +270,19 @@ describe('EmailManagementService', () => {
     });
   });
 
+  it('should return an empty array when getDeletedEmailTemplates fails', (done) => {
+    emailServiceMock.getDeletedEmailTemplates.and.returnValue(
+      throwError(() => new Error('Error fetching deleted email templates'))
+    );
+  
+    service.getDeletedEmailtemplates().subscribe((deletedTemplates) => {
+      expect(deletedTemplates).toEqual([]);
+      expect(emailServiceMock.getDeletedEmailTemplates).toHaveBeenCalled();
+      done();
+    });
+  });
+  
+
   it('should get deleted email intervals successfully', (done) => {
     emailIntervalServiceMock.getDeletedIntervals.and.returnValue(
       of({ success: true, data: mockEmailIntervals })

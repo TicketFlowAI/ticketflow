@@ -6,7 +6,7 @@ import { AuthService } from '../api/servicios-mindsoftdev/auth.service';
 import { IUserModel } from '../models/entities/user.model';
 import { UserManagementService } from './user-management.service';
 import { of, throwError } from 'rxjs';
-import { HttpResponse, provideHttpClient } from '@angular/common/http';
+import { HttpResponse, HttpStatusCode, provideHttpClient } from '@angular/common/http';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { LoginRequest } from '../models/requests/login.request';
 import { ResetPasswordRequestModel } from '../models/requests/password.request';
@@ -14,6 +14,8 @@ import { isDevMode } from '@angular/core';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from '../../transloco-loader';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+import { MessageService } from '../../shared/services/message.service';
 
 describe('AuthManagementService', () => {
   let service: AuthManagementService;
@@ -22,6 +24,8 @@ describe('AuthManagementService', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let userManagementServiceSpy: jasmine.SpyObj<UserManagementService>;
   let spinnerServiceSpy: jasmine.SpyObj<SpinnerService>;
+  let messageServiceSpy: jasmine.SpyObj<MessageService>;
+  let routerServiceSpy: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
     const userManagementSpy = jasmine.createSpyObj('UserManagementService', ['getMyUser']);
@@ -29,7 +33,7 @@ describe('AuthManagementService', () => {
       set: jasmine.createSpy('set'),
       value: null,
     };
-
+  
     const tokenSpy = jasmine.createSpyObj('TokenService', ['getToken', 'tokenExists', 'clearAll']);
     const sanctumSpy = jasmine.createSpyObj('SanctumService', ['getCsrfCookie']);
     const authSpy = jasmine.createSpyObj('AuthService', [
@@ -52,7 +56,13 @@ describe('AuthManagementService', () => {
       'hideDialogSpinner',
       'hideGlobalSpinner',
     ]);
-
+    const messageSpy = jasmine.createSpyObj('MessageService', [
+      'addSuccessMessage',
+      'addWarningMessage',
+      'addErrorMessage',
+    ]);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl', 'navigate']);
+  
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
@@ -71,17 +81,22 @@ describe('AuthManagementService', () => {
         { provide: AuthService, useValue: authSpy },
         { provide: UserManagementService, useValue: userManagementSpy },
         { provide: SpinnerService, useValue: spinnerSpy },
+        { provide: MessageService, useValue: messageSpy },
+        { provide: Router, useValue: routerSpy },
         AuthManagementService,
       ],
     });
-
+  
     service = TestBed.inject(AuthManagementService);
     tokenServiceSpy = TestBed.inject(TokenService) as jasmine.SpyObj<TokenService>;
     sanctumServiceSpy = TestBed.inject(SanctumService) as jasmine.SpyObj<SanctumService>;
     authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     userManagementServiceSpy = TestBed.inject(UserManagementService) as jasmine.SpyObj<UserManagementService>;
     spinnerServiceSpy = TestBed.inject(SpinnerService) as jasmine.SpyObj<SpinnerService>;
+    messageServiceSpy = TestBed.inject(MessageService) as jasmine.SpyObj<MessageService>;
+    routerServiceSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
+  
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -250,17 +265,17 @@ describe('AuthManagementService', () => {
   });
 
   it('should get two-factor QR code successfully', () => {
-    const mockQrCode = { svg: 'mock-qr-code' }; 
+    const mockQrCode = { svg: 'mock-qr-code' };
     authServiceSpy.getTwoFactorQrCode.and.returnValue(of(mockQrCode));
-  
+
     service.getTwoFactorQrCode().subscribe((response) => {
       expect(response).toBe(mockQrCode);
     });
-  
+
     expect(authServiceSpy.getTwoFactorQrCode).toHaveBeenCalled();
     expect(spinnerServiceSpy.hideDialogSpinner).toHaveBeenCalled();
   });
-  
+
 
   it('should handle error when getting two-factor QR code', () => {
     authServiceSpy.getTwoFactorQrCode.and.returnValue(throwError(() => new Error('Error')));
@@ -314,22 +329,65 @@ describe('AuthManagementService', () => {
     expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
   });
 
-  it('should handle two-factor challenge successfully', () => {
+  it('should handle two-factor challenge successfully with a regular code', () => {
+    const mockCode = '123456'; // Código regular (6 caracteres)
     authServiceSpy.challengeTwoFactor.and.returnValue(of(new HttpResponse({ status: 200 })));
 
-    service.twoFactorChallenge('123456');
+    service.twoFactorChallenge(mockCode);
 
-    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith('123456');
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith({ code: mockCode });
     expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+    expect(messageServiceSpy.addSuccessMessage).toHaveBeenCalled();
+    expect(routerServiceSpy.navigateByUrl).toHaveBeenCalledWith('/');
+  });
+
+  it('should handle two-factor challenge successfully with a recovery code', () => {
+    const mockRecoveryCode = 'ABCDEFG12345'; // Código de recuperación (más de 6 caracteres)
+    authServiceSpy.challengeTwoFactor.and.returnValue(of(new HttpResponse({ status: 200 })));
+
+    service.twoFactorChallenge(mockRecoveryCode);
+
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith({ recovery_code: mockRecoveryCode });
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+    expect(messageServiceSpy.addSuccessMessage).toHaveBeenCalled();
+    expect(routerServiceSpy.navigateByUrl).toHaveBeenCalledWith('/');
+  });
+
+  it('should handle two-factor challenge with an invalid code', () => {
+    const mockCode = '123456';
+    authServiceSpy.challengeTwoFactor.and.returnValue(
+      throwError(() => ({ status: HttpStatusCode.UnprocessableEntity }))
+    );
+
+    service.twoFactorChallenge(mockCode);
+
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith({ code: mockCode });
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+    expect(messageServiceSpy.addWarningMessage).toHaveBeenCalled();
+  });
+
+  it('should handle two-factor challenge with a general error', () => {
+    const mockCode = '123456';
+    authServiceSpy.challengeTwoFactor.and.returnValue(
+      throwError(() => ({ status: HttpStatusCode.InternalServerError }))
+    );
+
+    service.twoFactorChallenge(mockCode);
+
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith({ code: mockCode });
+    expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
+    expect(messageServiceSpy.addErrorMessage).toHaveBeenCalled();
   });
 
   it('should handle error when two-factor challenge fails', () => {
+    const mockCode = '123456'; // Código regular (6 caracteres)
     authServiceSpy.challengeTwoFactor.and.returnValue(throwError(() => new Error('Error')));
-
-    service.twoFactorChallenge('123456');
-
-    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith('123456');
+  
+    service.twoFactorChallenge(mockCode);
+  
+    expect(authServiceSpy.challengeTwoFactor).toHaveBeenCalledWith({ code: mockCode }); // Cambiado para reflejar el formato correcto
     expect(spinnerServiceSpy.hideGlobalSpinner).toHaveBeenCalled();
   });
+  
 
 });

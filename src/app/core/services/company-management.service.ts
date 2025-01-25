@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
+import { catchError, finalize, map, Observable, of } from 'rxjs';
 import { CompanyService } from '../api/servicios-mindsoftdev/company.service';
 import { CompanyModel } from '../models/entities/company.model';
 import { MessageService } from '../../shared/services/message.service';

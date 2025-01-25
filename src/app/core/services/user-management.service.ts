@@ -97,7 +97,6 @@ export class UserManagementService {
 
     return this.userService.getDeletedUsers().pipe(
       map((user) => {
-        console.log(user)
         return user.data
       }),
       catchError(() => {

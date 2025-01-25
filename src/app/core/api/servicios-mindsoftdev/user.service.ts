@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { IUserModelResponse, IUsersModelResponse } from '../../models/entities/user.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
-import { IUserRolesModelResponse } from '../../models/entities/user-role.model';
 
 @Injectable({
   providedIn: 'root'

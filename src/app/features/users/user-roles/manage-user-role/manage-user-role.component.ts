@@ -92,7 +92,7 @@ export class ManageUserRoleComponent {
 
   onSaveClick(): void {
     const formValue = this.userRoleForm.value
-    console.log(formValue)
+
     let userRole = new UserRoleModel(
       0,
       formValue.name,

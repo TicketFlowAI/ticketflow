@@ -5,7 +5,7 @@ import { ReportTicketComplexityModel } from '../models/reports/global/fields/rep
 import { ReportTechnicianReassignsModel } from '../models/reports/techinican-performance/fields/report-technician-reassigns.model';
 import { ReportTechnicianWeeklyComparisonModel } from '../models/reports/techinican-performance/fields/report-technician-weekly-comparison.model';
 import { ReportTicketEscalationsModel } from '../models/reports/global/fields/report-ticket-escalations.model';
-import { IReportTechnicianScorePerQuestionResponse, ReportTechnicianScorePerQuestion } from '../models/reports/techinican-performance/fields/report-score-per-question.model';
+import { ReportTechnicianScorePerQuestion } from '../models/reports/techinican-performance/fields/report-score-per-question.model';
 
 @Injectable({
   providedIn: 'root'

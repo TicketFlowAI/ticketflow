@@ -116,8 +116,6 @@ export class LoginComponent {
           }
         }
       });
-    } else {
-      console.log('Form is invalid');
     }
   }
 }

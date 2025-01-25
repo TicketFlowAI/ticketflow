@@ -75,10 +75,9 @@ export class AuthService {
     });
   }
 
-  challengeTwoFactor(code: string): Observable<any> {
-    const json = code.length > 6? { recovery_code: code} : { code: code}
+  challengeTwoFactor(code: any): Observable<any> {
     const customHeaders = this.customHeadersService.addAppJson().addXsrfToken().getHeaders();
-    return this.http.post(`${this.apiAuthentication}/two-factor-challenge`, json, {
+    return this.http.post(`${this.apiAuthentication}/two-factor-challenge`, code, {
       headers: customHeaders,
       withCredentials: true,
       observe: 'response',

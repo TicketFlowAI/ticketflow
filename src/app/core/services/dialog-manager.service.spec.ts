@@ -453,5 +453,78 @@ describe('DialogManagerService', () => {
     });
   });
   
+  it('should open the UserRoleInfoComponent dialog', () => {
+    const mockUserRole = { id: 1, name: 'Admin' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openUserRoleInfoDialog(mockUserRole as any);
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockUserRole.id,
+    });
+  });
+  
+  it('should open the ManageUserRoleComponent dialog and return true after closing', (done) => {
+    const mockUserRole = { id: 1, name: 'Admin' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openManageUserRoleDialog(mockUserRole as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '350px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockUserRole,
+    });
+  });
+  
+  it('should open the ManageSurveyQuestionComponent dialog and return true after closing', (done) => {
+    const mockSurveyQuestion = { id: 1, question: 'What is your satisfaction?' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openManageSurveyQuestionDialog(mockSurveyQuestion as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '700px',
+      maxWidth: '100vw',
+      height: '250px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockSurveyQuestion,
+    });
+  });
+  
+  it('should open the ManageEmailIntervalComponent dialog and return true after closing', (done) => {
+    const mockEmailInterval = { id: 1, interval: 'Daily' };
+    matDialogMock.open.and.returnValue({ afterClosed: () => of(true) } as any);
+  
+    service.openManageEmailIntervalDialog(mockEmailInterval as any).subscribe((result) => {
+      expect(result).toBeTrue();
+      done();
+    });
+  
+    expect(matDialogMock.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '600px',
+      maxWidth: '100vw',
+      height: '425px',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      data: mockEmailInterval,
+    });
+  });
+
   
 });

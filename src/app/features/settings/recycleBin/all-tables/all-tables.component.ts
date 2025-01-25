@@ -22,7 +22,6 @@ import { ServiceTaxModel } from '../../../../core/models/entities/service-tax.mo
 import { TicketModel } from '../../../../core/models/entities/ticket.model';
 import { EmailTemplateModel } from '../../../../core/models/entities/email-template.model';
 import { EmailIntervalModel } from '../../../../core/models/entities/email-interval.model';
-import { UserRoleModel } from '../../../../core/models/entities/user-role.model';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
@@ -184,7 +183,7 @@ export class AllTablesComponent {
   loadUsersTable() {
     this.userManagementService.getDeletedUsers().subscribe({
       next: (response) => {
-        console.log('Datos de usuarios:', response); // Para depurar
+
         this.users = response
         this.usersFiltered = this.users
         this.cdr.markForCheck()

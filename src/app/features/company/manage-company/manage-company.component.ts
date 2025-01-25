@@ -98,7 +98,7 @@ export class ManageCompanyComponent {
       formValue.state,
       formValue.city
     )
- console.log(company)
+
     if (this.companyData) {
       company.id = this.companyData.id
       company.name = this.companyData.name

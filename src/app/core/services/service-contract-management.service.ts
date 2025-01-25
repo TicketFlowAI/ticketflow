@@ -281,7 +281,6 @@ export class ServiceContractManagementService {
   newServiceContract(request: ServiceRequest): Observable<boolean> {
     this.spinnerService.showDialogSpinner({fullscreen: false, size: 100, hasBackdrop: true});
 
-    console.log(request)
     return this.serviceContractService.newServiceContractRequest(request).pipe(
       map(() => {
         const transate = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.NEW-SERVICE-REQUEST-SUCCESS');

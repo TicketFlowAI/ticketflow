@@ -45,7 +45,7 @@ export class TicketService {
 
   getTicketHistory(id: number): Observable<ITicketHistoryApiResponse> {
     const customHeaders = this.customHeadersService.addAppJson().getHeaders();
-    console.log(customHeaders)
+
     return this.http.get<ITicketHistoryApiResponse>(`${this.apiTickets}/history/${id}`, {
       headers: customHeaders,
       withCredentials: true

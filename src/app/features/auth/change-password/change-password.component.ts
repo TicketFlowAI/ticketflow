@@ -53,8 +53,6 @@ export class ChangePasswordComponent {
     this.route.queryParamMap.subscribe((queryParams) => {
       this.token = queryParams.get('token');
       this.email = queryParams.get('email');
-      console.log('Token:', this.token);
-      console.log('Email:', this.email);
     });
   }
 
@@ -80,8 +78,8 @@ export class ChangePasswordComponent {
 
     this.authManagementService.resetPassword(resetRequest).subscribe({
       next: (response) => {
-        this.showSuccess = response; // Manejo del resultado (true o false)
-        this.cdr.markForCheck(); // Asegura que el cambio se refleje en la vista
+        this.showSuccess = response; 
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error resetting password:', err);

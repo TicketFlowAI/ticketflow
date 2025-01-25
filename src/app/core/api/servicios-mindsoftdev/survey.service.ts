@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ISurveyAnswersApiResponse, ISurveyApiResponse } from '../../models/entities/survey.model';
+import { ISurveyAnswersApiResponse } from '../../models/entities/survey.model';
 import { CustomHeadersService } from '../../utils/custom-headers.service';
 
 @Injectable({

@@ -1,7 +1,6 @@
-import { CanActivateFn, ResolveEnd, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { UserManagementService } from '../services/user-management.service';
 import { inject } from '@angular/core';
-import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const userManagementService = inject(UserManagementService);

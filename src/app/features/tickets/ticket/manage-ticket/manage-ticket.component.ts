@@ -87,14 +87,6 @@ export class ManageTicketComponent {
       this.dialogRef.close(false);
     });
 
-    this.ticketForm.statusChanges.subscribe(() => {
-      console.log('Errores del formulario:', this.ticketForm.errors);
-      console.log('Errores por campo:');
-      Object.keys(this.ticketForm.controls).forEach((key) => {
-        console.log(`${key}:`, this.ticketForm.get(key)?.errors);
-      });
-    });
-
     if (this.data.ticket) {
       this.titleFormControl.setValue(this.data.ticket.title)
 

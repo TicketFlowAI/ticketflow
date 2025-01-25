@@ -20,7 +20,6 @@ export class HomeComponent {
 
   constructor() {
     effect(() => {
-      console.log(this.user)
       this.user = this.userManagementService.currentUser();
       this.cdr.markForCheck();
     });

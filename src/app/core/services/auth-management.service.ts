@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { TokenService } from "./token.service";
 import { LoginRequest } from "../models/requests/login.request";
-import { catchError, concatMap, finalize, map, of, tap } from "rxjs";
+import { catchError, concatMap, finalize, map, of } from "rxjs";
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { SanctumService } from '../api/servicios-mindsoftdev/sanctum.service';
 import { AuthService } from '../api/servicios-mindsoftdev/auth.service';
@@ -11,7 +11,6 @@ import { MessageService } from '../../shared/services/message.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ResetPasswordRequestModel } from '../models/requests/password.request';
 import { Router } from '@angular/router';
-import { UserRoles } from '../models/entities/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,12 +38,11 @@ export class AuthManagementService {
           if (twoFaRoutes.includes(currentRoute)) {
             // Si estamos en las rutas de 2FA, setear currentUser a null
             this.userManagementService.currentUser.set(null);
-            console.log(`Usuario seteado a null en la ruta: ${currentRoute}`);
           } else if (user) {
             // Si no estamos en rutas de 2FA y el usuario existe, setearlo normalmente
             this.userManagementService.currentUser.set(user);
           } else {
-            console.log('No user found');
+
             this.tokenService.clearAll();
           }
   
@@ -256,7 +254,9 @@ export class AuthManagementService {
   twoFactorChallenge(code: string) {
     this.spinnerService.showGlobalSpinner({ fullscreen: false, size: 100, hasBackdrop: false });
 
-    this.authService.challengeTwoFactor(code).pipe(
+    const json = code.length > 6? { recovery_code: code} : { code: code}
+
+    this.authService.challengeTwoFactor(json).pipe(
       map(() => {
         const successMessage = this.translocoService.translateObject('SHARED.TOASTS.CUSTOM.TWO-FACTOR-AUTH.SUCCESS');
         this.messageService.addSuccessMessage(successMessage);

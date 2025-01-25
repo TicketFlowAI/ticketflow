@@ -69,7 +69,7 @@ export class ManageSurveyQuestionComponent {
 
   onSaveClick(): void {
     const formValue = this.surveyQuestionForm.value;
-    console.log(formValue.active)
+
     let surveyQuestion = new SurveyQuestionModel(
       0,
       formValue.question,

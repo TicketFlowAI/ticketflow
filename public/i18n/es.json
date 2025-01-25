@@ -251,7 +251,7 @@
       "DELETE": "Borrar",
       "RE-OPEN": "Reabrir",
       "NO-AI": "Solicitar atención Humana",
-      "NO-AI-TOOLTIP": "Si respuesta generada por IA no resolvío completamente su problema. (Tenga en cuenta que un técnico podría tardar más en responder).",
+      "NO-AI-TOOLTIP": "Si la respuesta generada por IA no resolvió completamente su problema, puede solicitar interacción humana. (Tenga en cuenta que un técnico podría tardar más en responder).",
       "OPEN-SURVEY": "Responder Encuesta",
       "ADMIN": {
         "TICKETS": "Administrar Tickets",
