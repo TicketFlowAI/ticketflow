@@ -218,4 +218,26 @@ describe('AuthService', () => {
 
     req.flush(mockResponse);
   });
+
+  it('should confirm password successfully and handle error', (done) => {
+    const payload = { password: 'password123' };
+  
+    service.confirmPassword(payload).subscribe({
+      next: (response: ILoginResponseTest) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpMock.expectOne(`${API_URL}/user/confirm-password`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(payload);
+  
+    req.flush({ message: 'Invalid password' }, { status: 400, statusText: 'Bad Request' });
+  });
+  
 });

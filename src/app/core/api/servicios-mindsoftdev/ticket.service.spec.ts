@@ -185,4 +185,156 @@ describe('TicketService', () => {
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+
+  it('should get deleted tickets successfully', (done) => {
+    service.getDeletedTickets().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockTicketsResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockTicketsResponse);
+  });
+  
+  it('should handle error when getting deleted tickets', (done) => {
+    service.getDeletedTickets().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should get ticket history successfully', (done) => {
+    const ticketId = 1;
+    const mockHistoryResponse = { success: true, data: [] };
+  
+    service.getTicketHistory(ticketId).subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockHistoryResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/history/${ticketId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockHistoryResponse);
+  });
+  
+  it('should handle error when getting ticket history', (done) => {
+    const ticketId = 1;
+  
+    service.getTicketHistory(ticketId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(500);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/history/${ticketId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Internal Server Error' }, { status: 500, statusText: 'Internal Server Error' });
+  });
+
+  
+  it('should close a ticket successfully', (done) => {
+    const ticketId = 1;
+  
+    service.closeTicket(ticketId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/close/${ticketId}`);
+    expect(req.request.method).toBe('POST');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when closing a ticket', (done) => {
+    const ticketId = 1;
+  
+    service.closeTicket(ticketId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/close/${ticketId}`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  
+  it('should reopen a ticket successfully', (done) => {
+    const ticketId = 1;
+  
+    service.reopenTicket(ticketId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/open/${ticketId}`);
+    expect(req.request.method).toBe('POST');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when reopening a ticket', (done) => {
+    const ticketId = 1;
+  
+    service.reopenTicket(ticketId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(500);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/tickets/open/${ticketId}`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Internal Server Error' }, { status: 500, statusText: 'Internal Server Error' });
+  });
+  
 });

@@ -101,4 +101,78 @@ describe('EmailService', () => {
 
     req.flush(new HttpResponse({ status: 200, statusText: 'OK' }));
   });
+
+  it('should get deleted email templates successfully', (done) => {
+    service.getDeletedEmailTemplates().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockEmailTemplatesResponse);
+        done();
+      },
+      error: (error) => {
+        fail('Expected success, but got error: ' + error.message);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/emails/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockEmailTemplatesResponse);
+  });
+  
+  it('should handle error when getting deleted email templates', (done) => {
+    service.getDeletedEmailTemplates().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/emails/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  
+  it('should restore an email template successfully', (done) => {
+    const emailTemplateId = 1;
+  
+    service.restoreEmailTemplate(emailTemplateId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: (error) => {
+        fail('Expected success, but got error: ' + error.message);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/emails/${emailTemplateId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush(null, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring an email template', (done) => {
+    const emailTemplateId = 1;
+  
+    service.restoreEmailTemplate(emailTemplateId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/emails/${emailTemplateId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+  
 });

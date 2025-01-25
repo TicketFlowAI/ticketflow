@@ -104,4 +104,78 @@ describe('ServiceTaxService', () => {
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+
+  it('should get deleted service taxes successfully', (done) => {
+    service.getDeletedServiceTaxes().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockTaxesResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/taxes/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockTaxesResponse);
+  });
+  
+  it('should handle error when getting deleted service taxes', (done) => {
+    service.getDeletedServiceTaxes().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/taxes/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should restore a service tax successfully', (done) => {
+    const taxId = 1;
+  
+    service.restoreServiceTax(taxId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/taxes/${taxId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring a service tax', (done) => {
+    const taxId = 1;
+  
+    service.restoreServiceTax(taxId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/taxes/${taxId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  
 });

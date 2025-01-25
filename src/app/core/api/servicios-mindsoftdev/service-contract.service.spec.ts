@@ -116,4 +116,308 @@ describe('ServiceContractService', () => {
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+
+  it('should get deleted service contracts successfully', (done) => {
+    service.getDeletedServiceContracts().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockContractsResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockContractsResponse);
+  });
+  
+  it('should handle error when getting deleted service contracts', (done) => {
+    service.getDeletedServiceContracts().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should restore a service contract successfully', (done) => {
+    const contractId = 1;
+  
+    service.restoreServiceContract(contractId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/${contractId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring a service contract', (done) => {
+    const contractId = 1;
+  
+    service.restoreServiceContract(contractId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/${contractId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  it('should create a new service contract request successfully', (done) => {
+    const request = { company_id: 1, service_id: 1 };
+  
+    service.newServiceContractRequest(request).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(201);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/request`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(request);
+  
+    req.flush({}, { status: 201, statusText: 'Created' });
+  });
+  
+  it('should handle error when creating a new service contract request', (done) => {
+    const request = { company_id: 1, service_id: 1 };
+  
+    service.newServiceContractRequest(request).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/request`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  it('should cancel a service contract request successfully', (done) => {
+    const contractId = 1;
+  
+    service.cancelServiceContractRequest(contractId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/cancel`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ contract_id: contractId });
+  
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when cancelling a service contract request', (done) => {
+    const contractId = 1;
+  
+    service.cancelServiceContractRequest(contractId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/cancel`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+  
+  it('should get deleted service contracts successfully', (done) => {
+    service.getDeletedServiceContracts().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockContractsResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockContractsResponse);
+  });
+  
+  it('should handle error when getting deleted service contracts', (done) => {
+    service.getDeletedServiceContracts().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should restore a service contract successfully', (done) => {
+    const contractId = 1;
+  
+    service.restoreServiceContract(contractId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/${contractId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring a service contract', (done) => {
+    const contractId = 1;
+  
+    service.restoreServiceContract(contractId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/${contractId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  it('should create a new service contract request successfully', (done) => {
+    const request = { company_id: 1, service_id: 1 };
+  
+    service.newServiceContractRequest(request).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(201);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/request`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(request);
+  
+    req.flush({}, { status: 201, statusText: 'Created' });
+  });
+  
+  it('should handle error when creating a new service contract request', (done) => {
+    const request = { company_id: 1, service_id: 1 };
+  
+    service.newServiceContractRequest(request).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/request`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  it('should cancel a service contract request successfully', (done) => {
+    const contractId = 1;
+  
+    service.cancelServiceContractRequest(contractId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/cancel`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ contract_id: contractId });
+  
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when cancelling a service contract request', (done) => {
+    const contractId = 1;
+  
+    service.cancelServiceContractRequest(contractId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/servicecontracts/cancel`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });  
 });

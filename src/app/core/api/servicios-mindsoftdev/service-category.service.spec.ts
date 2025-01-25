@@ -104,4 +104,77 @@ describe('ServiceCategoryService', () => {
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+
+  it('should get deleted service categories successfully', (done) => {
+    service.getDeletedServiceCategories().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockCategoriesResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/categories/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockCategoriesResponse);
+  });
+  
+  it('should handle error when getting deleted service categories', (done) => {
+    service.getDeletedServiceCategories().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/categories/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should restore a service category successfully', (done) => {
+    const categoryId = 1;
+  
+    service.restoreServiceCategory(categoryId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/categories/${categoryId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring a service category', (done) => {
+    const categoryId = 1;
+  
+    service.restoreServiceCategory(categoryId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/categories/${categoryId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+  
 });

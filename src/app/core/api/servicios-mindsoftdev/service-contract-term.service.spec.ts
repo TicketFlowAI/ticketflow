@@ -104,4 +104,77 @@ describe('ServiceContractTermService', () => {
 
     req.flush({}, { status: 200, statusText: 'OK' });
   });
+
+  it('should get deleted service contract terms successfully', (done) => {
+    service.getDeletedServiceContractTerms().subscribe({
+      next: (response) => {
+        expect(response).toEqual(mockTermsResponse);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/serviceTerms/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockTermsResponse);
+  });
+  
+  it('should handle error when getting deleted service contract terms', (done) => {
+    service.getDeletedServiceContractTerms().subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(404);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/serviceTerms/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should restore a service contract term successfully', (done) => {
+    const termId = 1;
+  
+    service.restoreServiceContractTerm(termId).subscribe({
+      next: (response) => {
+        expect(response.status).toBe(200);
+        done();
+      },
+      error: () => {
+        fail('Expected success, but got error');
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/serviceTerms/${termId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({}, { status: 200, statusText: 'OK' });
+  });
+  
+  it('should handle error when restoring a service contract term', (done) => {
+    const termId = 1;
+  
+    service.restoreServiceContractTerm(termId).subscribe({
+      next: () => {
+        fail('Expected error, but got success');
+        done();
+      },
+      error: (error) => {
+        expect(error.status).toBe(400);
+        done();
+      },
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/serviceTerms/${termId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+  
 });
