@@ -4,11 +4,20 @@ import { HttpResponse } from '@angular/common/http';
 import { CompanyService } from './company.service';
 import { environment } from '../../../../environments/environment';
 import { ICompaniesApiResponse, ICompanyApiResponse, CompanyModel } from '../../models/entities/company.model';
+import { IUsersModelResponse, UserModel, UserRoles } from '../../models/entities/user.model';
 
 describe('CompanyService', () => {
   let service: CompanyService;
   let httpTestingController: HttpTestingController;
 
+  const mockUsersResponse: IUsersModelResponse = {
+    success: true,
+    data: [
+      new UserModel(1, 'John', 'Doe', 'john.doe@example.com', 1, UserRoles.Admin, 'Company A', '', 1),
+      new UserModel(2, 'Jane', 'Smith', 'jane.smith@example.com', 2, UserRoles.Technician, 'Company B', '', 0),
+    ],
+  };
+  
   const mockCompaniesResponse: ICompaniesApiResponse = {
     success: true,
     data: [
@@ -101,4 +110,87 @@ describe('CompanyService', () => {
 
     req.flush(new HttpResponse({ status: 200, statusText: 'OK' }));
   });
+
+  it('should get users for a specific company by company ID', () => {
+    const companyId = 1;
+  
+    service.getCompanyUsers(companyId).subscribe((response) => {
+      expect(response).toEqual(mockUsersResponse);
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/${companyId}/users`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUsersResponse);
+  });
+
+  it('should handle error when getting users for a specific company', () => {
+    const companyId = 1;
+  
+    service.getCompanyUsers(companyId).subscribe(
+      () => fail('should have failed with a 404 error'),
+      (error) => {
+        expect(error.status).toBe(404);
+        expect(error.statusText).toBe('Not Found');
+      }
+    );
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/${companyId}/users`);
+    expect(req.request.method).toBe('GET');
+    req.flush('404 error', { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should get deleted companies', () => {
+    service.getDeletedCompanies().subscribe((response) => {
+      expect(response).toEqual(mockCompaniesResponse);
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockCompaniesResponse);
+  });
+
+  it('should handle error when getting deleted companies', () => {
+    service.getDeletedCompanies().subscribe(
+      () => fail('should have failed with a 500 error'),
+      (error) => {
+        expect(error.status).toBe(500);
+        expect(error.statusText).toBe('Internal Server Error');
+      }
+    );
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/deleted`);
+    expect(req.request.method).toBe('GET');
+    req.flush('500 error', { status: 500, statusText: 'Internal Server Error' });
+  });
+  
+  it('should restore a deleted company by ID', () => {
+    const companyId = 3;
+  
+    service.restoreCompany(companyId).subscribe((response) => {
+      expect(response.status).toBe(200);
+    });
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/${companyId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toBeNull();
+  
+    req.flush(new HttpResponse({ status: 200, statusText: 'OK' }));
+  });
+
+  it('should handle error when restoring a deleted company', () => {
+    const companyId = 3;
+  
+    service.restoreCompany(companyId).subscribe(
+      () => fail('should have failed with a 400 error'),
+      (error) => {
+        expect(error.status).toBe(400);
+        expect(error.statusText).toBe('Bad Request');
+      }
+    );
+  
+    const req = httpTestingController.expectOne(`${environment.apiEndpoint}/api/companies/${companyId}/restore`);
+    expect(req.request.method).toBe('PUT');
+    req.flush('400 error', { status: 400, statusText: 'Bad Request' });
+  });
+  
 });
