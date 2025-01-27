@@ -31,7 +31,12 @@ export const adminRoleGuard: CanActivateFn = () => {
         clearInterval(interval);
         hasAccess = userManagementService.isUserAdmin();
       
-        if (!hasAccess) router.navigate(['/']);
+        if(currentUser?.twoFactorEnabled == 0) {
+          router.navigate(['/2fa-setup']);
+        }
+        else {
+          if (!hasAccess) router.navigate(['/']);
+        }
 
         resolve(hasAccess);
       }

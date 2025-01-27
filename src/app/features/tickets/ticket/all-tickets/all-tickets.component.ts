@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -12,7 +12,7 @@ import { faPencil, faX, faPlus, faInfoCircle, faUsers, faMessage, faClipboardLis
 import { DialogManagerService } from '../../../../core/services/dialog-manager.service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TicketManagementService } from '../../../../core/services/ticket-management.service';
-import { TicketModel } from '../../../../core/models/entities/ticket.model';
+import { TicketModel, TicketStatus } from '../../../../core/models/entities/ticket.model';
 import { TicketDialogData } from '../../../../core/models/dialogs/ticket-dialog-data.model';
 import { concatMap, of, tap } from 'rxjs';
 import { GlobalSpinnerComponent } from "../../../../shared/components/global-spinner/global-spinner.component";
@@ -52,6 +52,8 @@ export class AllTicketsComponent {
   protected readonly faMessage = faMessage;
   protected readonly faClipboardList = faClipboardList;
 
+  public TicketStatus = TicketStatus
+
   private readonly userManagementService = inject(UserManagementService)
   private readonly ticketManagementService = inject(TicketManagementService)
   private readonly dialogManagerService = inject(DialogManagerService)
@@ -67,7 +69,18 @@ export class AllTicketsComponent {
   pageIndex = 0; // Índice de la página actual
   filterText = ''; // Texto de filtro
 
-  ngOnInit(): void {
+  @ViewChild('teamHeader') teamHeaderTemplate!: TemplateRef<any>;
+  @ViewChild('clientHeader') clientHeaderTemplate!: TemplateRef<any>;
+
+  @ViewChild('adminFilters') adminFiltersTemplate!: TemplateRef<any>;
+  @ViewChild('technicianFilters') technicianFiltersTemplate!: TemplateRef<any>;
+  @ViewChild('clientFilters') clientFiltersTemplate!: TemplateRef<any>;
+
+  @ViewChild('adminTickets') adminTicketsTemplate!: TemplateRef<any>;
+  @ViewChild('technicianTickets') techinicianTicketsTemplate!: TemplateRef<any>;
+  @ViewChild('clientTickets') clientTicketsTemplate!: TemplateRef<any>;
+  
+  ngOnInit(): void { 
     this.loadTickets();
   }
 
@@ -82,23 +95,44 @@ export class AllTicketsComponent {
     });
   }
 
-  showAdminElement() {
-    return this.userManagementService.isUserAdmin()
+  showHeadRowOptions(): TemplateRef<any> {
+    if(this.userManagementService.isUserAdmin() || this.userManagementService.isUserTechnician()) {
+      return this.teamHeaderTemplate
+    }
+    else{
+      return this.clientHeaderTemplate
+    }
   }
 
-  showTechnicianElement() {
-    return this.userManagementService.isUserTechnician()
+  showFiltersRow(): TemplateRef<any> {
+    if(this.userManagementService.isUserAdmin()) {
+      return this.adminFiltersTemplate
+    }
+    else if(this.userManagementService.isUserTechnician()) {
+      return this.technicianFiltersTemplate
+    }
+    else{
+      return this.clientFiltersTemplate
+    }
   }
 
-  showClientElement() {
-    return this.userManagementService.isUserClient()
+  showTicketsRow(): TemplateRef<any> {
+    if(this.userManagementService.isUserAdmin()) {
+      return this.adminTicketsTemplate
+    }
+    else if(this.userManagementService.isUserTechnician()) {
+      return this.techinicianTicketsTemplate
+    }
+    else{
+      return this.clientTicketsTemplate
+    }
   }
 
   onPriorityOrder(order: 'asc' | 'desc'): void {
     this.filteredTickets.sort((a, b) => {
       const aPriority = typeof a.priority === 'number' ? a.priority : Infinity;
       const bPriority = typeof b.priority === 'number' ? b.priority : Infinity;
-  
+
       if (aPriority === bPriority) {
         return 0;
       }
@@ -106,12 +140,12 @@ export class AllTicketsComponent {
     });
     this.updatePageTickets();
   }
-  
+
   onComplexityOrder(order: 'asc' | 'desc'): void {
     this.filteredTickets.sort((a, b) => {
       const aComplexity = typeof a.complexity === 'number' ? a.complexity : Infinity;
       const bComplexity = typeof b.complexity === 'number' ? b.complexity : Infinity;
-  
+
       if (aComplexity === bComplexity) {
         return 0;
       }
@@ -119,7 +153,6 @@ export class AllTicketsComponent {
     });
     this.updatePageTickets();
   }
-  
 
   onStatusFilter(status: number | null): void {
     if (status === null) {
@@ -157,6 +190,52 @@ export class AllTicketsComponent {
     this.pagedTickets = this.filteredTickets.slice(startIndex, endIndex);
   }
 
+  getStatusText(status: number): string {
+    let statusText: string = '';
+
+    switch (status) {
+      case TicketStatus.Closed: {
+        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-CLOSED');
+        return statusText;
+      }
+      case TicketStatus.Open: {
+        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-OPEN');
+        return statusText;
+      }
+      case TicketStatus.InProgress: {
+        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PROGRESS');
+        return statusText;
+      }
+      case TicketStatus.PendingSurvey: {
+        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PENDING-SURVEY');
+        return statusText;
+      }
+      default: {
+        return statusText;
+      }
+    }
+  }
+
+  getStatusElementStyle(status: number) {
+    switch (status) {
+      case 0: {
+        return 'red';
+      }
+      case 1: {
+       return 'green';
+      }
+      case 2: {
+        return 'yellow';
+      }
+      case 3: {
+       return 'blue';;
+      }
+      default: {
+        return ;
+      }
+    }
+  }
+
   openTicketInfo(ticket: TicketModel) {
     this.dialogManagerService.openTicketInfoDialog(ticket)
   }
@@ -169,7 +248,7 @@ export class AllTicketsComponent {
     this.dialogManagerService.openTicketTechnicianHistory(ticket)
   }
 
-  openSatisfactionSurvey(ticket: TicketModel) { 
+  openSatisfactionSurvey(ticket: TicketModel) {
     this.dialogManagerService.openTicketSurveyDialog(ticket).subscribe({
       next: (response) => {
         if (response) this.loadTickets()
@@ -264,5 +343,5 @@ export class AllTicketsComponent {
     return of(null);
   }
 
-  
+
 }

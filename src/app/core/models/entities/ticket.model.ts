@@ -8,6 +8,13 @@ export interface ITicketApiResponse {
   data: ITicketModel;
 }
 
+export enum TicketStatus {
+  Closed = 0,
+  Open = 1,
+  InProgress = 2,
+  PendingSurvey = 3,
+}
+
 export interface ITicketModel {
   id: number;
   title: string;

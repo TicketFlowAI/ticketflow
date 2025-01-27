@@ -11,6 +11,7 @@ import { MessageService } from '../../shared/services/message.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ResetPasswordRequestModel } from '../models/requests/password.request';
 import { Router } from '@angular/router';
+import { UserRoles } from '../models/entities/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +41,23 @@ export class AuthManagementService {
             this.userManagementService.currentUser.set(null);
           } else if (user) {
             // Si no estamos en rutas de 2FA y el usuario existe, setearlo normalmente
-            this.userManagementService.currentUser.set(user);
+            if(user.role == UserRoles.Admin || 
+               user.role == UserRoles.Technician || 
+               user.role == UserRoles.One || 
+               user.role == UserRoles.Two || 
+               user.role == UserRoles.Three){
+                if(user.twoFactorEnabled == 0) {
+                  this.userManagementService.currentUser.set(null);
+                  this.router.navigateByUrl('/2fa-setup')
+                }
+                else{
+                  this.userManagementService.currentUser.set(user);
+                }
+            }
+            else {
+              this.userManagementService.currentUser.set(user);
+            }
           } else {
-
             this.tokenService.clearAll();
           }
   

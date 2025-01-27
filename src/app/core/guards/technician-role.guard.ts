@@ -16,7 +16,12 @@ export const technicianRoleGuard: CanActivateFn = () => {
   if (currentUser) {
     hasAccess = userManagementService.isUserTechnician();
 
-    if (!hasAccess) router.navigate(['/']);
+    if(currentUser?.twoFactorEnabled == 0) {
+      router.navigate(['/2fa-setup']);
+    }
+    else {
+      if (!hasAccess) router.navigate(['/']);
+    }
 
     return hasAccess;
   }
@@ -31,7 +36,12 @@ export const technicianRoleGuard: CanActivateFn = () => {
         clearInterval(interval);
         hasAccess  = userManagementService.isUserTechnician();
         
-        if (!hasAccess) router.navigate(['/']);
+        if(currentUser?.twoFactorEnabled == 0) {
+          router.navigate(['/2fa-setup']);
+        }
+        else {
+          if (!hasAccess) router.navigate(['/']);
+        }
 
         resolve(hasAccess);
       }

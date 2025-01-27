@@ -16,7 +16,12 @@ export const teamRoleGuard: CanActivateFn = () => {
   if (currentUser) {
     hasAccess = userManagementService.isUserTeam();
 
-    if (!hasAccess) router.navigate(['/']);
+    if(currentUser?.twoFactorEnabled == 0) {
+      router.navigate(['/2fa-setup']);
+    }
+    else {
+      if (!hasAccess) router.navigate(['/']);
+    }
 
     return hasAccess;
   }
@@ -31,9 +36,13 @@ export const teamRoleGuard: CanActivateFn = () => {
         clearInterval(interval);
         hasAccess = userManagementService.isUserTeam();
         
-        if (!hasAccess) router.navigate(['/']);
-
-
+        if(currentUser?.twoFactorEnabled == 0) {
+          router.navigate(['/2fa-setup']);
+        }
+        else {
+          if (!hasAccess) router.navigate(['/']);
+        }
+        
         resolve(hasAccess);
       }
     }, intervalSeconds * 1000);

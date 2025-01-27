@@ -14,6 +14,7 @@ import { DialogSpinnerComponent } from '../../../shared/components/dialog-spinne
 import { FieldErrorEmailComponent } from '../../../shared/components/form-validation/field-error-email/field-error-email.component';
 import { FieldErrorRequiredComponent } from '../../../shared/components/form-validation/field-error-required/field-error-required.component';
 import { UserRoles } from '../../../core/models/entities/user.model';
+import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent {
   //SERVICES
   public readonly dialogRef = inject(MatDialogRef<LoginComponent>);
   public readonly router = inject(Router);
+  public readonly tokenService = inject(TokenService);
   private readonly authManagementService = inject(AuthManagementService);
   private readonly userManagementService = inject(UserManagementService);
   private readonly fb = inject(FormBuilder)
@@ -78,6 +80,8 @@ export class LoginComponent {
       loginRequest.email = loginFormValue.email ?? '';
       loginRequest.password = loginFormValue.password ?? '';
 
+      this.tokenService.clearAll();
+
       this.authManagementService.login(loginRequest).subscribe({
         next: (response) => {
           if (response) {
@@ -94,6 +98,7 @@ export class LoginComponent {
             //Descomentar Todo esto
             
             if (response.two_factor) {
+              console.log('sdds')
               this.router.navigateByUrl('/2fa-authenticate');
             } else {
               this.userManagementService.getMyUser().subscribe({
