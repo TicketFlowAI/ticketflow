@@ -251,10 +251,17 @@ export class AllTicketsComponent {
   openSatisfactionSurvey(ticket: TicketModel) {
     this.dialogManagerService.openTicketSurveyDialog(ticket).subscribe({
       next: (response) => {
-        if (response) this.loadTickets()
+        if (response) {
+          this.loadTickets();
+          // Espera de 2 segundos antes de cargar los tickets
+          setTimeout(() => {
+            this.loadTickets();
+          }, 2000); // 2000 milisegundos = 2 segundos
+        }
       }
-    })
+    });
   }
+  
 
   openTicketManageDialog(ticket: TicketModel | null) {
     let data: TicketDialogData = { ticket, serviceContract: null }
@@ -342,6 +349,4 @@ export class AllTicketsComponent {
   private handleCancelDelete() {
     return of(null);
   }
-
-
 }
