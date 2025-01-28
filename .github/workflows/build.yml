@@ -1,37 +1,96 @@
-name: SonarQube Cloud Analysis
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - master
+      - main
+      - development
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - development
 
 jobs:
-  sonarcloud:
-    name: SonarCloud Analysis
+  lint:
+    name: Lint Code with SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Necesario para un análisis completo
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20 # Cambia a tu versión de Node.js si es diferente
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install # Cambia a npm install si usas npm
+        run: npm install
 
-      - name: Build project and generate coverage
+      - name: Lint with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+  prebuild:
+    name: Prebuild Phase
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Set up SSH
         run: |
-          npm test --watch=false --code-coverage # Genera la cobertura en la carpeta coverage
-          npm run build --prod # Construye el proyecto
+          sudo apt-get update
+          sudo apt-get install -y ssh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ticketflow.mindsoftdev.com >> ~/.ssh/known_hosts
 
-      - name: Run SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Connect to remote machine and install dependencies
+        run: |
+          ssh ticketflow@ticketflow.mindsoftdev.com "
+            cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/project-folder &&
+            npm install ||
+            (npm audit || true)
+          "
+
+  test:
+    name: Testing Phase
+    runs-on: ubuntu-latest
+    needs: prebuild
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test -- --watch=false
+
+  deploy:
+    name: Deploy Phase
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular application
+        run: npm run build
