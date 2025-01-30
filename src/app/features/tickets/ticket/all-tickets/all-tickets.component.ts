@@ -77,10 +77,14 @@ export class AllTicketsComponent {
   @ViewChild('clientFilters') clientFiltersTemplate!: TemplateRef<any>;
 
   @ViewChild('adminTickets') adminTicketsTemplate!: TemplateRef<any>;
-  @ViewChild('technicianTickets') techinicianTicketsTemplate!: TemplateRef<any>;
+  @ViewChild('technicianTickets') technicianTicketsTemplate!: TemplateRef<any>
   @ViewChild('clientTickets') clientTicketsTemplate!: TemplateRef<any>;
-  
-  ngOnInit(): void { 
+
+  ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
     this.loadTickets();
   }
 
@@ -96,34 +100,34 @@ export class AllTicketsComponent {
   }
 
   showHeadRowOptions(): TemplateRef<any> {
-    if(this.userManagementService.isUserAdmin() || this.userManagementService.isUserTechnician()) {
+    if (this.userManagementService.isUserAdmin() || this.userManagementService.isUserTechnician()) {
       return this.teamHeaderTemplate
     }
-    else{
+    else {
       return this.clientHeaderTemplate
     }
   }
 
   showFiltersRow(): TemplateRef<any> {
-    if(this.userManagementService.isUserAdmin()) {
+    if (this.userManagementService.isUserAdmin()) {
       return this.adminFiltersTemplate
     }
-    else if(this.userManagementService.isUserTechnician()) {
+    else if (this.userManagementService.isUserTechnician()) {
       return this.technicianFiltersTemplate
     }
-    else{
+    else {
       return this.clientFiltersTemplate
     }
   }
 
   showTicketsRow(): TemplateRef<any> {
-    if(this.userManagementService.isUserAdmin()) {
+    if (this.userManagementService.isUserAdmin()) {
       return this.adminTicketsTemplate
     }
-    else if(this.userManagementService.isUserTechnician()) {
-      return this.techinicianTicketsTemplate
+    else if (this.userManagementService.isUserTechnician()) {
+      return this.technicianTicketsTemplate
     }
-    else{
+    else {
       return this.clientTicketsTemplate
     }
   }
@@ -195,19 +199,19 @@ export class AllTicketsComponent {
 
     switch (status) {
       case TicketStatus.Closed: {
-        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-CLOSED');
+        statusText = this.translocoService.translateObject('FEATURES.TICKETS.STATUS-CLOSED');
         return statusText;
       }
       case TicketStatus.Open: {
-        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-OPEN');
+        statusText = this.translocoService.translateObject('FEATURES.TICKETS.STATUS-OPEN');
         return statusText;
       }
       case TicketStatus.InProgress: {
-        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PROGRESS');
+        statusText = this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PROGRESS');
         return statusText;
       }
       case TicketStatus.PendingSurvey: {
-        statusText =  this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PENDING-SURVEY');
+        statusText = this.translocoService.translateObject('FEATURES.TICKETS.STATUS-PENDING-SURVEY');
         return statusText;
       }
       default: {
@@ -222,16 +226,16 @@ export class AllTicketsComponent {
         return 'red';
       }
       case 1: {
-       return 'green';
+        return 'green';
       }
       case 2: {
         return 'yellow';
       }
       case 3: {
-       return 'blue';;
+        return 'blue';;
       }
       default: {
-        return ;
+        return;
       }
     }
   }
@@ -261,7 +265,7 @@ export class AllTicketsComponent {
       }
     });
   }
-  
+
 
   openTicketManageDialog(ticket: TicketModel | null) {
     let data: TicketDialogData = { ticket, serviceContract: null }

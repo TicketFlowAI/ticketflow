@@ -6,11 +6,11 @@ import { UserModel, UserRoles } from '../models/entities/user.model';
 import { UserManagementService } from '../services/user-management.service';
 
 const userTechnicianMock = new UserModel(
-  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Technician, 'SomeCompany'
+  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Technician, 'SomeCompany', '', 1
 )
 
 const userNoTechnicianMock = new UserModel(
-  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Client, 'SomeCompany'
+  1, 'Mr', 'NoBody', 'example@gmail.com', 1, UserRoles.Client, 'SomeCompany',  '', 0
 )
 
 const userManagementServiceMock: {
@@ -48,7 +48,7 @@ describe('TeamRoleGuard', () => {
     const result = TestBed.runInInjectionContext(() => teamRoleGuard({} as any, {} as any))
 
     expect(result).toBeFalse()
-    expect(navigateSpy).toHaveBeenCalledWith(['/']);
+    expect(navigateSpy).toHaveBeenCalledWith(['/2fa-setup']);
   });
 
   it('should grant access if current user is team on no refresh navigation', () => {
