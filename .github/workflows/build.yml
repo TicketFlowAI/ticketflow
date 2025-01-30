@@ -54,27 +54,47 @@ jobs:
             npm audit fix || echo "npm audit fix failed" || true
 
   build:
-    name: Build project
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Build project
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ticketflow
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng build
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: cd htdocs/***/ticketflow && ng build
 
   test:
-    name: test project
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Build project
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ticketflow
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
           script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
