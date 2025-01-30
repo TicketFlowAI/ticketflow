@@ -44,7 +44,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: linuxserver.io
+          username: ticketflow.mindsoftdev.com
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow &&
@@ -61,7 +61,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: linuxserver.io
+          username: ticketflow.mindsoftdev.com
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow && ng build
@@ -74,7 +74,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: linuxserver.io
+          username: ticketflow.mindsoftdev.com
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
