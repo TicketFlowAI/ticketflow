@@ -47,4 +47,4 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && git reset --hard && git pull && npm i && npm audit fix && 
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && git reset --hard && git pull && npm i && npm audit fix 
