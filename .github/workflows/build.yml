@@ -35,3 +35,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  prebuild:
+      name: Prebuild Setup
+      runs-on: ubuntu-latest
+      steps:
+        - name: Setup SSH
+          uses: kielabokkie/ssh-key-and-known-hosts-action@v1.4.1
+          with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-host: ${{ secrets.SSH_HOST }}
+            ssh-port: ${{ secrets.SSH_PORT }}
+            ssh-socket: /tmp/ssh-auth.sock
+        
+        - name: Connect via SSH and update repository
+          run: |
+            ssh -o StrictHostKeyChecking=no user@${{ secrets.SSH_HOST }} << 'EOF'
+              cd /homa/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow
+              git pull origin master
+              npm install || echo "npm install failed"
+              npm audit || echo "npm audit failed"
+            EOF
