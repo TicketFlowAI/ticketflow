@@ -37,22 +37,28 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   prebuild:
-      name: Prebuild Setup
-      runs-on: ubuntu-latest
-      steps:
-        - name: Setup SSH
-          uses: kielabokkie/ssh-key-and-known-hosts-action@v1.4.1
-          with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-            ssh-host: ticketflow.mindsoftdev.com
-            ssh-port: 22
-            ssh-socket: /tmp/ssh-auth.sock
-        
-        - name: Connect via SSH and update repository
-          run: |
-            ssh -o StrictHostKeyChecking=no user@${{ secrets.SSH_HOST }} << 'EOF'
-              cd /homa/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow
-              git pull origin master
-              npm install || echo "npm install failed"
-              npm audit || echo "npm audit failed"
-            EOF
+    name: Prebuild Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start SSH Agent and Add Key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Connect via SSH and update repository
+        run: |
+          ssh -o StrictHostKeyChecking=no user@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow
+            git pull origin master
+            npm install || echo "npm install failed"
+            npm audit || echo "npm audit failed"
+          EOF
