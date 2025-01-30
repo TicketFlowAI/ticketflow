@@ -47,7 +47,7 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow &&
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow &&
             git pull origin master &&
             npm install || echo "npm install failed"
             npm audit || echo "npm audit failed" || true
@@ -64,7 +64,7 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow && ng build
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng build
 
   test:
     name: test project
@@ -77,4 +77,4 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
