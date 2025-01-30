@@ -84,3 +84,4 @@ To deploy the project, follow these steps:
 ## 🔧 Configuring Back-End URL
 
 To set up the route to the back-end deployment, navigate to `/src/environments` and configure the URL in both `environment.ts` and `environment.development.ts` files so that it points to your installation of the back end.
+
