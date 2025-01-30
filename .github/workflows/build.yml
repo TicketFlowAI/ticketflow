@@ -37,28 +37,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   prebuild:
-    name: Prebuild Setup
+    name: prebuild
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Start SSH Agent and Add Key
-        uses: webfactory/ssh-agent@v0.5.4
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.2.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Add Known Hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Connect via SSH and update repository
-        run: |
-          ssh -o StrictHostKeyChecking=no user@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /home/ticketflow/htdocs/ticketflow.mindsoftdev.com/ticketflow
-            git pull origin master
-            npm install || echo "npm install failed"
-            npm audit || echo "npm audit failed"
-          EOF
+          host: ${{ secrets.HOST }}
+          username: ticketflow
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
