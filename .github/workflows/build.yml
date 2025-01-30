@@ -44,8 +44,8 @@ jobs:
           uses: kielabokkie/ssh-key-and-known-hosts-action@v1.4.1
           with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-            ssh-host: ${{ secrets.SSH_HOST }}
-            ssh-port: ${{ secrets.SSH_PORT }}
+            ssh-host: ticketflow.mindsoftdev.com
+            ssh-port: 22
             ssh-socket: /tmp/ssh-auth.sock
         
         - name: Connect via SSH and update repository
