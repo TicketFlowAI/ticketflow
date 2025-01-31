@@ -72,8 +72,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ticketflow
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: cd htdocs/***/ticketflow && ng build
 
   test:
@@ -95,6 +95,6 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ticketflow
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
