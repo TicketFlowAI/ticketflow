@@ -111,3 +111,15 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: cd htdocs/servicios.mindsoftdev.com/serviciosTicketFlow && php artisan test || true
+
+  monitor-back:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build project
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: servicios
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: curl servicios.mindsoftdev.com/up
