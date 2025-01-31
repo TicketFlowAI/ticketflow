@@ -63,7 +63,7 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd htdocs/servicios.mindsoftdev.com/ticketflow && ng build
+          script: cd htdocs/servicios.mindsoftdev.com/ticketflow && npm link @angular/cli && ng build
 
   test:
     runs-on: ubuntu-latest
@@ -75,4 +75,4 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && ng test
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && npm link @angular/cli && ng test
