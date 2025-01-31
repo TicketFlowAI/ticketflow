@@ -64,6 +64,26 @@ jobs:
           port: ${{ secrets.PORT }}
           script: cd htdocs/servicios.mindsoftdev.com/serviciosTicketFlow/ && composer i && composer u && npm i || npm audit fix
 
+  dast-scan:
+    name: OWASP ZAP Dynamic Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy application to test environment
+        run: echo "Deploying application to test environment..."
+
+      - name: Run OWASP ZAP Scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: 'https://ticketflow.mindsoftdev.com'  # URL de tu aplicación en prueba
+          format: 'html'  # Generar reporte en HTML
+          rules_file_name: '.zap/rules.json'  # Configuración personalizada de reglas (opcional)
+
+      - name: Upload OWASP ZAP Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-report
+          path: zap_report.html
+
   build-front:
     runs-on: ubuntu-latest
     steps:
