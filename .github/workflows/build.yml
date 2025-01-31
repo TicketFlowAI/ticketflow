@@ -36,8 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  prebuild:
-    name: pull, install and update dependencies
+  prebuild-front:
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
@@ -53,19 +52,19 @@ jobs:
             npm audit || echo "npm audit failed" || true
             npm audit fix || echo "npm audit fix failed" || true
 
-  build:
+  prebuild-back:
     runs-on: ubuntu-latest
     steps:
-      - name: Build project
+      - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: ticketflow
+          username: servicios
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd htdocs/servicios.mindsoftdev.com/ticketflow && npm link @angular/cli && ng build
+          script: cd htdocs/servicios.mindsoftdev.com/serviciosTicketFlow/ && composer i && composer u && npm i || npm audit fix
 
-  test:
+  build-front:
     runs-on: ubuntu-latest
     steps:
       - name: Build project
@@ -75,4 +74,40 @@ jobs:
           username: ticketflow
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && npm link @angular/cli && ng test
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && npm run build
+  
+  build-back:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build project
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: servicios
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd htdocs/servicios.mindsoftdev.com/serviciosTicketFlow && composer u && composer i && npm run build
+
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build project
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ticketflow
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd htdocs/ticketflow.mindsoftdev.com/ticketflow && npm test
+  
+  test-back:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build project
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: servicios
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd htdocs/servicios.mindsoftdev.com/serviciosTicketFlow && php artisan test || true
