@@ -1,0 +1,27 @@
+name: Scheduled DAST Scan
+
+on:
+  schedule:
+    # Definir frecuencia de ejecución (en formato cron). Este ejemplo es todos los lunes a las 03:00 UTC.
+    - cron: '0 3 * * 1'
+
+jobs:
+  dast-scan:
+    name: OWASP ZAP Periodic Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy application to test environment
+        run: echo "Deploying application to test environment..."  # Reemplazar con tu proceso de despliegue real
+
+      - name: Run OWASP ZAP Scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: 'https://mindsoft.ticketflow.com'  # URL de la aplicación a escanear
+          format: 'html'  # Puedes cambiar a 'json', 'xml', etc.
+          rules_file_name: '.zap/rules.json'  # Configuración personalizada de reglas (opcional)
+
+      - name: Upload OWASP ZAP Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-scheduled-report
+          path: zap_report.html
